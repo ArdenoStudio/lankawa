@@ -33,6 +33,17 @@ create table if not exists source_health (
   checked_at timestamptz default now()
 );
 
+insert into sources (id, name, category, url, cadence_minutes, active) values
+  ('octane_fuel', 'Octane Fuel API', 'transport', 'https://octane-api.fly.dev', 10080, true),
+  ('lk_flood_api', 'Sri Lanka Flood API', 'disaster', 'https://lk-flood-api.vercel.app', 10, true),
+  ('cbsl_fx', 'Central Bank of Sri Lanka', 'economy', 'https://www.cbsl.gov.lk', 1440, true)
+on conflict (id) do update set
+  name = excluded.name,
+  category = excluded.category,
+  url = excluded.url,
+  cadence_minutes = excluded.cadence_minutes,
+  active = excluded.active;
+
 create or replace view source_status as
 select
   s.id,

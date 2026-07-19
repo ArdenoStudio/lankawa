@@ -56,7 +56,7 @@ export default async function HomePage({
             {t("viewDistricts")}
           </Link>
         </div>
-        <DistrictGrid locale={locale} />
+        <DistrictGrid locale={locale} limit={6} />
       </section>
     </div>
   );

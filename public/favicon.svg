@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Lankawa">
+  <rect width="64" height="64" rx="14" fill="#020617"/>
+  <rect x="4" y="4" width="56" height="56" rx="12" fill="#0f172a" stroke="#14b8a6" stroke-width="2"/>
+  <path d="M18 42c6-10 14-16 14-22 0-4-3-7-7-7s-7 3-7 7" fill="none" stroke="#5eead4" stroke-width="3" stroke-linecap="round"/>
+  <text x="34" y="41" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700" fill="#f8fafc">LK</text>
+</svg>

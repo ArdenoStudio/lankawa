@@ -8,7 +8,9 @@
     "districts": "Districts",
     "disaster": "Disaster",
     "economy": "Economy",
-    "api": "API"
+    "api": "API",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "home": {
     "eyebrow": "National civic intelligence",
@@ -17,7 +19,7 @@
     "pulseTitle": "Live pulse",
     "sourcesTitle": "Source health",
     "districtsTitle": "District atlas",
-    "districtsSubtitle": "Explore all 25 districts with population and provincial context.",
+    "districtsSubtitle": "A preview of six districts — browse the full atlas for all 25.",
     "viewDistricts": "Browse districts",
     "disclaimer": "Aggregated from public sources. Not an official government publication."
   },

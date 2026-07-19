@@ -1,6 +1,9 @@
+"use client";
+
 import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { DISTRICTS, getDistrictName } from "@/lib/districts";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import type { District } from "@/lib/types";
 
 export function DistrictCard({
@@ -10,6 +13,8 @@ export function DistrictCard({
   district: District;
   locale: string;
 }) {
+  const t = useTranslations("districts");
+
   return (
     <Link
       href={`/districts/${district.slug}`}
@@ -21,13 +26,13 @@ export function DistrictCard({
       <p className="mt-1 text-sm text-slate-400">{district.province}</p>
       <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
         <div>
-          <dt className="text-slate-500">Population</dt>
+          <dt className="text-slate-500">{t("population")}</dt>
           <dd className="font-medium text-slate-200">
             {district.population.toLocaleString()}
           </dd>
         </div>
         <div>
-          <dt className="text-slate-500">Area</dt>
+          <dt className="text-slate-500">{t("area")}</dt>
           <dd className="font-medium text-slate-200">
             {district.areaSqKm.toLocaleString()} km²
           </dd>
@@ -37,10 +42,18 @@ export function DistrictCard({
   );
 }
 
-export function DistrictGrid({ locale }: { locale: string }) {
+export function DistrictGrid({
+  locale,
+  limit,
+}: {
+  locale: string;
+  limit?: number;
+}) {
+  const districts = limit ? DISTRICTS.slice(0, limit) : DISTRICTS;
+
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {DISTRICTS.map((district) => (
+      {districts.map((district) => (
         <DistrictCard key={district.slug} district={district} locale={locale} />
       ))}
     </div>
