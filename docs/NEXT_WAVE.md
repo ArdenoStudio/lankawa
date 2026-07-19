@@ -151,10 +151,10 @@ Master plan already says: *Watchdog satellite2024 = link/consume with licence ch
 
 ### Recommended Watchdog policy for Lankawa
 
-**Now (thin integration — ship with wave 1–2 docs):**
-1. Add `/sources/watchdog_satellite2024` methodology page + external attribution (GitHub + Watchdog.team).
-2. On `/environment` (or a new `/environment/land-cover` section): **link out** to Watchdog maps + short explainer (“urban growth / greenery loss, 2017–2024”). No bulk image hosting.
-3. Optionally pull **one** small preview tile (if they host a stable CDN thumbnail) with MIT attribution — never mirror the 27GB set into this repo.
+**Now (Lankawa-native Land Change Pulse — shipped direction):**
+1. District greenery/built-up indices on `/environment` via `lankawa_land_pulse` (our JSON, morning-sized).
+2. Credit Watchdog satellite2024 as MIT prior art in methodology — do **not** host their mosaics.
+3. See `docs/WATCHDOG_VS_LANKAWA.md` for the full rework thesis.
 
 **Later (year-2 / funded — parked):**
 - District-level greenery/built-up **index** derived from their LULC grids (offline ETL → `observations`).

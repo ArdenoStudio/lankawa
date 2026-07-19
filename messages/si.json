@@ -584,6 +584,21 @@
     "asOf": "{date} දක්වා",
     "noTimestamp": "කාල මුද්‍රාවක් නැත"
   },
+  "citation": {
+    "label": "උපුටනය",
+    "copy": "උපුටනය copy කරන්න",
+    "copied": "උපුටනය copy විය.",
+    "error": "උපුටනය copy කළ නොහැකි විය.",
+    "source": "මූලාශ්‍රය:",
+    "asOf": "{date} වන විට",
+    "disclaimer": "නිල රජයේ ප්‍රකාශනයක් නොවේ."
+  },
+  "export": {
+    "png": "PNG export කරන්න",
+    "preparing": "PNG සූදානම් කරමින්...",
+    "ready": "PNG download විය.",
+    "error": "Chart export කළ නොහැකි විය."
+  },
   "sources": {
     "title": "දත්ත මූලාශ්‍ර",
     "subtitle": "ලංකාව තුළ  සෑම මිනුමක්ම නැවුම් බව, ක්‍රමවේදය සහ ප්‍රවේණිය සහිත ලියාපදිංචි මූලාශ්‍රයකට යොමු වේ.",
@@ -805,10 +820,19 @@
     "asOf": "As of {date}",
     "nationalIndex": "National index",
     "fuelPrice": "Petrol 92 reference",
+    "coconutIndex": "පොල් දර්ශකය",
     "compareCta": "Compare districts",
     "compareLink": "Open compare",
     "foodLink": "Food price module",
     "foodLinkCta": "View FoodLK pulse",
+    "honestyTitle": "ආදාන සත්‍යතාව",
+    "honestyFuel": "ඉන්ධන",
+    "honestyProperty": "දේපල",
+    "honestyFood": "ආහාර",
+    "honestyCoconut": "පොල්",
+    "honestyValueLive": "live",
+    "honestyValueSeed": "seed",
+    "honestyValueLifeFederation": "life_federation",
     "tableTitle": "Ranked by index",
     "rank": "Rank",
     "district": "District",
@@ -944,6 +968,7 @@
     "costOfLivingLink": "Cost of living",
     "costOfLivingCta": "View composite COL index",
     "staplesTitle": "Staple prices",
+    "coconutIndexBadge": "පොල් දර්ශකය",
     "perUnit": "per {unit}",
     "tableTitle": "District meal costs",
     "tableSubtitle": "Estimated daily meal cost and monthly food basket by district.",
@@ -1274,8 +1299,9 @@
     "inputFuel": "Octane CPC පෙට්‍රල් 92 ජාතික යොමු මිල.",
     "inputProperty": "PropertyLK දිස්ත්‍රික් මධ්‍ය අගයන් — කොළඹට සාපේක්ෂව.",
     "inputFood": "FoodLK හෝ Ariva Life අත්‍යවශ්‍ය කූඩය; නැත්නම් බීජ ආහාර ඇස්තමේන්තු.",
+    "inputCoconut": "පොල් අගය ආහාර staple items අතරින් ගෙන COL ආහාර සංඥාවක් ලෙස පෙන්වයි; live, life_federation, හෝ seed provenance සමඟ.",
     "methodTitle": "සංයුක්ත ක්‍රමය",
-    "methodBody": "සජීවී ආදාන තිබේ නම් ජාතික පෙට්‍රල් යොමුව සහ ආහාර කූඩ යාවත්කාලීන වේ. දේපල සංරචකය PropertyLK මත පදනම් වේ. සහෝදරයන් නොමැති නම් බීජ දත්ත පෙන්වයි.",
+    "methodBody": "සජීවී ආදාන තිබේ නම් ජාතික පෙට්‍රල් යොමුව සහ ආහාර කූඩ යාවත්කාලීන වේ. දේපල සංරචකය PropertyLK මත පදනම් වේ. පොල් දර්ශකය ආහාර සංඥාවට යෙදෙන පොල් staple මිල පෙන්වයි. සහෝදරයන් නොමැති නම් බීජ දත්ත පෙන්වයි.",
     "limitsTitle": "සීමා",
     "limitsBody": "මෙය නිල NCPI/CCPI දත්ත නොවේ. සිවිල් සංසන්දනය සඳහා පමණි."
   },
@@ -1288,5 +1314,16 @@
     "openDistrict": "දිස්‍ත්‍රික් පිටුව විවෘත කරන්න",
     "pin": "නිවස ලෙස තඹන්න",
     "unpin": "ඉවත් කරන්න"
+  },
+  "landChange": {
+    "title": "භූමි වෙනස්කම් ස්පන්දනය",
+    "subtitle": "2018 සිට දිස්ත්‍රික් හරිත / ගොඩනැගිලි වෙනස — උදෑසන පරීක්ෂාවට, චන්ද්‍රිකා ගැලරියක් නොවේ.",
+    "asOf": "{date} වන විට",
+    "greeneryNational": "ජාතික හරිත දර්ශක Δ",
+    "builtUpNational": "ජාතික ගොඩනැගිලි දර්ශක Δ",
+    "points2018to2024": "ලකුණු (2018→2024)",
+    "topGreeneryLoss": "වැඩිම හරිත අඩුවීම්",
+    "topBuiltUpGain": "වැඩිම ගොඩනැගිලි වැඩිවීම්",
+    "attribution": "Lankawa දිස්‍ත්‍රික් දර්ශක. පෙර පර්යේෂණ: Team Watchdog satellite2024 (MIT). නිල ඉඩම් භාවිත සිතියම් නොවේ."
   }
 }

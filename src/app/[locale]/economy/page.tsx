@@ -16,7 +16,7 @@ import { fetchLpgPriceSnapshot } from "@/lib/integrations/lpg";
 import { getFuelHistorySeries } from "@/lib/fuel";
 import { buildCseSnapshot } from "@/lib/integrations/cse";
 import { buildPulseSnapshot } from "@/lib/pulse";
-import { getSourceProvenancePath } from "@/lib/sources";
+import { getSource, getSourceProvenancePath } from "@/lib/sources";
 
 export default async function EconomyPage({
   params,
@@ -34,6 +34,8 @@ export default async function EconomyPage({
   const cseSnapshot = await buildCseSnapshot();
   const goldRate = await fetchLatestCbslGoldRate();
   const lpgSnapshot = await fetchLpgPriceSnapshot();
+  const fxSource = getSource("cbsl_fx");
+  const fuelSource = getSource("octane_fuel");
   const economyMetrics = snapshot.metrics.filter((metric) =>
     ["usd_lkr", "fuel_petrol_92", "fuel_diesel"].includes(metric.id),
   );
@@ -134,13 +136,28 @@ export default async function EconomyPage({
             series={fxSeries}
             asOf={macro.asOf}
             latestBand={latestFxRate}
+            chartId="economy-fx-usd-lkr-chart"
+            citation={{
+              sourceName: fxSource?.name ?? "Central Bank of Sri Lanka",
+              sourcePath: getSourceProvenancePath("cbsl_fx"),
+              permalink: `/${locale}/economy`,
+            }}
             labels={{
               bandTitle: t("fxBandTitle"),
               buy: t("fxBuy"),
               sell: t("fxSell"),
             }}
           />
-          <FuelHistoryChart title={t("fuelHistoryTitle")} series={fuelHistory} />
+          <FuelHistoryChart
+            title={t("fuelHistoryTitle")}
+            series={fuelHistory}
+            chartId="economy-fuel-history-chart"
+            citation={{
+              sourceName: fuelSource?.name ?? "Octane Fuel API",
+              sourcePath: getSourceProvenancePath("octane_fuel"),
+              permalink: `/${locale}/economy`,
+            }}
+          />
         </div>
       </section>
 

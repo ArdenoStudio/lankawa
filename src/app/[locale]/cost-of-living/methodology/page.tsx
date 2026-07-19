@@ -32,6 +32,7 @@ export default async function CostOfLivingMethodologyPage({
           <li>{t("inputFuel")}</li>
           <li>{t("inputProperty")}</li>
           <li>{t("inputFood")}</li>
+          <li>{t("inputCoconut")}</li>
         </ul>
       </section>
 

@@ -4,7 +4,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -33,15 +32,15 @@ export function DataSaverProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [enabled, setEnabledState] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    setEnabledState(
-      parseDataSaverValue(window.localStorage.getItem(DATA_SAVER_STORAGE_KEY)),
+  const [enabled, setEnabledState] = useState(() => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+    return parseDataSaverValue(
+      window.localStorage.getItem(DATA_SAVER_STORAGE_KEY),
     );
-    setHydrated(true);
-  }, []);
+  });
+  const [hydrated] = useState(() => typeof window !== "undefined");
 
   const setEnabled = useCallback((nextEnabled: boolean) => {
     setEnabledState(nextEnabled);
@@ -75,4 +74,3 @@ export function useDataSaver() {
   }
   return context;
 }
-

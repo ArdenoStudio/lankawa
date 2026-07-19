@@ -1,7 +1,16 @@
+import { ChartExportButton } from "@/components/ChartExportButton";
+import { CitationCard } from "@/components/CitationCard";
 import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { Link } from "@/i18n/navigation";
+import type { FuelHistorySeries } from "@/lib/fuel";
 import type { LpgPriceSnapshot } from "@/lib/integrations/lpg";
 import type { FreshnessTier } from "@/lib/types";
+
+interface ChartCitation {
+  sourceName: string;
+  sourcePath: string;
+  permalink?: string;
+}
 
 function formatDirectionalDelta(value: number, fractionDigits: number): string {
   const direction = value > 0 ? "↑" : value < 0 ? "↓" : "→";
@@ -48,16 +57,25 @@ export function FxSparkline({
   asOf,
   latestBand,
   labels,
+  chartId = "fx-sparkline-chart",
+  citation,
 }: {
   title: string;
   series: Array<{ date: string; sellRate: number }>;
   asOf: string;
-  latestBand?: { date: string; buyRate: number; sellRate: number };
+  latestBand?: {
+    date: string;
+    buyRate: number;
+    sellRate: number;
+    observedAt?: string;
+  };
   labels: {
     bandTitle: string;
     buy: string;
     sell: string;
   };
+  chartId?: string;
+  citation?: ChartCitation;
 }) {
   if (series.length === 0) {
     return null;
@@ -75,6 +93,7 @@ export function FxSparkline({
     buyRate: latest.sellRate,
     sellRate: latest.sellRate,
   };
+  const observedAt = latestBand?.observedAt ?? band.date;
 
   const points = series
     .map((point, index) => {
@@ -117,24 +136,41 @@ export function FxSparkline({
           </p>
         </div>
       </div>
-      <svg
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        className="mt-4 h-24 w-full"
-        role="img"
-        aria-label={title}
-      >
-        <polyline
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          className="text-slate-200"
-          points={points}
+      <div id={chartId} className="mt-4">
+        <svg
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          className="h-24 w-full"
+          role="img"
+          aria-label={title}
+        >
+          <polyline
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="text-slate-200"
+            points={points}
+          />
+        </svg>
+      </div>
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+        <p className="text-xs text-slate-500">
+          {first.date} → {latest.date} · {asOf} · {band.date}
+        </p>
+        <ChartExportButton targetId={chartId} />
+      </div>
+      {citation ? (
+        <CitationCard
+          className="mt-4"
+          title={title}
+          value={band.sellRate.toFixed(2)}
+          unit="LKR"
+          observedAt={observedAt}
+          sourceName={citation.sourceName}
+          sourcePath={citation.sourcePath}
+          permalink={citation.permalink}
         />
-      </svg>
-      <p className="mt-2 text-xs text-slate-500">
-        {first.date} → {latest.date} · {asOf} · {band.date}
-      </p>
+      ) : null}
     </article>
   );
 }
@@ -142,9 +178,13 @@ export function FxSparkline({
 export function FuelHistoryChart({
   title,
   series,
+  chartId = "fuel-history-chart",
+  citation,
 }: {
   title: string;
-  series: Array<{ fuelType: string; label: string; points: Array<{ recorded_at: string; price_lkr: number }> }>;
+  series: FuelHistorySeries[];
+  chartId?: string;
+  citation?: ChartCitation;
 }) {
   const validSeries = series.filter((item) => item.points.length >= 2);
   if (validSeries.length === 0) {
@@ -162,6 +202,18 @@ export function FuelHistoryChart({
     { className: "text-white", dash: undefined, label: "solid" },
     { className: "text-slate-400", dash: "4 4", label: "dashed" },
   ] as const;
+  const latestPoints = validSeries.map((item) => ({
+    item,
+    latest: item.points[item.points.length - 1],
+  }));
+  const latestObservedAt = latestPoints.reduce(
+    (latest, current) =>
+      current.latest.recorded_at > latest ? current.latest.recorded_at : latest,
+    latestPoints[0]?.latest.recorded_at ?? "",
+  );
+  const citationValue = latestPoints
+    .map(({ item, latest }) => `${item.label} ${latest.price_lkr.toFixed(0)}`)
+    .join("; ");
 
   return (
     <article className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:col-span-2 lg:col-span-3">
@@ -202,36 +254,53 @@ export function FuelHistoryChart({
           );
         })}
       </div>
-      <svg
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        className="mt-4 h-28 w-full"
-        role="img"
-        aria-label={title}
-      >
-        {validSeries.map((item, seriesIndex) => {
-          const points = item.points
-            .map((point, index) => {
-              const x =
-                (index / Math.max(item.points.length - 1, 1)) * 100;
-              const y = 100 - ((point.price_lkr - min) / range) * 100;
-              return `${x},${y}`;
-            })
-            .join(" ");
-          const style = lineStyles[seriesIndex % lineStyles.length];
-          return (
-            <polyline
-              key={item.fuelType}
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeDasharray={style.dash}
-              className={style.className}
-              points={points}
-            />
-          );
-        })}
-      </svg>
+      <div id={chartId} className="mt-4">
+        <svg
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          className="h-28 w-full"
+          role="img"
+          aria-label={title}
+        >
+          {validSeries.map((item, seriesIndex) => {
+            const points = item.points
+              .map((point, index) => {
+                const x =
+                  (index / Math.max(item.points.length - 1, 1)) * 100;
+                const y = 100 - ((point.price_lkr - min) / range) * 100;
+                return `${x},${y}`;
+              })
+              .join(" ");
+            const style = lineStyles[seriesIndex % lineStyles.length];
+            return (
+              <polyline
+                key={item.fuelType}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeDasharray={style.dash}
+                className={style.className}
+                points={points}
+              />
+            );
+          })}
+        </svg>
+      </div>
+      <div className="mt-2 flex justify-end">
+        <ChartExportButton targetId={chartId} />
+      </div>
+      {citation && latestObservedAt ? (
+        <CitationCard
+          className="mt-4"
+          title={title}
+          value={citationValue}
+          unit="LKR/L"
+          observedAt={latestObservedAt}
+          sourceName={citation.sourceName}
+          sourcePath={citation.sourcePath}
+          permalink={citation.permalink}
+        />
+      ) : null}
     </article>
   );
 }
