@@ -1,0 +1,30 @@
+{
+  "sourceId": "bank_remittance_tt",
+  "sourceName": "Bank TT remittance board (seed)",
+  "asOf": "2026-07-18",
+  "methodologyNote": "Indicative telegraphic-transfer style USD/LKR buy-sell bands curated from public bank rate pages for morning comparison. Not live scrapes until adapters stabilize. Not CBSL official rates. Fees and corridor products differ by bank.",
+  "corridor": "USD → LKR",
+  "banks": [
+    {
+      "id": "peoples",
+      "name": "People's Bank",
+      "buyLkr": 301.2,
+      "sellLkr": 308.5,
+      "note": "TT / telegraphic transfer indicative"
+    },
+    {
+      "id": "ndb",
+      "name": "NDB Bank",
+      "buyLkr": 300.8,
+      "sellLkr": 308.9,
+      "note": "TT indicative"
+    },
+    {
+      "id": "sampath",
+      "name": "Sampath Bank",
+      "buyLkr": 301.0,
+      "sellLkr": 308.75,
+      "note": "TT indicative"
+    }
+  ]
+}

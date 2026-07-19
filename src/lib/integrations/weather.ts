@@ -4,12 +4,18 @@ import { getSource, getSourceProvenancePath } from "../sources";
 import type { FreshnessTier, PulseMetric, SourceHealth } from "../types";
 
 const OPEN_METEO_URL =
-  "https://api.open-meteo.com/v1/forecast?latitude=6.9271&longitude=79.8612&current=temperature_2m,weather_code,precipitation&timezone=Asia/Colombo";
+  "https://api.open-meteo.com/v1/forecast?latitude=6.9271&longitude=79.8612" +
+  "&current=temperature_2m,weather_code,precipitation,uv_index" +
+  "&daily=uv_index_max,precipitation_sum&forecast_days=7&timezone=Asia/Colombo";
 
 export interface ColomboWeather {
   temp: number;
   label: string;
   precipitation: number;
+  uvIndex: number | null;
+  uvIndexMaxToday: number | null;
+  rainNext7dMm: number | null;
+  rainTomorrowMm: number | null;
   observedAt: string;
 }
 
@@ -19,6 +25,12 @@ interface OpenMeteoResponse {
     temperature_2m?: number;
     weather_code?: number;
     precipitation?: number;
+    uv_index?: number;
+  };
+  daily?: {
+    time?: string[];
+    uv_index_max?: number[];
+    precipitation_sum?: number[];
   };
 }
 
@@ -48,6 +60,7 @@ export async function fetchColomboWeather(): Promise<ColomboWeather> {
 
   const data = (await response.json()) as OpenMeteoResponse;
   const current = data.current;
+  const daily = data.daily;
 
   if (
     current?.temperature_2m == null ||
@@ -57,10 +70,22 @@ export async function fetchColomboWeather(): Promise<ColomboWeather> {
     throw new Error("Open-Meteo response missing current weather fields");
   }
 
+  const precipSums = daily?.precipitation_sum ?? [];
+  const uvMax = daily?.uv_index_max ?? [];
+  const rainNext7dMm =
+    precipSums.length > 0
+      ? precipSums.reduce((sum, value) => sum + (Number(value) || 0), 0)
+      : null;
+
   return {
     temp: current.temperature_2m,
     label: wmoCodeToLabel(current.weather_code),
     precipitation: current.precipitation,
+    uvIndex:
+      typeof current.uv_index === "number" ? current.uv_index : null,
+    uvIndexMaxToday: typeof uvMax[0] === "number" ? uvMax[0] : null,
+    rainNext7dMm,
+    rainTomorrowMm: typeof precipSums[1] === "number" ? precipSums[1] : null,
     observedAt: current.time ?? new Date().toISOString(),
   };
 }
@@ -71,6 +96,17 @@ function weatherContribution(
   weather: ColomboWeather,
 ): { metric: PulseMetric; health: SourceHealth } {
   const tier = computeFreshnessTier(weather.observedAt, source.cadenceMinutes);
+  const noteParts = [weather.label];
+  if (weather.precipitation > 0) {
+    noteParts.push(`${weather.precipitation.toFixed(1)} mm`);
+  }
+  const uv = weather.uvIndexMaxToday ?? weather.uvIndex;
+  if (uv != null) {
+    noteParts.push(`UV ${uv.toFixed(0)}`);
+  }
+  if (weather.rainNext7dMm != null) {
+    noteParts.push(`7d rain ${weather.rainNext7dMm.toFixed(0)} mm`);
+  }
 
   return {
     metric: {
@@ -82,7 +118,7 @@ function weatherContribution(
       tier,
       sourceId: source.id,
       provenancePath: getSourceProvenancePath(source.id),
-      note: `${weather.label}${weather.precipitation > 0 ? ` · ${weather.precipitation.toFixed(1)} mm` : ""}`,
+      note: noteParts.join(" · "),
     },
     health: {
       id: source.id,
@@ -114,6 +150,10 @@ export async function buildWeatherPulseMetric(checkedAt: string): Promise<{
           temp: dbObservation.value,
           label: "Colombo",
           precipitation: 0,
+          uvIndex: null,
+          uvIndexMaxToday: null,
+          rainNext7dMm: null,
+          rainTomorrowMm: null,
           observedAt: dbObservation.observedAt,
         });
       }

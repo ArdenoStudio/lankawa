@@ -449,10 +449,10 @@ export const SOURCES: SourceDefinition[] = [
     cadenceMinutes: 525600,
     adapter: "partner",
     description:
-      "District greenery and built-up change indices (2018→2024) for civic morning checks.",
+      "District greenery/built-up change (2018→2024) plus weekly NDVI anomaly for civic morning checks.",
     methodology:
-      "Curated district-scale greenery/built-up indices for product use. Inspired by public Sentinel-2 LULC practice and prior art from Team Watchdog satellite2024 (MIT). Lankawa does not host full-resolution mosaics. Not official Survey Department land use. See /environment/land-change and docs/WATCHDOG_VS_LANKAWA.md.",
-    metrics: ["greenery_index", "builtup_index"],
+      "Curated district-scale greenery/built-up indices plus ETL-curated weekly NDVI anomaly (vs seasonal baseline) for product use. Inspired by public Sentinel-2 LULC/NDVI practice and prior art from Team Watchdog satellite2024 (MIT). Lankawa does not host full-resolution mosaics. Not official Survey Department land use. See /environment/land-change and docs/WATCHDOG_VS_LANKAWA.md.",
+    metrics: ["greenery_index", "builtup_index", "ndvi_anomaly"],
   },
   {
     id: "lankawa_debt_pulse",
@@ -513,10 +513,36 @@ export const SOURCES: SourceDefinition[] = [
     cadenceMinutes: 60,
     adapter: "api",
     description:
-      "Current temperature, precipitation, and weather conditions for Colombo.",
+      "Current temperature, precipitation, UV, and 7-day rain outlook for Colombo.",
     methodology:
-      "Lankawa polls the Open-Meteo forecast endpoint for Colombo coordinates (6.9271°N, 79.8612°E) with WMO weather codes mapped to short labels. Observations refresh hourly on the home pulse.",
-    metrics: ["weather_colombo"],
+      "Lankawa polls the Open-Meteo forecast endpoint for Colombo coordinates (6.9271°N, 79.8612°E) with current temperature/precip/UV plus daily uv_index_max and precipitation_sum for a 7-day rain outlook. WMO weather codes map to short labels. Observations refresh hourly on the home pulse.",
+    metrics: ["weather_colombo", "weather_uv", "weather_rain_7d"],
+  },
+  {
+    id: "nasa_firms",
+    name: "NASA FIRMS active fires",
+    category: "disaster",
+    url: "https://firms.modaps.eosdis.nasa.gov/",
+    cadenceMinutes: 60,
+    adapter: "api",
+    description:
+      "VIIRS near-real-time fire detections inside Sri Lanka's land bounding box.",
+    methodology:
+      "When NASA_FIRMS_MAP_KEY is configured, Lankawa pulls the FIRMS area CSV for VIIRS_SNPP_NRT over the district-map land bbox (2-day window). Pins are raw detections — not fire department confirmed incidents. Without a key, the panel stays empty with an explicit needs-key note.",
+    metrics: ["firms_fires"],
+  },
+  {
+    id: "gdacs",
+    name: "GDACS multi-hazard alerts",
+    category: "disaster",
+    url: "https://www.gdacs.org/",
+    cadenceMinutes: 60,
+    adapter: "api",
+    description:
+      "Global Disaster Alert and Coordination System events in the Indian Ocean / South Asia window.",
+    methodology:
+      "Lankawa reads the public GDACS GeoJSON SEARCH feed (TC/FL/EQ/DR/WF) and filters to a regional bbox (70–95°E, 5°S–25°N) plus any event listing Sri Lanka. Orange/Red alerts are prioritised for pins; Green events may appear for context. Not a Met Dept or DMC order.",
+    metrics: ["gdacs_events"],
   },
   {
     id: "usgs_earthquake",
@@ -565,10 +591,29 @@ export const SOURCES: SourceDefinition[] = [
     cadenceMinutes: 15,
     adapter: "api",
     description:
-      "All Share Price Index (ASPI), S&P SL20, and market summary from public CSE JSON endpoints.",
+      "ASPI, S&P SL20, sectors, most-active trades, and foreign/domestic summary from public CSE JSON endpoints.",
     methodology:
-      "Read-only fetch of undocumented public endpoints on `cse.lk` (e.g. `aspiData`, `marketSummery`, `tradeSummary`) — adapter logic ported from the Chime/koel `chime/adapters/cse.py` boundary, not from PulseCSE. No Telegram, no portfolio engine, no duplicate PulseCSE backend. Market-hours data only; delayed figures tagged with freshness tiers. Surfaced on `/economy` pulse, not the home today strip.",
-    metrics: ["cse_aspi", "cse_market_status"],
+      "Read-only fetch of undocumented public endpoints on `cse.lk` (e.g. `aspiData`, `marketSummery`, `tradeSummary`, `allSectors`, `mostActiveTrades`, `dailyMarketSummery`) — catalogued by community docs such as Cookie-Cat21/cse-api-docs; adapter logic ported from the Chime/koel boundary, not PulseCSE. Browser CORS blocks client use — server proxy only. Surfaced on `/economy`.",
+    metrics: [
+      "cse_aspi",
+      "cse_market_status",
+      "cse_sectors",
+      "cse_most_active",
+      "cse_foreign",
+    ],
+  },
+  {
+    id: "bank_remittance_tt",
+    name: "Bank TT remittance board",
+    category: "economy",
+    url: "internal://economy/remittance-tt",
+    cadenceMinutes: 1440,
+    adapter: "seed",
+    description:
+      "Indicative USD→LKR telegraphic-transfer style buy/sell bands from major Sri Lankan banks.",
+    methodology:
+      "Seeded morning comparison board for People's Bank, NDB, and Sampath indicative TT-style rates. Not live scrapes until adapters stabilize. Not CBSL official rates; fees and corridors differ by product. Pair with the CBSL remittance calculator on /economy.",
+    metrics: ["remittance_tt_buy", "remittance_tt_sell"],
   },
   {
     id: "news_rss",

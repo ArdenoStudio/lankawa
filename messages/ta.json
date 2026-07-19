@@ -89,7 +89,10 @@
     "depthEconomy": "பொருளாதாரம்",
     "depthDisaster": "பேரிடர்",
     "depthExplore": "ஆராயுங்கள்",
-    "depthLearn": "வழிகாட்டிகள்"
+    "depthLearn": "வழிகாட்டிகள்",
+    "morningDeltaUv": "Colombo UV max",
+    "morningDeltaRain7d": "Colombo 7d rain",
+    "morningDeltaWeatherAsOf": "forecast as of {date}"
   },
   "modules": {
     "districts": {
@@ -479,7 +482,23 @@
     "mapMode_landslide": "Landslide",
     "mapError": "Unable to load district map",
     "mapLegendLandslide": "Brighter fills = watch/warning attention in the seed overlay.",
-    "mapLegendFlood": "National flood alert context — open district pages for station detail."
+    "mapLegendFlood": "National flood alert context — open district pages for station detail.",
+    "hazardTitle": "Satellite & regional hazards",
+    "hazardSubtitle": "NASA FIRMS fire pins over Sri Lanka and GDACS multi-hazard events in the wider Indian Ocean / South Asia window.",
+    "firesTitle": "Active fires (FIRMS)",
+    "firesEmpty": "No VIIRS fire detections in the Sri Lanka land box for the lookback window.",
+    "firesNeedsKey": "Set NASA_FIRMS_MAP_KEY to enable live FIRMS CSV pulls. Empty pins are shown until then — not a claim of zero fire risk.",
+    "firesCount": "{count} detections in window",
+    "firesBrightness": "Brightness",
+    "firesConfidence": "Confidence",
+    "gdacsTitle": "GDACS regional alerts",
+    "gdacsEmpty": "No GDACS events in the regional window right now.",
+    "gdacsAlertLevel": "Alert",
+    "gdacsEventType": "Type",
+    "gdacsCountry": "Country",
+    "gdacsReport": "GDACS report",
+    "firmsSource": "NASA FIRMS provenance",
+    "gdacsSource": "GDACS provenance"
   },
   "economy": {
     "title": "பொருளாதார நிலை",
@@ -530,7 +549,7 @@
     },
     "cse": {
       "title": "கொழும்பு பங்குச் சந்தை",
-      "subtitle": "ASPI, S&P SL20 மற்றும் CSE பலகையின் முக்கிய நகர்வுகள்",
+      "subtitle": "ASPI, S&P SL20, sectors, most active, and foreign participation from the public CSE board",
       "sourceName": "கொழும்பு பங்குச் சந்தை",
       "aspi": "ASPI",
       "snp": "S&P SL20",
@@ -542,7 +561,16 @@
       "turnover": "வர்த்தக மதிப்பு",
       "fallbackNote": "நேரடி CSE தரவு தற்காலிகமாக கிடைக்கவில்லை. சமீபத்திய cache snapshot காட்டப்படுகிறது.",
       "provenance": "தரவு மூலம்",
-      "noMovers": "நகர்வுகள் இல்லை"
+      "noMovers": "நகர்வுகள் இல்லை",
+      "sectors": "Sectors",
+      "mostActive": "Most active",
+      "foreign": "Foreign vs domestic",
+      "domesticTrades": "Domestic trades",
+      "foreignTrades": "Foreign trades",
+      "foreignBuy": "Foreign purchase",
+      "foreignSell": "Foreign sales",
+      "noSectors": "No sector rows",
+      "noActive": "No active trades"
     },
     "debt": {
       "title": "வெளிநாட்டு கடன் அமைப்பு",
@@ -596,7 +624,22 @@
       "asOf": "Peer seed as of {date}",
       "methodology": "Methodology:",
       "empty": "Regional pump comparison unavailable."
-    }
+    },
+    "remittanceBoard": {
+      "title": "Bank TT remittance board",
+      "subtitle": "Indicative USD→LKR telegraphic-transfer style bands from major banks — compare beside the CBSL calculator.",
+      "buy": "Buy (LKR)",
+      "sell": "Sell (LKR)",
+      "spread": "Spread",
+      "bestBuy": "Best buy for senders",
+      "bestSell": "Best sell for receivers",
+      "seed": "Seed snapshot — not a live bank scrape yet.",
+      "asOf": "As of {date}",
+      "source": "Source provenance",
+      "honesty": "Indicative only. Bank fees, corridors, and same-day TT products differ. Not CBSL official rates."
+    },
+    "fxAnomaly": "Unusual day-over-day move",
+    "fxAnomalyQuiet": "Within recent MAD band"
   },
   "search": {
     "label": "லங்காவா தேடு",
@@ -1468,11 +1511,15 @@
     "colGreenery": "பசுமை",
     "colBuiltUp": "கட்டடம்",
     "districtTitle": "நில மாற்றம்",
-    "districtSubtitle": "இந்த மாவட்டத்தின் பசுமை மற்றும் கட்டடக் குறியீடு மாற்றம் (2018→2024).",
+    "districtSubtitle": "Greenery, built-up, and weekly NDVI anomaly for this district.",
     "greeneryDistrict": "பசுமைக் குறியீடு Δ",
     "builtUpDistrict": "கட்டடக் குறியீடு Δ",
     "viewNational": "தேசிய நிலத் துடிப்பு",
-    "sourceLink": "மூலம்"
+    "sourceLink": "மூலம்",
+    "ndviNational": "Weekly NDVI anomaly",
+    "ndviHint": "Negative = greenery stress vs seasonal baseline (ETL-curated)",
+    "topNdviStress": "Top NDVI stress districts",
+    "ndviDistrict": "NDVI anomaly"
   },
   "landChangeMethodology": {
     "back": "சுற்றுச்சூழலுக்குத் திரும்பு",
@@ -1502,12 +1549,18 @@
     "pin_flood": "வெள்ள உயர்வு",
     "pin_power": "மின் கவனம்",
     "pin_met": "வானிலை எச்சரிக்கை",
-    "help_fx_move": "Fire when USD/LKR day-over-day move is ≥ {threshold} LKR",
+    "help_fx_move": "Fire on large USD/LKR day moves or unusual MAD/z spikes",
     "help_flood": "Fire when river stations report elevated alert levels",
     "help_power": "Fire on CEB outage or scheduled interruption",
     "help_met": "Fire when Met Dept yellow/amber/red advisories are active",
     "pin_landslide": "Landslide watch",
-    "help_landslide": "Fire when highland districts show landslide watch/warning"
+    "help_landslide": "Fire when highland districts show landslide watch/warning",
+    "pin_flood_rising": "Flood rising",
+    "help_flood_rising": "Fire when elevated river gauges rise quickly (≥ ~5 cm/h)",
+    "pin_fire": "Fires (FIRMS)",
+    "help_fire": "Fire when NASA FIRMS detects active fires in Sri Lanka",
+    "pin_gdacs": "GDACS hazard",
+    "help_gdacs": "Fire on Orange/Red GDACS events in the regional window"
   },
   "weekLedger": {
     "title": "வார பதிவேடு",

@@ -56,7 +56,7 @@ export async function LandChangePulse({ locale }: { locale: string }) {
         </div>
       </div>
 
-      <dl className="grid gap-4 sm:grid-cols-2">
+      <dl className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-2xl border border-white/15 bg-white/[0.03] p-5">
           <dt className="text-sm text-neutral-500">{t("greeneryNational")}</dt>
           <dd className="mt-2 text-3xl font-semibold text-white">
@@ -85,6 +85,16 @@ export async function LandChangePulse({ locale }: { locale: string }) {
             {snapshot.national.builtUpIndex2024}
           </p>
         </div>
+        <div className="rounded-2xl border border-white/15 bg-white/[0.03] p-5">
+          <dt className="text-sm text-neutral-500">{t("ndviNational")}</dt>
+          <dd className="mt-2 text-3xl font-semibold text-white">
+            {snapshot.national.ndviAnomaly > 0 ? "+" : ""}
+            {snapshot.national.ndviAnomaly.toFixed(2)}
+          </dd>
+          <p className="mt-2 text-xs text-neutral-500">
+            {snapshot.national.ndviWeekLabel} · {t("ndviHint")}
+          </p>
+        </div>
       </dl>
 
       <LandChangeChart
@@ -104,7 +114,7 @@ export async function LandChangePulse({ locale }: { locale: string }) {
         }}
       />
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-3">
         <div className="rounded-2xl border border-white/15 p-4">
           <h3 className="text-sm font-semibold text-white">
             {t("topGreeneryLoss")}
@@ -151,6 +161,32 @@ export async function LandChangePulse({ locale }: { locale: string }) {
                   </Link>
                   <span className="font-medium tabular-nums">
                     +{row.builtUpDelta}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div className="rounded-2xl border border-white/15 p-4">
+          <h3 className="text-sm font-semibold text-white">
+            {t("topNdviStress")}
+          </h3>
+          <ul className="mt-3 space-y-2 text-sm">
+            {snapshot.topNdviStress.map((row) => {
+              const district = getDistrict(row.slug);
+              return (
+                <li
+                  key={row.slug}
+                  className="flex items-center justify-between gap-2 text-neutral-300"
+                >
+                  <Link
+                    href={`/districts/${row.slug}`}
+                    className="text-white underline decoration-white/25 hover:decoration-white"
+                  >
+                    {district ? getDistrictName(district, locale) : row.slug}
+                  </Link>
+                  <span className="font-medium tabular-nums">
+                    {row.ndviAnomaly.toFixed(2)}
                   </span>
                 </li>
               );

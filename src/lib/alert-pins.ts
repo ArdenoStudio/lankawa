@@ -1,9 +1,12 @@
 export const ALERT_PIN_IDS = [
   "fx_move",
   "flood",
+  "flood_rising",
   "power",
   "met",
   "landslide",
+  "fire",
+  "gdacs",
 ] as const;
 
 export type AlertPinId = (typeof ALERT_PIN_IDS)[number];
@@ -11,14 +14,22 @@ export type AlertPinId = (typeof ALERT_PIN_IDS)[number];
 export interface AlertSignalContext {
   fxAbsDeltaLkr: number | null;
   fxThresholdLkr: number;
+  fxUnusual: boolean;
+  fxAnomalyDetail: string | null;
   floodElevated: boolean;
   floodDetail: string | null;
+  floodRising: boolean;
+  floodRisingDetail: string | null;
   powerAttention: boolean;
   powerDetail: string | null;
   metWarning: boolean;
   metDetail: string | null;
   landslideAttention: boolean;
   landslideDetail: string | null;
+  fireAttention: boolean;
+  fireDetail: string | null;
+  gdacsAttention: boolean;
+  gdacsDetail: string | null;
 }
 
 export interface FiredAlert {
@@ -39,13 +50,17 @@ export function evaluateAlertPins(
   for (const pin of pins) {
     switch (pin) {
       case "fx_move": {
-        if (
+        const byThreshold =
           context.fxAbsDeltaLkr != null &&
-          context.fxAbsDeltaLkr >= context.fxThresholdLkr
-        ) {
+          context.fxAbsDeltaLkr >= context.fxThresholdLkr;
+        if (byThreshold || context.fxUnusual) {
           fired.push({
             id: pin,
-            detail: `USD/LKR moved ${context.fxAbsDeltaLkr.toFixed(2)} LKR (≥ ${context.fxThresholdLkr})`,
+            detail:
+              context.fxAnomalyDetail ??
+              (context.fxAbsDeltaLkr != null
+                ? `USD/LKR moved ${context.fxAbsDeltaLkr.toFixed(2)} LKR (≥ ${context.fxThresholdLkr})`
+                : "Unusual FX move"),
           });
         }
         break;
@@ -55,6 +70,15 @@ export function evaluateAlertPins(
           fired.push({
             id: pin,
             detail: context.floodDetail ?? "Elevated flood station alerts",
+          });
+        }
+        break;
+      }
+      case "flood_rising": {
+        if (context.floodRising) {
+          fired.push({
+            id: pin,
+            detail: context.floodRisingDetail ?? "River level rising quickly",
           });
         }
         break;
@@ -83,6 +107,24 @@ export function evaluateAlertPins(
             id: pin,
             detail:
               context.landslideDetail ?? "Landslide watch/warning districts active",
+          });
+        }
+        break;
+      }
+      case "fire": {
+        if (context.fireAttention) {
+          fired.push({
+            id: pin,
+            detail: context.fireDetail ?? "Active fire detections in Sri Lanka",
+          });
+        }
+        break;
+      }
+      case "gdacs": {
+        if (context.gdacsAttention) {
+          fired.push({
+            id: pin,
+            detail: context.gdacsDetail ?? "Regional GDACS hazard alert",
           });
         }
         break;

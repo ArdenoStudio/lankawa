@@ -2,10 +2,13 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { DataSaverGate } from "@/components/DataSaverGate";
 import { DisasterRiskMap } from "@/components/DisasterRiskMap";
 import { EarthquakePanel } from "@/components/EarthquakePanel";
+import { HazardPinsPanel } from "@/components/HazardPinsPanel";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
 import { LandslidePanel } from "@/components/LandslidePanel";
 import { MetDeptWarningsPanel } from "@/components/MetDeptWarningsPanel";
 import { fetchEarthquakeSnapshot } from "@/lib/integrations/earthquake";
+import { fetchFirmsSnapshot } from "@/lib/integrations/firms";
+import { fetchGdacsSnapshot } from "@/lib/integrations/gdacs";
 import { fetchLandslideSnapshot } from "@/lib/integrations/landslide";
 import { fetchMetDeptWarnings } from "@/lib/integrations/metdept";
 import { fetchPowerStatus } from "@/lib/integrations/power";
@@ -19,13 +22,15 @@ export default async function DisasterPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("disaster");
-  const [snapshot, power, earthquakes, metWarnings, landslides] =
+  const [snapshot, power, earthquakes, metWarnings, landslides, firms, gdacs] =
     await Promise.all([
       buildPulseSnapshot(),
       fetchPowerStatus(),
       fetchEarthquakeSnapshot(),
       fetchMetDeptWarnings(),
       fetchLandslideSnapshot(),
+      fetchFirmsSnapshot(),
+      fetchGdacsSnapshot(),
     ]);
 
   return (
@@ -125,6 +130,30 @@ export default async function DisasterPage({
           noSummary: t("metNoSummary"),
           sourceNote: t("metSourceNote"),
           provenance: t("metProvenance"),
+        }}
+      />
+
+      <HazardPinsPanel
+        firms={firms}
+        gdacs={gdacs}
+        locale={locale}
+        labels={{
+          title: t("hazardTitle"),
+          subtitle: t("hazardSubtitle"),
+          firesTitle: t("firesTitle"),
+          firesEmpty: t("firesEmpty"),
+          firesNeedsKey: t("firesNeedsKey"),
+          firesCount: t("firesCount"),
+          brightness: t("firesBrightness"),
+          confidence: t("firesConfidence"),
+          gdacsTitle: t("gdacsTitle"),
+          gdacsEmpty: t("gdacsEmpty"),
+          alertLevel: t("gdacsAlertLevel"),
+          eventType: t("gdacsEventType"),
+          country: t("gdacsCountry"),
+          report: t("gdacsReport"),
+          firmsSource: t("firmsSource"),
+          gdacsSource: t("gdacsSource"),
         }}
       />
 

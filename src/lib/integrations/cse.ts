@@ -40,6 +40,31 @@ export interface CseMarketSummary {
   observedAt: string | null;
 }
 
+export interface CseSector {
+  symbol: string;
+  name: string;
+  indexValue: number;
+  change: number | null;
+  changePct: number | null;
+  turnover: number | null;
+}
+
+export interface CseActiveTrade {
+  symbol: string;
+  tradeVolume: number | null;
+  shareVolume: number | null;
+  turnover: number | null;
+}
+
+export interface CseForeignDomestic {
+  domesticTrades: number | null;
+  foreignTrades: number | null;
+  domesticTurnover: number | null;
+  foreignPurchase: number | null;
+  foreignSales: number | null;
+  observedAt: string | null;
+}
+
 export interface CseSnapshot {
   sourceId: string;
   sourceName: string;
@@ -49,6 +74,9 @@ export interface CseSnapshot {
   topGainers: CseMover[];
   topLosers: CseMover[];
   summary: CseMarketSummary | null;
+  sectors: CseSector[];
+  mostActive: CseActiveTrade[];
+  foreignDomestic: CseForeignDomestic | null;
   asOf: string;
   tier: FreshnessTier;
   isFallback: boolean;
@@ -87,6 +115,31 @@ interface CseTradeSummaryRow {
 
 interface CseTradeSummaryResponse {
   reqTradeSummery?: CseTradeSummaryRow[];
+}
+
+interface CseSectorRow {
+  symbol?: string;
+  name?: string;
+  indexValue?: number;
+  change?: number;
+  percentage?: number;
+  sectorTurnoverToday?: number;
+}
+
+interface CseActiveRow {
+  symbol?: string;
+  tradeVolume?: number;
+  shareVolume?: number;
+  turnover?: number;
+}
+
+interface CseDailyMarketRow {
+  tradeDate?: number;
+  marketDomestic?: number;
+  marketForeign?: number;
+  equityDomesticPurchase?: number;
+  equityForeignPurchase?: number;
+  equityForeignSales?: number;
 }
 
 const SEED_AS_OF = "2026-07-18T09:30:00.000Z";
@@ -161,6 +214,60 @@ const SEED_SNAPSHOT: Omit<CseSnapshot, "tier" | "isFallback"> = {
     tradeCount: 13_397,
     shareVolume: 31_937_752,
     turnover: 722_636_709.45,
+    observedAt: SEED_AS_OF,
+  },
+  sectors: [
+    {
+      symbol: "BFI",
+      name: "Banks, Finance & Insurance",
+      indexValue: 1_120.4,
+      change: 4.2,
+      changePct: 0.38,
+      turnover: 210_000_000,
+    },
+    {
+      symbol: "FBT",
+      name: "Food, Beverage & Tobacco",
+      indexValue: 980.1,
+      change: -2.1,
+      changePct: -0.21,
+      turnover: 95_000_000,
+    },
+    {
+      symbol: "CON",
+      name: "Construction & Engineering",
+      indexValue: 640.5,
+      change: 1.1,
+      changePct: 0.17,
+      turnover: 42_000_000,
+    },
+  ],
+  mostActive: [
+    {
+      symbol: "SAMP.N0000",
+      tradeVolume: 725,
+      shareVolume: 642_653,
+      turnover: 88_033_548,
+    },
+    {
+      symbol: "JKH.N0000",
+      tradeVolume: 328,
+      shareVolume: 1_631_636,
+      turnover: 32_473_972,
+    },
+    {
+      symbol: "NDB.N0000",
+      tradeVolume: 311,
+      shareVolume: 175_019,
+      turnover: 18_983_229,
+    },
+  ],
+  foreignDomestic: {
+    domesticTrades: 13_347,
+    foreignTrades: 279,
+    domesticTurnover: 707_171_900,
+    foreignPurchase: 15_460_952,
+    foreignSales: 123_908_672,
     observedAt: SEED_AS_OF,
   },
   asOf: SEED_AS_OF,
@@ -276,12 +383,80 @@ function pickTopMovers(rows: CseTradeSummaryRow[]): {
   return { topGainers, topLosers };
 }
 
+function parseSectors(rows: CseSectorRow[] | null): CseSector[] {
+  if (!rows?.length) {
+    return [];
+  }
+
+  return rows
+    .map((row): CseSector | null => {
+      const indexValue = finiteNumber(row.indexValue);
+      if (indexValue == null || typeof row.name !== "string") {
+        return null;
+      }
+      return {
+        symbol: typeof row.symbol === "string" ? row.symbol : row.name,
+        name: row.name,
+        indexValue,
+        change: finiteNumber(row.change),
+        changePct: finiteNumber(row.percentage),
+        turnover: finiteNumber(row.sectorTurnoverToday),
+      };
+    })
+    .filter((row): row is CseSector => row != null)
+    .sort((a, b) => (b.turnover ?? 0) - (a.turnover ?? 0))
+    .slice(0, 8);
+}
+
+function parseMostActive(rows: CseActiveRow[] | null): CseActiveTrade[] {
+  if (!rows?.length) {
+    return [];
+  }
+
+  return rows
+    .map((row): CseActiveTrade | null => {
+      if (typeof row.symbol !== "string" || !row.symbol.trim()) {
+        return null;
+      }
+      return {
+        symbol: row.symbol.trim().toUpperCase(),
+        tradeVolume: finiteNumber(row.tradeVolume),
+        shareVolume: finiteNumber(row.shareVolume),
+        turnover: finiteNumber(row.turnover),
+      };
+    })
+    .filter((row): row is CseActiveTrade => row != null)
+    .slice(0, 8);
+}
+
+function parseForeignDomestic(
+  rows: CseDailyMarketRow[] | null,
+  fallbackObservedAt: string,
+): CseForeignDomestic | null {
+  const row = Array.isArray(rows) ? rows[0] : null;
+  if (!row) {
+    return null;
+  }
+
+  return {
+    domesticTrades: finiteNumber(row.marketDomestic),
+    foreignTrades: finiteNumber(row.marketForeign),
+    domesticTurnover: finiteNumber(row.equityDomesticPurchase),
+    foreignPurchase: finiteNumber(row.equityForeignPurchase),
+    foreignSales: finiteNumber(row.equityForeignSales),
+    observedAt: msToIso(row.tradeDate, fallbackObservedAt),
+  };
+}
+
 function buildSnapshotFromLive(parts: {
   aspi: CseIndexResponse | null;
   snp: CseIndexResponse | null;
   marketStatus: CseMarketStatusResponse | null;
   marketSummary: CseMarketSummaryResponse | null;
   tradeSummary: CseTradeSummaryResponse | null;
+  sectors: CseSectorRow[] | null;
+  mostActive: CseActiveRow[] | null;
+  dailyMarket: CseDailyMarketRow[] | null;
 }): CseSnapshot | null {
   const aspi = parseIndex(parts.aspi, {
     code: "ASPI",
@@ -305,6 +480,11 @@ function buildSnapshotFromLive(parts: {
     parts.marketSummary?.tradeDate,
     aspi.observedAt,
   );
+  const sectors = parseSectors(parts.sectors);
+  const mostActive = parseMostActive(parts.mostActive);
+  const foreignDomestic =
+    parseForeignDomestic(parts.dailyMarket, aspi.observedAt) ??
+    SEED_SNAPSHOT.foreignDomestic;
 
   const asOf = [aspi.observedAt, snp.observedAt, summaryObservedAt]
     .sort()
@@ -331,6 +511,9 @@ function buildSnapshotFromLive(parts: {
           observedAt: summaryObservedAt,
         }
       : SEED_SNAPSHOT.summary,
+    sectors: sectors.length > 0 ? sectors : SEED_SNAPSHOT.sectors,
+    mostActive: mostActive.length > 0 ? mostActive : SEED_SNAPSHOT.mostActive,
+    foreignDomestic,
     asOf,
     tier: computeFreshnessTier(asOf, CSE_CADENCE_MINUTES),
     isFallback: false,
@@ -346,12 +529,33 @@ function buildFallbackSnapshot(): CseSnapshot {
 }
 
 export async function buildCseSnapshot(): Promise<CseSnapshot> {
-  const [aspi, snp, marketStatus, marketSummary, tradeSummary] = await Promise.all([
+  const [
+    aspi,
+    snp,
+    marketStatus,
+    marketSummary,
+    tradeSummary,
+    sectors,
+    mostActive,
+    dailyMarket,
+  ] = await Promise.all([
     postCseJson<CseIndexResponse>("/aspiData"),
     postCseJson<CseIndexResponse>("/snpData"),
     postCseJson<CseMarketStatusResponse>("/marketStatus"),
     postCseJson<CseMarketSummaryResponse>("/marketSummery"),
     postCseJson<CseTradeSummaryResponse>("/tradeSummary"),
+    postCseJson<CseSectorRow[]>("/allSectors"),
+    postCseJson<CseActiveRow[]>("/mostActiveTrades"),
+    postCseJson<unknown>("/dailyMarketSummery").then((raw) => {
+      if (!Array.isArray(raw) || raw.length === 0) {
+        return null;
+      }
+      // Endpoint returns [[row]] or [row].
+      if (Array.isArray(raw[0])) {
+        return (raw[0] as CseDailyMarketRow[]) ?? null;
+      }
+      return raw as CseDailyMarketRow[];
+    }),
   ]);
 
   const live = buildSnapshotFromLive({
@@ -360,6 +564,9 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     marketStatus,
     marketSummary,
     tradeSummary,
+    sectors,
+    mostActive,
+    dailyMarket,
   });
 
   return live ?? buildFallbackSnapshot();

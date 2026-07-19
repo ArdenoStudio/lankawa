@@ -24,7 +24,7 @@ Backlog wave complete for planned items. Follow-on retention wave: fact-ledger b
 
 Still parked: Year-2 satellite ETL (see `docs/DATA_EXPANSION_RESEARCH.md`), protest tracker, Entity Sport cricket, pgvector news.
 
-Follow-on data wave (ranked): FIRMS/GDACS pins → Open-Meteo UV/rain deepen → CSE sectors/most-active → bank remittance TT → FX anomaly + flood rate-of-rise → NDVI district ETL.
+Data expansion wave shipped: FIRMS/GDACS pins, Open-Meteo UV/rain, CSE sectors/most-active/foreign, bank remittance TT seed, FX MAD anomaly + flood rate-of-rise pins, NDVI district seed. See `docs/DATA_EXPANSION_RESEARCH.md`.
 
 ---
 

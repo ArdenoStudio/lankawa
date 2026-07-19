@@ -3,6 +3,7 @@ import { MonoLineChart } from "@/components/charts/MonoLineChart";
 import { CitationCard } from "@/components/CitationCard";
 import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { Link } from "@/i18n/navigation";
+import type { FxAnomalyResult } from "@/lib/fx-anomaly";
 import type { FuelHistorySeries, FuelRevisionStep } from "@/lib/fuel";
 import type { LpgPriceSnapshot } from "@/lib/integrations/lpg";
 import type { FreshnessTier } from "@/lib/types";
@@ -58,6 +59,7 @@ export function FxSparkline({
   asOf,
   latestBand,
   labels,
+  anomaly,
   chartId = "fx-sparkline-chart",
   citation,
 }: {
@@ -74,7 +76,10 @@ export function FxSparkline({
     bandTitle: string;
     buy: string;
     sell: string;
+    anomaly?: string;
+    anomalyQuiet?: string;
   };
+  anomaly?: FxAnomalyResult;
   chartId?: string;
   citation?: ChartCitation;
 }) {
@@ -101,6 +106,23 @@ export function FxSparkline({
             {band.sellRate.toFixed(2)}{" "}
             <span className="text-base font-normal text-slate-400">LKR</span>
           </p>
+          {anomaly && labels.anomaly ? (
+            <p
+              className={
+                anomaly.unusual
+                  ? "mt-1 text-xs font-medium text-white"
+                  : "mt-1 text-xs text-slate-500"
+              }
+            >
+              {anomaly.unusual
+                ? `${labels.anomaly}${
+                    anomaly.madZ != null
+                      ? ` · z≈${anomaly.madZ.toFixed(1)}`
+                      : ""
+                  }`
+                : labels.anomalyQuiet ?? labels.anomaly}
+            </p>
+          ) : null}
         </div>
         <p className="text-sm font-medium text-slate-300">
           {formatDirectionalDelta(change, 2)} over {series.length} days
