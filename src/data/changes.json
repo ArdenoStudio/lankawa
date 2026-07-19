@@ -3,6 +3,12 @@
   "entries": [
     {
       "date": "2026-07-19",
+      "id": "polish-wave",
+      "title": "District share, CPC revisions, rate buckets",
+      "summary": "WhatsApp-ready district share cards, Octane CPC revision steps on Economy, split API rate buckets, and brief-email ops docs."
+    },
+    {
+      "date": "2026-07-19",
       "id": "finish-backlog-wave",
       "title": "Landslides, brief email, week ledger, /changes",
       "summary": "NBRO/DMC landslide panel + disaster map toggle, morning-brief opt-in scaffolding, week ledger, and product changelog API."
