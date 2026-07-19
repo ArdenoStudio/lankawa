@@ -6,13 +6,14 @@ const CRICKET_API_BASE =
   process.env.CRICKETDATA_API_BASE ?? "https://api.cricapi.com/v1";
 const FETCH_TIMEOUT_MS = 10_000;
 const CACHE_TTL_MS = 10 * 60_000;
-const SRI_LANKA_OFFSET_MS = 5.5 * 60 * 60 * 1000;
+const SRI_LANKA_OFFSET_MS = 5.5 * 60 * 60_000;
+const POST_MATCH_WINDOW_MS = 24 * 60 * 60_000;
 
 export interface SriLankaCricketMatch {
   sourceId: string;
   fetchedAt: string;
   name: string;
-  status: "live" | "upcoming";
+  status: "live" | "upcoming" | "ended";
   statusText: string;
   startsAt: string | null;
   venue: string | null;
@@ -72,6 +73,18 @@ function isTodayInSriLanka(value: string | null): boolean {
   return sriLankaDateKey(parsed) === sriLankaDateKey(new Date());
 }
 
+function isWithinPostMatchWindow(value: string | null): boolean {
+  if (!value) {
+    return false;
+  }
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) {
+    return false;
+  }
+  const age = Date.now() - parsed.getTime();
+  return age >= 0 && age <= POST_MATCH_WINDOW_MS;
+}
+
 function matchDate(match: CricketApiMatch): string | null {
   const raw = match.dateTimeGMT ?? match.date;
   if (!raw) {
@@ -96,14 +109,16 @@ function includesSriLanka(teams: string[]): boolean {
   return teams.some((team) => team.toLowerCase().includes("sri lanka"));
 }
 
-function matchStatus(match: CricketApiMatch): "live" | "upcoming" | null {
+function matchStatus(match: CricketApiMatch): "live" | "upcoming" | "ended" | null {
   const status = match.status?.toLowerCase() ?? "";
-  if (
-    match.matchStarted === true &&
-    match.matchEnded !== true &&
-    !status.includes("not started")
-  ) {
-    return "live";
+  const ended =
+    match.matchEnded === true ||
+    status.includes("won by") ||
+    status.includes("draw") ||
+    status.includes("no result") ||
+    status.includes("abandoned");
+  if (ended) {
+    return "ended";
   }
   if (
     status.includes("live") ||
@@ -111,12 +126,10 @@ function matchStatus(match: CricketApiMatch): "live" | "upcoming" | null {
     status.includes("stumps") ||
     status.includes("drinks") ||
     status.includes("lunch") ||
-    status.includes("tea")
+    status.includes("tea") ||
+    (match.matchStarted === true && !status.includes("not started"))
   ) {
     return "live";
-  }
-  if (match.matchEnded === true || status.includes("won by") || status.includes("draw")) {
-    return null;
   }
   return "upcoming";
 }
@@ -146,11 +159,20 @@ function normalizeMatch(match: CricketApiMatch): SriLankaCricketMatch | null {
   if (!status) {
     return null;
   }
-  if (status !== "live" && !isTodayInSriLanka(startsAt)) {
-    return null;
-  }
-  if (status === "live" && startsAt && !isTodayInSriLanka(startsAt)) {
-    return null;
+
+  if (status === "ended") {
+    if (!isWithinPostMatchWindow(startsAt) && !isTodayInSriLanka(startsAt)) {
+      return null;
+    }
+  } else if (status === "upcoming") {
+    if (!isTodayInSriLanka(startsAt)) {
+      return null;
+    }
+  } else if (status === "live" && startsAt && !isTodayInSriLanka(startsAt)) {
+    // Allow live carry-over only within post-match window edge cases.
+    if (!isWithinPostMatchWindow(startsAt)) {
+      return null;
+    }
   }
 
   return {
@@ -158,7 +180,9 @@ function normalizeMatch(match: CricketApiMatch): SriLankaCricketMatch | null {
     fetchedAt: new Date().toISOString(),
     name: match.name ?? teams.join(" vs "),
     status,
-    statusText: match.status ?? (status === "live" ? "Live" : "Upcoming"),
+    statusText:
+      match.status ??
+      (status === "live" ? "Live" : status === "ended" ? "Result" : "Upcoming"),
     startsAt,
     venue: match.venue ?? null,
     competition: match.series ?? match.matchType ?? null,
@@ -177,6 +201,7 @@ function pickSriLankaMatch(
 
   return (
     normalized.find((match) => match.status === "live") ??
+    normalized.find((match) => match.status === "ended") ??
     normalized.sort(
       (a, b) =>
         new Date(a.startsAt ?? 0).getTime() -

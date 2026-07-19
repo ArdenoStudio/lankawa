@@ -6,6 +6,7 @@ import {
   fetchNewsPulse,
   SL_NEWS_FEEDS,
 } from "@/lib/integrations/news";
+import { clusterHeadlines } from "@/lib/integrations/news-cluster";
 
 function sourceLabel(
   sourceId: string,
@@ -34,7 +35,15 @@ export async function NewsPulse({ headlineLimit = 5 }: { headlineLimit?: number 
   }
 
   const { metric } = buildNewsPulseMetric(new Date().toISOString(), pulse);
-  const headlines = pulse.headlines.slice(0, headlineLimit);
+  const clusters = clusterHeadlines(pulse.headlines, 0.35)
+    .filter((cluster) => cluster.headlines.length >= 2)
+    .slice(0, 4);
+  const clusteredUrls = new Set(
+    clusters.flatMap((cluster) => cluster.headlines.map((item) => item.url)),
+  );
+  const headlines = pulse.headlines
+    .filter((headline) => !clusteredUrls.has(headline.url))
+    .slice(0, headlineLimit);
   const sourceLabels = {
     daily_mirror: t("sourceMirror"),
     ada_derana: t("sourceAda"),
@@ -60,6 +69,34 @@ export async function NewsPulse({ headlineLimit = 5 }: { headlineLimit?: number 
         </div>
       </div>
 
+      {clusters.length > 0 ? (
+        <div className="grid gap-3 sm:grid-cols-2">
+          {clusters.map((cluster) => {
+            const outlets = new Set(cluster.headlines.map((item) => item.source));
+            const lead = cluster.headlines[0];
+            return (
+              <article
+                key={`${cluster.topic}-${lead?.url ?? cluster.score}`}
+                className="rounded-2xl border border-white/10 bg-white/[0.03] p-4"
+              >
+                <p className="text-xs uppercase tracking-[0.14em] text-slate-500">
+                  {t("clusterLabel")}
+                </p>
+                <h3 className="mt-2 text-sm font-medium text-white">
+                  {lead?.title ?? cluster.topic}
+                </h3>
+                <p className="mt-2 text-xs text-slate-500">
+                  {t("clusterMeta", {
+                    count: cluster.headlines.length,
+                    outlets: outlets.size,
+                  })}
+                </p>
+              </article>
+            );
+          })}
+        </div>
+      ) : null}
+
       <article className="lk-card p-5">
         <div className="mb-4 flex items-center justify-between gap-3">
           <p className="text-sm text-slate-400">
@@ -69,7 +106,10 @@ export async function NewsPulse({ headlineLimit = 5 }: { headlineLimit?: number 
         </div>
 
         <ul className="space-y-3" role="list">
-          {headlines.map((headline, index) => (
+          {(headlines.length > 0
+            ? headlines
+            : pulse.headlines.slice(0, headlineLimit)
+          ).map((headline, index) => (
             <li key={`${headline.url}-${index}`}>
               <Link
                 href="/sources/news_rss"

@@ -3,6 +3,12 @@
   "entries": [
     {
       "date": "2026-07-19",
+      "id": "retention-wave",
+      "title": "Brief ledger, cricket 24h, news clusters, offline shell",
+      "summary": "Morning fact ledger + locale brief templates, cricket post-match/economy card, Jaccard news clusters, and PWA offline morning shell."
+    },
+    {
+      "date": "2026-07-19",
       "id": "polish-wave",
       "title": "District share, CPC revisions, rate buckets",
       "summary": "WhatsApp-ready district share cards, Octane CPC revision steps on Economy, split API rate buckets, and brief-email ops docs."

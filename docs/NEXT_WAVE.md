@@ -20,7 +20,9 @@ W  Watchdog → Lankawa-native       ✅ Land Pulse deepen + Debt Pulse
 8 Split API rate buckets          ✅ default/export/assistant/subscribe
 ```
 
-Backlog wave complete for planned items. Year-2 satellite ETL, world pump compare, protest tracker, and Entity Sport cricket stay parked.
+Backlog wave complete for planned items. Follow-on retention wave: fact-ledger brief, cricket 24h/economy card, news clusters, PWA offline morning shell.
+
+Still parked: Year-2 satellite ETL, world pump compare, protest tracker, Entity Sport cricket, pgvector news.
 
 ---
 

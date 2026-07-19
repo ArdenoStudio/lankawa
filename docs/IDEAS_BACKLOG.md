@@ -32,11 +32,12 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 - Alert pins + morning brief email + Atom delta feeds ✅ (pins + brief opt-in shipped; Atom news feed already live; ops docs in DEPLOYMENT.md)
 - Economy: FX buy–sell band, Octane revision steps, world pump compare ✅ (band/remittance + CPC revision steps shipped; world pump deferred)
 - Disaster map + DMC landslide + NBRO baseline ✅
-- Trilingual AI brief (fact-ledger + downgrade ladder)
-- Cricket: economy card + post-match 24h metric (CricAPI 100/day)
+- Trilingual AI brief (fact-ledger + downgrade ladder) ✅ (pulse fact ledger + locale topic templates + mode ladder)
+- Cricket: economy card + post-match 24h metric (CricAPI 100/day) ✅
 - Journalist citation cards + chart export ✅
 - Split API rate buckets + CSV exports + `/changes` ✅ (buckets + `/changes` + expanded exports)
-- PWA offline morning shell + habit-gated install
+- PWA offline morning shell + habit-gated install ✅ (sw v4 caches brief/pulse; offline banner)
+- News clusters on home (Jaccard, no pgvector) ✅
 - NCPI monthly + PUCSL tariff blocks ✅
 - Remittance calculator for diaspora ✅
 - Village WhatsApp share cards + Data Saver mode ✅ (morning check + district share cards + Data Saver)
