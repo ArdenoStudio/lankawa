@@ -30,12 +30,18 @@ export interface LandChangeSnapshot {
 
 const seed = landData;
 
-export function getLandChangeSnapshot(): LandChangeSnapshot {
-  const districts: LandChangeDistrict[] = seed.districts.map((district) => ({
+function withDeltas(
+  district: (typeof seed.districts)[number],
+): LandChangeDistrict {
+  return {
     ...district,
     greeneryDelta: district.greenery2024 - district.greenery2018,
     builtUpDelta: district.builtUp2024 - district.builtUp2018,
-  }));
+  };
+}
+
+export function getLandChangeSnapshot(): LandChangeSnapshot {
+  const districts = seed.districts.map(withDeltas);
 
   const topGreeneryLoss = [...districts]
     .sort((a, b) => a.greeneryDelta - b.greeneryDelta)
@@ -60,4 +66,12 @@ export function getLandChangeSnapshot(): LandChangeSnapshot {
     topGreeneryLoss,
     topBuiltUpGain,
   };
+}
+
+export function getLandChangeForDistrict(
+  slug: string,
+): LandChangeDistrict | undefined {
+  return getLandChangeSnapshot().districts.find(
+    (district) => district.slug === slug,
+  );
 }

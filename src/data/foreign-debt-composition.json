@@ -1,0 +1,32 @@
+{
+  "sourceId": "lankawa_debt_pulse",
+  "sourceName": "Lankawa Foreign Debt Pulse",
+  "asOf": "2020-12-31",
+  "periodLabel": "2004–2020",
+  "methodologyNote": "Normalized from Team Watchdog databank-sri-lanka (Foreign Debt Composition 2004–2020), originally extracted from Central Bank of Sri Lanka reports. Lankawa hosts the civic pulse series with provenance — not a live CBSL feed. Historical share of commercial vs concessionary external debt.",
+  "attribution": {
+    "discovery": "Team Watchdog databank-sri-lanka",
+    "discoveryUrl": "https://github.com/team-watchdog/databank-sri-lanka/tree/main/datasets/sri-lankan-foreign-debt",
+    "primarySource": "Central Bank of Sri Lanka",
+    "articleUrl": "https://longform.watchdog.team/observations/the-sri-lankan-foreign-debt-problem"
+  },
+  "series": [
+    { "year": 2004, "commercialPct": 2.55, "concessionaryPct": 97.45 },
+    { "year": 2005, "commercialPct": 3.89, "concessionaryPct": 96.11 },
+    { "year": 2006, "commercialPct": 7.28, "concessionaryPct": 92.72 },
+    { "year": 2007, "commercialPct": 17.08, "concessionaryPct": 82.92 },
+    { "year": 2008, "commercialPct": 15.29, "concessionaryPct": 84.71 },
+    { "year": 2009, "commercialPct": 27.8, "concessionaryPct": 72.2 },
+    { "year": 2010, "commercialPct": 37.42, "concessionaryPct": 62.58 },
+    { "year": 2011, "commercialPct": 42.95, "concessionaryPct": 57.05 },
+    { "year": 2012, "commercialPct": 50.51, "concessionaryPct": 49.49 },
+    { "year": 2013, "commercialPct": 49.57, "concessionaryPct": 50.43 },
+    { "year": 2014, "commercialPct": 52.11, "concessionaryPct": 47.89 },
+    { "year": 2015, "commercialPct": 51.19, "concessionaryPct": 48.81 },
+    { "year": 2016, "commercialPct": 53.1, "concessionaryPct": 46.9 },
+    { "year": 2017, "commercialPct": 54.85, "concessionaryPct": 45.15 },
+    { "year": 2018, "commercialPct": 54.85, "concessionaryPct": 45.15 },
+    { "year": 2019, "commercialPct": 56.77, "concessionaryPct": 43.23 },
+    { "year": 2020, "commercialPct": 53.8, "concessionaryPct": 46.2 }
+  ]
+}

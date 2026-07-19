@@ -5,10 +5,19 @@ import { recordExportAudit } from "@/lib/db";
 import { DISTRICTS } from "@/lib/districts";
 import { getPresidentialElection2024 } from "@/lib/elections";
 import { getParliamentaryElection2024 } from "@/lib/elections";
+import { getForeignDebtSnapshot } from "@/lib/foreign-debt";
 import { getFuelHistorySeries } from "@/lib/fuel";
+import { getLandChangeSnapshot } from "@/lib/land-change";
 import { getPublicServicesCatalog } from "@/lib/services";
 
-const VALID_DATASETS = ["districts", "elections", "services", "fuel-history"] as const;
+const VALID_DATASETS = [
+  "districts",
+  "elections",
+  "services",
+  "fuel-history",
+  "land-change",
+  "foreign-debt",
+] as const;
 type ExportDataset = (typeof VALID_DATASETS)[number];
 type ExportFormat = "csv" | "geojson" | "json";
 type CsvValue = string | number | boolean | null | undefined;
@@ -214,6 +223,54 @@ async function buildFuelHistoryCsv(days: number): Promise<string> {
   return toCsv(headers, rows);
 }
 
+function buildLandChangeCsv(): string {
+  const snapshot = getLandChangeSnapshot();
+  const headers = [
+    "slug",
+    "greenery2018",
+    "greenery2024",
+    "greeneryDelta",
+    "builtUp2018",
+    "builtUp2024",
+    "builtUpDelta",
+    "sourceId",
+    "asOf",
+  ];
+  const rows: CsvRow[] = snapshot.districts.map((district) => ({
+    slug: district.slug,
+    greenery2018: district.greenery2018,
+    greenery2024: district.greenery2024,
+    greeneryDelta: district.greeneryDelta,
+    builtUp2018: district.builtUp2018,
+    builtUp2024: district.builtUp2024,
+    builtUpDelta: district.builtUpDelta,
+    sourceId: snapshot.sourceId,
+    asOf: snapshot.asOf,
+  }));
+
+  return toCsv(headers, rows);
+}
+
+function buildForeignDebtCsv(): string {
+  const snapshot = getForeignDebtSnapshot();
+  const headers = [
+    "year",
+    "commercialPct",
+    "concessionaryPct",
+    "sourceId",
+    "asOf",
+  ];
+  const rows: CsvRow[] = snapshot.series.map((point) => ({
+    year: point.year,
+    commercialPct: point.commercialPct,
+    concessionaryPct: point.concessionaryPct,
+    sourceId: snapshot.sourceId,
+    asOf: snapshot.asOf,
+  }));
+
+  return toCsv(headers, rows);
+}
+
 export async function GET(
   request: NextRequest,
   context: { params: Promise<{ dataset: string }> },
@@ -256,6 +313,10 @@ export async function GET(
         const days = Number(searchParams.get("days") ?? "90");
         return csvResponse(dataset, await buildFuelHistoryCsv(days));
       }
+      case "land-change":
+        return csvResponse(dataset, buildLandChangeCsv());
+      case "foreign-debt":
+        return csvResponse(dataset, buildForeignDebtCsv());
       default: {
         const _exhaustive: never = dataset;
         return _exhaustive;
@@ -333,6 +394,36 @@ export async function GET(
           headers: {
             "Content-Disposition": 'attachment; filename="lankawa-fuel-history.json"',
             "Cache-Control": "public, max-age=3600",
+          },
+        },
+      );
+    }
+    case "land-change": {
+      const snapshot = getLandChangeSnapshot();
+      return NextResponse.json(
+        {
+          exportedAt: new Date().toISOString(),
+          ...snapshot,
+        },
+        {
+          headers: {
+            "Content-Disposition": 'attachment; filename="lankawa-land-change.json"',
+            "Cache-Control": "public, max-age=86400",
+          },
+        },
+      );
+    }
+    case "foreign-debt": {
+      const snapshot = getForeignDebtSnapshot();
+      return NextResponse.json(
+        {
+          exportedAt: new Date().toISOString(),
+          ...snapshot,
+        },
+        {
+          headers: {
+            "Content-Disposition": 'attachment; filename="lankawa-foreign-debt.json"',
+            "Cache-Control": "public, max-age=86400",
           },
         },
       );

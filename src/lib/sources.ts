@@ -399,8 +399,21 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "District greenery and built-up change indices (2018→2024) for civic morning checks.",
     methodology:
-      "Curated district-scale greenery/built-up indices for product use. Inspired by public Sentinel-2 LULC practice and prior art from Team Watchdog satellite2024 (MIT). Lankawa does not host full-resolution mosaics. Not official Survey Department land use. See docs/WATCHDOG_VS_LANKAWA.md.",
+      "Curated district-scale greenery/built-up indices for product use. Inspired by public Sentinel-2 LULC practice and prior art from Team Watchdog satellite2024 (MIT). Lankawa does not host full-resolution mosaics. Not official Survey Department land use. See /environment/land-change and docs/WATCHDOG_VS_LANKAWA.md.",
     metrics: ["greenery_index", "builtup_index"],
+  },
+  {
+    id: "lankawa_debt_pulse",
+    name: "Lankawa Foreign Debt Pulse",
+    category: "economy",
+    url: "internal://economy/debt",
+    cadenceMinutes: 525600,
+    adapter: "partner",
+    description:
+      "Historical commercial vs concessionary share of Sri Lanka external debt (2004–2020).",
+    methodology:
+      "Normalized from Team Watchdog databank-sri-lanka Foreign Debt Composition CSV (originally extracted from Central Bank of Sri Lanka reports). Lankawa re-hosts a morning-sized series with /sources provenance — not a live CBSL feed and not post-2020 restructuring figures. See docs/WATCHDOG_VS_LANKAWA.md.",
+    metrics: ["commercial_debt_share", "concessionary_debt_share"],
   },
   {
     id: "environment_aqi_seed",

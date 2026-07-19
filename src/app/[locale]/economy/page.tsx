@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CseMarketCard } from "@/components/CseMarketCard";
+import { DebtCompositionCard } from "@/components/DebtCompositionCard";
 import {
   FuelHistoryChart,
   FxSparkline,
@@ -11,6 +12,7 @@ import { PulseCard } from "@/components/PulseCard";
 import { RemittanceCalculator } from "@/components/RemittanceCalculator";
 import { Link } from "@/i18n/navigation";
 import { getEconomyMacroSnapshot, getFxSeries, getLatestFxRate } from "@/lib/economy";
+import { getForeignDebtSnapshot } from "@/lib/foreign-debt";
 import { fetchLatestCbslGoldRate } from "@/lib/integrations/cbsl";
 import { fetchLpgPriceSnapshot } from "@/lib/integrations/lpg";
 import { getFuelHistorySeries } from "@/lib/fuel";
@@ -34,6 +36,7 @@ export default async function EconomyPage({
   const cseSnapshot = await buildCseSnapshot();
   const goldRate = await fetchLatestCbslGoldRate();
   const lpgSnapshot = await fetchLpgPriceSnapshot();
+  const debtSnapshot = getForeignDebtSnapshot();
   const fxSource = getSource("cbsl_fx");
   const fuelSource = getSource("octane_fuel");
   const economyMetrics = snapshot.metrics.filter((metric) =>
@@ -156,6 +159,22 @@ export default async function EconomyPage({
               sourceName: fuelSource?.name ?? "Octane Fuel API",
               sourcePath: getSourceProvenancePath("octane_fuel"),
               permalink: `/${locale}/economy`,
+            }}
+          />
+          <DebtCompositionCard
+            snapshot={debtSnapshot}
+            sourcePath={getSourceProvenancePath(debtSnapshot.sourceId)}
+            permalink={`/${locale}/economy`}
+            labels={{
+              title: t("debt.title"),
+              subtitle: t("debt.subtitle"),
+              commercial: t("debt.commercial"),
+              concessionary: t("debt.concessionary"),
+              latest: t("debt.latest"),
+              delta: t("debt.delta"),
+              asOf: t("debt.asOf", { date: debtSnapshot.asOf }),
+              attribution: t("debt.attribution"),
+              methodology: t("debt.methodology"),
             }}
           />
         </div>

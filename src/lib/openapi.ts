@@ -174,6 +174,28 @@ export const openApiSpec = {
         responses: { "200": { description: "District AQI and PM2.5 readings with live OpenAQ overlay when available" } },
       },
     },
+    "/environment/land-change": {
+      get: {
+        summary: "Land Change Pulse",
+        responses: {
+          "200": {
+            description:
+              "District greenery and built-up indices (2018→2024) with national deltas and top movers",
+          },
+        },
+      },
+    },
+    "/economy/debt": {
+      get: {
+        summary: "Foreign debt composition pulse",
+        responses: {
+          "200": {
+            description:
+              "Commercial vs concessionary external debt share series (2004–2020), normalized for Lankawa",
+          },
+        },
+      },
+    },
     "/tenders": {
       get: {
         summary: "Government procurement tender notices",
@@ -515,6 +537,34 @@ export const apiEndpoints = [
     summaryKey: "exportFuelHistorySummary" as const,
     descriptionKey: "exportFuelHistoryDescription" as const,
     example: "fuelType,label,recordedAt,priceLkr,...",
+  },
+  {
+    method: "GET",
+    path: "/api/v1/environment/land-change",
+    summaryKey: "landChangeSummary" as const,
+    descriptionKey: "landChangeDescription" as const,
+    example: `{ "national": { "greeneryDelta": -4 }, "districts": [...], "provenancePath": "/sources/lankawa_land_pulse" }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/economy/debt",
+    summaryKey: "debtSummary" as const,
+    descriptionKey: "debtDescription" as const,
+    example: `{ "latest": { "year": 2020, "commercialPct": 53.8 }, "series": [...], "provenancePath": "/sources/lankawa_debt_pulse" }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/export/land-change?format=csv",
+    summaryKey: "exportLandChangeSummary" as const,
+    descriptionKey: "exportLandChangeDescription" as const,
+    example: "slug,greenery2018,greenery2024,greeneryDelta,...",
+  },
+  {
+    method: "GET",
+    path: "/api/v1/export/foreign-debt?format=csv",
+    summaryKey: "exportForeignDebtSummary" as const,
+    descriptionKey: "exportForeignDebtDescription" as const,
+    example: "year,commercialPct,concessionaryPct,...",
   },
   {
     method: "GET",

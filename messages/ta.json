@@ -490,6 +490,17 @@
       "fallbackNote": "நேரடி CSE தரவு தற்காலிகமாக கிடைக்கவில்லை. சமீபத்திய cache snapshot காட்டப்படுகிறது.",
       "provenance": "தரவு மூலம்",
       "noMovers": "நகர்வுகள் இல்லை"
+    },
+    "debt": {
+      "title": "வெளிநாட்டு கடன் அமைப்பு",
+      "subtitle": "வணிக vs சலுகை வெளிநாட்டு கடன் பங்கு — Watchdog databank வழி CBSL அட்டவணைகளிலிருந்து Lankawa துடிப்பு.",
+      "commercial": "வணிகக் கடன்கள்",
+      "concessionary": "சலுகைக் கடன்கள்",
+      "latest": "சமீப பங்கு",
+      "delta": "வணிகப் பங்கு மாற்றம்",
+      "asOf": "{date} வரை தொடர்",
+      "attribution": "கண்டுபிடிப்பு",
+      "methodology": "முதன்மை எண்கள் CBSL அறிக்கைகளிலிருந்து. வரலாற்று மட்டும் — நேரடி கடன் டாஷ்போர்டு அல்ல."
     }
   },
   "search": {
@@ -716,7 +727,15 @@
     "exportDownload": "Download",
     "embedTitle": "Embeddable widgets",
     "embedBody": "Same-origin iframe widgets for today, pulse, fuel, and FX.",
-    "embedLink": "Open embed preview"
+    "embedLink": "Open embed preview",
+    "landChangeSummary": "Land Change Pulse",
+    "landChangeDescription": "District greenery and built-up indices (2018→2024) with national deltas and top movers.",
+    "debtSummary": "Foreign debt composition",
+    "debtDescription": "Commercial vs concessionary external debt share series (2004–2020), normalized for Lankawa.",
+    "exportLandChangeSummary": "Export land change",
+    "exportLandChangeDescription": "Download district greenery and built-up indices as JSON or CSV.",
+    "exportForeignDebtSummary": "Export foreign debt composition",
+    "exportForeignDebtDescription": "Download commercial vs concessionary debt share series as JSON or CSV."
   },
   "budget": {
     "title": "தேசிய பட்ஜெட் Tracker",
@@ -1324,6 +1343,39 @@
     "points2018to2024": "புள்ளிகள் (2018→2024)",
     "topGreeneryLoss": "அதிக பசுமை இழப்பு",
     "topBuiltUpGain": "அதிக கட்டட உயர்வு",
-    "attribution": "Lankawa மாவட்ட குறியீடுகள். முன் ஆராய்ச்சி: Team Watchdog satellite2024 (MIT). அதிகாரப்பூர்வ நில பயன்பாடு அல்ல."
+    "attribution": "Lankawa மாவட்ட குறியீடுகள். முன் ஆராய்ச்சி: Team Watchdog satellite2024 (MIT). அதிகாரப்பூர்வ நில பயன்பாடு அல்ல.",
+    "methodologyLink": "முறைமை",
+    "exportCsv": "CSV பதிவிறக்கு",
+    "chartTitle": "அதிக பசுமை இழப்பு (2018→2024)",
+    "greeneryDeltaAxis": "பசுமைக் குறியீடு மாற்றம் (புள்ளிகள்)",
+    "chartExportHint": "ஊடகம் / Discordக்கான ஒரே வண்ண ஏற்றுமதி",
+    "tableTitle": "அனைத்து மாவட்டங்கள் — பசுமை & கட்டடம்",
+    "colDistrict": "மாவட்டம்",
+    "colGreenery": "பசுமை",
+    "colBuiltUp": "கட்டடம்",
+    "districtTitle": "நில மாற்றம்",
+    "districtSubtitle": "இந்த மாவட்டத்தின் பசுமை மற்றும் கட்டடக் குறியீடு மாற்றம் (2018→2024).",
+    "greeneryDistrict": "பசுமைக் குறியீடு Δ",
+    "builtUpDistrict": "கட்டடக் குறியீடு Δ",
+    "viewNational": "தேசிய நிலத் துடிப்பு",
+    "sourceLink": "மூலம்"
+  },
+  "landChangeMethodology": {
+    "back": "சுற்றுச்சூழலுக்குத் திரும்பு",
+    "title": "நில மாற்றத் துடிப்பு முறைமை",
+    "subtitle": "செயற்கைக்கோள் மொசைக்குகளை ஹோஸ்ட் செய்யாமல் நில ஆராய்ச்சியை மாவட்ட காலை சோதனையாக மாற்றுவது.",
+    "whatTitle": "குறியீடுகள் என்ன பொருள்",
+    "whatBody": "ஒவ்வொரு மாவட்டத்திற்கும் 2018 மற்றும் 2024க்கான 0–100 பசுமை மற்றும் கட்டடக் குறியீடுகள் உள்ளன. மாற்றங்கள் புள்ளி வேறுபாடுகள் — காடாஸ்ட்ரல் வரைபடம் அல்ல.",
+    "watchdogTitle": "Team Watchdog என்ன செய்கிறது — நாம் என்ன செய்கிறோம்",
+    "watchdogBody": "Watchdog satellite2024 ஆண்டு Sentinel-2 மொசைக்குகள் மற்றும் நில மறைப்பு கட்டங்களை வெளியிடுகிறது. Lankawa வேறு வேலை: தினசரி, மும்மொழி தயாரிப்பு freshness உடன்.",
+    "watchdogPoint1": "நாங்கள் பல‑GB மொசைக்குகளை ஆப்பில் ஹோஸ்ட் செய்ய மாட்டோம்.",
+    "watchdogPoint2": "சிறிய JSON, API, CSV மற்றும் மாவட்ட கார்டுகளை அனுப்புகிறோம்.",
+    "watchdogPoint3": "Watchdog ஐ முன் ஆராய்ச்சியாக பாராட்டுகிறோம்; எங்கள் குறியீடுகள் Lankawa மாவட்ட தொகுப்பு.",
+    "honestyTitle": "நேர்மை ஒப்பந்தம்",
+    "honestyBody": "இது seed/curated தொடர் — Survey Dept நில பயன்பாடு அல்ல, zoning அல்ல, நேரடி சென்சார் அல்ல.",
+    "asOf": "{date} வரை தொடர்",
+    "apiTitle": "API & ஏற்றுமதி",
+    "apiBody": "மற்ற Lankawa civic endpoints போன்ற machine-readable அணுகல்.",
+    "csvLink": "மாவட்ட நில மாற்ற CSV பதிவிறக்கு"
   }
 }

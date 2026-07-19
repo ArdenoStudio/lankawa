@@ -1,6 +1,6 @@
 # Next wave plan — remaining backlog + Watchdog
 
-**Status:** Planning (post PR #1–#3 merge)  
+**Status:** Wave A shipped; Watchdog-native deepen shipped; Wave B next  
 **Product rule (locked):** Lankawa stays the umbrella UI. External projects are **data/attribution**, never iframes or parallel consumer apps.
 
 ---
@@ -8,15 +8,15 @@
 ## Priority order (recommended)
 
 ```
-1 Coconut Index / COL honesty     ← trust + COL credibility, reuses food stack
-2 Journalist citation + PNG export ← differentiator for press / Discord soft launch
+1 Coconut Index / COL honesty     ✅ shipped
+2 Journalist citation + PNG export ✅ shipped
+W  Watchdog → Lankawa-native       ✅ Land Pulse deepen + Debt Pulse
 3 NCPI + PUCSL blocks             ← economy depth, mostly static/scrape
 4 NBRO/DMC landslide layers       ← disaster map depth (harder GIS)
 5 Alert pins + brief email        ← retention, needs delivery ops
-W  Watchdog satellite / databank  ← link-first now; deep maps year-2
 ```
 
-Ship **1 → 2 → 3** as one PR wave. **4** is GIS-heavy. **5** needs email/Telegram ops decisions. **W** is mostly policy + thin UI until retention is proven.
+Ship **3** next. **4** is GIS-heavy. **5** needs email/Telegram ops decisions. Year-2 satellite ETL stays parked.
 
 ---
 
@@ -151,13 +151,13 @@ Master plan already says: *Watchdog satellite2024 = link/consume with licence ch
 
 ### Recommended Watchdog policy for Lankawa
 
-**Now (Lankawa-native Land Change Pulse — shipped direction):**
-1. District greenery/built-up indices on `/environment` via `lankawa_land_pulse` (our JSON, morning-sized).
-2. Credit Watchdog satellite2024 as MIT prior art in methodology — do **not** host their mosaics.
+**Now (shipped):**
+1. Land Change Pulse on `/environment` + district pages + methodology + API/CSV (`lankawa_land_pulse`).
+2. Foreign Debt Pulse on `/economy` from databank discovery → Lankawa seed/API (`lankawa_debt_pulse`).
 3. See `docs/WATCHDOG_VS_LANKAWA.md` for the full rework thesis.
 
 **Later (year-2 / funded — parked):**
-- District-level greenery/built-up **index** derived from their LULC grids (offline ETL → `observations`).
+- District-level greenery/built-up **index** derived from LULC grids (offline ETL → `observations`).
 - Compare-year slider on environment page.
 - Reservoir surface / Sentinel flood only after morning retention is proven.
 
