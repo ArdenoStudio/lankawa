@@ -14,6 +14,35 @@ export default async function CostOfLivingPage({
   const t = await getTranslations("costOfLiving");
   const snapshot = await getCostOfLivingData();
   const isComposite = snapshot.sourceId === "cost_of_living_composite";
+  const honestyValueLabels = {
+    live: t("honestyValueLive"),
+    seed: t("honestyValueSeed"),
+    life_federation: t("honestyValueLifeFederation"),
+  };
+  const honestyItems = snapshot.inputHonesty
+    ? [
+        {
+          key: "fuel",
+          label: t("honestyFuel"),
+          value: snapshot.inputHonesty.fuel,
+        },
+        {
+          key: "property",
+          label: t("honestyProperty"),
+          value: snapshot.inputHonesty.property,
+        },
+        {
+          key: "food",
+          label: t("honestyFood"),
+          value: snapshot.inputHonesty.food,
+        },
+        {
+          key: "coconut",
+          label: t("honestyCoconut"),
+          value: snapshot.inputHonesty.coconut,
+        },
+      ]
+    : [];
 
   return (
     <div className="space-y-8">
@@ -40,7 +69,7 @@ export default async function CostOfLivingPage({
         </p>
       </div>
 
-      <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
           <dt className="text-sm text-slate-500">{t("nationalIndex")}</dt>
           <dd className="mt-2 text-3xl font-semibold text-white">
@@ -65,6 +94,20 @@ export default async function CostOfLivingPage({
             </Link>
           </dd>
         </div>
+        {snapshot.coconut ? (
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <dt className="text-sm text-slate-500">{t("coconutIndex")}</dt>
+            <dd className="mt-2 text-3xl font-semibold text-white">
+              LKR {snapshot.coconut.priceLkr.toLocaleString()}
+              <span className="ml-2 text-base font-normal text-slate-400">
+                /{snapshot.coconut.unit}
+              </span>
+            </dd>
+            <dd className="mt-2 text-xs text-slate-500">
+              {snapshot.coconut.provenance}
+            </dd>
+          </div>
+        ) : null}
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:col-span-2 lg:col-span-1">
           <dt className="text-sm text-slate-500">{t("foodLink")}</dt>
           <dd className="mt-2">
@@ -74,6 +117,27 @@ export default async function CostOfLivingPage({
           </dd>
         </div>
       </dl>
+
+      {honestyItems.length > 0 ? (
+        <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
+            {t("honestyTitle")}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {honestyItems.map((item) => (
+              <span
+                key={item.key}
+                className="rounded-full border border-white/10 px-3 py-1 text-sm text-slate-300"
+              >
+                <span className="text-slate-500">{item.label}</span>{" "}
+                <span className="font-medium text-white">
+                  {honestyValueLabels[item.value]}
+                </span>
+              </span>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-white">{t("tableTitle")}</h2>

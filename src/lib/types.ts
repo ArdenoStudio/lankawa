@@ -339,12 +339,28 @@ export interface CostOfLivingDistrict {
   rank: number;
 }
 
+export interface CostOfLivingInputHonesty {
+  fuel: "live" | "seed";
+  property: "live" | "seed";
+  food: "live" | "life_federation" | "seed";
+  coconut: "live" | "life_federation" | "seed";
+}
+
+export interface CoconutIndex {
+  priceLkr: number;
+  unit: string;
+  asOf: string;
+  provenance: string;
+}
+
 export interface CostOfLivingSnapshot {
   sourceId: string;
   sourceName: string;
   asOf: string;
   nationalIndex: number;
   fuelPricePetrol92: number;
+  inputHonesty?: CostOfLivingInputHonesty;
+  coconut?: CoconutIndex;
   districts: CostOfLivingDistrict[];
 }
 

@@ -584,6 +584,21 @@
     "asOf": "{date} வரை",
     "noTimestamp": "நேர முத்திரை இல்லை"
   },
+  "citation": {
+    "label": "மேற்கோள்",
+    "copy": "மேற்கோளை copy செய்",
+    "copied": "மேற்கோள் copy செய்யப்பட்டது.",
+    "error": "மேற்கோளை copy செய்ய முடியவில்லை.",
+    "source": "மூலம்:",
+    "asOf": "{date} நிலவரப்படி",
+    "disclaimer": "அதிகாரப்பூர்வ அரசு வெளியீடு அல்ல."
+  },
+  "export": {
+    "png": "PNG export செய்",
+    "preparing": "PNG தயார் செய்கிறது...",
+    "ready": "PNG download செய்யப்பட்டது.",
+    "error": "Chart export செய்ய முடியவில்லை."
+  },
   "sources": {
     "title": "தரவு மூலங்கள்",
     "subtitle": "லங்காவாவின் ஒவ்வொரு அளவீடும் பதிவு செய்யப்பட்ட மூலத்திற்கு — புதுமை, முறைமையுடன் — திரும்புகிறது.",
@@ -805,10 +820,19 @@
     "asOf": "As of {date}",
     "nationalIndex": "National index",
     "fuelPrice": "Petrol 92 reference",
+    "coconutIndex": "தேங்காய் குறியீடு",
     "compareCta": "Compare districts",
     "compareLink": "Open compare",
     "foodLink": "Food price module",
     "foodLinkCta": "View FoodLK pulse",
+    "honestyTitle": "உள்ளீட்டு நேர்மை",
+    "honestyFuel": "எரிபொருள்",
+    "honestyProperty": "சொத்து",
+    "honestyFood": "உணவு",
+    "honestyCoconut": "தேங்காய்",
+    "honestyValueLive": "live",
+    "honestyValueSeed": "seed",
+    "honestyValueLifeFederation": "life_federation",
     "tableTitle": "Ranked by index",
     "rank": "Rank",
     "district": "District",
@@ -944,6 +968,7 @@
     "costOfLivingLink": "Cost of living",
     "costOfLivingCta": "View composite COL index",
     "staplesTitle": "Staple prices",
+    "coconutIndexBadge": "தேங்காய் குறியீடு",
     "perUnit": "per {unit}",
     "tableTitle": "District meal costs",
     "tableSubtitle": "Estimated daily meal cost and monthly food basket by district.",
@@ -1274,8 +1299,9 @@
     "inputFuel": "Octane CPC பெட்ரோல் 92 தேசிய குறிப்பு விலை.",
     "inputProperty": "PropertyLK மாவட்ட இடைநிலைகள் — கொழும்புக்கு ஒப்பீடு.",
     "inputFood": "FoodLK அல்லது Ariva Life அத்தியாவசியக் கூடை; இல்லையெனில் விதை உணவு மதிப்பீடு.",
+    "inputCoconut": "தேங்காய் உணவு staple items-இலிருந்து எடுக்கப்பட்டு COL உணவு signal ஆக காட்டப்படுகிறது; live, life_federation, அல்லது seed provenance உடன்.",
     "methodTitle": "கூட்டு முறை",
-    "methodBody": "நேரடி உள்ளீடுகள் கிடைக்கும்போது பெட்ரோல் குறிப்பும் உணவுக் கூடையும் புதுப்பிக்கப்படும். சொத்து கூறு PropertyLK அடிப்படையிலானது. பங்குதாரர்கள் இல்லையெனில் விதைத் தரவு காட்டப்படும்.",
+    "methodBody": "நேரடி உள்ளீடுகள் கிடைக்கும்போது பெட்ரோல் குறிப்பும் உணவுக் கூடையும் புதுப்பிக்கப்படும். சொத்து கூறு PropertyLK அடிப்படையிலானது. தேங்காய் குறியீடு உணவு signal-ல் பயன்படும் தேங்காய் staple விலையை காட்டுகிறது. பங்குதாரர்கள் இல்லையெனில் விதைத் தரவு காட்டப்படும்.",
     "limitsTitle": "வரம்புகள்",
     "limitsBody": "இது அதிகாரப்பூர்வ NCPI/CCPI தரவு அல்ல. குடிமை ஒப்பீட்டுக்காக மட்டும்."
   },
@@ -1288,5 +1314,16 @@
     "openDistrict": "மாவட்டப் பக்கத்தைத் திற",
     "pin": "வீடாக பின் செய்",
     "unpin": "பின்னை நீக்கு"
+  },
+  "landChange": {
+    "title": "நில மாற்றத் துடிப்பு",
+    "subtitle": "2018 முதல் மாவட்ட பசுமை / கட்டட மாற்றம் — காலை சோதனை அளவு, செயற்கைக்கோள் கேலரி அல்ல.",
+    "asOf": "{date} அன்று",
+    "greeneryNational": "தேசிய பசுமைக் குறியீடு Δ",
+    "builtUpNational": "தேசிய கட்டடக் குறியீடு Δ",
+    "points2018to2024": "புள்ளிகள் (2018→2024)",
+    "topGreeneryLoss": "அதிக பசுமை இழப்பு",
+    "topBuiltUpGain": "அதிக கட்டட உயர்வு",
+    "attribution": "Lankawa மாவட்ட குறியீடுகள். முன் ஆராய்ச்சி: Team Watchdog satellite2024 (MIT). அதிகாரப்பூர்வ நில பயன்பாடு அல்ல."
   }
 }

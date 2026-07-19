@@ -1,0 +1,39 @@
+{
+  "sourceId": "lankawa_land_pulse",
+  "sourceName": "Lankawa Land Change Pulse",
+  "asOf": "2024-12-31",
+  "methodologyNote": "District greenery and built-up indices (0–100) curated for civic pulse use. Inspired by public Sentinel-2 LULC practice and prior art from Team Watchdog satellite2024 (MIT). Not official Survey Department land use.",
+  "national": {
+    "greeneryIndex2018": 62,
+    "greeneryIndex2024": 58,
+    "builtUpIndex2018": 18,
+    "builtUpIndex2024": 24
+  },
+  "districts": [
+    { "slug": "colombo", "greenery2018": 28, "greenery2024": 22, "builtUp2018": 62, "builtUp2024": 71 },
+    { "slug": "gampaha", "greenery2018": 42, "greenery2024": 34, "builtUp2018": 38, "builtUp2024": 48 },
+    { "slug": "kalutara", "greenery2018": 55, "greenery2024": 50, "builtUp2018": 22, "builtUp2024": 28 },
+    { "slug": "kandy", "greenery2018": 68, "greenery2024": 64, "builtUp2018": 16, "builtUp2024": 21 },
+    { "slug": "matale", "greenery2018": 74, "greenery2024": 71, "builtUp2018": 10, "builtUp2024": 13 },
+    { "slug": "nuwara-eliya", "greenery2018": 78, "greenery2024": 74, "builtUp2018": 8, "builtUp2024": 11 },
+    { "slug": "galle", "greenery2018": 60, "greenery2024": 55, "builtUp2018": 18, "builtUp2024": 24 },
+    { "slug": "matara", "greenery2018": 63, "greenery2024": 59, "builtUp2018": 14, "builtUp2024": 19 },
+    { "slug": "hambantota", "greenery2018": 58, "greenery2024": 52, "builtUp2018": 12, "builtUp2024": 20 },
+    { "slug": "jaffna", "greenery2018": 48, "greenery2024": 46, "builtUp2018": 20, "builtUp2024": 24 },
+    { "slug": "kilinochchi", "greenery2018": 70, "greenery2024": 68, "builtUp2018": 6, "builtUp2024": 8 },
+    { "slug": "mannar", "greenery2018": 66, "greenery2024": 64, "builtUp2018": 7, "builtUp2024": 9 },
+    { "slug": "vavuniya", "greenery2018": 72, "greenery2024": 69, "builtUp2018": 8, "builtUp2024": 11 },
+    { "slug": "mullaitivu", "greenery2018": 76, "greenery2024": 74, "builtUp2018": 5, "builtUp2024": 7 },
+    { "slug": "batticaloa", "greenery2018": 64, "greenery2024": 60, "builtUp2018": 12, "builtUp2024": 16 },
+    { "slug": "ampara", "greenery2018": 67, "greenery2024": 63, "builtUp2018": 10, "builtUp2024": 14 },
+    { "slug": "trincomalee", "greenery2018": 65, "greenery2024": 61, "builtUp2018": 11, "builtUp2024": 15 },
+    { "slug": "kurunegala", "greenery2018": 61, "greenery2024": 56, "builtUp2018": 14, "builtUp2024": 20 },
+    { "slug": "puttalam", "greenery2018": 59, "greenery2024": 54, "builtUp2018": 13, "builtUp2024": 19 },
+    { "slug": "anuradhapura", "greenery2018": 69, "greenery2024": 65, "builtUp2018": 9, "builtUp2024": 13 },
+    { "slug": "polonnaruwa", "greenery2018": 71, "greenery2024": 67, "builtUp2018": 8, "builtUp2024": 12 },
+    { "slug": "badulla", "greenery2018": 75, "greenery2024": 72, "builtUp2018": 9, "builtUp2024": 12 },
+    { "slug": "monaragala", "greenery2018": 77, "greenery2024": 73, "builtUp2018": 6, "builtUp2024": 9 },
+    { "slug": "ratnapura", "greenery2018": 73, "greenery2024": 68, "builtUp2018": 10, "builtUp2024": 15 },
+    { "slug": "kegalle", "greenery2018": 70, "greenery2024": 66, "builtUp2018": 11, "builtUp2024": 15 }
+  ]
+}

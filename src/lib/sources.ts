@@ -373,8 +373,8 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "District composite cost-of-living index from fuel, property, and food basket proxies.",
     methodology:
-      "Weighted seed index combining Octane petrol 92 reference price, PropertyLK median bands, and estimated monthly food basket costs. Not an official NCPI publication.",
-    metrics: ["col_index", "food_basket_estimate"],
+      "Weighted seed index combining Octane petrol 92 reference price, PropertyLK median bands, estimated monthly food basket costs, and the coconut staple price as an explicit food signal. Not an official NCPI publication.",
+    metrics: ["col_index", "food_basket_estimate", "coconut_unit_lkr"],
   },
   {
     id: "cost_of_living_composite",
@@ -386,8 +386,21 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Live-refreshed district COL index when Octane, PropertyLK, or Life/Food inputs are available.",
     methodology:
-      "Combines live Octane petrol 92, PropertyLK district medians (Colombo-normalized property component), and Food/Life essentials basket scaling on top of the published seed relative structure. Not an official NCPI or HIES publication. See /cost-of-living/methodology.",
-    metrics: ["col_index", "food_basket_estimate", "fuel_petrol_92"],
+      "Combines live Octane petrol 92, PropertyLK district medians (Colombo-normalized property component), Food/Life essentials basket scaling, and the latest coconut staple item when present on top of the published seed relative structure. Not an official NCPI or HIES publication. See /cost-of-living/methodology.",
+    metrics: ["col_index", "food_basket_estimate", "fuel_petrol_92", "coconut_unit_lkr"],
+  },
+  {
+    id: "lankawa_land_pulse",
+    name: "Lankawa Land Change Pulse",
+    category: "environment",
+    url: "internal://environment/land-change",
+    cadenceMinutes: 525600,
+    adapter: "partner",
+    description:
+      "District greenery and built-up change indices (2018→2024) for civic morning checks.",
+    methodology:
+      "Curated district-scale greenery/built-up indices for product use. Inspired by public Sentinel-2 LULC practice and prior art from Team Watchdog satellite2024 (MIT). Lankawa does not host full-resolution mosaics. Not official Survey Department land use. See docs/WATCHDOG_VS_LANKAWA.md.",
+    metrics: ["greenery_index", "builtup_index"],
   },
   {
     id: "environment_aqi_seed",

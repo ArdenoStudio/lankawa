@@ -1,10 +1,46 @@
 import colData from "@/data/cost-of-living-seed.json";
+import foodData from "@/data/food-seed.json";
 import { getFoodData } from "@/lib/integrations/food";
 import { fetchOctanePrices, pickCpcPrice } from "@/lib/integrations/octane";
 import { getPropertyData } from "@/lib/integrations/propertylk";
-import type { CostOfLivingDistrict, CostOfLivingSnapshot } from "./types";
+import type {
+  CoconutIndex,
+  CostOfLivingDistrict,
+  CostOfLivingInputHonesty,
+  CostOfLivingSnapshot,
+  FoodSnapshot,
+} from "./types";
 
 const seedSnapshot = colData as CostOfLivingSnapshot;
+const seedFoodSnapshot = foodData as FoodSnapshot;
+
+function extractCoconutIndex(
+  food: Pick<FoodSnapshot, "asOf" | "sourceName" | "stapleItems">,
+): CoconutIndex | undefined {
+  const coconut = food.stapleItems.find((item) => item.slug === "coconut");
+  if (!coconut) {
+    return undefined;
+  }
+
+  return {
+    priceLkr: coconut.priceLkr,
+    unit: coconut.unit,
+    asOf: food.asOf,
+    provenance: `${food.sourceName} · ${coconut.source}`,
+  };
+}
+
+function withCostOfLivingMetadata(
+  snapshot: CostOfLivingSnapshot,
+  inputHonesty: CostOfLivingInputHonesty,
+  coconut: CoconutIndex | undefined,
+): CostOfLivingSnapshot {
+  return {
+    ...snapshot,
+    inputHonesty,
+    coconut,
+  };
+}
 
 export function getCostOfLivingSnapshot(): CostOfLivingSnapshot {
   return seedSnapshot;
@@ -18,29 +54,34 @@ export async function getCostOfLivingData(): Promise<CostOfLivingSnapshot> {
   ]);
 
   let fuelPrice = seedSnapshot.fuelPricePetrol92;
-  let liveFuel = false;
+  let fuelHonesty: CostOfLivingInputHonesty["fuel"] = "seed";
   if (fuelResult.status === "fulfilled") {
     const petrol92 = pickCpcPrice(fuelResult.value.prices, "petrol_92");
     if (petrol92?.price_lkr) {
       fuelPrice = Math.round(petrol92.price_lkr);
-      liveFuel = true;
+      fuelHonesty = "live";
     }
   }
 
   let foodBasketNational = seedSnapshot.districts.find((d) => d.slug === "colombo")
     ?.foodBasketLkr;
-  let liveFood = false;
-  if (foodResult.status === "fulfilled" && foodResult.value.provenance !== "seed") {
-    foodBasketNational = foodResult.value.essentialsBasketLkr;
-    liveFood = true;
+  let foodSnapshot: FoodSnapshot = seedFoodSnapshot;
+  let foodHonesty: CostOfLivingInputHonesty["food"] = "seed";
+  if (foodResult.status === "fulfilled") {
+    foodSnapshot = foodResult.value;
+    foodHonesty = foodResult.value.provenance;
+    if (foodResult.value.provenance !== "seed") {
+      foodBasketNational = foodResult.value.essentialsBasketLkr;
+    }
   }
+  const coconut = extractCoconutIndex(foodSnapshot);
 
-  let liveProperty = false;
+  let propertyHonesty: CostOfLivingInputHonesty["property"] = "seed";
   const propertyBySlug = new Map<string, number>();
   if (propertyResult.status === "fulfilled") {
     const property = propertyResult.value;
     if (property.sourceId !== "propertylk_seed") {
-      liveProperty = true;
+      propertyHonesty = "live";
       const colombo =
         property.districts.find((d) => d.slug === "colombo")?.medianPerPerch ?? 1;
       for (const district of property.districts) {
@@ -52,9 +93,19 @@ export async function getCostOfLivingData(): Promise<CostOfLivingSnapshot> {
     }
   }
 
-  const liveInputs = liveFuel || liveFood || liveProperty;
+  const inputHonesty: CostOfLivingInputHonesty = {
+    fuel: fuelHonesty,
+    property: propertyHonesty,
+    food: foodHonesty,
+    coconut: foodHonesty,
+  };
+
+  const liveInputs =
+    fuelHonesty === "live" ||
+    foodHonesty !== "seed" ||
+    propertyHonesty === "live";
   if (!liveInputs) {
-    return seedSnapshot;
+    return withCostOfLivingMetadata(seedSnapshot, inputHonesty, coconut);
   }
 
   const seedColomboFood =
@@ -98,14 +149,18 @@ export async function getCostOfLivingData(): Promise<CostOfLivingSnapshot> {
     ranked.reduce((sum, district) => sum + district.index, 0) / ranked.length,
   );
 
-  return {
-    sourceId: "cost_of_living_composite",
-    sourceName: "Lankawa cost of living composite",
-    asOf: new Date().toISOString().slice(0, 10),
-    nationalIndex,
-    fuelPricePetrol92: fuelPrice,
-    districts: ranked,
-  };
+  return withCostOfLivingMetadata(
+    {
+      sourceId: "cost_of_living_composite",
+      sourceName: "Lankawa cost of living composite",
+      asOf: new Date().toISOString().slice(0, 10),
+      nationalIndex,
+      fuelPricePetrol92: fuelPrice,
+      districts: ranked,
+    },
+    inputHonesty,
+    coconut,
+  );
 }
 
 export function getCostOfLivingForDistrict(

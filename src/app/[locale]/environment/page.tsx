@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { EnvironmentDistrictTable } from "@/components/EnvironmentDistrictTable";
+import { LandChangePulse } from "@/components/LandChangePulse";
 import { Link } from "@/i18n/navigation";
 import { getEnvironmentData } from "@/lib/environment";
 import { getSourceProvenancePath } from "@/lib/sources";
@@ -31,6 +32,8 @@ export default async function EnvironmentPage({
       </div>
 
       <EnvironmentDistrictTable locale={locale} districts={snapshot.districts} />
+
+      <LandChangePulse locale={locale} />
 
       <p className="text-sm text-slate-500">
         {t("healthLink")}{" "}

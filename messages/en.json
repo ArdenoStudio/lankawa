@@ -593,6 +593,21 @@
     "asOf": "As of {date}",
     "noTimestamp": "No timestamp"
   },
+  "citation": {
+    "label": "Citation",
+    "copy": "Copy citation",
+    "copied": "Citation copied.",
+    "error": "Could not copy citation.",
+    "source": "Source:",
+    "asOf": "as of {date}",
+    "disclaimer": "Not an official government publication."
+  },
+  "export": {
+    "png": "Export PNG",
+    "preparing": "Preparing PNG...",
+    "ready": "PNG downloaded.",
+    "error": "Could not export chart."
+  },
   "sources": {
     "title": "Data Sources",
     "subtitle": "Every metric on Lankawa traces back to a registered source with freshness and methodology.",
@@ -816,10 +831,19 @@
     "asOf": "As of {date}",
     "nationalIndex": "National index (100 baseline)",
     "fuelPrice": "Petrol 92 reference",
+    "coconutIndex": "Coconut Index",
     "compareCta": "Compare districts",
     "compareLink": "Open compare",
     "foodLink": "Food price module",
     "foodLinkCta": "View FoodLK pulse",
+    "honestyTitle": "Input honesty",
+    "honestyFuel": "Fuel",
+    "honestyProperty": "Property",
+    "honestyFood": "Food",
+    "honestyCoconut": "Coconut",
+    "honestyValueLive": "live",
+    "honestyValueSeed": "seed",
+    "honestyValueLifeFederation": "life_federation",
     "tableTitle": "Ranked by index",
     "rank": "Rank",
     "district": "District",
@@ -955,6 +979,7 @@
     "costOfLivingLink": "Cost of living",
     "costOfLivingCta": "View composite COL index",
     "staplesTitle": "Staple prices",
+    "coconutIndexBadge": "Coconut Index",
     "perUnit": "per {unit}",
     "tableTitle": "District meal costs",
     "tableSubtitle": "Estimated daily meal cost and monthly food basket by district.",
@@ -1276,8 +1301,9 @@
     "inputFuel": "Octane CPC petrol 92 reference price (national).",
     "inputProperty": "PropertyLK district median land bands, Colombo-normalized for the property component.",
     "inputFood": "FoodLK or Ariva Life essentials basket when available; otherwise seed food basket estimates.",
+    "inputCoconut": "Coconut is extracted from the food staple items as a visible COL food signal, with live, life_federation, or seed provenance.",
     "methodTitle": "Composite method",
-    "methodBody": "When live federation inputs are available, Lankawa refreshes the national petrol reference and rescales district food baskets from the essentials estimate. Property components use live PropertyLK medians relative to Colombo. District ranks come from a blended index (seed structure + live components). If partners are offline, the published seed snapshot is shown with seed provenance.",
+    "methodBody": "When live federation inputs are available, Lankawa refreshes the national petrol reference and rescales district food baskets from the essentials estimate. Property components use live PropertyLK medians relative to Colombo. The Coconut Index surfaces the coconut staple price used by the food signal. District ranks come from a blended index (seed structure + live components). If partners are offline, the published seed snapshot is shown with seed provenance.",
     "limitsTitle": "Limits",
     "limitsBody": "This is not official NCPI, CCPI, or Department of Census and Statistics HIES data. It is a civic comparison tool with provenance badges. Do not use it for wage setting or formal inflation claims."
   },
@@ -1290,5 +1316,16 @@
     "openDistrict": "Open district page",
     "pin": "Pin as home",
     "unpin": "Unpin home"
+  },
+  "landChange": {
+    "title": "Land Change Pulse",
+    "subtitle": "District greenery and built-up change since 2018 — a morning-sized land signal, not a satellite gallery.",
+    "asOf": "As of {date}",
+    "greeneryNational": "National greenery index Δ",
+    "builtUpNational": "National built-up index Δ",
+    "points2018to2024": "pts (2018→2024)",
+    "topGreeneryLoss": "Largest greenery declines",
+    "topBuiltUpGain": "Largest built-up gains",
+    "attribution": "Lankawa indices are our own district aggregation for civic pulse use. Research prior art: Team Watchdog satellite2024 (MIT). Not official Survey Department land use — do not treat as legal zoning."
   }
 }
