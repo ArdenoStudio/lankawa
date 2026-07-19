@@ -587,6 +587,15 @@
       "source": "මූලාශ්‍රය",
       "decision": "PUCSL ගෘහස්ථ ගාස්තු",
       "none": "—"
+    },
+    "worldPump": {
+      "title": "Regional pump compare",
+      "subtitle": "Sri Lanka petrol 92 vs curated South/Southeast Asia retail peers (USD/L).",
+      "seedBadge": "Seed",
+      "liveBadge": "Live",
+      "asOf": "Peer seed as of {date}",
+      "methodology": "Methodology:",
+      "empty": "Regional pump comparison unavailable."
     }
   },
   "search": {
@@ -724,7 +733,8 @@
     "adapters": {
       "api": "API ඒකාබද්ධතාව",
       "scrape": "කාලසටහන් scrape",
-      "partner": "හවුල්කරු feed"
+      "partner": "හවුල්කරු feed",
+      "seed": "Seed snapshot"
     }
   },
   "developers": {
@@ -931,7 +941,9 @@
     "international": "International",
     "domestic": "Domestic",
     "noResults": "No transport entries match your filters.",
-    "disclaimer": "Static seed directory — representative routes and stations only."
+    "disclaimer": "Static seed directory — representative routes and stations only.",
+    "vehiclesLink": "Vehicle market pulse",
+    "vehiclesLinkCta": "View district vehicle medians"
   },
   "costOfLiving": {
     "title": "Cost of Living Index",

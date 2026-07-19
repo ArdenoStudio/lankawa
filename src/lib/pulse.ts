@@ -16,7 +16,7 @@ import { buildWeatherPulseMetric } from "./integrations/weather";
 import { formatPropertyPrice } from "./property";
 import { formatVehiclePrice } from "./vehicle";
 import { getSource, getSourceProvenancePath } from "./sources";
-import type { FreshnessTier, PulseMetric, PulseSnapshot, SourceHealth } from "./types";
+import type { PulseMetric, PulseSnapshot, SourceHealth } from "./types";
 
 export const TODAY_METRIC_IDS = [
   "usd_lkr",

@@ -2,6 +2,19 @@ import type { SourceCategory, SourceDefinition } from "./types";
 
 export const SOURCES: SourceDefinition[] = [
   {
+    id: "world_pump_seed",
+    name: "Regional pump seed",
+    category: "economy",
+    adapter: "seed",
+    url: "https://lankawa.vercel.app/economy",
+    cadenceMinutes: 10080,
+    description:
+      "Curated regional retail petrol pump USD/L peers for comparison with Sri Lanka CPC petrol 92. Not a live global fuel API.",
+    methodology:
+      "Peer rows are a dated seed snapshot. Sri Lanka is computed live as Octane CPC petrol 92 LKR/L divided by CBSL USD/LKR when both are available. Labeled seed vs live in the Economy world-pump card.",
+    metrics: ["regional_petrol_usd_per_litre"],
+  },
+  {
     id: "octane_fuel",
     name: "Octane Fuel API",
     category: "transport",

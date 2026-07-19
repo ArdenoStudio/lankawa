@@ -3,6 +3,12 @@
   "entries": [
     {
       "date": "2026-07-19",
+      "id": "world-pump-seed",
+      "title": "Regional world-pump compare",
+      "summary": "Economy card compares live Sri Lanka petrol 92 (USD/L) with curated regional seed peers."
+    },
+    {
+      "date": "2026-07-19",
       "id": "retention-wave",
       "title": "Brief ledger, cricket 24h, news clusters, offline shell",
       "summary": "Morning fact ledger + locale brief templates, cricket post-match/economy card, Jaccard news clusters, and PWA offline morning shell."

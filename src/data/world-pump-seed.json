@@ -1,0 +1,33 @@
+{
+  "sourceId": "world_pump_seed",
+  "sourceName": "Lankawa regional pump seed",
+  "asOf": "2026-07-01",
+  "unit": "USD/L",
+  "methodologyNote": "Indicative retail petrol pump prices for regional context only. Sri Lanka row is derived from Octane CPC petrol 92 when live; peers are a curated seed snapshot, not a live global API. Not an official government series.",
+  "peers": [
+    {
+      "id": "india",
+      "name": "India",
+      "petrolUsdPerLitre": 1.18,
+      "note": "Metro retail average (seed)"
+    },
+    {
+      "id": "bangladesh",
+      "name": "Bangladesh",
+      "petrolUsdPerLitre": 1.05,
+      "note": "Dhaka retail (seed)"
+    },
+    {
+      "id": "pakistan",
+      "name": "Pakistan",
+      "petrolUsdPerLitre": 0.98,
+      "note": "Karachi retail (seed)"
+    },
+    {
+      "id": "thailand",
+      "name": "Thailand",
+      "petrolUsdPerLitre": 1.22,
+      "note": "Bangkok retail (seed)"
+    }
+  ]
+}

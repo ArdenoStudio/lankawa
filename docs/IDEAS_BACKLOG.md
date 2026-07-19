@@ -30,7 +30,7 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 
 - Suba Delta / Week Ledger / home-district pin (localStorage) ✅ (week ledger + home pin + morning deltas)
 - Alert pins + morning brief email + Atom delta feeds ✅ (pins + brief opt-in shipped; Atom news feed already live; ops docs in DEPLOYMENT.md)
-- Economy: FX buy–sell band, Octane revision steps, world pump compare ✅ (band/remittance + CPC revision steps shipped; world pump deferred)
+- Economy: FX buy–sell band, Octane revision steps, world pump compare ✅ (band/remittance + CPC revision steps shipped; world pump seed card shipped)
 - Disaster map + DMC landslide + NBRO baseline ✅
 - Trilingual AI brief (fact-ledger + downgrade ladder) ✅ (pulse fact ledger + locale topic templates + mode ladder)
 - Cricket: economy card + post-match 24h metric (CricAPI 100/day) ✅
