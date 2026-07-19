@@ -1,12 +1,18 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CseMarketCard } from "@/components/CseMarketCard";
-import { FuelHistoryChart, FxSparkline, MacroIndicatorCard } from "@/components/EconomyCards";
+import {
+  FuelHistoryChart,
+  FxSparkline,
+  LpgPriceCard,
+  MacroIndicatorCard,
+} from "@/components/EconomyCards";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
 import { PulseCard } from "@/components/PulseCard";
 import { RemittanceCalculator } from "@/components/RemittanceCalculator";
 import { Link } from "@/i18n/navigation";
 import { getEconomyMacroSnapshot, getFxSeries, getLatestFxRate } from "@/lib/economy";
 import { fetchLatestCbslGoldRate } from "@/lib/integrations/cbsl";
+import { fetchLpgPriceSnapshot } from "@/lib/integrations/lpg";
 import { getFuelHistorySeries } from "@/lib/fuel";
 import { buildCseSnapshot } from "@/lib/integrations/cse";
 import { buildPulseSnapshot } from "@/lib/pulse";
@@ -27,6 +33,7 @@ export default async function EconomyPage({
   const fuelHistory = await getFuelHistorySeries(90);
   const cseSnapshot = await buildCseSnapshot();
   const goldRate = await fetchLatestCbslGoldRate();
+  const lpgSnapshot = await fetchLpgPriceSnapshot();
   const economyMetrics = snapshot.metrics.filter((metric) =>
     ["usd_lkr", "fuel_petrol_92", "fuel_diesel"].includes(metric.id),
   );
@@ -80,6 +87,21 @@ export default async function EconomyPage({
               </p>
             </article>
           ) : null}
+          <LpgPriceCard
+            snapshot={lpgSnapshot}
+            locale={locale}
+            labels={{
+              eyebrow: t("lpg.eyebrow"),
+              title: t("lpg.title"),
+              subtitle: t("lpg.subtitle"),
+              cylinder12_5: t("lpg.cylinder12_5"),
+              asOf: t("lpg.asOf", {
+                date: new Date(lpgSnapshot.asOf).toLocaleDateString(locale),
+              }),
+              source: t("lpg.source"),
+              seed: t("lpg.seed"),
+            }}
+          />
         </div>
       </section>
 

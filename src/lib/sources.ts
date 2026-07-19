@@ -54,6 +54,19 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["gold_lkr_troy_ounce"],
   },
   {
+    id: "lpg_cylinder_prices",
+    name: "Sri Lanka LPG cylinder prices",
+    category: "economy",
+    url: "https://www.litrogas.com/price-list/",
+    cadenceMinutes: 1440,
+    adapter: "scrape",
+    description:
+      "Household LPG refill prices for Sri Lanka from public Litro and LAUGFS price list pages.",
+    methodology:
+      "Lankawa probes the public Litro and LAUGFS LPG price-list pages with short server-side timeouts and parses district refill tables for 12.5 kg, 5 kg, and smaller domestic cylinders. If both pages are unavailable or their table shape changes, the economy page shows a clearly labeled July 2026 seed snapshot for Colombo household cylinders.",
+    metrics: ["lpg_12_5kg_colombo", "lpg_5kg_colombo"],
+  },
+  {
     id: "election_commission_2024",
     name: "Election Commission of Sri Lanka",
     category: "civic",

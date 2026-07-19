@@ -15,7 +15,7 @@ function sourceLabel(
   return labels[sourceId] ?? feed?.name ?? sourceId;
 }
 
-export async function NewsPulse() {
+export async function NewsPulse({ headlineLimit = 5 }: { headlineLimit?: number }) {
   const t = await getTranslations("news");
 
   let pulse;
@@ -34,7 +34,7 @@ export async function NewsPulse() {
   }
 
   const { metric } = buildNewsPulseMetric(new Date().toISOString(), pulse);
-  const headlines = pulse.headlines.slice(0, 5);
+  const headlines = pulse.headlines.slice(0, headlineLimit);
   const sourceLabels = {
     daily_mirror: t("sourceMirror"),
     ada_derana: t("sourceAda"),

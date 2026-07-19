@@ -42,7 +42,11 @@
     "governance": "ஆளுமை",
     "data": "தரவு",
     "about": "பற்றி",
-    "learn": "வழிகாட்டிகள்"
+    "learn": "வழிகாட்டிகள்",
+    "dataSaver": "Data Saver",
+    "dataSaverOn": "On",
+    "dataSaverOff": "Off",
+    "dataSaverToggle": "Data Saver mode மாற்று"
   },
   "home": {
     "eyebrow": "இலங்கையின் சிவில் தளம்",
@@ -192,6 +196,14 @@
     "sourceMirror": "Daily Mirror",
     "sourceAda": "Ada Derana",
     "feed": "Atom feed"
+  },
+  "shareMorning": {
+    "title": "Lankawa morning check",
+    "button": "காலை சரிபார்ப்பை பகிர்",
+    "hint": "இருந்தால் share sheet பயன்படுத்தும்; இல்லையெனில் text copy செய்யும்.",
+    "copied": "காலை சரிபார்ப்பு copy செய்யப்பட்டது.",
+    "error": "பகிர முடியவில்லை. பக்கத்திலிருந்து copy செய்யுங்கள்.",
+    "footer": "Source: Lankawa"
   },
   "brief": {
     "eyebrow": "காலை சுருக்கம்",
@@ -439,6 +451,15 @@
       "unit": "ஒரு troy ounceக்கு",
       "asOf": "{date} நிலவரப்படி",
       "provenance": "மூலம்"
+    },
+    "lpg": {
+      "eyebrow": "வீட்டு LPG",
+      "title": "சிலிண்டர் விலைகள்",
+      "subtitle": "கொழும்பு 12.5 kg refill குறிப்பு",
+      "cylinder12_5": "12.5 kg refill",
+      "asOf": "{date} நிலவரப்படி",
+      "source": "மூலம்",
+      "seed": "Seed snapshot"
     },
     "remittance": {
       "title": "Remittance calculator",
@@ -1238,6 +1259,12 @@
   },
   "a11y": {
     "skipToContent": "முதன்மை உள்ளடக்கத்திற்குச் செல்"
+  },
+  "dataSaver": {
+    "mapPendingTitle": "Map தயார் செய்கிறது",
+    "mapPendingBody": "Interactive map load செய்ய முன் Data Saver சரிபார்க்கிறது.",
+    "mapSkippedTitle": "Data Saver காரணமாக map தவிர்க்கப்பட்டது",
+    "mapSkippedBody": "Interactive map load செய்ய header-ல் Data Saver off செய்யுங்கள்."
   },
   "costOfLivingMethodology": {
     "title": "வாழ்க்கைச் செலவு முறைமை",

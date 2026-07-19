@@ -42,7 +42,11 @@
     "governance": "පාලනය",
     "data": "දත්ත",
     "about": "ගැන",
-    "learn": "මගපෙන්වීම්"
+    "learn": "මගපෙන්වීම්",
+    "dataSaver": "Data Saver",
+    "dataSaverOn": "On",
+    "dataSaverOff": "Off",
+    "dataSaverToggle": "Data Saver mode මාරු කරන්න"
   },
   "home": {
     "eyebrow": "ශ්‍රී ලංකාවේ සිවිල් වේදිකාව",
@@ -192,6 +196,14 @@
     "sourceMirror": "Daily Mirror",
     "sourceAda": "Ada Derana",
     "feed": "Atom පෝෂණය"
+  },
+  "shareMorning": {
+    "title": "Lankawa morning check",
+    "button": "උදෑසන පරීක්ෂාව share කරන්න",
+    "hint": "හැකි නම් share sheet භාවිතා කරයි; නැත්නම් text copy කරයි.",
+    "copied": "උදෑසන පරීක්ෂාව copy විය.",
+    "error": "Share කළ නොහැකි විය. පිටුවෙන් copy කරන්න.",
+    "footer": "Source: Lankawa"
   },
   "brief": {
     "eyebrow": "උදෑසන සාරාංශය",
@@ -439,6 +451,15 @@
       "unit": "Troy ounce එකකට",
       "asOf": "{date} වන විට",
       "provenance": "මූලාශ්‍රය"
+    },
+    "lpg": {
+      "eyebrow": "ගෘහස්ථ LPG",
+      "title": "සිලින්ඩර් මිල",
+      "subtitle": "කොළඹ 12.5 kg refill යොමුව",
+      "cylinder12_5": "12.5 kg refill",
+      "asOf": "{date} වන විට",
+      "source": "මූලාශ්‍රය",
+      "seed": "Seed snapshot"
     },
     "remittance": {
       "title": "Remittance calculator",
@@ -1238,6 +1259,12 @@
   },
   "a11y": {
     "skipToContent": "ප්‍රධාන අන්තර්ගතය වෙත යන්න"
+  },
+  "dataSaver": {
+    "mapPendingTitle": "Map එක සූදානම් කරමින්",
+    "mapPendingBody": "Interactive map load කිරීමට පෙර Data Saver පරීක්ෂා කරයි.",
+    "mapSkippedTitle": "Data Saver නිසා map එක skip කළා",
+    "mapSkippedBody": "Interactive map load කිරීමට header එකේ Data Saver off කරන්න."
   },
   "costOfLivingMethodology": {
     "title": "ජීවන වියදම් ක්‍රමවේදය",

@@ -5,6 +5,7 @@ import { Inter, Noto_Sans_Sinhala, Noto_Sans_Tamil } from "next/font/google";
 import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { DataSaverProvider } from "@/components/DataSaverProvider";
 import { PwaRegister } from "@/components/PwaRegister";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { routing } from "@/i18n/routing";
@@ -108,20 +109,22 @@ export default async function LocaleLayout({
         className={`${calSans.variable} ${inter.variable} ${notoSinhala.variable} ${notoTamil.variable} min-h-full bg-slate-950 font-sans text-slate-100 antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
-          <a href="#main-content" className="lk-skip-link">
-            {tA11y("skipToContent")}
-          </a>
-          <PwaRegister />
-          <InstallPrompt />
-          <SiteHeader />
-          <main
-            id="main-content"
-            tabIndex={-1}
-            className="mx-auto flex min-h-[calc(100vh-8rem)] w-full max-w-6xl flex-1 flex-col px-4 py-8 md:py-10"
-          >
-            {children}
-          </main>
-          <SiteFooter />
+          <DataSaverProvider>
+            <a href="#main-content" className="lk-skip-link">
+              {tA11y("skipToContent")}
+            </a>
+            <PwaRegister />
+            <InstallPrompt />
+            <SiteHeader />
+            <main
+              id="main-content"
+              tabIndex={-1}
+              className="mx-auto flex min-h-[calc(100vh-8rem)] w-full max-w-6xl flex-1 flex-col px-4 py-8 md:py-10"
+            >
+              {children}
+            </main>
+            <SiteFooter />
+          </DataSaverProvider>
         </NextIntlClientProvider>
       </body>
     </html>

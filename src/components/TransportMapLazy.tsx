@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { DataSaverMapFallback } from "@/components/DataSaverMapFallback";
+import { useDataSaver } from "@/components/DataSaverProvider";
 
 const TransportMap = dynamic(
   () => import("@/components/TransportMap").then((mod) => mod.TransportMap),
@@ -15,5 +17,15 @@ const TransportMap = dynamic(
 );
 
 export function TransportMapLazy() {
+  const { enabled, hydrated } = useDataSaver();
+
+  if (!hydrated) {
+    return <DataSaverMapFallback height={320} pending />;
+  }
+
+  if (enabled) {
+    return <DataSaverMapFallback height={320} />;
+  }
+
   return <TransportMap />;
 }

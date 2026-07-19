@@ -7,6 +7,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { GlobalSearch } from "@/components/GlobalSearch";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 import { Logo } from "@/components/brand/Logo";
+import { useDataSaver } from "@/components/DataSaverProvider";
 
 const primaryLinks = [
   { href: "/districts", key: "districts" },
@@ -194,6 +195,8 @@ function MoreDropdown({ pathname }: { pathname: string }) {
 export function SiteHeader() {
   const t = useTranslations("nav");
   const pathname = usePathname();
+  const { enabled: dataSaverEnabled, hydrated, toggle: toggleDataSaver } =
+    useDataSaver();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -237,6 +240,24 @@ export function SiteHeader() {
           <LocaleSwitcher />
           <button
             type="button"
+            onClick={toggleDataSaver}
+            aria-pressed={hydrated ? dataSaverEnabled : false}
+            aria-label={t("dataSaverToggle")}
+            className={`hidden rounded-full border px-3 py-1.5 text-xs font-medium transition sm:inline-flex ${
+              hydrated && dataSaverEnabled
+                ? "border-white bg-white text-black"
+                : "border-white/10 text-slate-300 hover:bg-white/5 hover:text-white"
+            }`}
+          >
+            {t("dataSaver")}{" "}
+            <span className="ml-1 text-[10px] uppercase tracking-wide">
+              {hydrated && dataSaverEnabled
+                ? t("dataSaverOn")
+                : t("dataSaverOff")}
+            </span>
+          </button>
+          <button
+            type="button"
             className="inline-flex items-center justify-center rounded-full border border-white/10 p-2 text-slate-200 hover:bg-white/5 lg:hidden"
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
@@ -272,6 +293,23 @@ export function SiteHeader() {
           id="mobile-nav"
           className="border-t border-white/10 px-4 py-4 lg:hidden"
         >
+          <div className="mb-4 sm:hidden">
+            <button
+              type="button"
+              onClick={toggleDataSaver}
+              aria-pressed={hydrated ? dataSaverEnabled : false}
+              className={`w-full rounded-full border px-3 py-2 text-sm font-medium transition ${
+                hydrated && dataSaverEnabled
+                  ? "border-white bg-white text-black"
+                  : "border-white/10 text-slate-300 hover:bg-white/5 hover:text-white"
+              }`}
+            >
+              {t("dataSaver")} ·{" "}
+              {hydrated && dataSaverEnabled
+                ? t("dataSaverOn")
+                : t("dataSaverOff")}
+            </button>
+          </div>
           <div className="space-y-5">
             {mobileSections.map((section) => (
               <div key={section.key}>

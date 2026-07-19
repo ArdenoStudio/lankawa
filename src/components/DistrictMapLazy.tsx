@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { DataSaverMapFallback } from "@/components/DataSaverMapFallback";
+import { useDataSaver } from "@/components/DataSaverProvider";
 import type { DistrictMapProps } from "@/components/DistrictMap";
 
 const DistrictMap = dynamic(
@@ -16,5 +18,16 @@ const DistrictMap = dynamic(
 );
 
 export function DistrictMapLazy(props: DistrictMapProps) {
+  const { enabled, hydrated } = useDataSaver();
+  const height = props.height ?? 420;
+
+  if (!hydrated) {
+    return <DataSaverMapFallback height={height} pending />;
+  }
+
+  if (enabled) {
+    return <DataSaverMapFallback height={height} />;
+  }
+
   return <DistrictMap {...props} />;
 }

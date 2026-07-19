@@ -22,7 +22,7 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 | Home district pin + PWA shell | Retention/offline | ✅ |
 | Monochrome signed deltas | A11y after B&W | ✅ |
 | CBSL gold card on `/economy` | High habit, reuses CBSL | D next |
-| LAUGFS LPG scrape + Litro image path | Household energy | D |
+| LAUGFS/Litro LPG scrape + seed fallback | Household energy | D partial ✅ |
 | Met Dept WARNING/ADVISORY card | Disaster | F |
 | Coconut Index flow/root UI | COL honesty | F1 |
 
@@ -39,7 +39,13 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 - PWA offline morning shell + habit-gated install
 - NCPI monthly + PUCSL tariff blocks
 - Remittance calculator for diaspora
-- Village WhatsApp share cards + Data Saver mode
+- Village WhatsApp share cards + Data Saver mode ✅ (morning check share + local Data Saver shipped; village cards still open)
+
+## Recently shipped / partial
+
+- Household LPG card: `/economy` now probes public Litro/LAUGFS price-list pages and shows a clearly labeled July 2026 seed snapshot if scraping fails.
+- Data Saver mode: header toggle persists `lankawa_data_saver`, skips cricket visually, caps home news at 5 headlines, and avoids loading heavy map bundles where possible.
+- Share morning check: home Today section now shares FX, fuel, weather, and power via Web Share API or copies plain text for WhatsApp/manual sharing.
 
 ## Explicitly defer
 

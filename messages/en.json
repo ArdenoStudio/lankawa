@@ -42,7 +42,11 @@
     "governance": "Governance",
     "data": "Data",
     "about": "About",
-    "learn": "Guides"
+    "learn": "Guides",
+    "dataSaver": "Data Saver",
+    "dataSaverOn": "On",
+    "dataSaverOff": "Off",
+    "dataSaverToggle": "Toggle Data Saver mode"
   },
   "home": {
     "eyebrow": "Sri Lanka's civic platform",
@@ -89,6 +93,12 @@
   },
   "a11y": {
     "skipToContent": "Skip to main content"
+  },
+  "dataSaver": {
+    "mapPendingTitle": "Preparing map",
+    "mapPendingBody": "Checking Data Saver before loading the interactive map.",
+    "mapSkippedTitle": "Map skipped in Data Saver",
+    "mapSkippedBody": "Turn Data Saver off in the header to load the interactive map."
   },
   "modules": {
     "districts": {
@@ -195,6 +205,14 @@
     "sourceMirror": "Daily Mirror",
     "sourceAda": "Ada Derana",
     "feed": "Atom feed"
+  },
+  "shareMorning": {
+    "title": "Lankawa morning check",
+    "button": "Share morning check",
+    "hint": "Uses your share sheet when available, otherwise copies text.",
+    "copied": "Morning check copied.",
+    "error": "Could not share. Try copying from the page.",
+    "footer": "Source: Lankawa"
   },
   "brief": {
     "eyebrow": "Morning brief",
@@ -442,6 +460,15 @@
       "unit": "Per troy ounce",
       "asOf": "As of {date}",
       "provenance": "Source"
+    },
+    "lpg": {
+      "eyebrow": "Household LPG",
+      "title": "Cylinder prices",
+      "subtitle": "Colombo 12.5 kg refill reference",
+      "cylinder12_5": "12.5 kg refill",
+      "asOf": "As of {date}",
+      "source": "Source",
+      "seed": "Seed snapshot"
     },
     "remittance": {
       "title": "Remittance calculator",
