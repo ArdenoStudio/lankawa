@@ -19,38 +19,60 @@ assert.ok(flood.detail?.includes("ALERT"));
 const quiet = floodIsElevated([{ alertLevel: "NORMAL", count: 4 }]);
 assert.equal(quiet.elevated, false);
 
+const baseContext = {
+  fxAbsDeltaLkr: 1.2,
+  fxThresholdLkr: 1,
+  fxUnusual: false,
+  fxAnomalyDetail: null,
+  floodElevated: true,
+  floodDetail: "ALERT: 2",
+  floodRising: true,
+  floodRisingDetail: "Kelani rising 6.2 cm/h",
+  powerAttention: false,
+  powerDetail: null,
+  metWarning: true,
+  metDetail: "Amber advisory",
+  landslideAttention: true,
+  landslideDetail: "3 watch",
+  fireAttention: true,
+  fireDetail: "4 fire pins",
+  gdacsAttention: true,
+  gdacsDetail: "Orange TC nearby",
+};
+
 const fired = evaluateAlertPins(
-  ["fx_move", "flood", "power", "met", "landslide"],
-  {
-    fxAbsDeltaLkr: 1.2,
-    fxThresholdLkr: 1,
-    floodElevated: true,
-    floodDetail: "ALERT: 2",
-    powerAttention: false,
-    powerDetail: null,
-    metWarning: true,
-    metDetail: "Amber advisory",
-    landslideAttention: true,
-    landslideDetail: "3 watch",
-  },
+  [
+    "fx_move",
+    "flood",
+    "flood_rising",
+    "power",
+    "met",
+    "landslide",
+    "fire",
+    "gdacs",
+  ],
+  baseContext,
 );
 
 assert.deepEqual(
   fired.map((item) => item.id),
-  ["fx_move", "flood", "met", "landslide"],
+  ["fx_move", "flood", "flood_rising", "met", "landslide", "fire", "gdacs"],
 );
 
-const quietPins = evaluateAlertPins(["fx_move"], {
+const unusualOnly = evaluateAlertPins(["fx_move"], {
+  ...baseContext,
   fxAbsDeltaLkr: 0.2,
-  fxThresholdLkr: 1,
-  floodElevated: false,
-  floodDetail: null,
-  powerAttention: false,
-  powerDetail: null,
-  metWarning: false,
-  metDetail: null,
-  landslideAttention: false,
-  landslideDetail: null,
+  fxUnusual: true,
+  fxAnomalyDetail: "USD/LKR Δ +0.20 LKR · z≈2.8",
+});
+assert.equal(unusualOnly.length, 1);
+
+const quietPins = evaluateAlertPins(["fx_move", "flood_rising", "fire"], {
+  ...baseContext,
+  fxAbsDeltaLkr: 0.2,
+  fxUnusual: false,
+  floodRising: false,
+  fireAttention: false,
 });
 assert.equal(quietPins.length, 0);
 

@@ -233,6 +233,8 @@ function buildLandChangeCsv(): string {
     "builtUp2018",
     "builtUp2024",
     "builtUpDelta",
+    "ndviAnomaly",
+    "ndviWeekLabel",
     "sourceId",
     "asOf",
   ];
@@ -244,6 +246,8 @@ function buildLandChangeCsv(): string {
     builtUp2018: district.builtUp2018,
     builtUp2024: district.builtUp2024,
     builtUpDelta: district.builtUpDelta,
+    ndviAnomaly: district.ndviAnomaly,
+    ndviWeekLabel: district.ndviWeekLabel,
     sourceId: snapshot.sourceId,
     asOf: snapshot.asOf,
   }));

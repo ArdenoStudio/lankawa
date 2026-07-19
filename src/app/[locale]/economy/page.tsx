@@ -14,10 +14,12 @@ import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBa
 import { NcpiInflationCard } from "@/components/NcpiInflationCard";
 import { PucslTariffCard } from "@/components/PucslTariffCard";
 import { PulseCard } from "@/components/PulseCard";
+import { RemittanceBoard } from "@/components/RemittanceBoard";
 import { RemittanceCalculator } from "@/components/RemittanceCalculator";
 import { WorldPumpCompare } from "@/components/WorldPumpCompare";
 import { Link } from "@/i18n/navigation";
 import { getEconomyMacroSnapshot, getFxSeries, getLatestFxRate } from "@/lib/economy";
+import { computeFxAnomaly } from "@/lib/fx-anomaly";
 import { getForeignDebtSnapshot } from "@/lib/foreign-debt";
 import { fetchLatestCbslGoldRate } from "@/lib/integrations/cbsl";
 import { fetchLpgPriceSnapshot } from "@/lib/integrations/lpg";
@@ -26,6 +28,7 @@ import { buildCseSnapshot } from "@/lib/integrations/cse";
 import { getNcpiSnapshot } from "@/lib/ncpi";
 import { getPucslTariffSnapshot } from "@/lib/pucsl";
 import { buildPulseSnapshot } from "@/lib/pulse";
+import { getRemittanceTtSnapshot } from "@/lib/remittance";
 import { getSource, getSourceProvenancePath } from "@/lib/sources";
 import { getWorldPumpSnapshot } from "@/lib/world-pump";
 
@@ -40,7 +43,9 @@ export default async function EconomyPage({
   const snapshot = await buildPulseSnapshot();
   const macro = getEconomyMacroSnapshot();
   const fxSeries = await getFxSeries();
+  const fxAnomaly = computeFxAnomaly(fxSeries);
   const latestFxRate = await getLatestFxRate();
+  const remittanceTt = getRemittanceTtSnapshot();
   const [fuelHistory, fuelRevisions] = await Promise.all([
     getFuelHistorySeries(90),
     getFuelRevisionSteps(8),
@@ -165,6 +170,7 @@ export default async function EconomyPage({
             series={fxSeries}
             asOf={macro.asOf}
             latestBand={latestFxRate}
+            anomaly={fxAnomaly}
             chartId="economy-fx-usd-lkr-chart"
             citation={{
               sourceName: fxSource?.name ?? "Central Bank of Sri Lanka",
@@ -175,6 +181,8 @@ export default async function EconomyPage({
               bandTitle: t("fxBandTitle"),
               buy: t("fxBuy"),
               sell: t("fxSell"),
+              anomaly: t("fxAnomaly"),
+              anomalyQuiet: t("fxAnomalyQuiet"),
             }}
           />
           <FuelHistoryChart
@@ -282,6 +290,23 @@ export default async function EconomyPage({
         </div>
       </section>
 
+      <RemittanceBoard
+        snapshot={remittanceTt}
+        labels={{
+          title: t("remittanceBoard.title"),
+          subtitle: t("remittanceBoard.subtitle"),
+          buy: t("remittanceBoard.buy"),
+          sell: t("remittanceBoard.sell"),
+          spread: t("remittanceBoard.spread"),
+          bestBuy: t("remittanceBoard.bestBuy"),
+          bestSell: t("remittanceBoard.bestSell"),
+          seed: t("remittanceBoard.seed"),
+          asOf: t("remittanceBoard.asOf"),
+          source: t("remittanceBoard.source"),
+          honesty: t("remittanceBoard.honesty"),
+        }}
+      />
+
       <RemittanceCalculator rates={latestFxRate} />
 
       <CseMarketCard
@@ -300,6 +325,15 @@ export default async function EconomyPage({
           turnover: t("cse.turnover"),
           fallbackNote: t("cse.fallbackNote"),
           noMovers: t("cse.noMovers"),
+          sectors: t("cse.sectors"),
+          mostActive: t("cse.mostActive"),
+          foreign: t("cse.foreign"),
+          domesticTrades: t("cse.domesticTrades"),
+          foreignTrades: t("cse.foreignTrades"),
+          foreignBuy: t("cse.foreignBuy"),
+          foreignSell: t("cse.foreignSell"),
+          noSectors: t("cse.noSectors"),
+          noActive: t("cse.noActive"),
         }}
       />
     </div>

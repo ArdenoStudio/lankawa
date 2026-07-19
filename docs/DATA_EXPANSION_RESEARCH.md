@@ -100,12 +100,12 @@ Avoid: LLM-invented numbers, stock tips, rainfall “forecast models” that dup
 ## Recommended ship order (after chart polish)
 
 ```
-1 FIRMS fire pins + GDACS on /disaster
-2 Open-Meteo UV + 7d rain on home morning check
-3 CSE wave-2: sectors + most active + foreign summary
-4 Bank remittance TT board (3 banks, seed fallback)
-5 FX anomaly badge + flood rate-of-rise pins
-6 Weekly NDVI district ETL (Watchdog land deepen)
+1 FIRMS fire pins + GDACS on /disaster          ✅ shipped (wave)
+2 Open-Meteo UV + 7d rain on home morning check ✅ shipped
+3 CSE wave-2: sectors + most active + foreign   ✅ shipped
+4 Bank remittance TT board (3 banks, seed)      ✅ shipped
+5 FX anomaly badge + flood rate-of-rise pins    ✅ shipped
+6 Weekly NDVI district ETL (Land Pulse deepen)  ✅ seed shipped (cron later)
 ```
 
 ---

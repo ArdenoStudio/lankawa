@@ -14,9 +14,12 @@ import { readAlertPins, writeAlertPins } from "@/lib/preferences";
 const PIN_HREF: Record<AlertPinId, string> = {
   fx_move: "/economy",
   flood: "/disaster",
+  flood_rising: "/disaster",
   power: "/disaster",
   met: "/disaster",
   landslide: "/disaster",
+  fire: "/disaster",
+  gdacs: "/disaster",
 };
 
 export function AlertPins({ context }: { context: AlertSignalContext }) {

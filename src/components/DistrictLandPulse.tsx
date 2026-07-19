@@ -32,7 +32,7 @@ export async function DistrictLandPulse({
         </Link>
       </div>
 
-      <dl className="grid gap-3 sm:grid-cols-2">
+      <dl className="grid gap-3 sm:grid-cols-3">
         <div className="rounded-xl border border-white/10 bg-black/20 p-4">
           <dt className="text-xs text-neutral-500">{t("greeneryDistrict")}</dt>
           <dd className="mt-1 text-2xl font-semibold text-white">
@@ -58,6 +58,14 @@ export async function DistrictLandPulse({
           <p className="mt-1 text-xs text-neutral-500">
             {row.builtUp2018} → {row.builtUp2024}
           </p>
+        </div>
+        <div className="rounded-xl border border-white/10 bg-black/20 p-4">
+          <dt className="text-xs text-neutral-500">{t("ndviDistrict")}</dt>
+          <dd className="mt-1 text-2xl font-semibold text-white">
+            {row.ndviAnomaly > 0 ? "+" : ""}
+            {row.ndviAnomaly.toFixed(2)}
+          </dd>
+          <p className="mt-1 text-xs text-neutral-500">{row.ndviWeekLabel}</p>
         </div>
       </dl>
 

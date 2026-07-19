@@ -89,7 +89,10 @@
     "depthEconomy": "ආර්ථිකය",
     "depthDisaster": "විපත්",
     "depthExplore": "ගවේෂණය",
-    "depthLearn": "මගපෙන්වීම්"
+    "depthLearn": "මගපෙන්වීම්",
+    "morningDeltaUv": "Colombo UV max",
+    "morningDeltaRain7d": "Colombo 7d rain",
+    "morningDeltaWeatherAsOf": "forecast as of {date}"
   },
   "modules": {
     "districts": {
@@ -479,7 +482,23 @@
     "mapMode_landslide": "Landslide",
     "mapError": "Unable to load district map",
     "mapLegendLandslide": "Brighter fills = watch/warning attention in the seed overlay.",
-    "mapLegendFlood": "National flood alert context — open district pages for station detail."
+    "mapLegendFlood": "National flood alert context — open district pages for station detail.",
+    "hazardTitle": "Satellite & regional hazards",
+    "hazardSubtitle": "NASA FIRMS fire pins over Sri Lanka and GDACS multi-hazard events in the wider Indian Ocean / South Asia window.",
+    "firesTitle": "Active fires (FIRMS)",
+    "firesEmpty": "No VIIRS fire detections in the Sri Lanka land box for the lookback window.",
+    "firesNeedsKey": "Set NASA_FIRMS_MAP_KEY to enable live FIRMS CSV pulls. Empty pins are shown until then — not a claim of zero fire risk.",
+    "firesCount": "{count} detections in window",
+    "firesBrightness": "Brightness",
+    "firesConfidence": "Confidence",
+    "gdacsTitle": "GDACS regional alerts",
+    "gdacsEmpty": "No GDACS events in the regional window right now.",
+    "gdacsAlertLevel": "Alert",
+    "gdacsEventType": "Type",
+    "gdacsCountry": "Country",
+    "gdacsReport": "GDACS report",
+    "firmsSource": "NASA FIRMS provenance",
+    "gdacsSource": "GDACS provenance"
   },
   "economy": {
     "title": "ආර්ථික නාඩි",
@@ -530,7 +549,7 @@
     },
     "cse": {
       "title": "කොළඹ වත්කම් හුවමාරුව",
-      "subtitle": "ASPI, S&P SL20 සහ CSE පුවරුවේ ප්‍රමුඛ චලනයන්",
+      "subtitle": "ASPI, S&P SL20, sectors, most active, and foreign participation from the public CSE board",
       "sourceName": "කොළඹ වත්කම් හුවමාරුව",
       "aspi": "ASPI",
       "snp": "S&P SL20",
@@ -542,7 +561,16 @@
       "turnover": "වෙළඳ පරිමාව",
       "fallbackNote": "සජීවී CSE දත්ත තාවකාලිකව ලබා ගත නොහැක. අවසන් cache snapshot එක පෙන්වයි.",
       "provenance": "දත්ත ප්‍රවේණිය",
-      "noMovers": "චලනයන් නොමැත"
+      "noMovers": "චලනයන් නොමැත",
+      "sectors": "Sectors",
+      "mostActive": "Most active",
+      "foreign": "Foreign vs domestic",
+      "domesticTrades": "Domestic trades",
+      "foreignTrades": "Foreign trades",
+      "foreignBuy": "Foreign purchase",
+      "foreignSell": "Foreign sales",
+      "noSectors": "No sector rows",
+      "noActive": "No active trades"
     },
     "debt": {
       "title": "විදේශ ණය සංයුතිය",
@@ -596,7 +624,22 @@
       "asOf": "Peer seed as of {date}",
       "methodology": "Methodology:",
       "empty": "Regional pump comparison unavailable."
-    }
+    },
+    "remittanceBoard": {
+      "title": "Bank TT remittance board",
+      "subtitle": "Indicative USD→LKR telegraphic-transfer style bands from major banks — compare beside the CBSL calculator.",
+      "buy": "Buy (LKR)",
+      "sell": "Sell (LKR)",
+      "spread": "Spread",
+      "bestBuy": "Best buy for senders",
+      "bestSell": "Best sell for receivers",
+      "seed": "Seed snapshot — not a live bank scrape yet.",
+      "asOf": "As of {date}",
+      "source": "Source provenance",
+      "honesty": "Indicative only. Bank fees, corridors, and same-day TT products differ. Not CBSL official rates."
+    },
+    "fxAnomaly": "Unusual day-over-day move",
+    "fxAnomalyQuiet": "Within recent MAD band"
   },
   "search": {
     "label": "ලංකාව search",
@@ -1468,11 +1511,15 @@
     "colGreenery": "හරිත",
     "colBuiltUp": "ගොඩනැගිලි",
     "districtTitle": "භූමි වෙනස",
-    "districtSubtitle": "මෙම දිස්ත්‍රික්කයේ හරිත සහ ගොඩනැගිලි දර්ශක වෙනස (2018→2024).",
+    "districtSubtitle": "Greenery, built-up, and weekly NDVI anomaly for this district.",
     "greeneryDistrict": "හරිත දර්ශක Δ",
     "builtUpDistrict": "ගොඩනැගිලි දර්ශක Δ",
     "viewNational": "ජාතික භූමි ස්පන්දනය",
-    "sourceLink": "මූලාශ්‍රය"
+    "sourceLink": "මූලාශ්‍රය",
+    "ndviNational": "Weekly NDVI anomaly",
+    "ndviHint": "Negative = greenery stress vs seasonal baseline (ETL-curated)",
+    "topNdviStress": "Top NDVI stress districts",
+    "ndviDistrict": "NDVI anomaly"
   },
   "landChangeMethodology": {
     "back": "පරිසරයට ආපසු",
@@ -1502,12 +1549,18 @@
     "pin_flood": "ගංවතුර ඉහළ",
     "pin_power": "විදුලි අවධානය",
     "pin_met": "කාලගුණ අනතුරු ඇඟවීම",
-    "help_fx_move": "Fire when USD/LKR day-over-day move is ≥ {threshold} LKR",
+    "help_fx_move": "Fire on large USD/LKR day moves or unusual MAD/z spikes",
     "help_flood": "Fire when river stations report elevated alert levels",
     "help_power": "Fire on CEB outage or scheduled interruption",
     "help_met": "Fire when Met Dept yellow/amber/red advisories are active",
     "pin_landslide": "Landslide watch",
-    "help_landslide": "Fire when highland districts show landslide watch/warning"
+    "help_landslide": "Fire when highland districts show landslide watch/warning",
+    "pin_flood_rising": "Flood rising",
+    "help_flood_rising": "Fire when elevated river gauges rise quickly (≥ ~5 cm/h)",
+    "pin_fire": "Fires (FIRMS)",
+    "help_fire": "Fire when NASA FIRMS detects active fires in Sri Lanka",
+    "pin_gdacs": "GDACS hazard",
+    "help_gdacs": "Fire on Orange/Red GDACS events in the regional window"
   },
   "weekLedger": {
     "title": "සති ලෙජර්",

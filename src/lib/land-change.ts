@@ -8,6 +8,8 @@ export interface LandChangeDistrict {
   builtUp2024: number;
   greeneryDelta: number;
   builtUpDelta: number;
+  ndviAnomaly: number;
+  ndviWeekLabel: string;
 }
 
 export interface LandChangeSnapshot {
@@ -22,10 +24,13 @@ export interface LandChangeSnapshot {
     builtUpIndex2024: number;
     greeneryDelta: number;
     builtUpDelta: number;
+    ndviAnomaly: number;
+    ndviWeekLabel: string;
   };
   districts: LandChangeDistrict[];
   topGreeneryLoss: LandChangeDistrict[];
   topBuiltUpGain: LandChangeDistrict[];
+  topNdviStress: LandChangeDistrict[];
 }
 
 const seed = landData;
@@ -37,6 +42,8 @@ function withDeltas(
     ...district,
     greeneryDelta: district.greenery2024 - district.greenery2018,
     builtUpDelta: district.builtUp2024 - district.builtUp2018,
+    ndviAnomaly: district.ndviAnomaly,
+    ndviWeekLabel: district.ndviWeekLabel,
   };
 }
 
@@ -48,6 +55,9 @@ export function getLandChangeSnapshot(): LandChangeSnapshot {
     .slice(0, 5);
   const topBuiltUpGain = [...districts]
     .sort((a, b) => b.builtUpDelta - a.builtUpDelta)
+    .slice(0, 5);
+  const topNdviStress = [...districts]
+    .sort((a, b) => a.ndviAnomaly - b.ndviAnomaly)
     .slice(0, 5);
 
   return {
@@ -61,10 +71,13 @@ export function getLandChangeSnapshot(): LandChangeSnapshot {
         seed.national.greeneryIndex2024 - seed.national.greeneryIndex2018,
       builtUpDelta:
         seed.national.builtUpIndex2024 - seed.national.builtUpIndex2018,
+      ndviAnomaly: seed.national.ndviAnomaly,
+      ndviWeekLabel: seed.national.ndviWeekLabel,
     },
     districts,
     topGreeneryLoss,
     topBuiltUpGain,
+    topNdviStress,
   };
 }
 

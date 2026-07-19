@@ -89,7 +89,10 @@
     "ardenoTitle": "Ardeno living-cost stack",
     "ardenoSubtitle": "Fuel, property, vehicles, and food — integrated in-platform from sister platforms.",
     "viewArdeno": "Open Ardeno hub",
-    "disclaimer": "Aggregated from public sources. Not an official government publication."
+    "disclaimer": "Aggregated from public sources. Not an official government publication.",
+    "morningDeltaUv": "Colombo UV max",
+    "morningDeltaRain7d": "Colombo 7d rain",
+    "morningDeltaWeatherAsOf": "forecast as of {date}"
   },
   "a11y": {
     "skipToContent": "Skip to main content"
@@ -488,7 +491,23 @@
     "mapMode_landslide": "Landslide",
     "mapError": "Unable to load district map",
     "mapLegendLandslide": "Brighter fills = watch/warning attention in the seed overlay.",
-    "mapLegendFlood": "National flood alert context — open district pages for station detail."
+    "mapLegendFlood": "National flood alert context — open district pages for station detail.",
+    "hazardTitle": "Satellite & regional hazards",
+    "hazardSubtitle": "NASA FIRMS fire pins over Sri Lanka and GDACS multi-hazard events in the wider Indian Ocean / South Asia window.",
+    "firesTitle": "Active fires (FIRMS)",
+    "firesEmpty": "No VIIRS fire detections in the Sri Lanka land box for the lookback window.",
+    "firesNeedsKey": "Set NASA_FIRMS_MAP_KEY to enable live FIRMS CSV pulls. Empty pins are shown until then — not a claim of zero fire risk.",
+    "firesCount": "{count} detections in window",
+    "firesBrightness": "Brightness",
+    "firesConfidence": "Confidence",
+    "gdacsTitle": "GDACS regional alerts",
+    "gdacsEmpty": "No GDACS events in the regional window right now.",
+    "gdacsAlertLevel": "Alert",
+    "gdacsEventType": "Type",
+    "gdacsCountry": "Country",
+    "gdacsReport": "GDACS report",
+    "firmsSource": "NASA FIRMS provenance",
+    "gdacsSource": "GDACS provenance"
   },
   "economy": {
     "title": "Economic Pulse",
@@ -539,7 +558,7 @@
     },
     "cse": {
       "title": "Colombo Stock Exchange",
-      "subtitle": "ASPI, S&P SL20, and top movers from the public CSE board",
+      "subtitle": "ASPI, S&P SL20, sectors, most active, and foreign participation from the public CSE board",
       "sourceName": "Colombo Stock Exchange",
       "aspi": "ASPI",
       "snp": "S&P SL20",
@@ -551,7 +570,16 @@
       "turnover": "Turnover",
       "fallbackNote": "Live CSE data is temporarily unavailable. Showing the latest cached snapshot.",
       "provenance": "Data provenance",
-      "noMovers": "No movers available"
+      "noMovers": "No movers available",
+      "sectors": "Sectors",
+      "mostActive": "Most active",
+      "foreign": "Foreign vs domestic",
+      "domesticTrades": "Domestic trades",
+      "foreignTrades": "Foreign trades",
+      "foreignBuy": "Foreign purchase",
+      "foreignSell": "Foreign sales",
+      "noSectors": "No sector rows",
+      "noActive": "No active trades"
     },
     "debt": {
       "title": "Foreign debt composition",
@@ -605,7 +633,22 @@
       "asOf": "Peer seed as of {date}",
       "methodology": "Methodology:",
       "empty": "Regional pump comparison unavailable."
-    }
+    },
+    "remittanceBoard": {
+      "title": "Bank TT remittance board",
+      "subtitle": "Indicative USD→LKR telegraphic-transfer style bands from major banks — compare beside the CBSL calculator.",
+      "buy": "Buy (LKR)",
+      "sell": "Sell (LKR)",
+      "spread": "Spread",
+      "bestBuy": "Best buy for senders",
+      "bestSell": "Best sell for receivers",
+      "seed": "Seed snapshot — not a live bank scrape yet.",
+      "asOf": "As of {date}",
+      "source": "Source provenance",
+      "honesty": "Indicative only. Bank fees, corridors, and same-day TT products differ. Not CBSL official rates."
+    },
+    "fxAnomaly": "Unusual day-over-day move",
+    "fxAnomalyQuiet": "Within recent MAD band"
   },
   "search": {
     "label": "Search Lankawa",
@@ -1468,11 +1511,15 @@
     "colGreenery": "Greenery",
     "colBuiltUp": "Built-up",
     "districtTitle": "Land change",
-    "districtSubtitle": "Greenery and built-up index change for this district (2018→2024).",
+    "districtSubtitle": "Greenery, built-up, and weekly NDVI anomaly for this district.",
     "greeneryDistrict": "Greenery index Δ",
     "builtUpDistrict": "Built-up index Δ",
     "viewNational": "National Land Pulse",
-    "sourceLink": "Source"
+    "sourceLink": "Source",
+    "ndviNational": "Weekly NDVI anomaly",
+    "ndviHint": "Negative = greenery stress vs seasonal baseline (ETL-curated)",
+    "topNdviStress": "Top NDVI stress districts",
+    "ndviDistrict": "NDVI anomaly"
   },
   "landChangeMethodology": {
     "back": "Back to environment",
@@ -1502,12 +1549,18 @@
     "pin_flood": "Flood elevated",
     "pin_power": "Power attention",
     "pin_met": "Met warning",
-    "help_fx_move": "Fire when USD/LKR day-over-day move is ≥ {threshold} LKR",
+    "help_fx_move": "Fire on large USD/LKR day moves or unusual MAD/z spikes",
     "help_flood": "Fire when river stations report elevated alert levels",
     "help_power": "Fire on CEB outage or scheduled interruption",
     "help_met": "Fire when Met Dept yellow/amber/red advisories are active",
     "pin_landslide": "Landslide watch",
-    "help_landslide": "Fire when highland districts show landslide watch/warning"
+    "help_landslide": "Fire when highland districts show landslide watch/warning",
+    "pin_flood_rising": "Flood rising",
+    "help_flood_rising": "Fire when elevated river gauges rise quickly (≥ ~5 cm/h)",
+    "pin_fire": "Fires (FIRMS)",
+    "help_fire": "Fire when NASA FIRMS detects active fires in Sri Lanka",
+    "pin_gdacs": "GDACS hazard",
+    "help_gdacs": "Fire on Orange/Red GDACS events in the regional window"
   },
   "weekLedger": {
     "title": "Week ledger",

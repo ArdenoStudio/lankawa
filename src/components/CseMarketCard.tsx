@@ -3,6 +3,13 @@ import { Link } from "@/i18n/navigation";
 import type { CseMover, CseSnapshot } from "@/lib/integrations/cse";
 import { getSourceProvenancePath } from "@/lib/sources";
 
+function formatCompact(value: number | null): string {
+  if (value == null) {
+    return "—";
+  }
+  return value.toLocaleString(undefined, { maximumFractionDigits: 0 });
+}
+
 function formatChange(change: number | null, changePct: number | null): string {
   if (change == null && changePct == null) {
     return "—";
@@ -87,6 +94,15 @@ export function CseMarketCard({
     turnover: string;
     fallbackNote: string;
     noMovers: string;
+    sectors: string;
+    mostActive: string;
+    foreign: string;
+    domesticTrades: string;
+    foreignTrades: string;
+    foreignBuy: string;
+    foreignSell: string;
+    noSectors: string;
+    noActive: string;
   };
 }) {
   const indices = [
@@ -177,6 +193,97 @@ export function CseMarketCard({
           movers={snapshot.topLosers}
           emptyLabel={labels.noMovers}
         />
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-3">
+        <div className="space-y-3">
+          <h3 className="text-sm font-medium text-slate-300">{labels.sectors}</h3>
+          {snapshot.sectors.length === 0 ? (
+            <p className="text-sm text-slate-500">{labels.noSectors}</p>
+          ) : (
+            <ul className="space-y-2">
+              {snapshot.sectors.slice(0, 6).map((sector) => (
+                <li
+                  key={sector.symbol}
+                  className="flex items-start justify-between gap-3 rounded-xl border border-white/5 bg-black/10 px-3 py-2"
+                >
+                  <div>
+                    <p className="text-sm font-medium text-white">{sector.name}</p>
+                    <p className="text-xs text-slate-500">{sector.symbol}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-medium text-white">
+                      {sector.indexValue.toLocaleString(undefined, {
+                        maximumFractionDigits: 2,
+                      })}
+                    </p>
+                    <p className="text-xs text-slate-300">
+                      {formatChange(sector.change, sector.changePct)}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className="space-y-3">
+          <h3 className="text-sm font-medium text-slate-300">
+            {labels.mostActive}
+          </h3>
+          {snapshot.mostActive.length === 0 ? (
+            <p className="text-sm text-slate-500">{labels.noActive}</p>
+          ) : (
+            <ul className="space-y-2">
+              {snapshot.mostActive.slice(0, 6).map((row) => (
+                <li
+                  key={row.symbol}
+                  className="flex items-start justify-between gap-3 rounded-xl border border-white/5 bg-black/10 px-3 py-2"
+                >
+                  <p className="text-sm font-medium text-white">{row.symbol}</p>
+                  <div className="text-right text-xs text-slate-400">
+                    <p>{formatCompact(row.shareVolume)} sh</p>
+                    <p>{formatCompact(row.turnover)} LKR</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
+          <h3 className="text-sm font-medium text-slate-300">{labels.foreign}</h3>
+          {snapshot.foreignDomestic ? (
+            <dl className="mt-3 space-y-2 text-sm">
+              <div className="flex justify-between gap-3">
+                <dt className="text-slate-500">{labels.domesticTrades}</dt>
+                <dd className="text-white">
+                  {formatCompact(snapshot.foreignDomestic.domesticTrades)}
+                </dd>
+              </div>
+              <div className="flex justify-between gap-3">
+                <dt className="text-slate-500">{labels.foreignTrades}</dt>
+                <dd className="text-white">
+                  {formatCompact(snapshot.foreignDomestic.foreignTrades)}
+                </dd>
+              </div>
+              <div className="flex justify-between gap-3">
+                <dt className="text-slate-500">{labels.foreignBuy}</dt>
+                <dd className="text-white">
+                  {formatCompact(snapshot.foreignDomestic.foreignPurchase)}
+                </dd>
+              </div>
+              <div className="flex justify-between gap-3">
+                <dt className="text-slate-500">{labels.foreignSell}</dt>
+                <dd className="text-white">
+                  {formatCompact(snapshot.foreignDomestic.foreignSales)}
+                </dd>
+              </div>
+            </dl>
+          ) : (
+            <p className="mt-3 text-sm text-slate-500">{labels.noActive}</p>
+          )}
+        </article>
       </div>
     </section>
   );
