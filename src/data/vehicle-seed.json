@@ -1,0 +1,111 @@
+{
+  "sourceId": "vehicle_platform_seed",
+  "sourceName": "AutoLens LK Vehicle Intelligence (seed)",
+  "asOf": "2026-06-16T06:20:08.166342Z",
+  "totalListings": 112609,
+  "avgPriceLkr": 9409013,
+  "goodDealsCount": 3256,
+  "sourceCount": 11,
+  "popularMakes": [
+    { "make": "Toyota", "count": 36626 },
+    { "make": "Suzuki", "count": 22269 },
+    { "make": "Nissan", "count": 13047 },
+    { "make": "Honda", "count": 10625 },
+    { "make": "Mitsubishi", "count": 4361 },
+    { "make": "Mercedes", "count": 3129 },
+    { "make": "Daihatsu", "count": 2574 },
+    { "make": "Bmw", "count": 2264 }
+  ],
+  "districts": [
+    {
+      "slug": "colombo",
+      "districtName": "Colombo",
+      "listingCount": 9548,
+      "medianPriceLkr": 9314924,
+      "avgPriceLkr": 9314924,
+      "topMake": "Suzuki",
+      "topModel": "Wagon"
+    },
+    {
+      "slug": "gampaha",
+      "districtName": "Gampaha",
+      "listingCount": 5205,
+      "medianPriceLkr": 5717436,
+      "avgPriceLkr": 5717436,
+      "topMake": "Suzuki",
+      "topModel": "Wagon"
+    },
+    {
+      "slug": "kurunegala",
+      "districtName": "Kurunegala",
+      "listingCount": 4859,
+      "medianPriceLkr": 5311992,
+      "avgPriceLkr": 5311992,
+      "topMake": "Suzuki",
+      "topModel": "Wagon"
+    },
+    {
+      "slug": "kandy",
+      "districtName": "Kandy",
+      "listingCount": 4711,
+      "medianPriceLkr": 5401577,
+      "avgPriceLkr": 5401577,
+      "topMake": "Suzuki",
+      "topModel": "Alto"
+    },
+    {
+      "slug": "matara",
+      "districtName": "Matara",
+      "listingCount": 2080,
+      "medianPriceLkr": 5925176,
+      "avgPriceLkr": 5925176,
+      "topMake": "Suzuki",
+      "topModel": "Wagon"
+    },
+    {
+      "slug": "galle",
+      "districtName": "Galle",
+      "listingCount": 2063,
+      "medianPriceLkr": 5669361,
+      "avgPriceLkr": 5669361,
+      "topMake": "Suzuki",
+      "topModel": "Alto"
+    },
+    {
+      "slug": "kalutara",
+      "districtName": "Kalutara",
+      "listingCount": 1980,
+      "medianPriceLkr": 4985000,
+      "avgPriceLkr": 5120000,
+      "topMake": "Toyota",
+      "topModel": "Axio"
+    },
+    {
+      "slug": "jaffna",
+      "districtName": "Jaffna",
+      "listingCount": 1420,
+      "medianPriceLkr": 4650000,
+      "avgPriceLkr": 4780000,
+      "topMake": "Suzuki",
+      "topModel": "Alto"
+    },
+    {
+      "slug": "anuradhapura",
+      "districtName": "Anuradhapura",
+      "listingCount": 1310,
+      "medianPriceLkr": 4200000,
+      "avgPriceLkr": 4350000,
+      "topMake": "Toyota",
+      "topModel": "Corolla"
+    },
+    {
+      "slug": "ratnapura",
+      "districtName": "Ratnapura",
+      "listingCount": 1180,
+      "medianPriceLkr": 4100000,
+      "avgPriceLkr": 4280000,
+      "topMake": "Suzuki",
+      "topModel": "Wagon"
+    }
+  ]
+}

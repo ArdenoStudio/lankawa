@@ -1,10 +1,12 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PulseCard } from "@/components/PulseCard";
+import { ArdenoStackGrid } from "@/components/ArdenoStackGrid";
 import { DistrictGrid } from "@/components/DistrictCard";
 import { HeroSection } from "@/components/HeroSection";
 import { ModuleGrid } from "@/components/ModuleGrid";
 import { SourceHealthBar } from "@/components/SourceHealthBar";
 import { Link } from "@/i18n/navigation";
+import { buildArdenoModuleCards, getLifeOverview } from "@/lib/life";
 import { buildPulseSnapshot } from "@/lib/pulse";
 
 export default async function HomePage({
@@ -16,6 +18,8 @@ export default async function HomePage({
   setRequestLocale(locale);
   const t = await getTranslations("home");
   const snapshot = await buildPulseSnapshot();
+  const overview = await getLifeOverview();
+  const ardenoModules = buildArdenoModuleCards(overview);
 
   return (
     <div className="space-y-12 md:space-y-16">
@@ -51,6 +55,22 @@ export default async function HomePage({
 
       <section className="space-y-5">
         <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 className="text-2xl font-semibold text-white">{t("ardenoTitle")}</h2>
+            <p className="mt-2 text-slate-400">{t("ardenoSubtitle")}</p>
+          </div>
+          <Link
+            href="/ardeno"
+            className="rounded-full bg-teal-500 px-4 py-2 text-sm font-medium text-slate-950 hover:bg-teal-400"
+          >
+            {t("viewArdeno")}
+          </Link>
+        </div>
+        <ArdenoStackGrid modules={ardenoModules.slice(0, 4)} />
+      </section>
+
+      <section className="space-y-4">
+        <div className="flex items-end justify-between gap-4">
           <div>
             <h2 className="text-2xl font-semibold text-white">
               {t("districtsTitle")}

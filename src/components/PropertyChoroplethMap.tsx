@@ -9,9 +9,10 @@ import { districtSlugFromName, districtSlugFromPcode } from "@/lib/district-geo"
 import {
   formatPropertyPrice,
   getMaxPropertyMedian,
-  getPropertyDistrictPrice,
   getPropertyPriceColor,
+  getPropertySnapshot,
 } from "@/lib/property";
+import type { PropertySnapshot } from "@/lib/types";
 
 interface DistrictFeatureProperties {
   slug?: string;
@@ -40,14 +41,21 @@ function resolveSlug(properties: DistrictFeatureProperties): string | null {
   );
 }
 
-export function PropertyChoroplethMap({ height = 420 }: { height?: number }) {
+export function PropertyChoroplethMap({
+  height = 420,
+  snapshot: snapshotProp,
+}: {
+  height?: number;
+  snapshot?: PropertySnapshot;
+}) {
   const t = useTranslations("property");
   const locale = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const popupRef = useRef<maplibregl.Popup | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const maxMedian = getMaxPropertyMedian();
+  const snapshot = snapshotProp ?? getPropertySnapshot();
+  const maxMedian = getMaxPropertyMedian(snapshot);
 
   useEffect(() => {
     if (!containerRef.current) {
@@ -66,7 +74,9 @@ export function PropertyChoroplethMap({ height = 420 }: { height?: number }) {
 
         for (const feature of geojson.features) {
           const slug = resolveSlug(feature.properties);
-          const price = slug ? getPropertyDistrictPrice(slug) : undefined;
+          const price = slug
+            ? snapshot.districts.find((district) => district.slug === slug)
+            : undefined;
           const district = slug
             ? DISTRICTS.find((item) => item.slug === slug)
             : undefined;
@@ -212,7 +222,7 @@ export function PropertyChoroplethMap({ height = 420 }: { height?: number }) {
         mapRef.current = null;
       }
     };
-  }, [locale, maxMedian, t]);
+  }, [locale, maxMedian, snapshot.asOf, t]);
 
   if (error) {
     return (

@@ -44,6 +44,13 @@ export default async function TransportPage({
         initialQuery={filters.q}
       />
 
+      <p className="text-sm text-slate-500">
+        {t("vehiclesLink")}:{" "}
+        <Link href="/vehicles" className="text-teal-300 hover:text-teal-200">
+          {t("vehiclesLinkCta")} →
+        </Link>
+      </p>
+
       <p className="text-sm text-slate-500">{t("disclaimer")}</p>
     </div>
   );

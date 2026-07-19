@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation";
 import {
   formatPropertyPrice,
   getNationalMedianPerPerch,
-  getPropertySnapshot,
+  getPropertyData,
 } from "@/lib/property";
 import { getSourceProvenancePath } from "@/lib/sources";
 
@@ -17,8 +17,8 @@ export default async function PropertyPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("property");
-  const snapshot = getPropertySnapshot();
-  const nationalMedian = getNationalMedianPerPerch();
+  const snapshot = await getPropertyData();
+  const nationalMedian = getNationalMedianPerPerch(snapshot);
   const colombo = snapshot.districts.find(
     (district) => district.slug === "colombo",
   );
@@ -71,7 +71,7 @@ export default async function PropertyPage({
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-white">{t("mapTitle")}</h2>
         <p className="text-sm text-slate-400">{t("mapSubtitle")}</p>
-        <PropertyChoroplethMap />
+        <PropertyChoroplethMap snapshot={snapshot} />
         <div className="flex flex-wrap gap-4 text-xs text-slate-400">
           <span className="inline-flex items-center gap-2">
             <span className="inline-block h-3 w-3 rounded-full bg-teal-800" />
@@ -90,10 +90,14 @@ export default async function PropertyPage({
 
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-white">{t("tableTitle")}</h2>
-        <PropertyDistrictTable locale={locale} />
+        <PropertyDistrictTable locale={locale} snapshot={snapshot} />
       </section>
 
-      <p className="text-sm text-slate-500">{t("disclaimer")}</p>
+      <p className="text-sm text-slate-500">
+        {snapshot.sourceId === "propertylk_seed"
+          ? t("disclaimerSeed")
+          : t("disclaimer")}
+      </p>
     </div>
   );
 }

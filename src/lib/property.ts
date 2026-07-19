@@ -13,14 +13,18 @@ export function getPropertyDistrictPrice(
   return snapshot.districts.find((district) => district.slug === slug);
 }
 
-export function getMaxPropertyMedian(): number {
+export function getMaxPropertyMedian(
+  snapshot: PropertySnapshot = getPropertySnapshot(),
+): number {
   return Math.max(
     ...snapshot.districts.map((district) => district.medianPerPerch),
     1,
   );
 }
 
-export function getNationalMedianPerPerch(): number {
+export function getNationalMedianPerPerch(
+  snapshot: PropertySnapshot = getPropertySnapshot(),
+): number {
   const sorted = [...snapshot.districts].sort(
     (a, b) => a.medianPerPerch - b.medianPerPerch,
   );
@@ -37,6 +41,8 @@ export function formatPropertyPrice(value: number): string {
   }
   return value.toLocaleString();
 }
+
+export { getPropertyData } from "./integrations/propertylk";
 
 export function getPropertyPriceColor(median: number, maxMedian: number): string {
   const ratio = median / maxMedian;

@@ -395,6 +395,103 @@ export interface PropertySnapshot {
   districts: PropertyDistrictPrice[];
 }
 
+export interface VehicleMakeStat {
+  make: string;
+  count: number;
+}
+
+export interface VehicleDistrictPrice {
+  slug: string;
+  districtName: string;
+  listingCount: number;
+  medianPriceLkr: number;
+  avgPriceLkr: number;
+  topMake: string;
+  topModel: string;
+}
+
+export interface VehicleSnapshot {
+  sourceId: string;
+  sourceName: string;
+  asOf: string;
+  totalListings: number;
+  avgPriceLkr: number;
+  goodDealsCount: number;
+  sourceCount: number;
+  popularMakes: VehicleMakeStat[];
+  districts: VehicleDistrictPrice[];
+}
+
+export interface FoodItemPrice {
+  slug: string;
+  name: string;
+  unit: string;
+  priceLkr: number;
+  source: string;
+}
+
+export interface FoodDistrictMealCost {
+  slug: string;
+  dailyMealCostLkr: number;
+  monthlyBasketLkr: number;
+  restaurantIndex: number;
+}
+
+export interface FoodSnapshot {
+  sourceId: string;
+  sourceName: string;
+  asOf: string;
+  essentialsBasketLkr: number;
+  retailOffers: number;
+  marketQuotes: number;
+  stapleItems: FoodItemPrice[];
+  districts: FoodDistrictMealCost[];
+}
+
+export interface LifeDomainMetric {
+  label: string;
+  value: number;
+  unit: string;
+}
+
+export interface LifeDomainHighlight {
+  label: string;
+  value: string;
+  severity: string;
+}
+
+export interface LifeDomain {
+  key: string;
+  label: string;
+  category: string;
+  status: string;
+  summary: string;
+  observedAt: string;
+  freshnessNote?: string;
+  metrics: LifeDomainMetric[];
+  highlights?: LifeDomainHighlight[];
+}
+
+export interface LifeOverviewSnapshot {
+  sourceId: string;
+  sourceName: string;
+  asOf: string;
+  headline: string;
+  freshnessNote: string;
+  domains: LifeDomain[];
+}
+
+export interface ArdenoModuleCard {
+  id: string;
+  title: string;
+  description: string;
+  href: string;
+  sourceId: string;
+  metricLabel?: string;
+  metricValue?: string;
+  status?: string;
+}
+
 export type LocalGovernmentType = "MC" | "UC" | "PS";
 
 export interface LocalGovernmentBody {

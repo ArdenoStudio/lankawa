@@ -30,6 +30,9 @@
     "closeMenu": "Close menu",
     "property": "Property",
     "transport": "Transport",
+    "vehicles": "Vehicles",
+    "food": "Food",
+    "ardeno": "Ardeno stack",
     "costOfLiving": "Cost of living",
     "environment": "Environment",
     "status": "Status",
@@ -60,6 +63,9 @@
     "ctaEconomy": "Economy",
     "ctaElections": "Elections",
     "ctaServices": "Services",
+    "ardenoTitle": "Ardeno living-cost stack",
+    "ardenoSubtitle": "Fuel, property, vehicles, and food — integrated in-platform from sister platforms.",
+    "viewArdeno": "Open Ardeno hub",
     "disclaimer": "Aggregated from public sources. Not an official government publication."
   },
   "modules": {
@@ -258,7 +264,10 @@
     "groupElections": "Elections",
     "groupServices": "Services",
     "groupProperty": "Property",
-    "groupLocalGov": "Local government"
+    "groupLocalGov": "Local government",
+    "groupVehicles": "Vehicles",
+    "groupFood": "Food",
+    "groupArdeno": "Ardeno stack"
   },
   "services": {
     "title": "Public Services",
@@ -414,6 +423,12 @@
     "transportDescription": "Bus routes, railway stations, and airports filterable by district.",
     "costOfLivingSummary": "Cost of living index",
     "costOfLivingDescription": "District composite index from fuel, property, and food basket seeds.",
+    "vehiclesSummary": "Vehicle market snapshot",
+    "vehiclesDescription": "District median used-vehicle prices, popular makes, and listing counts.",
+    "foodSummary": "Food price snapshot",
+    "foodDescription": "Staple prices, essentials basket, and district meal-cost bands.",
+    "lifeSummary": "Life platform overview",
+    "lifeDescription": "Unified living-cost domain health from the Ariva Life Platform orchestrator.",
     "exportDistrictsSummary": "Export districts GeoJSON",
     "exportDistrictsDescription": "Download simplified district boundaries with provenance metadata.",
     "exportElectionsSummary": "Export elections JSON",
@@ -530,7 +545,9 @@
     "international": "International",
     "domestic": "Domestic",
     "noResults": "No transport entries match your filters.",
-    "disclaimer": "Static seed directory — no GTFS feed available for Sri Lanka. Representative routes and stations only."
+    "disclaimer": "Static seed directory — no GTFS feed available for Sri Lanka. Representative routes and stations only.",
+    "vehiclesLink": "Vehicle market pulse",
+    "vehiclesLinkCta": "View district vehicle medians"
   },
   "costOfLiving": {
     "title": "Cost of Living Index",
@@ -540,6 +557,8 @@
     "fuelPrice": "Petrol 92 reference",
     "compareCta": "Compare districts",
     "compareLink": "Open compare",
+    "foodLink": "Food price module",
+    "foodLinkCta": "View FoodLK pulse",
     "tableTitle": "Ranked by index",
     "rank": "Rank",
     "district": "District",
@@ -640,7 +659,56 @@
     "priceBand": "Price band",
     "trend": "YoY trend",
     "intensity": "Relative price",
-    "disclaimer": "Representative seed data aligned with PropertyLK patterns. Not a property valuation service — verify with licensed professionals."
+    "disclaimer": "Representative seed data aligned with PropertyLK patterns. Not a property valuation service — verify with licensed professionals.",
+    "disclaimerSeed": "Showing seed fallback data — the live PropertyLK API was unavailable at fetch time. Figures are representative, not valuations."
+  },
+  "vehicles": {
+    "title": "Vehicle Market Pulse",
+    "subtitle": "Used vehicle listing medians, popular makes, and district price bands from the AutoLens LK partner API.",
+    "asOf": "As of {date}",
+    "totalListings": "National listings",
+    "avgPrice": "Average price",
+    "colomboMedian": "Colombo median",
+    "goodDeals": "Good deals tracked",
+    "popularMakesTitle": "Popular makes",
+    "listingsLabel": "listings",
+    "tableTitle": "District price bands",
+    "tableSubtitle": "Median listing prices mapped to Lankawa district slugs.",
+    "district": "District",
+    "listings": "Listings",
+    "medianPrice": "Median price",
+    "popularModel": "Top model",
+    "intensity": "Relative price",
+    "disclaimer": "Market intelligence from classified listings — not official valuations. Seed fallback used when the Vehicle Platform API is unavailable."
+  },
+  "food": {
+    "title": "Food Price Pulse",
+    "subtitle": "Staple food prices and district meal-cost bands — enhances the cost-of-living food component.",
+    "asOf": "As of {date}",
+    "essentialsBasket": "Essentials basket",
+    "retailOffers": "Retail offers tracked",
+    "costOfLivingLink": "Cost of living",
+    "costOfLivingCta": "View composite COL index",
+    "staplesTitle": "Staple prices",
+    "perUnit": "per {unit}",
+    "tableTitle": "District meal costs",
+    "tableSubtitle": "Estimated daily meal cost and monthly food basket by district.",
+    "district": "District",
+    "dailyMeal": "Daily meal (est.)",
+    "monthlyBasket": "Monthly basket",
+    "restaurantIndex": "Restaurant index",
+    "intensity": "Relative cost",
+    "disclaimer": "Representative food price intelligence — not official NCPI. Seed fallback used when FoodLK endpoints are unavailable."
+  },
+  "ardeno": {
+    "eyebrow": "Sister platforms",
+    "title": "Ardeno Living-Cost Stack",
+    "subtitle": "Unified hub for Octane fuel, PropertyLK, AutoLens LK vehicles, and FoodLK — all browsable inside Lankawa.",
+    "asOf": "As of {date}",
+    "modulesTitle": "Platform modules",
+    "modulesSubtitle": "Each card links to an in-platform module with source provenance and freshness badges.",
+    "lifeTitle": "Life platform domains",
+    "disclaimer": "Aggregated partner intelligence from the Ardeno ecosystem. Not official government data."
   },
   "electionHistory": {
     "eyebrow": "Electoral history",

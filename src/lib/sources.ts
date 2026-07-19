@@ -145,6 +145,19 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["tenders"],
   },
   {
+    id: "propertylk_api",
+    name: "PropertyLK Price Intelligence (live)",
+    category: "civic",
+    url: "internal://property",
+    cadenceMinutes: 43200,
+    adapter: "partner",
+    description:
+      "District-level median land and property price bands from the PropertyLK partner API.",
+    methodology:
+      "Server-side fetch from the PropertyLK production API (`/api/v1/districts`). When the upstream times out or returns empty data, Lankawa falls back to the static seed dataset and surfaces seed provenance on the property page and pulse.",
+    metrics: ["property_median_per_perch"],
+  },
+  {
     id: "propertylk_seed",
     name: "PropertyLK Price Intelligence",
     category: "civic",
@@ -154,8 +167,86 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "District-level median land and property price bands across Sri Lanka.",
     methodology:
-      "Representative seed data aligned with PropertyLK price intelligence patterns. Server-side adapter attempts live fetch from the partner API; falls back to static seed when unavailable.",
+      "Representative seed data aligned with PropertyLK price intelligence patterns. Used when the live partner API is unavailable — the property page and pulse show an explicit seed fallback notice.",
     metrics: ["property_median_per_perch"],
+  },
+  {
+    id: "vehicle_platform_api",
+    name: "AutoLens LK Vehicle Intelligence (live)",
+    category: "transport",
+    url: "internal://vehicles",
+    cadenceMinutes: 86400,
+    adapter: "partner",
+    description:
+      "Used vehicle listing medians, popular makes, and district price bands from the Vehicle Platform API.",
+    methodology:
+      "Server-side fetch from `/api/v1/stats/summary`, `/stats/district-prices`, and `/listings/makes`. District names are mapped to Lankawa slugs. Falls back to seed when upstream is unavailable.",
+    metrics: ["vehicle_median_price", "vehicle_listings"],
+  },
+  {
+    id: "vehicle_platform_seed",
+    name: "AutoLens LK Vehicle Intelligence",
+    category: "transport",
+    url: "internal://vehicles",
+    cadenceMinutes: 86400,
+    adapter: "partner",
+    description:
+      "Representative used vehicle market bands by district and popular makes.",
+    methodology:
+      "Static seed aligned with AutoLens LK market snapshots. Used when the live Vehicle Platform API is unavailable.",
+    metrics: ["vehicle_median_price", "vehicle_listings"],
+  },
+  {
+    id: "food_platform_api",
+    name: "FoodLK Price Intelligence (live)",
+    category: "economy",
+    url: "internal://food",
+    cadenceMinutes: 86400,
+    adapter: "partner",
+    description:
+      "Staple food prices, essentials basket, and district meal-cost bands.",
+    methodology:
+      "Attempts direct FoodLK API endpoints (`/stats/summary`, `/categories/summary`, `/home/summary`). When those fail, tries the Life Platform food domain from `/life/overview`. Falls back to seed district meal costs derived from the cost-of-living model.",
+    metrics: ["food_basket_estimate", "staple_prices"],
+  },
+  {
+    id: "food_platform_seed",
+    name: "FoodLK Price Intelligence",
+    category: "economy",
+    url: "internal://food",
+    cadenceMinutes: 86400,
+    adapter: "partner",
+    description:
+      "Staple food prices and district meal-cost estimates for cost-of-living enrichment.",
+    methodology:
+      "Representative seed from FoodLK / Life Platform patterns. District monthly baskets align with the Lankawa cost-of-living seed. Used when live FoodLK endpoints return errors.",
+    metrics: ["food_basket_estimate", "staple_prices"],
+  },
+  {
+    id: "life_platform_api",
+    name: "Ariva Life Platform (live)",
+    category: "economy",
+    url: "internal://ardeno",
+    cadenceMinutes: 3600,
+    adapter: "partner",
+    description:
+      "Unified living-cost orchestrator across food, fuel, property, and vehicles.",
+    methodology:
+      "Server-side fetch from `/api/v1/life/overview` on the Life Platform backend. Powers the Ardeno stack hub with domain health and headline metrics. Falls back to a constructed seed overview when unavailable.",
+    metrics: ["life_overview", "domain_health"],
+  },
+  {
+    id: "life_platform_seed",
+    name: "Ariva Life Platform",
+    category: "economy",
+    url: "internal://ardeno",
+    cadenceMinutes: 3600,
+    adapter: "partner",
+    description:
+      "Seed overview for the Ardeno living-cost stack when the Life Platform API is unavailable.",
+    methodology:
+      "Static domain summaries referencing Octane, PropertyLK, AutoLens LK, and FoodLK seed modules. Internal links only — no external UI navigation.",
+    metrics: ["life_overview"],
   },
   {
     id: "local_government_seed",

@@ -2,7 +2,7 @@ export const openApiSpec = {
   openapi: "3.1.0",
   info: {
     title: "Lankawa Public API",
-    version: "0.6.0",
+    version: "0.7.0",
     description:
       "Public civic intelligence API for Sri Lanka. Every metric includes source provenance and freshness tiers.",
   },
@@ -179,6 +179,24 @@ export const openApiSpec = {
       get: {
         summary: "District cost of living index",
         responses: { "200": { description: "Composite index from fuel, property, and food basket seeds" } },
+      },
+    },
+    "/vehicles": {
+      get: {
+        summary: "Vehicle market snapshot",
+        responses: { "200": { description: "District median used-vehicle prices and popular makes" } },
+      },
+    },
+    "/food": {
+      get: {
+        summary: "Food price snapshot",
+        responses: { "200": { description: "Staple prices and district meal-cost bands" } },
+      },
+    },
+    "/life": {
+      get: {
+        summary: "Life platform overview",
+        responses: { "200": { description: "Unified living-cost domain health from Ariva Life Platform" } },
       },
     },
     "/export/{dataset}": {
@@ -374,6 +392,27 @@ export const apiEndpoints = [
     summaryKey: "costOfLivingSummary" as const,
     descriptionKey: "costOfLivingDescription" as const,
     example: `{ "nationalIndex": 72, "districts": [{ "slug": "colombo", "index": 98 }] }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/vehicles",
+    summaryKey: "vehiclesSummary" as const,
+    descriptionKey: "vehiclesDescription" as const,
+    example: `{ "totalListings": 112609, "districts": [{ "slug": "colombo", "medianPriceLkr": 9314924 }] }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/food",
+    summaryKey: "foodSummary" as const,
+    descriptionKey: "foodDescription" as const,
+    example: `{ "essentialsBasketLkr": 8650, "stapleItems": [{ "name": "Rice", "priceLkr": 320 }] }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/life",
+    summaryKey: "lifeSummary" as const,
+    descriptionKey: "lifeDescription" as const,
+    example: `{ "headline": "...", "domains": [{ "key": "food", "status": "degraded" }] }`,
   },
   {
     method: "GET",

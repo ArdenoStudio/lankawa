@@ -3,12 +3,18 @@ import { getLatestObservation, isDatabaseConfigured, savePulseSnapshot } from ".
 import { fetchLatestCbslFxRate } from "./integrations/cbsl";
 import { fetchFloodAlertSummary } from "./integrations/flood";
 import { fetchOctanePrices, pickCpcPrice } from "./integrations/octane";
-import { formatPropertyPrice, getPropertySnapshot } from "./property";
+import { getPropertyData } from "./integrations/propertylk";
+import { getVehicleData } from "./integrations/vehicle";
+import { formatPropertyPrice } from "./property";
+import { formatVehiclePrice } from "./vehicle";
 import { getSource, getSourceProvenancePath } from "./sources";
 import type { PulseMetric, PulseSnapshot, SourceHealth } from "./types";
 
 const FX_FALLBACK_RATE = 302.5;
 const FX_FALLBACK_DATE = "2026-07-18T00:00:00.000Z";
+const FUEL_FALLBACK_PETROL = 414;
+const FUEL_FALLBACK_DIESEL = 382;
+const FUEL_FALLBACK_DATE = "2026-06-30T00:00:00.000Z";
 
 async function buildFuelMetrics(checkedAt: string): Promise<{
   metrics: PulseMetric[];
@@ -62,14 +68,38 @@ async function buildFuelMetrics(checkedAt: string): Promise<{
       },
     };
   } catch (error) {
+    const tier = computeFreshnessTier(FUEL_FALLBACK_DATE, source.cadenceMinutes);
     return {
-      metrics: [],
+      metrics: [
+        {
+          id: "fuel_petrol_92",
+          label: "Petrol 92",
+          value: FUEL_FALLBACK_PETROL.toFixed(2),
+          unit: "LKR/L",
+          observedAt: FUEL_FALLBACK_DATE,
+          tier,
+          sourceId: source.id,
+          provenancePath: getSourceProvenancePath(source.id),
+          note: "Fallback — Octane API unavailable",
+        },
+        {
+          id: "fuel_diesel",
+          label: "Auto Diesel",
+          value: FUEL_FALLBACK_DIESEL.toFixed(2),
+          unit: "LKR/L",
+          observedAt: FUEL_FALLBACK_DATE,
+          tier,
+          sourceId: source.id,
+          provenancePath: getSourceProvenancePath(source.id),
+          note: "Fallback — Octane API unavailable",
+        },
+      ],
       health: {
         id: source.id,
         name: source.name,
         category: source.category,
-        tier: "down",
-        lastSuccessAt: null,
+        tier,
+        lastSuccessAt: FUEL_FALLBACK_DATE,
         lastCheckedAt: checkedAt,
         error: error instanceof Error ? error.message : "Unknown error",
         provenancePath: getSourceProvenancePath(source.id),
@@ -218,31 +248,39 @@ async function buildFxMetric(checkedAt: string): Promise<{
 
 export async function buildPulseSnapshot(): Promise<PulseSnapshot> {
   const checkedAt = new Date().toISOString();
-  const [fuel, flood, fx] = await Promise.all([
+  const [fuel, flood, fx, propertySnapshot, vehicleSnapshot] = await Promise.all([
     buildFuelMetrics(checkedAt),
     buildFloodData(checkedAt),
     buildFxMetric(checkedAt),
+    getPropertyData(),
+    getVehicleData(),
   ]);
 
   const normalStations =
     flood.flood.find((item) => item.alertLevel === "NORMAL")?.count ?? 0;
   const totalStations = flood.flood.reduce((sum, item) => sum + item.count, 0);
 
-  const propertySnapshot = getPropertySnapshot();
-  const colomboPrice = propertySnapshot.districts.find(
+  const colomboProperty = propertySnapshot.districts.find(
     (district) => district.slug === "colombo",
   );
-  const propertySource = getSource("propertylk_seed")!;
+  const propertySource =
+    getSource(propertySnapshot.sourceId) ?? getSource("propertylk_seed")!;
+
+  const colomboVehicle = vehicleSnapshot.districts.find(
+    (district) => district.slug === "colombo",
+  );
+  const vehicleSource =
+    getSource(vehicleSnapshot.sourceId) ?? getSource("vehicle_platform_seed")!;
 
   const metrics: PulseMetric[] = [
     fx.metric,
     ...fuel.metrics,
-    ...(colomboPrice
+    ...(colomboProperty
       ? [
           {
             id: "property_colombo_median",
             label: "Colombo land (median)",
-            value: formatPropertyPrice(colomboPrice.medianPerPerch),
+            value: formatPropertyPrice(colomboProperty.medianPerPerch),
             unit: "LKR/perch",
             observedAt: propertySnapshot.asOf,
             tier: computeFreshnessTier(
@@ -251,13 +289,34 @@ export async function buildPulseSnapshot(): Promise<PulseSnapshot> {
             ),
             sourceId: propertySource.id,
             provenancePath: getSourceProvenancePath(propertySource.id),
-            note: `National median LKR ${formatPropertyPrice(
-              propertySnapshot.districts
-                .map((district) => district.medianPerPerch)
-                .sort((a, b) => a - b)[
-                Math.floor(propertySnapshot.districts.length / 2)
-              ] ?? 0,
-            )}/perch`,
+            note:
+              propertySnapshot.sourceId === "propertylk_seed"
+                ? "Seed fallback — live PropertyLK API unavailable"
+                : `National median LKR ${formatPropertyPrice(
+                    propertySnapshot.districts
+                      .map((district) => district.medianPerPerch)
+                      .sort((a, b) => a - b)[
+                      Math.floor(propertySnapshot.districts.length / 2)
+                    ] ?? 0,
+                  )}/perch`,
+          } satisfies PulseMetric,
+        ]
+      : []),
+    ...(colomboVehicle
+      ? [
+          {
+            id: "vehicle_colombo_median",
+            label: "Colombo vehicles (median)",
+            value: formatVehiclePrice(colomboVehicle.medianPriceLkr),
+            unit: "LKR",
+            observedAt: vehicleSnapshot.asOf,
+            tier: computeFreshnessTier(
+              vehicleSnapshot.asOf,
+              vehicleSource.cadenceMinutes,
+            ),
+            sourceId: vehicleSource.id,
+            provenancePath: getSourceProvenancePath(vehicleSource.id),
+            note: `${vehicleSnapshot.totalListings.toLocaleString()} national listings tracked`,
           } satisfies PulseMetric,
         ]
       : []),

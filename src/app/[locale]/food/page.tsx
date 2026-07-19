@@ -1,18 +1,19 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { CostOfLivingTable } from "@/components/CostOfLivingTable";
+import { FoodDistrictTable } from "@/components/FoodDistrictTable";
+import { FoodStapleGrid } from "@/components/FoodStapleGrid";
 import { Link } from "@/i18n/navigation";
-import { getCostOfLivingSnapshot } from "@/lib/cost-of-living";
 import { getSourceProvenancePath } from "@/lib/sources";
+import { getFoodData } from "@/lib/food";
 
-export default async function CostOfLivingPage({
+export default async function FoodPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations("costOfLiving");
-  const snapshot = getCostOfLivingSnapshot();
+  const t = await getTranslations("food");
+  const snapshot = await getFoodData();
 
   return (
     <div className="space-y-8">
@@ -32,42 +33,39 @@ export default async function CostOfLivingPage({
 
       <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <dt className="text-sm text-slate-500">{t("nationalIndex")}</dt>
+          <dt className="text-sm text-slate-500">{t("essentialsBasket")}</dt>
           <dd className="mt-2 text-3xl font-semibold text-white">
-            {snapshot.nationalIndex}
+            LKR {snapshot.essentialsBasketLkr.toLocaleString()}
           </dd>
         </div>
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <dt className="text-sm text-slate-500">{t("fuelPrice")}</dt>
+          <dt className="text-sm text-slate-500">{t("retailOffers")}</dt>
           <dd className="mt-2 text-3xl font-semibold text-white">
-            LKR {snapshot.fuelPricePetrol92}
-            <span className="ml-2 text-base font-normal text-slate-400">/L</span>
+            {snapshot.retailOffers.toLocaleString()}
           </dd>
         </div>
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <dt className="text-sm text-slate-500">{t("compareCta")}</dt>
+          <dt className="text-sm text-slate-500">{t("costOfLivingLink")}</dt>
           <dd className="mt-2">
             <Link
-              href="/compare?districts=colombo,kandy"
+              href="/cost-of-living"
               className="text-teal-300 hover:text-teal-200"
             >
-              {t("compareLink")} →
-            </Link>
-          </dd>
-        </div>
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:col-span-2 lg:col-span-1">
-          <dt className="text-sm text-slate-500">{t("foodLink")}</dt>
-          <dd className="mt-2">
-            <Link href="/food" className="text-teal-300 hover:text-teal-200">
-              {t("foodLinkCta")} →
+              {t("costOfLivingCta")} →
             </Link>
           </dd>
         </div>
       </dl>
 
       <section className="space-y-4">
+        <h2 className="text-xl font-semibold text-white">{t("staplesTitle")}</h2>
+        <FoodStapleGrid snapshot={snapshot} />
+      </section>
+
+      <section className="space-y-4">
         <h2 className="text-xl font-semibold text-white">{t("tableTitle")}</h2>
-        <CostOfLivingTable locale={locale} />
+        <p className="text-sm text-slate-400">{t("tableSubtitle")}</p>
+        <FoodDistrictTable locale={locale} snapshot={snapshot} />
       </section>
 
       <p className="text-sm text-slate-500">{t("disclaimer")}</p>

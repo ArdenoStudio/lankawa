@@ -18,6 +18,14 @@ import {
   getPropertyDistrictPrice,
 } from "@/lib/property";
 import {
+  formatVehiclePrice,
+  getVehicleDistrictPrice,
+} from "@/lib/vehicle";
+import {
+  formatFoodPrice,
+  getFoodDistrictMealCost,
+} from "@/lib/food";
+import {
   getAllPublicServices,
   getPublicServiceName,
 } from "@/lib/services";
@@ -28,6 +36,9 @@ type SearchResult =
   | { type: "election"; slug: string; label: string; meta: string; href: string }
   | { type: "service"; slug: string; label: string; meta: string; href: string }
   | { type: "property"; slug: string; label: string; meta: string; href: string }
+  | { type: "vehicle"; slug: string; label: string; meta: string; href: string }
+  | { type: "food"; slug: string; label: string; meta: string; href: string }
+  | { type: "ardeno"; slug: string; label: string; meta: string; href: string }
   | { type: "localGov"; slug: string; label: string; meta: string; href: string };
 
 function normalize(value: string): string {
@@ -56,6 +67,28 @@ function buildSearchIndex(locale: string): SearchResult[] {
         label: getDistrictName(district, locale),
         meta: `Property · LKR ${formatPropertyPrice(price.medianPerPerch)}/perch`,
         href: "/property",
+      });
+    }
+
+    const vehiclePrice = getVehicleDistrictPrice(district.slug);
+    if (vehiclePrice) {
+      results.push({
+        type: "vehicle",
+        slug: `vehicle-${district.slug}`,
+        label: getDistrictName(district, locale),
+        meta: `Vehicles · LKR ${formatVehiclePrice(vehiclePrice.medianPriceLkr)} median`,
+        href: "/vehicles",
+      });
+    }
+
+    const foodCost = getFoodDistrictMealCost(district.slug);
+    if (foodCost) {
+      results.push({
+        type: "food",
+        slug: `food-${district.slug}`,
+        label: getDistrictName(district, locale),
+        meta: `Food · LKR ${formatFoodPrice(foodCost.monthlyBasketLkr)}/mo basket`,
+        href: "/food",
       });
     }
   }
@@ -144,6 +177,27 @@ function buildSearchIndex(locale: string): SearchResult[] {
     href: "/property",
   });
   results.push({
+    type: "vehicle",
+    slug: "vehicles-hub",
+    label: "Vehicle Market Pulse",
+    meta: "Used vehicle medians by district",
+    href: "/vehicles",
+  });
+  results.push({
+    type: "food",
+    slug: "food-hub",
+    label: "Food Price Pulse",
+    meta: "Staple prices and meal-cost bands",
+    href: "/food",
+  });
+  results.push({
+    type: "ardeno",
+    slug: "ardeno-hub",
+    label: "Ardeno Living-Cost Stack",
+    meta: "Fuel, property, vehicles, food modules",
+    href: "/ardeno",
+  });
+  results.push({
     type: "localGov",
     slug: "local-government-hub",
     label: "Local Government Directory",
@@ -187,6 +241,9 @@ export function GlobalSearch() {
       election: [],
       service: [],
       property: [],
+      vehicle: [],
+      food: [],
+      ardeno: [],
       localGov: [],
     };
     for (const result of results) {
@@ -201,6 +258,9 @@ export function GlobalSearch() {
       ...grouped.province,
       ...grouped.election,
       ...grouped.property,
+      ...grouped.vehicle,
+      ...grouped.food,
+      ...grouped.ardeno,
       ...grouped.localGov,
       ...grouped.service,
     ],
@@ -262,6 +322,9 @@ export function GlobalSearch() {
     election: t("groupElections"),
     service: t("groupServices"),
     property: t("groupProperty"),
+    vehicle: t("groupVehicles"),
+    food: t("groupFood"),
+    ardeno: t("groupArdeno"),
     localGov: t("groupLocalGov"),
   };
 
@@ -309,6 +372,9 @@ export function GlobalSearch() {
               "province",
               "election",
               "property",
+              "vehicle",
+              "food",
+              "ardeno",
               "localGov",
               "service",
             ] as const
