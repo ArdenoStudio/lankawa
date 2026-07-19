@@ -216,7 +216,7 @@ export function SiteHeader() {
       )}
     >
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3">
-        <Logo variant="full" markSize={28} />
+        <Logo variant="wordmark" />
 
         <nav className="hidden items-center gap-1 lg:flex lg:flex-1 lg:justify-center">
           {primaryLinks.map((link) => (
