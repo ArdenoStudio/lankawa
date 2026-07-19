@@ -3,6 +3,8 @@ import { Link } from "@/i18n/navigation";
 import { getLandChangeSnapshot } from "@/lib/land-change";
 import { getSourceProvenancePath } from "@/lib/sources";
 
+const LAND_CHANGE_CSV_PATH = "/api/v1/export/land-change?format=csv";
+
 export default async function LandChangeMethodologyPage({
   params,
 }: {
@@ -72,7 +74,8 @@ export default async function LandChangeMethodologyPage({
         </code>
         <p className="text-sm text-neutral-500">
           <a
-            href="/api/v1/export/land-change?format=csv"
+            href={LAND_CHANGE_CSV_PATH}
+            download="lankawa-land-change.csv"
             className="text-white underline decoration-white/30 hover:decoration-white"
           >
             {t("csvLink")}

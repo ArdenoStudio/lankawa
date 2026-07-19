@@ -6,6 +6,8 @@ import { getDistrict, getDistrictName } from "@/lib/districts";
 import { getLandChangeSnapshot } from "@/lib/land-change";
 import { getSourceProvenancePath } from "@/lib/sources";
 
+const LAND_CHANGE_CSV_PATH = "/api/v1/export/land-change?format=csv";
+
 export async function LandChangePulse({ locale }: { locale: string }) {
   const t = await getTranslations("landChange");
   const snapshot = getLandChangeSnapshot();
@@ -44,7 +46,8 @@ export async function LandChangePulse({ locale }: { locale: string }) {
             </Link>
             {" · "}
             <a
-              href="/api/v1/export/land-change?format=csv"
+              href={LAND_CHANGE_CSV_PATH}
+              download="lankawa-land-change.csv"
               className="text-white underline decoration-white/30 hover:decoration-white"
             >
               {t("exportCsv")}
