@@ -1,0 +1,72 @@
+{
+  "sourceId": "pucsl_tariff",
+  "sourceName": "Public Utilities Commission of Sri Lanka",
+  "asOf": "2025-06-12",
+  "effectiveFrom": "2025-06-12",
+  "category": "Domestic (residential)",
+  "methodologyNote": "Curated domestic (residential) energy and fixed charges from PUCSL end-user tariff decisions. Block billing depends on whether monthly consumption is ≤60 kWh or >60 kWh. Not a live CEB bill calculator — verify against your CEB/LECO bill and the latest PUCSL decision.",
+  "decisionUrl": "https://www.pucsl.gov.lk/electricity/tariff/domestic/",
+  "tracks": [
+    {
+      "id": "upto_60",
+      "label": "Monthly consumption ≤ 60 kWh",
+      "slabs": [
+        {
+          "id": "0-30",
+          "fromKwh": 0,
+          "toKwh": 30,
+          "energyLkrPerKwh": 4.5,
+          "fixedLkrPerMonth": 80
+        },
+        {
+          "id": "31-60",
+          "fromKwh": 31,
+          "toKwh": 60,
+          "energyLkrPerKwh": 8.0,
+          "fixedLkrPerMonth": 210
+        }
+      ]
+    },
+    {
+      "id": "above_60",
+      "label": "Monthly consumption > 60 kWh",
+      "slabs": [
+        {
+          "id": "0-60",
+          "fromKwh": 0,
+          "toKwh": 60,
+          "energyLkrPerKwh": 12.75,
+          "fixedLkrPerMonth": null
+        },
+        {
+          "id": "61-90",
+          "fromKwh": 61,
+          "toKwh": 90,
+          "energyLkrPerKwh": 18.5,
+          "fixedLkrPerMonth": 400
+        },
+        {
+          "id": "91-120",
+          "fromKwh": 91,
+          "toKwh": 120,
+          "energyLkrPerKwh": 24.0,
+          "fixedLkrPerMonth": 1000
+        },
+        {
+          "id": "121-180",
+          "fromKwh": 121,
+          "toKwh": 180,
+          "energyLkrPerKwh": 41.0,
+          "fixedLkrPerMonth": 1500
+        },
+        {
+          "id": "181+",
+          "fromKwh": 181,
+          "toKwh": null,
+          "energyLkrPerKwh": 61.0,
+          "fixedLkrPerMonth": 2100
+        }
+      ]
+    }
+  ]
+}

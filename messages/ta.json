@@ -501,6 +501,39 @@
       "asOf": "{date} வரை தொடர்",
       "attribution": "கண்டுபிடிப்பு",
       "methodology": "முதன்மை எண்கள் CBSL அறிக்கைகளிலிருந்து. வரலாற்று மட்டும் — நேரடி கடன் டாஷ்போர்டு அல்ல."
+    },
+    "householdTitle": "வீட்டு எண்கள்",
+    "householdSubtitle": "அதிகாரப்பூர்வ பணவீக்கம் மற்றும் வீட்டு மின் கட்டணங்கள்.",
+    "ncpi": {
+      "title": "NCPI பணவீக்கம்",
+      "subtitle": "National Consumer Price Index from the Department of Census and Statistics — monthly official series, not Lankawa COL.",
+      "yoy": "ஆண்டுக்கு ஆண்டு",
+      "mom": "மாதத்திற்கு மாதம்",
+      "core": "Core YoY",
+      "food": "Food YoY",
+      "nonFood": "Non-food YoY",
+      "index": "Index level",
+      "period": "Period",
+      "honesty": "Monthly official series with a period label. Not live inflation. Not the Lankawa cost-of-living composite.",
+      "source": "மூலம்",
+      "release": "DCS வெளியீடு"
+    },
+    "tariff": {
+      "title": "மின் கட்டணம் (வீட்டு)",
+      "subtitle": "PUCSL-approved residential energy and fixed charges by consumption block.",
+      "effective": "Effective from",
+      "slab": "பகுதி",
+      "energy": "LKR/kWh",
+      "fixed": "நிலையான LKR/மாதம்",
+      "unitsLabel": "மாத அலகுகள் (kWh)",
+      "estimateTitle": "குறிப்பான பில் மதிப்பீடு",
+      "energyTotal": "Energy charge",
+      "fixedTotal": "Fixed charge",
+      "billTotal": "குறிப்பான மொத்தம்",
+      "honesty": "Indicative only — progressive slabs and fixed charges can change with PUCSL decisions. Not your CEB/LECO bill; verify against the latest decision and your meter reading.",
+      "source": "மூலம்",
+      "decision": "PUCSL வீட்டுக் கட்டணம்",
+      "none": "—"
     }
   },
   "search": {
@@ -735,7 +768,11 @@
     "exportLandChangeSummary": "Export land change",
     "exportLandChangeDescription": "Download district greenery and built-up indices as JSON or CSV.",
     "exportForeignDebtSummary": "Export foreign debt composition",
-    "exportForeignDebtDescription": "Download commercial vs concessionary debt share series as JSON or CSV."
+    "exportForeignDebtDescription": "Download commercial vs concessionary debt share series as JSON or CSV.",
+    "ncpiSummary": "NCPI inflation",
+    "ncpiDescription": "Latest NCPI headline YoY/MoM, core, food/non-food splits, and recent monthly series from DCS.",
+    "tariffsSummary": "PUCSL domestic tariffs",
+    "tariffsDescription": "Residential electricity energy and fixed charges by consumption block with effective date."
   },
   "budget": {
     "title": "தேசிய பட்ஜெட் Tracker",

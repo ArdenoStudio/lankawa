@@ -11,12 +11,12 @@
 1 Coconut Index / COL honesty     ✅ shipped
 2 Journalist citation + PNG export ✅ shipped
 W  Watchdog → Lankawa-native       ✅ Land Pulse deepen + Debt Pulse
-3 NCPI + PUCSL blocks             ← economy depth, mostly static/scrape
+3 NCPI + PUCSL blocks             ✅ household inflation + tariff slabs
 4 NBRO/DMC landslide layers       ← disaster map depth (harder GIS)
 5 Alert pins + brief email        ← retention, needs delivery ops
 ```
 
-Ship **3** next. **4** is GIS-heavy. **5** needs email/Telegram ops decisions. Year-2 satellite ETL stays parked.
+Ship **5** (alert pins first) next, then **4** GIS. Year-2 satellite ETL stays parked.
 
 ---
 
