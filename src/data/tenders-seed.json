@@ -1,0 +1,103 @@
+{
+  "sourceId": "egp_procurement_seed",
+  "sourceName": "Government Procurement — e-GP notices (seed)",
+  "asOf": "2026-07-15",
+  "notices": [
+    {
+      "id": "tender-2026-001",
+      "title": "Supply of medical consumables — Western Province",
+      "reference": "MOH/WP/2026/041",
+      "ministry": "health_min",
+      "province": "Western",
+      "district": "colombo",
+      "category": "goods",
+      "estimatedValueLkr": 42000000,
+      "closingDate": "2026-08-05",
+      "status": "open"
+    },
+    {
+      "id": "tender-2026-002",
+      "title": "Road resurfacing — Kandy District",
+      "reference": "RDA/KDY/2026/118",
+      "ministry": "highways",
+      "province": "Central",
+      "district": "kandy",
+      "category": "works",
+      "estimatedValueLkr": 185000000,
+      "closingDate": "2026-08-12",
+      "status": "open"
+    },
+    {
+      "id": "tender-2026-003",
+      "title": "IT infrastructure upgrade — Ministry of Finance",
+      "reference": "MOF/ICT/2026/009",
+      "ministry": "finance",
+      "province": "Western",
+      "district": "colombo",
+      "category": "services",
+      "estimatedValueLkr": 96000000,
+      "closingDate": "2026-07-28",
+      "status": "open"
+    },
+    {
+      "id": "tender-2026-004",
+      "title": "School furniture — Gampaha District",
+      "reference": "MOE/GA/2026/033",
+      "ministry": "education_min",
+      "province": "Western",
+      "district": "gampaha",
+      "category": "goods",
+      "estimatedValueLkr": 28000000,
+      "closingDate": "2026-08-20",
+      "status": "open"
+    },
+    {
+      "id": "tender-2026-005",
+      "title": "Flood mitigation works — Ratnapura",
+      "reference": "DMC/RAT/2026/007",
+      "ministry": "defence_min",
+      "province": "Sabaragamuwa",
+      "district": "ratnapura",
+      "category": "works",
+      "estimatedValueLkr": 320000000,
+      "closingDate": "2026-09-01",
+      "status": "open"
+    },
+    {
+      "id": "tender-2026-006",
+      "title": "Solar street lighting — Jaffna Municipality area",
+      "reference": "PD/LE/2026/014",
+      "ministry": "power",
+      "province": "Northern",
+      "district": "jaffna",
+      "category": "works",
+      "estimatedValueLkr": 54000000,
+      "closingDate": "2026-07-22",
+      "status": "closing_soon"
+    },
+    {
+      "id": "tender-2026-007",
+      "title": "Ambulance fleet maintenance — Eastern Province",
+      "reference": "MOH/EP/2026/022",
+      "ministry": "health_min",
+      "province": "Eastern",
+      "district": "batticaloa",
+      "category": "services",
+      "estimatedValueLkr": 15000000,
+      "closingDate": "2026-06-30",
+      "status": "closed"
+    },
+    {
+      "id": "tender-2026-008",
+      "title": "Tea factory equipment — Nuwara Eliya",
+      "reference": "MPI/NE/2026/005",
+      "ministry": "plantation",
+      "province": "Central",
+      "district": "nuwara-eliya",
+      "category": "goods",
+      "estimatedValueLkr": 72000000,
+      "closingDate": "2026-08-15",
+      "status": "open"
+    }
+  ]
+}

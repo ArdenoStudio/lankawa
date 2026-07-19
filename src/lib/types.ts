@@ -198,3 +198,89 @@ export interface EconomyMacroSnapshot {
   indicators: EconomyMacroIndicator[];
   fxSeries: FxSeriesPoint[];
 }
+
+export interface BudgetSector {
+  id: string;
+  amount: number;
+  sharePct: number;
+}
+
+export interface BudgetMinistry {
+  id: string;
+  sector: string;
+  amount: number;
+}
+
+export interface BudgetFiscalYear {
+  id: string;
+  label: string;
+  revenue: number;
+  expenditure: number;
+  deficit: number;
+  capitalExpenditure: number;
+  recurrentExpenditure: number;
+  sectors: BudgetSector[];
+  ministries: BudgetMinistry[];
+}
+
+export interface BudgetSnapshot {
+  sourceId: string;
+  sourceName: string;
+  asOf: string;
+  currency: string;
+  fiscalYears: BudgetFiscalYear[];
+}
+
+export type DengueRiskLevel = "high" | "moderate" | "low";
+
+export interface DengueDistrictStat {
+  slug: string;
+  cases: number;
+  changePct: number;
+  riskLevel: DengueRiskLevel;
+}
+
+export interface DengueSnapshot {
+  sourceId: string;
+  sourceName: string;
+  asOf: string;
+  epidemiologicalWeek: number;
+  year: number;
+  nationalTotal: number;
+  nationalChangePct: number;
+  districts: DengueDistrictStat[];
+}
+
+export interface MpScorecardMember {
+  id: string;
+  electoralDistrict: string;
+  party: string;
+  attendancePct: number;
+  privateMemberBills: number;
+  questionsAsked: number;
+  committeeRoles: number;
+}
+
+export interface MpScorecardSnapshot {
+  sourceId: string;
+  sourceName: string;
+  asOf: string;
+  parliamentSession: string;
+  members: MpScorecardMember[];
+}
+
+export type TenderCategory = "goods" | "works" | "services";
+export type TenderStatus = "open" | "closing_soon" | "closed";
+
+export interface TenderNotice {
+  id: string;
+  title: string;
+  reference: string;
+  ministry: string;
+  province: string;
+  district: string;
+  category: TenderCategory;
+  estimatedValueLkr: number;
+  closingDate: string;
+  status: TenderStatus;
+}

@@ -14,6 +14,11 @@ const links = [
   { href: "/services", key: "services" },
   { href: "/disaster", key: "disaster" },
   { href: "/economy", key: "economy" },
+  { href: "/budget", key: "budget" },
+  { href: "/health", key: "health" },
+  { href: "/compare", key: "compare" },
+  { href: "/civic", key: "civic" },
+  { href: "/tenders", key: "tenders" },
   { href: "/sources", key: "sources" },
   { href: "/developers", key: "developers" },
 ] as const;

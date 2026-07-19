@@ -89,8 +89,60 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Hospitals, schools, and GN offices indexed by district (seed data).",
     methodology:
-      "A curated seed directory covers Colombo, Kandy, and Galle districts deeply. Other districts show a coming-soon placeholder until official open-data feeds are integrated.",
+      "A curated seed directory covers representative facilities across all 25 districts. Not exhaustive — typically 3+ facilities per district until official open-data feeds are integrated.",
     metrics: ["public_services"],
+  },
+  {
+    id: "budget_verite_seed",
+    name: "Verité Research / Budget Speech summaries",
+    category: "economy",
+    url: "internal://budget",
+    cadenceMinutes: 525600,
+    adapter: "scrape",
+    description:
+      "National budget appropriations by ministry and sector for FY 2024/25 and 2025/26.",
+    methodology:
+      "Curated static seed aligned with published budget speech totals and Verité Research sector summaries. Figures are rounded approximations — not digitized official appropriation ledgers.",
+    metrics: ["budget_expenditure", "budget_revenue"],
+  },
+  {
+    id: "epidemiology_unit_seed",
+    name: "Epidemiology Unit — Weekly Dengue Report",
+    category: "health",
+    url: "internal://health",
+    cadenceMinutes: 10080,
+    adapter: "scrape",
+    description:
+      "Weekly dengue case counts by administrative district.",
+    methodology:
+      "Representative district-level seed data patterned on Epidemiology Unit weekly report formats. Not live scraped — updated manually until ingest pipeline is approved.",
+    metrics: ["dengue_weekly"],
+  },
+  {
+    id: "manthri_inspired_seed",
+    name: "Parliamentary records (seed)",
+    category: "civic",
+    url: "internal://civic",
+    cadenceMinutes: 525600,
+    adapter: "scrape",
+    description:
+      "Sample MP attendance and legislative activity scorecards.",
+    methodology:
+      "Illustrative seed inspired by Manthri.lk patterns. Not scraped from Manthri — representative sample members for demo purposes only.",
+    metrics: ["mp_attendance", "mp_bills"],
+  },
+  {
+    id: "egp_procurement_seed",
+    name: "Government Procurement — e-GP notices",
+    category: "civic",
+    url: "internal://tenders",
+    cadenceMinutes: 1440,
+    adapter: "scrape",
+    description:
+      "Sample government procurement tender notices with district filters.",
+    methodology:
+      "Static seed notices modeled on e-GP publication formats. Not live from e-GP portal — for demonstration and API testing only.",
+    metrics: ["tenders"],
   },
 ];
 

@@ -1,8 +1,9 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { FxSparkline, MacroIndicatorCard } from "@/components/EconomyCards";
+import { FuelHistoryChart, FxSparkline, MacroIndicatorCard } from "@/components/EconomyCards";
 import { PulseCard } from "@/components/PulseCard";
 import { Link } from "@/i18n/navigation";
 import { getEconomyMacroSnapshot, getFxSeries } from "@/lib/economy";
+import { getFuelHistorySeries } from "@/lib/fuel";
 import { buildPulseSnapshot } from "@/lib/pulse";
 import { getSourceProvenancePath } from "@/lib/sources";
 
@@ -17,6 +18,7 @@ export default async function EconomyPage({
   const snapshot = await buildPulseSnapshot();
   const macro = getEconomyMacroSnapshot();
   const fxSeries = await getFxSeries();
+  const fuelHistory = await getFuelHistorySeries(90);
   const economyMetrics = snapshot.metrics.filter((metric) =>
     ["usd_lkr", "fuel_petrol_92", "fuel_diesel"].includes(metric.id),
   );
@@ -68,6 +70,7 @@ export default async function EconomyPage({
             series={fxSeries}
             asOf={macro.asOf}
           />
+          <FuelHistoryChart title={t("fuelHistoryTitle")} series={fuelHistory} />
         </div>
       </section>
     </div>

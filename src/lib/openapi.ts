@@ -2,7 +2,7 @@ export const openApiSpec = {
   openapi: "3.1.0",
   info: {
     title: "Lankawa Public API",
-    version: "0.2.0",
+    version: "0.3.0",
     description:
       "Public civic intelligence API for Sri Lanka. Every metric includes source provenance and freshness tiers.",
   },
@@ -117,6 +117,27 @@ export const openApiSpec = {
         responses: { "200": { description: "Historical water levels with freshness tier" } },
       },
     },
+    "/fuel/history": {
+      get: {
+        summary: "CPC fuel price history",
+        parameters: [
+          { name: "days", in: "query", schema: { type: "integer", default: 90 } },
+        ],
+        responses: { "200": { description: "Petrol 92 and auto diesel price series" } },
+      },
+    },
+    "/budget": {
+      get: {
+        summary: "National budget snapshot",
+        responses: { "200": { description: "FY 2024/25 and 2025/26 budget seed data" } },
+      },
+    },
+    "/health/dengue": {
+      get: {
+        summary: "Weekly dengue statistics",
+        responses: { "200": { description: "District-level dengue case counts (seed)" } },
+      },
+    },
   },
 } as const;
 
@@ -204,6 +225,27 @@ export const apiEndpoints = [
     summaryKey: "floodHistorySummary" as const,
     descriptionKey: "floodHistoryDescription" as const,
     example: `{ "points": [{ "timestamp": "...", "waterLevel": 1.39 }], "tier": "fresh" }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/fuel/history?days=90",
+    summaryKey: "fuelHistorySummary" as const,
+    descriptionKey: "fuelHistoryDescription" as const,
+    example: `{ "days": 90, "series": [{ "fuelType": "petrol_92", "points": [...] }] }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/budget",
+    summaryKey: "budgetSummary" as const,
+    descriptionKey: "budgetDescription" as const,
+    example: `{ "fiscalYears": [{ "id": "fy2025-26", "revenue": 4580, ... }] }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/health/dengue",
+    summaryKey: "dengueSummary" as const,
+    descriptionKey: "dengueDescription" as const,
+    example: `{ "nationalTotal": 3842, "districts": [{ "slug": "colombo", "cases": 612 }] }`,
   },
   {
     method: "GET",

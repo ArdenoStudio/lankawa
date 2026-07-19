@@ -30,6 +30,7 @@ import {
   getProvinceName,
   getProvinceSlugFromDistrictProvince,
 } from "@/lib/provinces";
+import { getDengueDistrictStats } from "@/lib/health";
 import { getPublicServicesForDistrict } from "@/lib/services";
 import { isVanniAdminDistrict } from "@/lib/election-swing";
 
@@ -68,6 +69,7 @@ export default async function DistrictDetailPage({
   const floodStationNames = getFloodStationsForDistrict(slug);
   const province = getProvinceForDistrict(district);
   const services = getPublicServicesForDistrict(slug);
+  const dengueStats = getDengueDistrictStats(slug);
 
   let liveFloodStations: Awaited<ReturnType<typeof fetchFloodLevelsForDistrict>> = [];
   try {
@@ -279,6 +281,24 @@ export default async function DistrictDetailPage({
           >
             <p className="font-medium text-white">{t("relatedEconomy")}</p>
             <p className="mt-1 text-sm text-slate-400">{t("relatedEconomyDesc")}</p>
+          </Link>
+          <Link
+            href="/health"
+            className="rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-teal-400/30 hover:bg-white/10"
+          >
+            <p className="font-medium text-white">{t("relatedHealth")}</p>
+            <p className="mt-1 text-sm text-slate-400">
+              {dengueStats
+                ? t("relatedHealthCases", { count: dengueStats.cases })
+                : t("relatedHealthDesc")}
+            </p>
+          </Link>
+          <Link
+            href={`/compare?districts=${slug},colombo`}
+            className="rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-teal-400/30 hover:bg-white/10"
+          >
+            <p className="font-medium text-white">{t("relatedCompare")}</p>
+            <p className="mt-1 text-sm text-slate-400">{t("relatedCompareDesc")}</p>
           </Link>
         </div>
       </section>

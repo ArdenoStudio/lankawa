@@ -1,0 +1,62 @@
+{
+  "sourceId": "manthri_inspired_seed",
+  "sourceName": "Parliamentary records (seed — Manthri-inspired patterns)",
+  "asOf": "2026-06-30",
+  "parliamentSession": "2025/26",
+  "members": [
+    {
+      "id": "mp-colombo-01",
+      "electoralDistrict": "colombo",
+      "party": "NPP",
+      "attendancePct": 87,
+      "privateMemberBills": 2,
+      "questionsAsked": 14,
+      "committeeRoles": 3
+    },
+    {
+      "id": "mp-kandy-01",
+      "electoralDistrict": "kandy",
+      "party": "NPP",
+      "attendancePct": 92,
+      "privateMemberBills": 1,
+      "questionsAsked": 9,
+      "committeeRoles": 2
+    },
+    {
+      "id": "mp-galle-01",
+      "electoralDistrict": "galle",
+      "party": "SJB",
+      "attendancePct": 78,
+      "privateMemberBills": 0,
+      "questionsAsked": 11,
+      "committeeRoles": 1
+    },
+    {
+      "id": "mp-jaffna-01",
+      "electoralDistrict": "jaffna",
+      "party": "ITAK",
+      "attendancePct": 94,
+      "privateMemberBills": 3,
+      "questionsAsked": 18,
+      "committeeRoles": 4
+    },
+    {
+      "id": "mp-kurunegala-01",
+      "electoralDistrict": "kurunegala",
+      "party": "NPP",
+      "attendancePct": 81,
+      "privateMemberBills": 1,
+      "questionsAsked": 7,
+      "committeeRoles": 2
+    },
+    {
+      "id": "mp-badulla-01",
+      "electoralDistrict": "badulla",
+      "party": "NPP",
+      "attendancePct": 85,
+      "privateMemberBills": 0,
+      "questionsAsked": 6,
+      "committeeRoles": 1
+    }
+  ]
+}

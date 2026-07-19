@@ -3,6 +3,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { PwaRegister } from "@/components/PwaRegister";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
@@ -21,10 +22,12 @@ export async function generateMetadata({
   return {
     title: t("title"),
     description: t("description"),
+    manifest: "/manifest.json",
+    themeColor: "#0f766e",
     icons: {
       icon: "/favicon.svg",
       shortcut: "/favicon.svg",
-      apple: "/favicon.svg",
+      apple: "/icons/icon-192.svg",
     },
   };
 }
@@ -49,6 +52,7 @@ export default async function LocaleLayout({
     <html lang={locale} className="h-full">
       <body className="min-h-full bg-slate-950 text-slate-100 antialiased">
         <NextIntlClientProvider messages={messages}>
+          <PwaRegister />
           <SiteHeader />
           <main className="mx-auto flex min-h-[calc(100vh-8rem)] w-full max-w-6xl flex-1 flex-col px-4 py-8">
             {children}
