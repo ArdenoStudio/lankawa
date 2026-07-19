@@ -1,6 +1,7 @@
 "use client";
 
 import { ChartExportButton } from "@/components/ChartExportButton";
+import { MonoLineChart } from "@/components/charts/MonoLineChart";
 import { CitationCard } from "@/components/CitationCard";
 import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { Link } from "@/i18n/navigation";
@@ -32,26 +33,6 @@ export function NcpiInflationCard({
 }) {
   const { latest, series } = snapshot;
   const chartId = "ncpi-yoy-chart";
-  const width = 360;
-  const height = 120;
-  const padX = 16;
-  const padY = 14;
-  const innerW = width - padX * 2;
-  const innerH = height - padY * 2;
-  const values = series.map((point) => point.yoyPct);
-  const min = Math.min(...values, 0);
-  const max = Math.max(...values, 0);
-  const range = max - min || 1;
-
-  const points = series
-    .map((point, index) => {
-      const x = padX + (index / Math.max(series.length - 1, 1)) * innerW;
-      const y = padY + ((max - point.yoyPct) / range) * innerH;
-      return `${x},${y}`;
-    })
-    .join(" ");
-
-  const zeroY = padY + ((max - 0) / range) * innerH;
 
   return (
     <article className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:col-span-2 lg:col-span-3">
@@ -117,48 +98,26 @@ export function NcpiInflationCard({
       </dl>
 
       <div className="mt-4 overflow-x-auto">
-        <svg
+        <MonoLineChart
           id={chartId}
-          viewBox={`0 0 ${width} ${height}`}
-          className="h-auto w-full max-w-2xl text-white"
-          role="img"
-          aria-label={labels.yoy}
-        >
-          <line
-            x1={padX}
-            y1={zeroY}
-            x2={width - padX}
-            y2={zeroY}
-            stroke="currentColor"
-            strokeOpacity={0.25}
-            strokeDasharray="3 3"
-          />
-          <polyline
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            points={points}
-          />
-          <text
-            x={padX}
-            y={height - 2}
-            className="fill-current text-[10px]"
-            fill="currentColor"
-            opacity={0.5}
-          >
-            {series[0]?.label}
-          </text>
-          <text
-            x={width - padX}
-            y={height - 2}
-            textAnchor="end"
-            className="fill-current text-[10px]"
-            fill="currentColor"
-            opacity={0.5}
-          >
-            {series[series.length - 1]?.label}
-          </text>
-        </svg>
+          ariaLabel={labels.yoy}
+          height={128}
+          showZeroLine
+          startLabel={series[0]?.label}
+          endLabel={series[series.length - 1]?.label}
+          valueFormat={(value) => `${value.toFixed(1)}%`}
+          series={[
+            {
+              id: "ncpi-yoy",
+              className: "text-white",
+              area: true,
+              values: series.map((point) => ({
+                date: `${point.period}-01`,
+                value: point.yoyPct,
+              })),
+            },
+          ]}
+        />
       </div>
 
       <footer className="mt-4 space-y-3 border-t border-white/10 pt-4">

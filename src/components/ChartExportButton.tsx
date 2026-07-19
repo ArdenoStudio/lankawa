@@ -106,9 +106,20 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
-async function exportSvgToPng(targetId: string): Promise<void> {
+function resolveSvg(targetId: string): SVGSVGElement | null {
   const target = document.getElementById(targetId);
-  const svg = target?.querySelector("svg");
+  if (!target) {
+    return null;
+  }
+  if (target instanceof SVGSVGElement) {
+    return target;
+  }
+  const nested = target.querySelector("svg");
+  return nested instanceof SVGSVGElement ? nested : null;
+}
+
+async function exportSvgToPng(targetId: string): Promise<void> {
+  const svg = resolveSvg(targetId);
 
   if (!(svg instanceof SVGSVGElement)) {
     throw new Error("No SVG chart found to export.");

@@ -1,6 +1,7 @@
 "use client";
 
 import { ChartExportButton } from "@/components/ChartExportButton";
+import { MonoLineChart } from "@/components/charts/MonoLineChart";
 import { CitationCard } from "@/components/CitationCard";
 import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { Link } from "@/i18n/navigation";
@@ -28,29 +29,6 @@ export function DebtCompositionCard({
   permalink?: string;
 }) {
   const { series, latest, commercialDeltaPts } = snapshot;
-  const width = 360;
-  const height = 140;
-  const padX = 12;
-  const padY = 16;
-  const innerW = width - padX * 2;
-  const innerH = height - padY * 2;
-
-  const commercialPoints = series
-    .map((point, index) => {
-      const x = padX + (index / Math.max(series.length - 1, 1)) * innerW;
-      const y = padY + ((100 - point.commercialPct) / 100) * innerH;
-      return `${x},${y}`;
-    })
-    .join(" ");
-
-  const concessionaryPoints = series
-    .map((point, index) => {
-      const x = padX + (index / Math.max(series.length - 1, 1)) * innerW;
-      const y = padY + ((100 - point.concessionaryPct) / 100) * innerH;
-      return `${x},${y}`;
-    })
-    .join(" ");
-
   const chartId = "foreign-debt-composition-chart";
 
   return (
@@ -97,48 +75,34 @@ export function DebtCompositionCard({
       </div>
 
       <div className="mt-4 overflow-x-auto">
-        <svg
+        <MonoLineChart
           id={chartId}
-          viewBox={`0 0 ${width} ${height}`}
-          className="h-auto w-full max-w-2xl text-white"
-          role="img"
-          aria-label={labels.title}
-        >
-          <polyline
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            opacity={0.95}
-            points={commercialPoints}
-          />
-          <polyline
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeDasharray="4 3"
-            opacity={0.55}
-            points={concessionaryPoints}
-          />
-          <text
-            x={padX}
-            y={height - 2}
-            className="fill-current text-[10px]"
-            fill="currentColor"
-            opacity={0.5}
-          >
-            {snapshot.earliest.year}
-          </text>
-          <text
-            x={width - padX}
-            y={height - 2}
-            textAnchor="end"
-            className="fill-current text-[10px]"
-            fill="currentColor"
-            opacity={0.5}
-          >
-            {latest.year}
-          </text>
-        </svg>
+          ariaLabel={labels.title}
+          height={140}
+          startLabel={String(snapshot.earliest.year)}
+          endLabel={String(latest.year)}
+          valueFormat={(value) => `${value.toFixed(0)}%`}
+          series={[
+            {
+              id: "commercial",
+              className: "text-white",
+              values: series.map((point) => ({
+                date: `${point.year}-01-01`,
+                value: point.commercialPct,
+              })),
+            },
+            {
+              id: "concessionary",
+              className: "text-slate-400",
+              dasharray: "4 3",
+              opacity: 0.85,
+              values: series.map((point) => ({
+                date: `${point.year}-01-01`,
+                value: point.concessionaryPct,
+              })),
+            },
+          ]}
+        />
         <p className="mt-2 text-xs text-slate-500">
           <span className="mr-3">— {labels.commercial}</span>
           <span className="opacity-70">- - {labels.concessionary}</span>

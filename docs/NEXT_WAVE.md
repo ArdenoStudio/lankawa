@@ -22,7 +22,9 @@ W  Watchdog → Lankawa-native       ✅ Land Pulse deepen + Debt Pulse
 
 Backlog wave complete for planned items. Follow-on retention wave: fact-ledger brief, cricket 24h/economy card, news clusters, PWA offline morning shell.
 
-Still parked: Year-2 satellite ETL, world pump compare, protest tracker, Entity Sport cricket, pgvector news.
+Still parked: Year-2 satellite ETL (see `docs/DATA_EXPANSION_RESEARCH.md`), protest tracker, Entity Sport cricket, pgvector news.
+
+Follow-on data wave (ranked): FIRMS/GDACS pins → Open-Meteo UV/rain deepen → CSE sectors/most-active → bank remittance TT → FX anomaly + flood rate-of-rise → NDVI district ETL.
 
 ---
 

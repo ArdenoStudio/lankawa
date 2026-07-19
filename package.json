@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx src/lib/freshness.test.ts && tsx src/lib/analytics.test.ts && tsx src/lib/pucsl.test.ts && tsx src/lib/alert-pins.test.ts && tsx src/lib/rate-limit.test.ts"
+    "test": "tsx src/lib/freshness.test.ts && tsx src/lib/analytics.test.ts && tsx src/lib/pucsl.test.ts && tsx src/lib/alert-pins.test.ts && tsx src/lib/rate-limit.test.ts && tsx src/lib/charts/mono.test.ts"
   },
   "dependencies": {
     "@fontsource/cal-sans": "^5.3.0",
