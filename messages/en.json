@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "title": "Lankawa — Sri Lanka Civic Intelligence",
+    "description": "Everything public, for every Sri Lankan. Unified civic data across economy, districts, disasters, and public services."
+  },
+  "nav": {
+    "home": "Home",
+    "districts": "Districts",
+    "disaster": "Disaster",
+    "economy": "Economy",
+    "api": "API"
+  },
+  "home": {
+    "eyebrow": "National civic intelligence",
+    "title": "Understand Sri Lanka today",
+    "subtitle": "Fresh public data across economy, fuel, floods, and districts — with source provenance on every number.",
+    "pulseTitle": "Live pulse",
+    "sourcesTitle": "Source health",
+    "districtsTitle": "District atlas",
+    "districtsSubtitle": "Explore all 25 districts with population and provincial context.",
+    "viewDistricts": "Browse districts",
+    "disclaimer": "Aggregated from public sources. Not an official government publication."
+  },
+  "districts": {
+    "title": "District Atlas",
+    "subtitle": "Sri Lanka's 25 districts as the universal geographic key for civic data.",
+    "population": "Population",
+    "area": "Area",
+    "province": "Province",
+    "capital": "Capital",
+    "back": "Back to districts"
+  },
+  "disaster": {
+    "title": "Disaster & Flood",
+    "subtitle": "River station monitoring from the Sri Lanka Flood API.",
+    "normal": "Normal",
+    "stations": "stations"
+  },
+  "economy": {
+    "title": "Economic Pulse",
+    "subtitle": "Exchange rates, fuel prices, and macro indicators."
+  },
+  "freshness": {
+    "fresh": "Fresh",
+    "stale": "Stale",
+    "down": "Down",
+    "unknown": "Unknown"
+  },
+  "footer": {
+    "built": "Built for Sri Lanka",
+    "github": "GitHub"
+  }
+}
