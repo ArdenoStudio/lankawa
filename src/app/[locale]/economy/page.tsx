@@ -8,6 +8,8 @@ import {
   MacroIndicatorCard,
 } from "@/components/EconomyCards";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
+import { NcpiInflationCard } from "@/components/NcpiInflationCard";
+import { PucslTariffCard } from "@/components/PucslTariffCard";
 import { PulseCard } from "@/components/PulseCard";
 import { RemittanceCalculator } from "@/components/RemittanceCalculator";
 import { Link } from "@/i18n/navigation";
@@ -17,6 +19,8 @@ import { fetchLatestCbslGoldRate } from "@/lib/integrations/cbsl";
 import { fetchLpgPriceSnapshot } from "@/lib/integrations/lpg";
 import { getFuelHistorySeries } from "@/lib/fuel";
 import { buildCseSnapshot } from "@/lib/integrations/cse";
+import { getNcpiSnapshot } from "@/lib/ncpi";
+import { getPucslTariffSnapshot } from "@/lib/pucsl";
 import { buildPulseSnapshot } from "@/lib/pulse";
 import { getSource, getSourceProvenancePath } from "@/lib/sources";
 
@@ -37,6 +41,8 @@ export default async function EconomyPage({
   const goldRate = await fetchLatestCbslGoldRate();
   const lpgSnapshot = await fetchLpgPriceSnapshot();
   const debtSnapshot = getForeignDebtSnapshot();
+  const ncpiSnapshot = getNcpiSnapshot();
+  const tariffSnapshot = getPucslTariffSnapshot();
   const fxSource = getSource("cbsl_fx");
   const fuelSource = getSource("octane_fuel");
   const economyMetrics = snapshot.metrics.filter((metric) =>
@@ -175,6 +181,59 @@ export default async function EconomyPage({
               asOf: t("debt.asOf", { date: debtSnapshot.asOf }),
               attribution: t("debt.attribution"),
               methodology: t("debt.methodology"),
+            }}
+          />
+        </div>
+      </section>
+
+      <section className="space-y-4">
+        <div>
+          <h2 className="text-xl font-semibold text-white">
+            {t("householdTitle")}
+          </h2>
+          <p className="mt-1 text-sm text-slate-400">{t("householdSubtitle")}</p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <NcpiInflationCard
+            snapshot={ncpiSnapshot}
+            sourcePath={getSourceProvenancePath(ncpiSnapshot.sourceId)}
+            permalink={`/${locale}/economy`}
+            labels={{
+              title: t("ncpi.title"),
+              subtitle: t("ncpi.subtitle"),
+              yoy: t("ncpi.yoy"),
+              mom: t("ncpi.mom"),
+              core: t("ncpi.core"),
+              food: t("ncpi.food"),
+              nonFood: t("ncpi.nonFood"),
+              index: t("ncpi.index"),
+              period: t("ncpi.period"),
+              honesty: t("ncpi.honesty"),
+              source: t("ncpi.source"),
+              release: t("ncpi.release"),
+            }}
+          />
+          <PucslTariffCard
+            snapshot={tariffSnapshot}
+            locale={locale}
+            sourcePath={getSourceProvenancePath(tariffSnapshot.sourceId)}
+            permalink={`/${locale}/economy`}
+            labels={{
+              title: t("tariff.title"),
+              subtitle: t("tariff.subtitle"),
+              effective: t("tariff.effective"),
+              slab: t("tariff.slab"),
+              energy: t("tariff.energy"),
+              fixed: t("tariff.fixed"),
+              unitsLabel: t("tariff.unitsLabel"),
+              estimateTitle: t("tariff.estimateTitle"),
+              energyTotal: t("tariff.energyTotal"),
+              fixedTotal: t("tariff.fixedTotal"),
+              billTotal: t("tariff.billTotal"),
+              honesty: t("tariff.honesty"),
+              source: t("tariff.source"),
+              decision: t("tariff.decision"),
+              none: t("tariff.none"),
             }}
           />
         </div>

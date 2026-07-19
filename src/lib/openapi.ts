@@ -196,6 +196,28 @@ export const openApiSpec = {
         },
       },
     },
+    "/economy/ncpi": {
+      get: {
+        summary: "NCPI inflation snapshot",
+        responses: {
+          "200": {
+            description:
+              "Latest NCPI headline YoY/MoM, core, food/non-food, and recent monthly series",
+          },
+        },
+      },
+    },
+    "/economy/tariffs": {
+      get: {
+        summary: "PUCSL domestic electricity tariffs",
+        responses: {
+          "200": {
+            description:
+              "Residential energy and fixed charges by consumption block with effective date",
+          },
+        },
+      },
+    },
     "/tenders": {
       get: {
         summary: "Government procurement tender notices",
@@ -551,6 +573,20 @@ export const apiEndpoints = [
     summaryKey: "debtSummary" as const,
     descriptionKey: "debtDescription" as const,
     example: `{ "latest": { "year": 2020, "commercialPct": 53.8 }, "series": [...], "provenancePath": "/sources/lankawa_debt_pulse" }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/economy/ncpi",
+    summaryKey: "ncpiSummary" as const,
+    descriptionKey: "ncpiDescription" as const,
+    example: `{ "periodLabel": "March 2026", "latest": { "yoyPct": 2.4, "momPct": 0.7 }, "provenancePath": "/sources/dcs_ncpi" }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/economy/tariffs",
+    summaryKey: "tariffsSummary" as const,
+    descriptionKey: "tariffsDescription" as const,
+    example: `{ "effectiveFrom": "2025-06-12", "tracks": [{ "id": "above_60", "slabs": [...] }], "provenancePath": "/sources/pucsl_tariff" }`,
   },
   {
     method: "GET",

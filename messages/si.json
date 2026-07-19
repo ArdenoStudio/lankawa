@@ -501,6 +501,39 @@
       "asOf": "{date} දක්වා ශ්‍රේණිය",
       "attribution": "සොයාගත්තේ",
       "methodology": "ප්‍රාථමික අගයන් CBSL වාර්තා වලින්. ඓතිහාසික පමණි — live ණය dashboard නොවේ."
+    },
+    "householdTitle": "ගෘහස්ථ අංක",
+    "householdSubtitle": "නිල උද්ධමනය සහ ගෘහස්ථ විදුලි ගාස්තු.",
+    "ncpi": {
+      "title": "NCPI උද්ධමනය",
+      "subtitle": "National Consumer Price Index from the Department of Census and Statistics — monthly official series, not Lankawa COL.",
+      "yoy": "වාර්ෂික",
+      "mom": "මාසික",
+      "core": "Core YoY",
+      "food": "Food YoY",
+      "nonFood": "Non-food YoY",
+      "index": "Index level",
+      "period": "Period",
+      "honesty": "Monthly official series with a period label. Not live inflation. Not the Lankawa cost-of-living composite.",
+      "source": "මූලාශ්‍රය",
+      "release": "DCS නිකුතුව"
+    },
+    "tariff": {
+      "title": "විදුලි ගාස්තු (ගෘහස්ථ)",
+      "subtitle": "PUCSL-approved residential energy and fixed charges by consumption block.",
+      "effective": "Effective from",
+      "slab": "කොටස",
+      "energy": "LKR/kWh",
+      "fixed": "ස්ථිර LKR/මාස",
+      "unitsLabel": "මාසික ඒකක (kWh)",
+      "estimateTitle": "ඇඟවුම් බිල් ඇස්තමේන්තුව",
+      "energyTotal": "Energy charge",
+      "fixedTotal": "Fixed charge",
+      "billTotal": "ඇඟවුම් එකතුව",
+      "honesty": "Indicative only — progressive slabs and fixed charges can change with PUCSL decisions. Not your CEB/LECO bill; verify against the latest decision and your meter reading.",
+      "source": "මූලාශ්‍රය",
+      "decision": "PUCSL ගෘහස්ථ ගාස්තු",
+      "none": "—"
     }
   },
   "search": {
@@ -735,7 +768,11 @@
     "exportLandChangeSummary": "Export land change",
     "exportLandChangeDescription": "Download district greenery and built-up indices as JSON or CSV.",
     "exportForeignDebtSummary": "Export foreign debt composition",
-    "exportForeignDebtDescription": "Download commercial vs concessionary debt share series as JSON or CSV."
+    "exportForeignDebtDescription": "Download commercial vs concessionary debt share series as JSON or CSV.",
+    "ncpiSummary": "NCPI inflation",
+    "ncpiDescription": "Latest NCPI headline YoY/MoM, core, food/non-food splits, and recent monthly series from DCS.",
+    "tariffsSummary": "PUCSL domestic tariffs",
+    "tariffsDescription": "Residential electricity energy and fixed charges by consumption block with effective date."
   },
   "budget": {
     "title": "ජාතික අයවැය Tracker",

@@ -1,0 +1,26 @@
+{
+  "sourceId": "dcs_ncpi",
+  "sourceName": "Department of Census and Statistics — NCPI",
+  "base": "2021=100",
+  "asOf": "2026-03-31",
+  "releasedAt": "2026-04-21",
+  "periodLabel": "March 2026",
+  "methodologyNote": "Curated from the DCS NCPI (Base 2021=100) monthly news release. Not a live scrape. Official series can be revised — always read the period label. Lankawa COL composite is separate and is not NCPI.",
+  "releaseUrl": "https://www.statistics.gov.lk/qlink/PressReleases/NCPI_20260421E",
+  "latest": {
+    "index": 210.9,
+    "yoyPct": 2.4,
+    "momPct": 0.7,
+    "coreYoyPct": 2.7,
+    "foodYoyPct": 0.7,
+    "nonFoodYoyPct": 3.8
+  },
+  "series": [
+    { "period": "2025-10", "label": "Oct 2025", "index": 207.5, "yoyPct": 2.7, "momPct": 0.0 },
+    { "period": "2025-11", "label": "Nov 2025", "index": 207.2, "yoyPct": 2.4, "momPct": -0.1 },
+    { "period": "2025-12", "label": "Dec 2025", "index": 210.5, "yoyPct": 2.9, "momPct": 1.6 },
+    { "period": "2026-01", "label": "Jan 2026", "index": 211.4, "yoyPct": 2.4, "momPct": 0.4 },
+    { "period": "2026-02", "label": "Feb 2026", "index": 209.4, "yoyPct": 1.6, "momPct": -0.9 },
+    { "period": "2026-03", "label": "Mar 2026", "index": 210.9, "yoyPct": 2.4, "momPct": 0.7 }
+  ]
+}

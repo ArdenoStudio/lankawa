@@ -106,6 +106,32 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["inflation_ccpi", "gdp_growth", "forex_reserves", "usd_lkr_series"],
   },
   {
+    id: "dcs_ncpi",
+    name: "Department of Census and Statistics — NCPI",
+    category: "economy",
+    url: "https://www.statistics.gov.lk/InflationAndPrices/StaticalInformation/MonthlyNCPI",
+    cadenceMinutes: 43200,
+    adapter: "partner",
+    description:
+      "Official National Consumer Price Index (Base 2021=100) headline and core inflation.",
+    methodology:
+      "Curated from DCS monthly NCPI news releases (YoY, MoM, index, food/non-food). Cadence is monthly — never presented as a live inflation feed. Distinct from Lankawa COL composite.",
+    metrics: ["ncpi_index", "ncpi_yoy", "ncpi_mom", "ncpi_core_yoy"],
+  },
+  {
+    id: "pucsl_tariff",
+    name: "Public Utilities Commission of Sri Lanka — Domestic tariff",
+    category: "economy",
+    url: "https://www.pucsl.gov.lk/electricity/tariff/domestic/",
+    cadenceMinutes: 525600,
+    adapter: "partner",
+    description:
+      "Approved domestic (residential) electricity energy and fixed charges by consumption block.",
+    methodology:
+      "Curated from PUCSL end-user tariff decisions for CEB/LECO domestic consumers. Progressive slabs differ for ≤60 kWh vs >60 kWh monthly use. Indicative bill estimate only — verify against the latest PUCSL decision and your bill.",
+    metrics: ["electricity_energy_lkr_kwh", "electricity_fixed_lkr"],
+  },
+  {
     id: "public_services_stub",
     name: "Lankawa Public Services Directory",
     category: "civic",
