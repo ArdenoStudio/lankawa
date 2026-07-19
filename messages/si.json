@@ -490,6 +490,17 @@
       "fallbackNote": "සජීවී CSE දත්ත තාවකාලිකව ලබා ගත නොහැක. අවසන් cache snapshot එක පෙන්වයි.",
       "provenance": "දත්ත ප්‍රවේණිය",
       "noMovers": "චලනයන් නොමැත"
+    },
+    "debt": {
+      "title": "විදේශ ණය සංයුතිය",
+      "subtitle": "වාණිජ vs සහනශීලී බාහිර ණය කොටස — Watchdog databank හරහා CBSL වගු වලින් Lankawa ස්පන්දනය.",
+      "commercial": "වාණිජ ණය",
+      "concessionary": "සහනශීලී ණය",
+      "latest": "නවතම කොටස",
+      "delta": "වාණිජ කොටස වෙනස",
+      "asOf": "{date} දක්වා ශ්‍රේණිය",
+      "attribution": "සොයාගත්තේ",
+      "methodology": "ප්‍රාථමික අගයන් CBSL වාර්තා වලින්. ඓතිහාසික පමණි — live ණය dashboard නොවේ."
     }
   },
   "search": {
@@ -716,7 +727,15 @@
     "exportDownload": "Download",
     "embedTitle": "Embeddable widgets",
     "embedBody": "Same-origin iframe widgets for today, pulse, fuel, and FX.",
-    "embedLink": "Open embed preview"
+    "embedLink": "Open embed preview",
+    "landChangeSummary": "Land Change Pulse",
+    "landChangeDescription": "District greenery and built-up indices (2018→2024) with national deltas and top movers.",
+    "debtSummary": "Foreign debt composition",
+    "debtDescription": "Commercial vs concessionary external debt share series (2004–2020), normalized for Lankawa.",
+    "exportLandChangeSummary": "Export land change",
+    "exportLandChangeDescription": "Download district greenery and built-up indices as JSON or CSV.",
+    "exportForeignDebtSummary": "Export foreign debt composition",
+    "exportForeignDebtDescription": "Download commercial vs concessionary debt share series as JSON or CSV."
   },
   "budget": {
     "title": "ජාතික අයවැය Tracker",
@@ -1324,6 +1343,39 @@
     "points2018to2024": "ලකුණු (2018→2024)",
     "topGreeneryLoss": "වැඩිම හරිත අඩුවීම්",
     "topBuiltUpGain": "වැඩිම ගොඩනැගිලි වැඩිවීම්",
-    "attribution": "Lankawa දිස්‍ත්‍රික් දර්ශක. පෙර පර්යේෂණ: Team Watchdog satellite2024 (MIT). නිල ඉඩම් භාවිත සිතියම් නොවේ."
+    "attribution": "Lankawa දිස්‍ත්‍රික් දර්ශක. පෙර පර්යේෂණ: Team Watchdog satellite2024 (MIT). නිල ඉඩම් භාවිත සිතියම් නොවේ.",
+    "methodologyLink": "ක්‍රමවේදය",
+    "exportCsv": "CSV බාගන්න",
+    "chartTitle": "වැඩිම හරිත අඩුවීම් (2018→2024)",
+    "greeneryDeltaAxis": "හරිත දර්ශක වෙනස (ලකුණු)",
+    "chartExportHint": "මාධ්‍ය / Discord සඳහා ඒකවර්ණ නිර්යාතය",
+    "tableTitle": "සියලු දිස්ත්‍රික්ක — හරිත සහ ගොඩනැගිලි",
+    "colDistrict": "දිස්ත්‍රික්කය",
+    "colGreenery": "හරිත",
+    "colBuiltUp": "ගොඩනැගිලි",
+    "districtTitle": "භූමි වෙනස",
+    "districtSubtitle": "මෙම දිස්ත්‍රික්කයේ හරිත සහ ගොඩනැගිලි දර්ශක වෙනස (2018→2024).",
+    "greeneryDistrict": "හරිත දර්ශක Δ",
+    "builtUpDistrict": "ගොඩනැගිලි දර්ශක Δ",
+    "viewNational": "ජාතික භූමි ස්පන්දනය",
+    "sourceLink": "මූලාශ්‍රය"
+  },
+  "landChangeMethodology": {
+    "back": "පරිසරයට ආපසු",
+    "title": "භූමි වෙනස්කම් ස්පන්දන ක්‍රමවේදය",
+    "subtitle": "How Lankawa turns land-cover research into a district morning check — without hosting satellite mosaics.",
+    "whatTitle": "What the indices mean",
+    "whatBody": "Each district has a greenery index and a built-up index on a 0–100 scale for 2018 and 2024. Deltas are point changes over that window. Numbers are sized for civic pulse use (compare with AQI or flood status), not cadastral mapping.",
+    "watchdogTitle": "What Team Watchdog does — and what we do instead",
+    "watchdogBody": "Team Watchdog’s satellite2024 project publishes annual Sentinel-2 mosaics and land-cover grids for journalism and research. That work is excellent prior art under MIT licence. Lankawa’s job is different: a daily, trilingual product with freshness provenance.",
+    "watchdogPoint1": "We do not host multi‑GB mosaics or Drive folders inside the app.",
+    "watchdogPoint2": "We ship small district JSON, an API, CSV export, and district-page cards.",
+    "watchdogPoint3": "We credit Watchdog as research inspiration; our indices are Lankawa’s civic aggregation until a year‑2 ETL writes observations from LULC grids.",
+    "honestyTitle": "Honesty contract",
+    "honestyBody": "This series is curated / seed until Lankawa runs its own yearly land-cover ETL. It is not Survey Department land use, not zoning, and not a live sensor feed. Treat it like other Lankawa seed pulses: useful context with clear provenance.",
+    "asOf": "Series as of {date}",
+    "apiTitle": "API & export",
+    "apiBody": "Machine-readable access uses the same shape as other Lankawa civic endpoints.",
+    "csvLink": "දිස්ත්‍රික් භූමි වෙනස් CSV බාගන්න"
   }
 }

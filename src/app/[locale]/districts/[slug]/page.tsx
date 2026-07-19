@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { DistrictLandPulse } from "@/components/DistrictLandPulse";
 import { DistrictMapLazy } from "@/components/DistrictMapLazy";
 import { DistrictPinButton } from "@/components/DistrictPinButton";
 import { ElectionSwingChart } from "@/components/ElectionSwingChart";
@@ -219,6 +220,8 @@ export default async function DistrictDetailPage({
       />
 
       <FloodSparklinePanel stationNames={floodStationNames} />
+
+      <DistrictLandPulse slug={slug} />
 
       {electionResult ? <ElectionSwingChart slug={slug} /> : null}
 

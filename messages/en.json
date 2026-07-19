@@ -499,6 +499,17 @@
       "fallbackNote": "Live CSE data is temporarily unavailable. Showing the latest cached snapshot.",
       "provenance": "Data provenance",
       "noMovers": "No movers available"
+    },
+    "debt": {
+      "title": "Foreign debt composition",
+      "subtitle": "Commercial vs concessionary share of external debt — a Lankawa pulse normalized from public CBSL tables (via Watchdog databank discovery).",
+      "commercial": "Commercial loans",
+      "concessionary": "Concessionary loans",
+      "latest": "Latest share",
+      "delta": "Commercial share change",
+      "asOf": "Series through {date}",
+      "attribution": "Discovered via",
+      "methodology": "Primary figures from Central Bank reports. Historical only — not post-restructuring live debt. Not an official CBSL dashboard."
     }
   },
   "search": {
@@ -710,6 +721,14 @@
     "exportServicesDescription": "Download the full public services directory seed as JSON or CSV.",
     "exportFuelHistorySummary": "Export fuel history",
     "exportFuelHistoryDescription": "Download petrol and diesel price history as JSON or CSV.",
+    "landChangeSummary": "Land Change Pulse",
+    "landChangeDescription": "District greenery and built-up indices (2018→2024) with national deltas and top movers.",
+    "debtSummary": "Foreign debt composition",
+    "debtDescription": "Commercial vs concessionary external debt share series (2004–2020), normalized for Lankawa.",
+    "exportLandChangeSummary": "Export land change",
+    "exportLandChangeDescription": "Download district greenery and built-up indices as JSON or CSV.",
+    "exportForeignDebtSummary": "Export foreign debt composition",
+    "exportForeignDebtDescription": "Download commercial vs concessionary debt share series as JSON or CSV.",
     "platformStatusSummary": "Platform status",
     "platformStatusDescription": "Database connectivity, source freshness counts, API version, and ingest schedule.",
     "pulseHistorySummary": "Pulse history",
@@ -1326,6 +1345,39 @@
     "points2018to2024": "pts (2018→2024)",
     "topGreeneryLoss": "Largest greenery declines",
     "topBuiltUpGain": "Largest built-up gains",
-    "attribution": "Lankawa indices are our own district aggregation for civic pulse use. Research prior art: Team Watchdog satellite2024 (MIT). Not official Survey Department land use — do not treat as legal zoning."
+    "attribution": "Lankawa indices are our own district aggregation for civic pulse use. Research prior art: Team Watchdog satellite2024 (MIT). Not official Survey Department land use — do not treat as legal zoning.",
+    "methodologyLink": "Methodology",
+    "exportCsv": "Download CSV",
+    "chartTitle": "Top greenery declines (2018→2024)",
+    "greeneryDeltaAxis": "Greenery index change (points)",
+    "chartExportHint": "Monochrome export for press / Discord",
+    "tableTitle": "All districts — greenery & built-up",
+    "colDistrict": "District",
+    "colGreenery": "Greenery",
+    "colBuiltUp": "Built-up",
+    "districtTitle": "Land change",
+    "districtSubtitle": "Greenery and built-up index change for this district (2018→2024).",
+    "greeneryDistrict": "Greenery index Δ",
+    "builtUpDistrict": "Built-up index Δ",
+    "viewNational": "National Land Pulse",
+    "sourceLink": "Source"
+  },
+  "landChangeMethodology": {
+    "back": "Back to environment",
+    "title": "Land Change Pulse methodology",
+    "subtitle": "How Lankawa turns land-cover research into a district morning check — without hosting satellite mosaics.",
+    "whatTitle": "What the indices mean",
+    "whatBody": "Each district has a greenery index and a built-up index on a 0–100 scale for 2018 and 2024. Deltas are point changes over that window. Numbers are sized for civic pulse use (compare with AQI or flood status), not cadastral mapping.",
+    "watchdogTitle": "What Team Watchdog does — and what we do instead",
+    "watchdogBody": "Team Watchdog’s satellite2024 project publishes annual Sentinel-2 mosaics and land-cover grids for journalism and research. That work is excellent prior art under MIT licence. Lankawa’s job is different: a daily, trilingual product with freshness provenance.",
+    "watchdogPoint1": "We do not host multi‑GB mosaics or Drive folders inside the app.",
+    "watchdogPoint2": "We ship small district JSON, an API, CSV export, and district-page cards.",
+    "watchdogPoint3": "We credit Watchdog as research inspiration; our indices are Lankawa’s civic aggregation until a year‑2 ETL writes observations from LULC grids.",
+    "honestyTitle": "Honesty contract",
+    "honestyBody": "This series is curated / seed until Lankawa runs its own yearly land-cover ETL. It is not Survey Department land use, not zoning, and not a live sensor feed. Treat it like other Lankawa seed pulses: useful context with clear provenance.",
+    "asOf": "Series as of {date}",
+    "apiTitle": "API & export",
+    "apiBody": "Machine-readable access uses the same shape as other Lankawa civic endpoints.",
+    "csvLink": "Download district land-change CSV"
   }
 }

@@ -25,21 +25,20 @@ Watchdog optimizes for **research publish + narrative**. Maps are large, annual,
 
 We should **not** try to out-map them with 27GB mosaics inside this Next.js app.
 
-## How we rework satellite2024 into *our* thing
+## How we reworked satellite2024 into *our* thing
 
 **Their artifact:** beautiful full-island imagery for journalists to open in a browser.
 
-**Our product:** a **Land Change Pulse** — district-scale indices you can check in the morning next to AQI, with the same honesty contract as FX/fuel.
+**Our product:** **Land Change Pulse** — district-scale indices you can check in the morning next to AQI, with the same honesty contract as FX/fuel.
 
-### Lankawa Land Pulse (ship now)
+### Shipped
 
-1. Curated **district greenery / built-up index** series (2018 → 2024) as small JSON in-repo — not their JPG tiles.
-2. Methodology inspired by public Sentinel LULC practice (and credit Watchdog as prior art / inspiration).
-3. Environment page section:
-   - National greenery Δ and built-up Δ
-   - Top districts losing greenery / gaining built-up
-   - Freshness = seed/curated until we run our own yearly ETL
-4. Attribution footer: “Land-cover research inspired by Team Watchdog satellite2024 (MIT). Lankawa indices are our own district aggregation for civic pulse use — not official Survey Dept land use.”
+1. Curated **district greenery / built-up index** series (2018 → 2024) as small JSON — not their JPG tiles.
+2. `/environment` national deltas, top movers, full district table, citation + PNG chart export.
+3. District atlas cards (`DistrictLandPulse`) on every district page.
+4. Methodology page `/environment/land-change` explaining Watchdog prior art vs Lankawa product job.
+5. API `GET /api/v1/environment/land-change` + CSV/JSON export `GET /api/v1/export/land-change`.
+6. Source registry `lankawa_land_pulse` with freshness + methodology.
 
 ### Later (year-2 ETL)
 
@@ -47,13 +46,24 @@ We should **not** try to out-map them with 27GB mosaics inside this Next.js app.
 - Compare-year control on `/environment`.
 - Still never host multi‑GB mosaics in git/Vercel.
 
-## How we rework databank into *our* thing
+## How we reworked databank into *our* thing
 
-Use databank as a **discovery index**, then:
+**Their artifact:** GitHub CSVs for researchers to download.
 
-1. Normalize chosen series into Lankawa `src/data/*` or cron observations.
-2. Surface on economy/health/transport with our source registry.
-3. Prefer Lankawa APIs (`/api/v1/...`) over “go read the GitHub folder.”
+**Our product:** normalize chosen series into Lankawa seeds/APIs with `/sources` provenance.
+
+### Shipped — Foreign Debt Pulse
+
+1. Normalized Watchdog databank **Foreign Debt Composition (2004–2020)** into `src/data/foreign-debt-composition.json`.
+2. Economy page chart (commercial vs concessionary) with citation + PNG export.
+3. API `GET /api/v1/economy/debt` + export `GET /api/v1/export/foreign-debt`.
+4. Source registry `lankawa_debt_pulse` — credits Watchdog discovery + CBSL primary figures.
+5. Explicit honesty: historical share series, not a live post-restructuring debt dashboard.
+
+### Next databank candidates
+
+- Clean NCPI / debt / transport tables when fresher than our scrapes.
+- Still re-host normalized JSON in Lankawa — never “go read the GitHub folder” as the UX.
 
 ## Explicit non-goals (Watchdog-adjacent)
 
@@ -64,4 +74,4 @@ Use databank as a **discovery index**, then:
 
 ## One-line positioning
 
-> Watchdog publishes deep research maps. Lankawa turns civic signals into a daily, trilingual, provenance-first morning check — including a land-change pulse that stays small, live-shaped, and district-addressable.
+> Watchdog publishes deep research maps and curated CSVs. Lankawa turns civic signals into a daily, trilingual, provenance-first morning check — land-change and debt pulses stay small, API-shaped, and district-addressable.
