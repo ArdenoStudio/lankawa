@@ -1,8 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { DataSaverMapFallback } from "@/components/DataSaverMapFallback";
+import { useDataSaver } from "@/components/DataSaverProvider";
+import type { PropertySnapshot } from "@/lib/types";
 
-export const PropertyChoroplethMap = dynamic(
+const PropertyChoroplethMapDynamic = dynamic(
   () =>
     import("@/components/PropertyChoroplethMap").then(
       (mod) => mod.PropertyChoroplethMap,
@@ -16,3 +19,23 @@ export const PropertyChoroplethMap = dynamic(
     ),
   },
 );
+
+export function PropertyChoroplethMap({
+  height = 420,
+  snapshot,
+}: {
+  height?: number;
+  snapshot?: PropertySnapshot;
+}) {
+  const { enabled, hydrated } = useDataSaver();
+
+  if (!hydrated) {
+    return <DataSaverMapFallback height={height} pending />;
+  }
+
+  if (enabled) {
+    return <DataSaverMapFallback height={height} />;
+  }
+
+  return <PropertyChoroplethMapDynamic height={height} snapshot={snapshot} />;
+}

@@ -1,8 +1,10 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { DataSaverMapFallback } from "@/components/DataSaverMapFallback";
+import { useDataSaver } from "@/components/DataSaverProvider";
 
-const ProvinceMapSection = dynamic(
+const ProvinceMapSectionDynamic = dynamic(
   () =>
     import("@/components/ProvinceMapSection").then(
       (mod) => mod.ProvinceMapSection,
@@ -17,4 +19,22 @@ const ProvinceMapSection = dynamic(
   },
 );
 
-export { ProvinceMapSection };
+export function ProvinceMapSection({
+  provinceDistrictSlugs,
+}: {
+  provinceDistrictSlugs?: string[];
+}) {
+  const { enabled, hydrated } = useDataSaver();
+
+  if (!hydrated) {
+    return <DataSaverMapFallback height={360} pending />;
+  }
+
+  if (enabled) {
+    return <DataSaverMapFallback height={360} />;
+  }
+
+  return (
+    <ProvinceMapSectionDynamic provinceDistrictSlugs={provinceDistrictSlugs} />
+  );
+}

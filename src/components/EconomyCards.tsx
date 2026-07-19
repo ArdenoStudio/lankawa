@@ -1,4 +1,6 @@
 import { FreshnessBadge } from "@/components/FreshnessBadge";
+import { Link } from "@/i18n/navigation";
+import type { LpgPriceSnapshot } from "@/lib/integrations/lpg";
 import type { FreshnessTier } from "@/lib/types";
 
 function formatDirectionalDelta(value: number, fractionDigits: number): string {
@@ -230,6 +232,87 @@ export function FuelHistoryChart({
           );
         })}
       </svg>
+    </article>
+  );
+}
+
+export function LpgPriceCard({
+  snapshot,
+  labels,
+  locale,
+}: {
+  snapshot: LpgPriceSnapshot;
+  labels: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    cylinder12_5: string;
+    asOf: string;
+    source: string;
+    seed: string;
+  };
+  locale: string;
+}) {
+  const colomboPrices = snapshot.prices
+    .filter(
+      (price) =>
+        price.district.toLowerCase() === "colombo" && price.cylinderKg === 12.5,
+    )
+    .sort((a, b) => a.provider.localeCompare(b.provider));
+
+  if (colomboPrices.length === 0) {
+    return null;
+  }
+
+  return (
+    <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-sm text-slate-500">{labels.eyebrow}</p>
+          <h3 className="mt-1 text-lg font-semibold text-white">
+            {labels.title}
+          </h3>
+          <p className="mt-1 text-xs text-slate-500">{labels.subtitle}</p>
+        </div>
+        <FreshnessBadge tier={snapshot.tier} />
+      </div>
+
+      <div className="mt-4 space-y-3">
+        {colomboPrices.map((price) => (
+          <div
+            key={`${price.provider}-${price.district}-${price.cylinderKg}`}
+            className="rounded-xl border border-white/10 bg-black/15 p-3"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-medium text-white">{price.provider}</p>
+                <p className="text-xs text-slate-500">{labels.cylinder12_5}</p>
+              </div>
+              <p className="text-xl font-semibold text-white">
+                {price.priceLkr.toLocaleString(locale, {
+                  maximumFractionDigits: 0,
+                })}
+                <span className="ml-1 text-xs font-normal text-slate-400">
+                  LKR
+                </span>
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <footer className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-white/10 pt-4 text-xs text-slate-500">
+        <span>
+          {labels.asOf}
+          {snapshot.isSeed ? ` · ${labels.seed}` : null}
+        </span>
+        <Link
+          href={snapshot.provenancePath}
+          className="text-slate-300 hover:text-white"
+        >
+          {labels.source}
+        </Link>
+      </footer>
     </article>
   );
 }

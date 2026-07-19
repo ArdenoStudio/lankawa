@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CricketCard } from "@/components/CricketCard";
+import { DataSaverGate } from "@/components/DataSaverGate";
 import { HomeDistrictPin } from "@/components/HomeDistrictPin";
 import { MorningBrief } from "@/components/MorningBrief";
 import { MorningDeltaStrip } from "@/components/MorningDeltaStrip";
@@ -7,6 +8,7 @@ import { NewsPulse } from "@/components/NewsPulse";
 import { PulseCard } from "@/components/PulseCard";
 import { HeroSection } from "@/components/HeroSection";
 import { RetentionBeacon } from "@/components/RetentionBeacon";
+import { ShareMorningCheck } from "@/components/ShareMorningCheck";
 import { SourceHealthBar } from "@/components/SourceHealthBar";
 import { Link } from "@/i18n/navigation";
 import { buildPulseSnapshot, getTodayPulseMetrics } from "@/lib/pulse";
@@ -21,6 +23,19 @@ export default async function HomePage({
   const t = await getTranslations("home");
   const snapshot = await buildPulseSnapshot();
   const todayMetrics = getTodayPulseMetrics(snapshot.metrics);
+  const shareMetrics = todayMetrics
+    .filter((metric) =>
+      ["usd_lkr", "fuel_petrol_92", "fuel_diesel", "weather_colombo", "power_status"].includes(
+        metric.id,
+      ),
+    )
+    .map((metric) => ({
+      id: metric.id,
+      label: metric.label,
+      value: metric.value,
+      unit: metric.unit,
+      note: metric.note,
+    }));
 
   return (
     <div className="space-y-10 md:space-y-14">
@@ -29,11 +44,14 @@ export default async function HomePage({
       <HomeDistrictPin locale={locale} />
 
       <section className="space-y-5" id="today">
-        <div>
-          <h2 className="font-display text-2xl font-semibold text-white">
-            {t("pulseTitle")}
-          </h2>
-          <p className="mt-2 text-slate-400">{t("pulseSubtitle")}</p>
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 className="font-display text-2xl font-semibold text-white">
+              {t("pulseTitle")}
+            </h2>
+            <p className="mt-2 text-slate-400">{t("pulseSubtitle")}</p>
+          </div>
+          <ShareMorningCheck metrics={shareMetrics} />
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {todayMetrics.map((metric, index) => (
@@ -49,11 +67,13 @@ export default async function HomePage({
         <MorningDeltaStrip />
       </section>
 
-      <CricketCard />
+      <DataSaverGate hideUntilHydrated>
+        <CricketCard />
+      </DataSaverGate>
 
       <MorningBrief locale={locale} />
 
-      <NewsPulse />
+      <NewsPulse headlineLimit={5} />
 
       <section className="space-y-3 border-t border-white/10 pt-8">
         <div>
