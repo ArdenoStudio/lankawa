@@ -9,14 +9,15 @@
     "elections": "Elections",
     "disaster": "Disaster",
     "economy": "Economy",
-    "api": "API",
+    "sources": "Sources",
+    "developers": "Developers",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
   },
   "home": {
     "eyebrow": "National civic intelligence",
     "title": "Understand Sri Lanka today",
-    "subtitle": "Fresh public data across economy, fuel, floods, and districts — with source provenance on every number.",
+    "subtitle": "Fresh public data across economy, fuel, floods, and districts — with data provenance on every number.",
     "pulseTitle": "Live pulse",
     "sourcesTitle": "Source health",
     "districtsTitle": "District atlas",
@@ -64,11 +65,12 @@
     "districtWinner": "District winner (1st preference)",
     "validVotes": "Valid votes",
     "voteBreakdown": "Vote breakdown",
-    "viewDistrict": "View district profile"
+    "viewDistrict": "View district profile",
+    "asOf": "As of {date}"
   },
   "disaster": {
     "title": "Disaster & Flood",
-    "subtitle": "River station monitoring from the Sri Lanka Flood API.",
+    "subtitle": "River station monitoring aggregated on Lankawa.",
     "normal": "Normal",
     "stations": "stations"
   },
@@ -86,7 +88,7 @@
     "title": "Mission & data sources",
     "subtitle": "Open civic intelligence for Sri Lanka — aggregated from public sources with provenance on every metric.",
     "missionTitle": "Mission",
-    "missionBody": "Lankawa makes public civic data accessible to every Sri Lankan. We unify economy, disaster, electoral, and geographic data around the 25 administrative districts — the universal key for understanding the country.",
+    "missionBody": "Lankawa unifies public civic data — economy, disasters, districts, and more — into one accessible platform. We believe Sri Lankans should not need to visit dozens of separate websites to understand their country.",
     "sourcesTitle": "Data sources",
     "refreshEvery": "Refreshes every {minutes} minutes",
     "electionSource": "Election Commission of Sri Lanka",
@@ -100,7 +102,10 @@
     "disclaimerBody": "Lankawa aggregates data from public and partner APIs. It is not an official government publication. Always verify critical information with primary sources.",
     "apiTitle": "Public API",
     "apiBody": "All data is available via a versioned JSON API with OpenAPI documentation.",
-    "apiLink": "View OpenAPI spec"
+    "apiLink": "View developer docs",
+    "platformTitle": "Everything in one place",
+    "platformBody": "All data, documentation, and source attribution live on Lankawa. You never need to leave this platform to explore metrics, understand methodology, or use the public API.",
+    "freshnessLink": "Explore data sources"
   },
   "freshness": {
     "fresh": "Fresh",
@@ -111,6 +116,68 @@
   "footer": {
     "built": "Built for Sri Lanka",
     "about": "About",
-    "github": "GitHub"
+    "sources": "Data sources"
+  },
+  "pulse": {
+    "provenance": "Data provenance",
+    "asOf": "As of {date}",
+    "noTimestamp": "No timestamp"
+  },
+  "sources": {
+    "title": "Data Sources",
+    "subtitle": "Every metric on Lankawa traces back to a registered source with freshness and methodology.",
+    "back": "Back to sources",
+    "overview": "Overview",
+    "methodology": "Methodology",
+    "freshness": "Freshness",
+    "metrics": "Live metrics",
+    "cadence": "Update cadence",
+    "adapter": "Integration type",
+    "lastUpdated": "Last updated {date}",
+    "lastChecked": "Last checked",
+    "lastSuccess": "Last successful fetch",
+    "unknownDate": "Not available",
+    "viewDetails": "View source details",
+    "categories": {
+      "economy": "Economy",
+      "disaster": "Disaster",
+      "energy": "Energy",
+      "health": "Health",
+      "civic": "Civic",
+      "transport": "Transport"
+    },
+    "adapters": {
+      "api": "API integration",
+      "scrape": "Scheduled scrape",
+      "partner": "Partner feed"
+    }
+  },
+  "developers": {
+    "title": "Developer API",
+    "subtitle": "Public read-only endpoints for civic data, freshness, and district profiles — all served from Lankawa.",
+    "back": "Back to developer docs",
+    "overviewTitle": "Getting started",
+    "overviewBody": "All endpoints are same-origin JSON APIs. No API key is required for read access. Responses include freshness tiers and internal provenance paths.",
+    "baseUrl": "Base URL: /api/v1",
+    "endpointsTitle": "Endpoints",
+    "healthSummary": "Source health",
+    "healthDescription": "Freshness tiers and last-checked timestamps for every registered data source.",
+    "pulseSummary": "Live pulse",
+    "pulseDescription": "Current exchange rates, fuel prices, flood station counts, and related metrics.",
+    "districtsSummary": "District list",
+    "districtsDescription": "All 25 Sri Lankan districts with population, area, and province metadata.",
+    "districtSummary": "District detail",
+    "districtDescription": "Single district profile keyed by slug.",
+    "openApiSummary": "OpenAPI specification",
+    "openApiDescription": "Machine-readable OpenAPI 3.1 document for the public API.",
+    "provenanceTitle": "Data provenance",
+    "provenanceBody": "Every metric references a source ID and an internal provenance path. Use the sources registry to understand methodology and freshness.",
+    "provenanceLink": "Browse data sources",
+    "openApiTitle": "OpenAPI document",
+    "openApiBody": "View the full OpenAPI specification rendered inside Lankawa, or fetch the raw JSON from the API.",
+    "openApiLink": "View OpenAPI JSON",
+    "openApiViewerSubtitle": "Machine-readable specification for the Lankawa public API.",
+    "electionsSummary": "Presidential election 2024",
+    "electionsDescription": "National summary and district-level first-preference results with provenance paths."
   }
 }

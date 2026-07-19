@@ -2,7 +2,7 @@
   "id": "presidential-2024",
   "type": "presidential",
   "date": "2024-09-21",
-  "sourceUrl": "https://results.elections.gov.lk/pre2024/",
+  "sourceId": "election_commission_2024",
   "sourceName": "Election Commission of Sri Lanka",
   "nationalWinner": "akd",
   "turnout": 79.46,

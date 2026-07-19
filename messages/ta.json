@@ -9,14 +9,15 @@
     "elections": "தேர்தல்",
     "disaster": "பேரிடர்",
     "economy": "பொருளாதாரம்",
-    "api": "API",
+    "sources": "மூலங்கள்",
+    "developers": "டெவலப்பர்கள்",
     "openMenu": "மெனுவைத் திற",
     "closeMenu": "மெனுவை மூட"
   },
   "home": {
     "eyebrow": "தேசிய சிவில் நுண்ணறிவு",
     "title": "இன்றைய இலங்கையைப் புரிந்துகொள்ளுங்கள்",
-    "subtitle": "பொருளாதாரம், எரிபொருள், வெள்ளம் மற்றும் மாவட்ட தரவு — ஒவ்வொரு எண்ணுக்கும் மூல ஆதாரத்துடன்.",
+    "subtitle": "பொருளாதாரம், எரிபொருள், வெள்ளம் மற்றும் மாவட்ட தரவு — ஒவ்வொரு எண்ணுக்கும் தரவு மூலம்.",
     "pulseTitle": "நேரடி நிலை",
     "sourcesTitle": "மூல ஆரோக்கியம்",
     "districtsTitle": "மாவட்ட வரைபடம்",
@@ -64,11 +65,12 @@
     "districtWinner": "மாவட்ட victor (1st preference)",
     "validVotes": "செல்லுபடியான வாக்குகள்",
     "voteBreakdown": "வாக்கு விவரம்",
-    "viewDistrict": "மாவட்ட profile பார்க்க"
+    "viewDistrict": "மாவட்ட profile பார்க்க",
+    "asOf": "{date} வரை"
   },
   "disaster": {
     "title": "பேரிடர் & வெள்ளம்",
-    "subtitle": "இலங்கை வெள்ள API-யின் நதி நிலை கண்காணிப்பு.",
+    "subtitle": "லங்காவாவில் தொகுக்கப்பட்ட நதி நிலை கண்காணிப்பு.",
     "normal": "சாதாரண",
     "stations": "நிலையங்கள்"
   },
@@ -86,7 +88,7 @@
     "title": "Mission & data sources",
     "subtitle": "இலங்கைக்கான open civic intelligence — public sources-லிருந்து provenance உடன்.",
     "missionTitle": "Mission",
-    "missionBody": "Lankawa ஒவ்வொரு இலங்கையருக்கும் public civic data accessible ஆக்குகிறது. economy, disaster, electoral, geographic data-வை 25 administrative districts சுற்றி unify செய்கிறோம்.",
+    "missionBody": "லங்காவா பொது சிவில் தரவை — பொருளாதாரம், பேரிடர்கள், மாவட்டங்கள் மற்றும் மேலும் — ஒரே அணுகக்கூடிய platform-ஆக ஒருங்கிணைக்கிறது. தங்கள் நாட்டைப் புரிந்துகொள்ள பல வெப்பதள்களுக்குச் செல்ல வேண்டியதில்லை என்று நாங்கள் நம்புகிறோம்.",
     "sourcesTitle": "தரவு மூலங்கள்",
     "refreshEvery": "{minutes} நிமிடங்களுக்கு refresh",
     "electionSource": "இலங்கை தேர்தல் ஆணையம்",
@@ -100,7 +102,10 @@
     "disclaimerBody": "Lankawa public APIs-லிருந்து data aggregate செய்கிறது. அதிகாரப்பூர்வ அரசு publication அல்ல.",
     "apiTitle": "Public API",
     "apiBody": "அனைத்து data versioned JSON API வழியாக available.",
-    "apiLink": "OpenAPI spec பார்க்க"
+    "apiLink": "View developer docs",
+    "platformTitle": "அனைத்தும் ஒரே இடத்தில்",
+    "platformBody": "அனைத்து தரவு, documentation, மூல attribution-ம் லங்காவாவில் உள்ளன. metrics explore, methodology புரிந்துகொள்ள, அல்லது பொது API பயன்படுத்த இந்த platform-ஐ விடத் தேவையில்லை.",
+    "freshnessLink": "தரவு மூலங்களை ஆராயுங்கள்"
   },
   "freshness": {
     "fresh": "புதிய",
@@ -110,7 +115,69 @@
   },
   "footer": {
     "built": "இலங்கைக்காக உருவாக்கப்பட்டது",
-    "about": "About",
-    "github": "GitHub"
+    "about": "பற்றி",
+    "sources": "தரவு மூலங்கள்"
+  },
+  "pulse": {
+    "provenance": "தரவு மூலம்",
+    "asOf": "{date} வரை",
+    "noTimestamp": "நேர முத்திரை இல்லை"
+  },
+  "sources": {
+    "title": "தரவு மூலங்கள்",
+    "subtitle": "லங்காவாவின் ஒவ்வொரு அளவீடும் பதிவு செய்யப்பட்ட மூலத்திற்கு — புதுமை, முறைமையுடன் — திரும்புகிறது.",
+    "back": "மூலங்களுக்குத் திரும்பு",
+    "overview": "கண்ணோட்டம்",
+    "methodology": "முறைமை",
+    "freshness": "புதுமை",
+    "metrics": "நேரடி அளவீடுகள்",
+    "cadence": "புதுப்பிப்பு இடைவெளி",
+    "adapter": "ஒருங்கிணைப்பு வகை",
+    "lastUpdated": "கடைசி புதுப்பிப்பு {date}",
+    "lastChecked": "கடைசி சோதனை",
+    "lastSuccess": "கடைசி வெற்றிகரமான பெறுதல்",
+    "unknownDate": "கிடைக்கவில்லை",
+    "viewDetails": "மூல விவரங்களைப் பார்க்க",
+    "categories": {
+      "economy": "பொருளாதாரம்",
+      "disaster": "பேரிடர்",
+      "energy": "ஆற்றல்",
+      "health": "சுகாதாரம்",
+      "civic": "சிவில்",
+      "transport": "போக்குவரத்து"
+    },
+    "adapters": {
+      "api": "API ஒருங்கிணைப்பு",
+      "scrape": "திட்டமிட்ட scrape",
+      "partner": "கூட்டாளர் feed"
+    }
+  },
+  "developers": {
+    "title": "டெவலப்பர் API",
+    "subtitle": "சிவில் தரவு, புதுமை, மாவட்ட சுயவிவரங்களுக்கான பொது read-only endpoints — அனைத்தும் லங்காவாவிலிருந்து.",
+    "back": "டெவலப்பர் docs-க்குத் திரும்பு",
+    "overviewTitle": "தொடங்குதல்",
+    "overviewBody": "அனைத்து endpoints-ம் same-origin JSON APIs. படிக்க API key தேவையில்லை. பதில்களில் புதுமை tier மற்றும் உள்ளக மூல பாதைகள் உள்ளன.",
+    "baseUrl": "Base URL: /api/v1",
+    "endpointsTitle": "Endpoints",
+    "healthSummary": "மூல ஆரோக்கியம்",
+    "healthDescription": "பதிவு செய்யப்பட்ட அனைத்து தரவு மூலங்களுக்கும் புதுமை tier மற்றும் கடைசி சோதனை timestamps.",
+    "pulseSummary": "நேரடி நிலை",
+    "pulseDescription": "தற்போதைய நாணய விகிதங்கள், எரிபொருள் விலைகள், வெள்ள நிலைய எண்ணிக்கைகள் மற்றும் தொடர்புடைய அளவீடுகள்.",
+    "districtsSummary": "மாவட்ட பட்டியல்",
+    "districtsDescription": "மக்கள்தொகை, பரப்பளவு, மாகாண metadata உடன் 25 இலங்கை மாவட்டங்கள்.",
+    "districtSummary": "மாவட்ட விவரம்",
+    "districtDescription": "slug மூலம் ஒற்றை மாவட்ட சுயவிவரம்.",
+    "openApiSummary": "OpenAPI specification",
+    "openApiDescription": "பொது API-க்கான machine-readable OpenAPI 3.1 document.",
+    "provenanceTitle": "தரவு மூலம்",
+    "provenanceBody": "ஒவ்வொரு அளவீடும் source ID மற்றும் உள்ளக மூல பாதையை reference செய்கிறது. முறைமை மற்றும் புதுமையைப் புரிந்துகொள்ள மூல registry-ஐப் பயன்படுத்துங்கள்.",
+    "provenanceLink": "தரவு மூலங்களை உலாவு",
+    "openApiTitle": "OpenAPI document",
+    "openApiBody": "லங்காவாவ තුළ  render செய்யப்பட்ட முழு OpenAPI specification-ஐப் பார்க்கவும், அல்லது API-யிலிருந்து raw JSON fetch செய்யவும்.",
+    "openApiLink": "OpenAPI JSON பார்க்க",
+    "openApiViewerSubtitle": "லங்காவா பொது API-க்கான machine-readable specification.",
+    "electionsSummary": "Presidential election 2024",
+    "electionsDescription": "National summary and district-level first-preference results with provenance paths."
   }
 }

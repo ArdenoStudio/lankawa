@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getPresidentialElection2024 } from "@/lib/elections";
+import { getSourceProvenancePath } from "@/lib/sources";
 
 export async function GET() {
   const election = getPresidentialElection2024();
@@ -9,8 +10,9 @@ export async function GET() {
       id: election.id,
       type: election.type,
       date: election.date,
-      sourceUrl: election.sourceUrl,
+      sourceId: election.sourceId,
       sourceName: election.sourceName,
+      provenancePath: getSourceProvenancePath(election.sourceId),
       nationalWinner: election.nationalWinner,
       turnout: election.turnout,
       validVotes: election.validVotes,

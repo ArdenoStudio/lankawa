@@ -68,8 +68,12 @@ export function SourceHealthList({
     name: string;
     tier: Parameters<typeof FreshnessBadge>[0]["tier"];
     error: string | null;
+    provenancePath: string;
+    lastSuccessAt: string | null;
   }>;
 }) {
+  const t = useTranslations("sources");
+
   return (
     <ul className="space-y-3">
       {sources.map((source) => (
@@ -78,7 +82,19 @@ export function SourceHealthList({
           className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3"
         >
           <div>
-            <p className="font-medium text-white">{source.name}</p>
+            <Link
+              href={source.provenancePath}
+              className="font-medium text-white hover:text-teal-200"
+            >
+              {source.name}
+            </Link>
+            {source.lastSuccessAt ? (
+              <p className="text-xs text-slate-500">
+                {t("lastUpdated", {
+                  date: new Date(source.lastSuccessAt).toLocaleString(),
+                })}
+              </p>
+            ) : null}
             {source.error ? (
               <p className="text-xs text-rose-300">{source.error}</p>
             ) : null}

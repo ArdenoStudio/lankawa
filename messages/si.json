@@ -9,14 +9,15 @@
     "elections": "මැතිවරණ",
     "disaster": "විපත්",
     "economy": "ආර්ථිකය",
-    "api": "API",
+    "sources": "මූලාශ්‍ර",
+    "developers": "සංවර්ධක",
     "openMenu": "මෙනුව විවෘත කරන්න",
     "closeMenu": "මෙනුව වසන්න"
   },
   "home": {
     "eyebrow": "ජාතික සිවිල් බුද්ධිය",
     "title": "අද ශ්‍රී ලංකාව තේරුම් ගන්න",
-    "subtitle": "ආර්ථික, ඉන්ධන, ගංවතුර සහ දිස්ත්‍රික් දත්ත — සෑම අගයකටම මූලාශ්‍ර සනාථකරණය සමඟ.",
+    "subtitle": "ආර්ථික, ඉන්ධන, ගංවතුර සහ දිස්ත්‍රික් දත්ත — සෑම අගයකටම දත්ත ප්‍රවේණිය.",
     "pulseTitle": "සජීවී නාඩි",
     "sourcesTitle": "මූලාශ්‍ර තත්ත්වය",
     "districtsTitle": "දිස්ත්‍රික් නකාශය",
@@ -64,11 +65,12 @@
     "districtWinner": "දිස්ත්‍රික් ජයග්‍රාහක (1st preference)",
     "validVotes": "වලංගු ඡන්ද",
     "voteBreakdown": "ඡන්ද විස්තර",
-    "viewDistrict": "දිස්ත්‍රික් profile බලන්න"
+    "viewDistrict": "දිස්ත්‍රික් profile බලන්න",
+    "asOf": "{date} දක්වා"
   },
   "disaster": {
     "title": "විපත් සහ ගංවතුර",
-    "subtitle": "ශ්‍රී ලංකා ගංවතුර API හි ගංගා මධ්‍යස්ථාන නිරීක්ෂණය.",
+    "subtitle": "ලංකාව තුළ එකතු කරන ලද ගංගා මධ්‍යස්ථාන නිරීක්ෂණ.",
     "normal": "සාමාන්‍ය",
     "stations": "මධ්‍යස්ථාන"
   },
@@ -86,7 +88,7 @@
     "title": "Mission සහ දත්ත මූලාශ්‍ර",
     "subtitle": "ශ්‍රී ලංකාව සඳහා විවෘත civic intelligence — public sources වලින් provenance සමඟ.",
     "missionTitle": "Mission",
-    "missionBody": "Lankawa සෑම ශ්‍රී ලාංකිකයෙකුටම public civic data accessible කරයි. අපි economy, disaster, electoral, සහ geographic data 25 administrative districts වටා unify කරමු.",
+    "missionBody": "ලංකාව පොදු සිවිල් දත්ත — ආර්ථික, විපත්, දිස්ත්‍රික් සහ තවත් — එක් ප්‍රවේශයකට එකතු කරයි. ශ්‍රී ලාංකිකයන්ට ඔවුන්ගේ රට තේරුම් ගැනීමට දස ගණනක වෙබ් අඩවි කිරීමට අවශ්‍ය නොවන බව අප විශ්වාස කරමු.",
     "sourcesTitle": "දත්ත මූලාශ්‍ර",
     "refreshEvery": "minutes {minutes} කට refresh",
     "electionSource": "ශ්‍රී ලංකා මැතිවරණ කොමිසම",
@@ -100,7 +102,10 @@
     "disclaimerBody": "Lankawa public APIs වලින් data aggregate කරයි. නිල රජයේ publication එකක් නොවේ.",
     "apiTitle": "Public API",
     "apiBody": "සියලු data versioned JSON API හරහා available.",
-    "apiLink": "OpenAPI spec බලන්න"
+    "apiLink": "View developer docs",
+    "platformTitle": "සියල්ල එක තැනක",
+    "platformBody": "සියලු දත්ත, documentation, සහ source attribution ලංකාව මත ජීවත් වේ. metrics explore කිරීමට, methodology තේරුම් ගැනීමට, හෝ පොදු API භාවිතා කිරීමට මෙම platform ඉතිරි කිරීමට අවශ්‍ය නැත.",
+    "freshnessLink": "දත්ත මූලාශ්‍ර explore කරන්න"
   },
   "freshness": {
     "fresh": "නැවුම්",
@@ -110,7 +115,69 @@
   },
   "footer": {
     "built": "ශ්‍රී ලංකාව සඳහා නිර්මාණය කළ",
-    "about": "About",
-    "github": "GitHub"
+    "about": "ගැන",
+    "sources": "දත්ත මූලාශ්‍ර"
+  },
+  "pulse": {
+    "provenance": "දත්ත ප්‍රවේණිය",
+    "asOf": "{date} දක්වා",
+    "noTimestamp": "කාල මුද්‍රාවක් නැත"
+  },
+  "sources": {
+    "title": "දත්ත මූලාශ්‍ර",
+    "subtitle": "ලංකාව තුළ  සෑම මිනුමක්ම නැවුම් බව, ක්‍රමවේදය සහ ප්‍රවේණිය සහිත ලියාපදිංචි මූලාශ්‍රයකට යොමු වේ.",
+    "back": "මූලාශ්‍ර වෙත ආපසු",
+    "overview": "දළ විශ්ලේෂණය",
+    "methodology": "ක්‍රමවේදය",
+    "freshness": "නැවුම් බව",
+    "metrics": "සජීවී මිනුම්",
+    "cadence": "යාවත්කාලීන කාලසටහන",
+    "adapter": "ඒකාබද්ධ වර්ගය",
+    "lastUpdated": "අවසන් යාවත්කාලීන {date}",
+    "lastChecked": "අවසන් පරීක්ෂාව",
+    "lastSuccess": "අවසන් සාර්ථක ලබා ගැනීම",
+    "unknownDate": "ලබා ගත නොහැක",
+    "viewDetails": "මූලාශ්‍ර විස්තර බලන්න",
+    "categories": {
+      "economy": "ආර්ථිකය",
+      "disaster": "විපත්",
+      "energy": "ශක්තිය",
+      "health": "සෞඛ්‍ය",
+      "civic": "සිවිල්",
+      "transport": "ප්‍රවාහන"
+    },
+    "adapters": {
+      "api": "API ඒකාබද්ධතාව",
+      "scrape": "කාලසටහන් scrape",
+      "partner": "හවුල්කරු feed"
+    }
+  },
+  "developers": {
+    "title": "සංවර්ධක API",
+    "subtitle": "සිවිල් දත්ත, නැවුම් බව සහ දිස්ත්‍රික් පැතිකඩ සඳහා පොදු කියවීම-only endpoints — සියල්ල ලංකාවෙන්.",
+    "back": "සංවර්ධක docs වෙත ආපසු",
+    "overviewTitle": "ආරම්භ කිරීම",
+    "overviewBody": "සියලු endpoints same-origin JSON APIs වේ. කියවීමට API key අවශ්‍ය නොවේ. ප්‍රතිචාරවල නැවුම් බව tier සහ අභ්‍යන්තර ප්‍රවේණි paths ඇත.",
+    "baseUrl": "Base URL: /api/v1",
+    "endpointsTitle": "Endpoints",
+    "healthSummary": "මූලාශ්‍ර සෞඛ්‍ය",
+    "healthDescription": "සියලු ලියාපදිංචි දත්ත මූලාශ්‍ර සඳහා නැවුම් බව tier සහ අවසන් පරීක්ෂා timestamps.",
+    "pulseSummary": "සජීවී නාඩි",
+    "pulseDescription": "වත්මන් විනිමය අනුපාත, ඉන්ධන මිල, ගංවතුර මධ්‍යස්ථාන ගණන් සහ සබැඳි මිනුම්.",
+    "districtsSummary": "දිස්ත්‍රික් ලැයිස්තුව",
+    "districtsDescription": "ජනගහනය, ප්‍රදේශය සහ පළාත metadata සහිත ශ්‍රී ලංකාවේ දිස්ත්‍රික් 25.",
+    "districtSummary": "දිස්ත්‍රික් විස්තර",
+    "districtDescription": "slug මගින් තනි දිස්ත්‍රික් පැතිකඩ.",
+    "openApiSummary": "OpenAPI specification",
+    "openApiDescription": "පොදු API සඳහා machine-readable OpenAPI 3.1 document.",
+    "provenanceTitle": "දත්ත ප්‍රවේණිය",
+    "provenanceBody": "සෑම මිනුමක්ම source ID සහ අභ්‍යන්තර ප්‍රවේණි path එකක් reference කරයි. ක්‍රමවේදය සහ නැවුම් බව තේරුම් ගැනීමට මූලාශ්‍ර registry භාවිතා කරන්න.",
+    "provenanceLink": "දත්ත මූලාශ්‍ර browse කරන්න",
+    "openApiTitle": "OpenAPI document",
+    "openApiBody": "ලංකාව තුළ render කළ සම්පූර්ණ OpenAPI specification බලන්න, හෝ API වෙතින් raw JSON fetch කරන්න.",
+    "openApiLink": "OpenAPI JSON බලන්න",
+    "openApiViewerSubtitle": "ලංකාව පොදු API සඳහා machine-readable specification.",
+    "electionsSummary": "Presidential election 2024",
+    "electionsDescription": "National summary and district-level first-preference results with provenance paths."
   }
 }

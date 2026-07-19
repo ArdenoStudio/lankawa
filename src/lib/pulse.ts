@@ -3,7 +3,7 @@ import { getLatestObservation } from "./db";
 import { fetchLatestCbslFxRate } from "./integrations/cbsl";
 import { fetchFloodAlertSummary } from "./integrations/flood";
 import { fetchOctanePrices, pickCpcPrice } from "./integrations/octane";
-import { getSource } from "./sources";
+import { getSource, getSourceProvenancePath } from "./sources";
 import type { PulseMetric, PulseSnapshot, SourceHealth } from "./types";
 
 const FX_FALLBACK_RATE = 302.5;
@@ -31,7 +31,7 @@ async function buildFuelMetrics(checkedAt: string): Promise<{
         observedAt: petrol92.recorded_at,
         tier,
         sourceId: source.id,
-        sourceUrl: source.url,
+        provenancePath: getSourceProvenancePath(source.id),
       });
     }
     if (diesel) {
@@ -43,7 +43,7 @@ async function buildFuelMetrics(checkedAt: string): Promise<{
         observedAt: diesel.recorded_at,
         tier,
         sourceId: source.id,
-        sourceUrl: source.url,
+        provenancePath: getSourceProvenancePath(source.id),
       });
     }
 
@@ -57,7 +57,7 @@ async function buildFuelMetrics(checkedAt: string): Promise<{
         lastSuccessAt: observedAt,
         lastCheckedAt: checkedAt,
         error: null,
-        sourceUrl: source.url,
+        provenancePath: getSourceProvenancePath(source.id),
       },
     };
   } catch (error) {
@@ -71,7 +71,7 @@ async function buildFuelMetrics(checkedAt: string): Promise<{
         lastSuccessAt: null,
         lastCheckedAt: checkedAt,
         error: error instanceof Error ? error.message : "Unknown error",
-        sourceUrl: source.url,
+        provenancePath: getSourceProvenancePath(source.id),
       },
     };
   }
@@ -96,7 +96,7 @@ async function buildFloodData(checkedAt: string): Promise<{
         lastSuccessAt: checkedAt,
         lastCheckedAt: checkedAt,
         error: null,
-        sourceUrl: source.url,
+        provenancePath: getSourceProvenancePath(source.id),
       },
     };
   } catch (error) {
@@ -110,7 +110,7 @@ async function buildFloodData(checkedAt: string): Promise<{
         lastSuccessAt: null,
         lastCheckedAt: checkedAt,
         error: error instanceof Error ? error.message : "Unknown error",
-        sourceUrl: source.url,
+        provenancePath: getSourceProvenancePath(source.id),
       },
     };
   }
@@ -144,7 +144,7 @@ async function buildFxMetric(checkedAt: string): Promise<{
           observedAt: dbObservation.observedAt,
           tier,
           sourceId: source.id,
-          sourceUrl: source.url,
+          provenancePath: getSourceProvenancePath(source.id),
           note,
         },
         health: {
@@ -155,7 +155,7 @@ async function buildFxMetric(checkedAt: string): Promise<{
           lastSuccessAt: dbObservation.observedAt,
           lastCheckedAt: checkedAt,
           error: null,
-          sourceUrl: source.url,
+          provenancePath: getSourceProvenancePath(source.id),
         },
       };
     }
@@ -172,7 +172,7 @@ async function buildFxMetric(checkedAt: string): Promise<{
         observedAt: latest.observedAt,
         tier,
         sourceId: source.id,
-        sourceUrl: source.url,
+        provenancePath: getSourceProvenancePath(source.id),
         note: `Buy ${latest.buyRate.toFixed(2)} / Sell ${latest.sellRate.toFixed(2)}`,
       },
       health: {
@@ -183,7 +183,7 @@ async function buildFxMetric(checkedAt: string): Promise<{
         lastSuccessAt: latest.observedAt,
         lastCheckedAt: checkedAt,
         error: null,
-        sourceUrl: source.url,
+        provenancePath: getSourceProvenancePath(source.id),
       },
     };
   } catch (error) {
@@ -198,7 +198,7 @@ async function buildFxMetric(checkedAt: string): Promise<{
         observedAt: FX_FALLBACK_DATE,
         tier,
         sourceId: source.id,
-        sourceUrl: source.url,
+        provenancePath: getSourceProvenancePath(source.id),
         note: "Fallback value — CBSL scrape unavailable",
       },
       health: {
@@ -209,7 +209,7 @@ async function buildFxMetric(checkedAt: string): Promise<{
         lastSuccessAt: FX_FALLBACK_DATE,
         lastCheckedAt: checkedAt,
         error: error instanceof Error ? error.message : "Unknown error",
-        sourceUrl: source.url,
+        provenancePath: getSourceProvenancePath(source.id),
       },
     };
   }
@@ -238,7 +238,7 @@ export async function buildPulseSnapshot(): Promise<PulseSnapshot> {
       observedAt: flood.health.lastSuccessAt,
       tier: flood.health.tier,
       sourceId: flood.health.id,
-      sourceUrl: flood.health.sourceUrl,
+      provenancePath: flood.health.provenancePath,
       note: `${normalStations} stations reporting normal levels`,
     },
   ];

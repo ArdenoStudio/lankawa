@@ -12,6 +12,8 @@ const links = [
   { href: "/elections", key: "elections" },
   { href: "/disaster", key: "disaster" },
   { href: "/economy", key: "economy" },
+  { href: "/sources", key: "sources" },
+  { href: "/developers", key: "developers" },
 ] as const;
 
 function NavLinks({
@@ -47,13 +49,6 @@ function NavLinks({
           </Link>
         );
       })}
-      <a
-        href="/api/v1/openapi.json"
-        onClick={onNavigate}
-        className={`rounded-full px-3 py-1.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white ${className ?? ""}`}
-      >
-        {t("api")}
-      </a>
     </>
   );
 }
@@ -70,7 +65,7 @@ export function SiteHeader() {
           Lankawa
         </Link>
 
-        <div className="order-3 w-full md:order-none md:w-auto md:flex-1 md:max-w-xs md:mx-4">
+        <div className="order-3 w-full md:order-none md:mx-4 md:w-auto md:max-w-xs md:flex-1">
           <DistrictSearch />
         </div>
 

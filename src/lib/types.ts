@@ -12,9 +12,13 @@ export interface SourceDefinition {
   id: string;
   name: string;
   category: SourceCategory;
+  /** Server-side fetch endpoint — never exposed as a clickable UI link. */
   url: string;
   cadenceMinutes: number;
   adapter: "api" | "scrape" | "partner";
+  description: string;
+  methodology: string;
+  metrics: string[];
 }
 
 export interface SourceHealth {
@@ -25,7 +29,8 @@ export interface SourceHealth {
   lastSuccessAt: string | null;
   lastCheckedAt: string;
   error: string | null;
-  sourceUrl: string;
+  /** Internal provenance path, e.g. /sources/cbsl_fx */
+  provenancePath: string;
 }
 
 export interface PulseMetric {
@@ -36,7 +41,8 @@ export interface PulseMetric {
   observedAt: string | null;
   tier: FreshnessTier;
   sourceId: string;
-  sourceUrl: string;
+  /** Internal provenance path, e.g. /sources/cbsl_fx */
+  provenancePath: string;
   note?: string;
 }
 
@@ -93,7 +99,7 @@ export interface PresidentialElection {
   id: string;
   type: "presidential";
   date: string;
-  sourceUrl: string;
+  sourceId: string;
   sourceName: string;
   nationalWinner: ElectionCandidateId;
   turnout: number;

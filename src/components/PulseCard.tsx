@@ -1,7 +1,11 @@
+import { getTranslations } from "next-intl/server";
 import { FreshnessBadge } from "./FreshnessBadge";
+import { Link } from "@/i18n/navigation";
 import type { PulseMetric } from "@/lib/types";
 
-export function PulseCard({ metric }: { metric: PulseMetric }) {
+export async function PulseCard({ metric }: { metric: PulseMetric }) {
+  const t = await getTranslations("pulse");
+
   return (
     <article className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
       <div className="mb-3 flex items-center justify-between gap-3">
@@ -22,17 +26,17 @@ export function PulseCard({ metric }: { metric: PulseMetric }) {
       <footer className="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
         <span>
           {metric.observedAt
-            ? new Date(metric.observedAt).toLocaleString()
-            : "No timestamp"}
+            ? t("asOf", {
+                date: new Date(metric.observedAt).toLocaleString(),
+              })
+            : t("noTimestamp")}
         </span>
-        <a
-          href={metric.sourceUrl}
-          target="_blank"
-          rel="noreferrer"
+        <Link
+          href={metric.provenancePath}
           className="text-teal-300 hover:text-teal-200"
         >
-          Source
-        </a>
+          {t("provenance")}
+        </Link>
       </footer>
     </article>
   );

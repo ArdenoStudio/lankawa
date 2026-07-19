@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { SOURCES } from "@/lib/sources";
+import { getSourceProvenancePath, SOURCES } from "@/lib/sources";
 
 export default async function AboutPage({
   params,
@@ -34,31 +34,24 @@ export default async function AboutPage({
               key={source.id}
               className="rounded-xl border border-white/10 bg-white/5 px-4 py-3"
             >
-              <a
-                href={source.url}
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                href={getSourceProvenancePath(source.id)}
                 className="font-medium text-teal-300 hover:text-teal-200"
               >
                 {source.name}
-              </a>
+              </Link>
               <p className="mt-1 text-sm capitalize text-slate-500">
                 {source.category} · {t("refreshEvery", { minutes: source.cadenceMinutes })}
               </p>
             </li>
           ))}
-          <li className="rounded-xl border border-white/10 bg-white/5 px-4 py-3">
-            <a
-              href="https://results.elections.gov.lk/pre2024/"
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium text-teal-300 hover:text-teal-200"
-            >
-              {t("electionSource")}
-            </a>
-            <p className="mt-1 text-sm text-slate-500">{t("electionSourceNote")}</p>
-          </li>
         </ul>
+        <Link
+          href="/sources"
+          className="inline-block text-sm text-teal-300 hover:text-teal-200"
+        >
+          {t("freshnessLink")}
+        </Link>
       </section>
 
       <section className="space-y-3">
@@ -77,10 +70,15 @@ export default async function AboutPage({
       </section>
 
       <section className="space-y-3">
+        <h2 className="text-xl font-semibold text-white">{t("platformTitle")}</h2>
+        <p className="max-w-2xl text-slate-400">{t("platformBody")}</p>
+      </section>
+
+      <section className="space-y-3">
         <h2 className="text-xl font-semibold text-white">{t("apiTitle")}</h2>
         <p className="max-w-2xl text-slate-400">{t("apiBody")}</p>
         <Link
-          href="/api/v1/openapi.json"
+          href="/developers"
           className="inline-flex rounded-full bg-teal-500 px-4 py-2 text-sm font-medium text-slate-950 hover:bg-teal-400"
         >
           {t("apiLink")}

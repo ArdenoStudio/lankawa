@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { ElectionDistrictRow } from "@/components/ElectionCards";
 import { DistrictMapLazy } from "@/components/DistrictMapLazy";
 import {
@@ -7,6 +8,7 @@ import {
   getElectionCandidate,
   getPresidentialElection2024,
 } from "@/lib/elections";
+import { getSourceProvenancePath } from "@/lib/sources";
 
 export default async function ElectionsPage({
   params,
@@ -87,14 +89,13 @@ export default async function ElectionsPage({
         </div>
         <p className="mt-4 text-xs text-slate-500">
           {t("source")}:{" "}
-          <a
-            href={election.sourceUrl}
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            href={getSourceProvenancePath(election.sourceId)}
             className="text-teal-300 hover:text-teal-200"
           >
             {election.sourceName}
-          </a>
+          </Link>
+          · {t("asOf", { date: election.date })}
         </p>
       </section>
 
