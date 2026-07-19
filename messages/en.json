@@ -1416,5 +1416,20 @@
     "apiTitle": "API & export",
     "apiBody": "Machine-readable access uses the same shape as other Lankawa civic endpoints.",
     "csvLink": "Download district land-change CSV"
+  },
+  "alertPins": {
+    "title": "Alert pins",
+    "subtitle": "Pin what you care about — saved on this device. Your alerts appear when a signal fires.",
+    "firedTitle": "Your alerts",
+    "firedSubtitle": "Pinned signals that are active against this morning’s pulse.",
+    "privacy": "Pins stay in this browser only. No email or account required.",
+    "pin_fx_move": "FX move",
+    "pin_flood": "Flood elevated",
+    "pin_power": "Power attention",
+    "pin_met": "Met warning",
+    "help_fx_move": "Fire when USD/LKR day-over-day move is ≥ {threshold} LKR",
+    "help_flood": "Fire when river stations report elevated alert levels",
+    "help_power": "Fire on CEB outage or scheduled interruption",
+    "help_met": "Fire when Met Dept yellow/amber/red advisories are active"
   }
 }

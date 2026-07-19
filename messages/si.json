@@ -1414,5 +1414,20 @@
     "apiTitle": "API & export",
     "apiBody": "Machine-readable access uses the same shape as other Lankawa civic endpoints.",
     "csvLink": "දිස්ත්‍රික් භූමි වෙනස් CSV බාගන්න"
+  },
+  "alertPins": {
+    "title": "ඇඟවීම් පින්",
+    "subtitle": "උනන්දුව තඹන්න — මෙම උපාංගයේ පමණි. සංඥාවක් ඇති විට ඇඟවීම් පෙනේ.",
+    "firedTitle": "ඔබේ ඇඟවීම්",
+    "firedSubtitle": "මේ උදෑසන pulse එකට එරෙහිව සක්‍රීය පින්.",
+    "privacy": "පින් මෙම බ්‍රවුසරයේ පමණි. විද්‍යුත් තැපැල් හෝ ගිණුම් අවශ්‍ය නොවේ.",
+    "pin_fx_move": "FX වෙනස",
+    "pin_flood": "ගංවතුර ඉහළ",
+    "pin_power": "විදුලි අවධානය",
+    "pin_met": "කාලගුණ අනතුරු ඇඟවීම",
+    "help_fx_move": "Fire when USD/LKR day-over-day move is ≥ {threshold} LKR",
+    "help_flood": "Fire when river stations report elevated alert levels",
+    "help_power": "Fire on CEB outage or scheduled interruption",
+    "help_met": "Fire when Met Dept yellow/amber/red advisories are active"
   }
 }

@@ -1414,5 +1414,20 @@
     "apiTitle": "API & ஏற்றுமதி",
     "apiBody": "மற்ற Lankawa civic endpoints போன்ற machine-readable அணுகல்.",
     "csvLink": "மாவட்ட நில மாற்ற CSV பதிவிறக்கு"
+  },
+  "alertPins": {
+    "title": "எச்சரிக்கை பின்கள்",
+    "subtitle": "நீங்கள் கவனிக்கும் சமிக்ஞைகளை பின் செய்யுங்கள் — இந்தச் சாதனத்தில் மட்டும்.",
+    "firedTitle": "உங்கள் எச்சரிக்கைகள்",
+    "firedSubtitle": "இன்றைய pulse-க்கு எதிராக செயலில் உள்ள பின்கள்.",
+    "privacy": "பின்கள் இந்த உலாவியில் மட்டும். மின்னஞ்சல் அல்லது கணக்கு தேவையில்லை.",
+    "pin_fx_move": "FX நகர்வு",
+    "pin_flood": "வெள்ள உயர்வு",
+    "pin_power": "மின் கவனம்",
+    "pin_met": "வானிலை எச்சரிக்கை",
+    "help_fx_move": "Fire when USD/LKR day-over-day move is ≥ {threshold} LKR",
+    "help_flood": "Fire when river stations report elevated alert levels",
+    "help_power": "Fire on CEB outage or scheduled interruption",
+    "help_met": "Fire when Met Dept yellow/amber/red advisories are active"
   }
 }

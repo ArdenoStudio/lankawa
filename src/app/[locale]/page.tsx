@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { AlertPins } from "@/components/AlertPins";
 import { CricketCard } from "@/components/CricketCard";
 import { DataSaverGate } from "@/components/DataSaverGate";
 import { HomeDistrictPin } from "@/components/HomeDistrictPin";
@@ -11,6 +12,7 @@ import { RetentionBeacon } from "@/components/RetentionBeacon";
 import { ShareMorningCheck } from "@/components/ShareMorningCheck";
 import { SourceHealthBar } from "@/components/SourceHealthBar";
 import { Link } from "@/i18n/navigation";
+import { buildAlertSignalContext } from "@/lib/alert-context";
 import { buildPulseSnapshot, getTodayPulseMetrics } from "@/lib/pulse";
 
 export default async function HomePage({
@@ -22,6 +24,7 @@ export default async function HomePage({
   setRequestLocale(locale);
   const t = await getTranslations("home");
   const snapshot = await buildPulseSnapshot();
+  const alertContext = await buildAlertSignalContext(snapshot);
   const todayMetrics = getTodayPulseMetrics(snapshot.metrics);
   const shareMetrics = todayMetrics
     .filter((metric) =>
@@ -42,6 +45,7 @@ export default async function HomePage({
       <RetentionBeacon locale={locale} />
       <HeroSection />
       <HomeDistrictPin locale={locale} />
+      <AlertPins context={alertContext} />
 
       <section className="space-y-5" id="today">
         <div className="flex flex-wrap items-end justify-between gap-4">
