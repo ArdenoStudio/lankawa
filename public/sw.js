@@ -1,10 +1,13 @@
-const CACHE_NAME = "lankawa-offline-v2";
+const CACHE_NAME = "lankawa-offline-v3";
 const OFFLINE_ASSETS = [
   "/geo/districts.geojson",
   "/favicon.svg",
   "/manifest.json",
   "/api/v1/pulse",
   "/api/v1/districts",
+  "/en",
+  "/si",
+  "/ta",
 ];
 
 const DISTRICT_SLUGS = [
@@ -68,11 +71,19 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  const isDocument = request.mode === "navigate" || request.destination === "document";
   const cacheable =
+    isDocument ||
     url.pathname.startsWith("/geo/") ||
     url.pathname.startsWith("/districts/") ||
     url.pathname.startsWith("/api/v1/districts") ||
-    url.pathname === "/api/v1/pulse";
+    url.pathname === "/api/v1/pulse" ||
+    url.pathname === "/en" ||
+    url.pathname === "/si" ||
+    url.pathname === "/ta" ||
+    url.pathname.startsWith("/en/") ||
+    url.pathname.startsWith("/si/") ||
+    url.pathname.startsWith("/ta/");
 
   if (!cacheable) {
     return;
@@ -80,10 +91,6 @@ self.addEventListener("fetch", (event) => {
 
   event.respondWith(
     caches.open(CACHE_NAME).then(async (cache) => {
-      const cached = await cache.match(request);
-      if (cached) {
-        return cached;
-      }
       try {
         const response = await fetch(request);
         if (response.ok) {
@@ -91,6 +98,19 @@ self.addEventListener("fetch", (event) => {
         }
         return response;
       } catch {
+        const cached = await cache.match(request);
+        if (cached) {
+          return cached;
+        }
+        if (isDocument) {
+          const localeShell =
+            (await cache.match("/en")) ||
+            (await cache.match("/si")) ||
+            (await cache.match("/ta"));
+          if (localeShell) {
+            return localeShell;
+          }
+        }
         const fallback = await cache.match("/geo/districts.geojson");
         if (fallback) {
           return fallback;

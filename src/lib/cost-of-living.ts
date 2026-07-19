@@ -36,7 +36,7 @@ export async function getCostOfLivingData(): Promise<CostOfLivingSnapshot> {
   }
 
   let liveProperty = false;
-  let propertyBySlug = new Map<string, number>();
+  const propertyBySlug = new Map<string, number>();
   if (propertyResult.status === "fulfilled") {
     const property = propertyResult.value;
     if (property.sourceId !== "propertylk_seed") {

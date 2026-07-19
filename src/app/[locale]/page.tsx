@@ -1,6 +1,8 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CricketCard } from "@/components/CricketCard";
+import { HomeDistrictPin } from "@/components/HomeDistrictPin";
 import { MorningBrief } from "@/components/MorningBrief";
+import { MorningDeltaStrip } from "@/components/MorningDeltaStrip";
 import { NewsPulse } from "@/components/NewsPulse";
 import { PulseCard } from "@/components/PulseCard";
 import { HeroSection } from "@/components/HeroSection";
@@ -24,6 +26,7 @@ export default async function HomePage({
     <div className="space-y-10 md:space-y-14">
       <RetentionBeacon locale={locale} />
       <HeroSection />
+      <HomeDistrictPin locale={locale} />
 
       <section className="space-y-5" id="today">
         <div>
@@ -43,6 +46,7 @@ export default async function HomePage({
             </div>
           ))}
         </div>
+        <MorningDeltaStrip />
       </section>
 
       <CricketCard />

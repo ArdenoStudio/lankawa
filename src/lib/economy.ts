@@ -1,6 +1,6 @@
 import macroData from "@/data/economy-macro.json";
 import { fetchCbslFxRates } from "./integrations/cbsl";
-import type { EconomyMacroSnapshot, FxSeriesPoint } from "./types";
+import type { EconomyMacroSnapshot, FxRateBand, FxSeriesPoint } from "./types";
 
 const macro = macroData as EconomyMacroSnapshot;
 
@@ -25,6 +25,30 @@ export async function getFxSeries(): Promise<FxSeriesPoint[]> {
   }
 
   return macro.fxSeries;
+}
+
+export async function getLatestFxRate(): Promise<FxRateBand> {
+  try {
+    const rates = await fetchCbslFxRates();
+    const latest = rates[0];
+    if (latest) {
+      return latest;
+    }
+  } catch {
+    // Fall back to static seed below.
+  }
+
+  if (macro.fxBand) {
+    return macro.fxBand;
+  }
+
+  const latestSeed = macro.fxSeries[macro.fxSeries.length - 1];
+  return {
+    date: latestSeed.date,
+    buyRate: latestSeed.sellRate,
+    sellRate: latestSeed.sellRate,
+    isFallback: true,
+  };
 }
 
 export function getMacroIndicator(id: string) {

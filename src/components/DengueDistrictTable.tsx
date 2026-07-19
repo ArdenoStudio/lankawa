@@ -20,6 +20,12 @@ function getDengueRiskColor(level: DengueRiskLevel): string {
   }
 }
 
+function formatChangePct(value: number): string {
+  const direction = value > 0 ? "↑" : value < 0 ? "↓" : "→";
+  const sign = value > 0 ? "+" : "";
+  return `${direction} ${sign}${value.toFixed(1)}%`;
+}
+
 export function DengueDistrictTable({
   districts,
   locale,
@@ -60,13 +66,8 @@ export function DengueDistrictTable({
                 <td className="px-4 py-3 text-right text-white">
                   {row.cases.toLocaleString()}
                 </td>
-                <td
-                  className={`px-4 py-3 text-right font-medium ${
-                    row.changePct >= 0 ? "text-rose-300" : "text-teal-300"
-                  }`}
-                >
-                  {row.changePct >= 0 ? "+" : ""}
-                  {row.changePct.toFixed(1)}%
+                <td className="px-4 py-3 text-right font-medium text-slate-300">
+                  {formatChangePct(row.changePct)}
                 </td>
                 <td className="px-4 py-3">
                   <span

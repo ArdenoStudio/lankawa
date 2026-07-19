@@ -47,9 +47,17 @@ export async function NewsPulse() {
           <h2 className="text-2xl font-semibold text-white">{t("title")}</h2>
           <p className="mt-2 text-slate-400">{t("subtitle")}</p>
         </div>
-        <Link href="/sources/news_rss" className="lk-btn-primary">
-          {t("viewAll")}
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <a
+            href="/feed.xml"
+            className="rounded-full border border-white/10 px-4 py-2 text-sm text-slate-200 transition hover:border-white/30 hover:bg-white/10"
+          >
+            {t("feed")}
+          </a>
+          <Link href="/sources/news_rss" className="lk-btn-primary">
+            {t("viewAll")}
+          </Link>
+        </div>
       </div>
 
       <article className="lk-card p-5">

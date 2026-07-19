@@ -8,6 +8,9 @@ function formatChange(change: number | null, changePct: number | null): string {
     return "—";
   }
 
+  const directionValue = changePct ?? change ?? 0;
+  const direction =
+    directionValue > 0 ? "↑" : directionValue < 0 ? "↓" : "→";
   const parts: string[] = [];
   if (change != null) {
     parts.push(`${change >= 0 ? "+" : ""}${change.toFixed(2)}`);
@@ -15,7 +18,7 @@ function formatChange(change: number | null, changePct: number | null): string {
   if (changePct != null) {
     parts.push(`(${changePct >= 0 ? "+" : ""}${changePct.toFixed(2)}%)`);
   }
-  return parts.join(" ");
+  return `${direction} ${parts.join(" ")}`;
 }
 
 function MoverList({
@@ -35,7 +38,6 @@ function MoverList({
       ) : (
         <ul className="space-y-2">
           {movers.map((mover) => {
-            const positive = (mover.changePct ?? 0) >= 0;
             return (
               <li
                 key={mover.symbol}
@@ -52,9 +54,7 @@ function MoverList({
                     })}
                   </p>
                   <p
-                    className={`text-xs font-medium ${
-                      positive ? "text-teal-300" : "text-rose-300"
-                    }`}
+                    className="text-xs font-medium text-slate-300"
                   >
                     {formatChange(mover.change, mover.changePct)}
                   </p>
@@ -123,7 +123,6 @@ export function CseMarketCard({
 
       <div className="grid gap-4 lg:grid-cols-3">
         {indices.map(({ key, label, index }) => {
-          const positive = (index.changePct ?? 0) >= 0;
           return (
             <article
               key={key}
@@ -136,9 +135,7 @@ export function CseMarketCard({
                 })}
               </p>
               <p
-                className={`mt-1 text-sm font-medium ${
-                  positive ? "text-teal-300" : "text-rose-300"
-                }`}
+                className="mt-1 text-sm font-medium text-slate-300"
               >
                 {formatChange(index.change, index.changePct)}
               </p>

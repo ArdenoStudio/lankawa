@@ -52,6 +52,11 @@
     "pulseSubtitle": "What matters this morning — refreshed on a public cadence.",
     "pulseLive": "Live now",
     "pulseStripLabel": "Live civic indicators",
+    "morningDeltaLabel": "Morning day-over-day deltas",
+    "morningDeltaFx": "USD/LKR sell",
+    "morningDeltaPetrol": "Petrol 92",
+    "morningDeltaDiesel": "Auto Diesel",
+    "morningDeltaAsOf": "as of {date}",
     "modulesTitle": "Explore the platform",
     "modulesSubtitle": "Jump into the modules that matter most — districts, elections, economy, and more.",
     "sourcesTitle": "Source health",
@@ -188,7 +193,8 @@
     "noHeadlines": "News headlines are temporarily unavailable.",
     "headlineCount": "{count} headlines tracked",
     "sourceMirror": "Daily Mirror",
-    "sourceAda": "Ada Derana"
+    "sourceAda": "Ada Derana",
+    "feed": "Atom feed"
   },
   "brief": {
     "eyebrow": "Morning brief",
@@ -412,7 +418,24 @@
     "macroTitle": "Macro snapshot",
     "macroSubtitle": "Static seed from CBSL public figures",
     "fxSparklineTitle": "USD/LKR (30-day trend)",
+    "fxBandTitle": "CBSL indicative buy/sell band",
+    "fxBuy": "Buy",
+    "fxSell": "Sell",
     "fuelHistoryTitle": "Fuel prices (90-day trend)",
+    "remittance": {
+      "title": "Remittance calculator",
+      "subtitle": "Convert using the latest CBSL USD/LKR buy and sell rates shown above.",
+      "asOf": "As of {date}",
+      "usdToLkrLabel": "USD amount",
+      "usdAmount": "USD amount to convert to LKR",
+      "lkrEstimate": "Indicative LKR",
+      "lkrToUsdLabel": "LKR amount",
+      "lkrAmount": "LKR amount to convert to USD",
+      "usdEstimate": "Indicative USD",
+      "buyRate": "CBSL buy rate",
+      "sellRate": "CBSL sell rate",
+      "disclaimer": "Indicative CBSL exchange rates only. These are not remittance corridor quotes, bank fees, transfer fees, or guaranteed settlement rates."
+    },
     "cse": {
       "title": "Colombo Stock Exchange",
       "subtitle": "ASPI, S&P SL20, and top movers from the public CSE board",
@@ -513,6 +536,7 @@
     "exploreHub": "Explore hub",
     "legal": "Legal",
     "disclaimer": "Disclaimer",
+    "feed": "Atom feed",
     "version": "Version {version}",
     "copyright": "Aggregated from public sources. Not an official government publication."
   },
@@ -616,11 +640,13 @@
     "lifeSummary": "Life platform overview",
     "lifeDescription": "Unified living-cost domain health from the Ariva Life Platform orchestrator.",
     "exportDistrictsSummary": "Export districts GeoJSON",
-    "exportDistrictsDescription": "Download simplified district boundaries with provenance metadata.",
-    "exportElectionsSummary": "Export elections JSON",
-    "exportElectionsDescription": "Download presidential and parliamentary 2024 seed datasets.",
-    "exportServicesSummary": "Export services JSON",
-    "exportServicesDescription": "Download the full public services directory seed.",
+    "exportDistrictsDescription": "Download simplified district boundaries with provenance metadata, including CSV.",
+    "exportElectionsSummary": "Export elections",
+    "exportElectionsDescription": "Download presidential and parliamentary 2024 seed datasets as JSON or CSV.",
+    "exportServicesSummary": "Export services",
+    "exportServicesDescription": "Download the full public services directory seed as JSON or CSV.",
+    "exportFuelHistorySummary": "Export fuel history",
+    "exportFuelHistoryDescription": "Download petrol and diesel price history as JSON or CSV.",
     "platformStatusSummary": "Platform status",
     "platformStatusDescription": "Database connectivity, source freshness counts, API version, and ingest schedule.",
     "pulseHistorySummary": "Pulse history",
@@ -632,9 +658,10 @@
     "export_districts": "District boundaries",
     "export_elections": "Election results",
     "export_services": "Public services",
+    "export_fuelHistory": "Fuel history",
     "exportDownload": "Download",
     "embedTitle": "Embeddable widgets",
-    "embedBody": "Same-origin iframe widgets for pulse, fuel, and FX — preview and copy embed code on the embed page.",
+    "embedBody": "Same-origin iframe widgets for today, pulse, fuel, and FX — preview and copy embed code on the embed page.",
     "embedLink": "Open embed preview"
   },
   "budget": {
@@ -776,8 +803,10 @@
   },
   "embed": {
     "title": "Embeddable Widgets",
-    "subtitle": "Preview same-origin Lankawa widgets for pulse, fuel, and FX — embed via iframe with minimal chrome.",
+    "subtitle": "Preview same-origin Lankawa widgets for today, pulse, fuel, and FX — embed via iframe with minimal chrome.",
     "developersLink": "Developer documentation",
+    "widget_today": "Today widget",
+    "widget_todayDesc": "Compact daily metrics for FX, fuel, weather, power, and flood stations.",
     "widget_pulse": "Pulse widget",
     "widget_pulseDesc": "Top live metrics from the national pulse.",
     "widget_fuel": "Fuel widget",
@@ -1203,5 +1232,15 @@
     "methodBody": "When live federation inputs are available, Lankawa refreshes the national petrol reference and rescales district food baskets from the essentials estimate. Property components use live PropertyLK medians relative to Colombo. District ranks come from a blended index (seed structure + live components). If partners are offline, the published seed snapshot is shown with seed provenance.",
     "limitsTitle": "Limits",
     "limitsBody": "This is not official NCPI, CCPI, or Department of Census and Statistics HIES data. It is a civic comparison tool with provenance badges. Do not use it for wage setting or formal inflation claims."
+  },
+  "homeDistrict": {
+    "title": "Your district",
+    "subtitle": "Pin a home district for faster morning checks — saved on this device only.",
+    "selectLabel": "Home district",
+    "none": "No district pinned",
+    "pinned": "Pinned: {district}.",
+    "openDistrict": "Open district page",
+    "pin": "Pin as home",
+    "unpin": "Unpin home"
   }
 }

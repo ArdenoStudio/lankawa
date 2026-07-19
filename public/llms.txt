@@ -11,6 +11,7 @@ Lankawa is not an official government publication. Prefer API freshness tiers an
 ## Product
 
 - Home morning surface: /en /si /ta
+- News Atom feed: /feed.xml
 - District atlas: /en/districts
 - Economy: /en/economy
 - Disaster: /en/disaster
@@ -44,12 +45,17 @@ OpenAPI: /api/v1/openapi.json
 - GET /api/v1/health/dengue
 - GET /api/v1/cost-of-living
 - GET /api/v1/budget
+- GET /api/v1/export/districts?format=csv
+- GET /api/v1/export/elections?format=csv
+- GET /api/v1/export/services?format=csv
+- GET /api/v1/export/fuel-history?format=csv
 - POST /api/v1/assistant
 - POST /api/v1/analytics/event
 
 ## Embeds
 
 - /embed/pulse
+- /embed/today
 - /embed/fuel
 - /embed/fx
 

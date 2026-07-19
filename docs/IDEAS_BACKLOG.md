@@ -6,18 +6,22 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 
 | Idea | Why | Phase |
 |------|-----|-------|
-| Morning home + Cal Sans/Inter | Retention surface | A ✅ in progress |
+| Morning home + Cal Sans/Inter | Retention surface | A ✅ |
 | PropertyLK `/districts` map | Live credibility | B1 ✅ |
 | Honest Food Life federation labels | Trust | B2 ✅ |
 | Skip link + focus-visible | A11y | A ✅ |
 | `llms.txt` | AI citations | F2 ✅ |
-| USGS earthquake panel | Disaster completeness | F ✅ shipped |
-| Learn guides | Trust | shipped |
-| Cron persist weather/power/CSE/news | Ingest purity | C |
-| Adapter canary GH Action | Scraper rot | C |
-| `/embed/today` | Partner embeds | A7 |
-| Morning delta strip | D7 habit | A+ |
-| CBSL gold card on `/economy` | High habit, reuses CBSL | D |
+| USGS earthquake panel | Disaster completeness | F ✅ |
+| Learn guides | Trust | ✅ |
+| Cron persist weather/power/CSE/news | Ingest purity | C ✅ |
+| Adapter canary GH Action | Scraper rot | C ✅ |
+| `/embed/today` | Partner embeds | A7 ✅ |
+| Morning delta strip | D7 habit | A+ ✅ |
+| FX buy–sell band + remittance calc | Economy habit | ✅ |
+| Atom feed + CSV export + sitemap | Syndication/SEO | ✅ |
+| Home district pin + PWA shell | Retention/offline | ✅ |
+| Monochrome signed deltas | A11y after B&W | ✅ |
+| CBSL gold card on `/economy` | High habit, reuses CBSL | D next |
 | LAUGFS LPG scrape + Litro image path | Household energy | D |
 | Met Dept WARNING/ADVISORY card | Disaster | F |
 | Coconut Index flow/root UI | COL honesty | F1 |

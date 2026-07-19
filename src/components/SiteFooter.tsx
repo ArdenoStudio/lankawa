@@ -43,7 +43,7 @@ export async function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-500 transition hover:text-[var(--lk-teal-bright)]"
+                    className="text-sm text-slate-500 transition hover:text-white"
                   >
                     {t(link.key)}
                   </Link>
@@ -59,7 +59,7 @@ export async function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-500 transition hover:text-[var(--lk-teal-bright)]"
+                    className="text-sm text-slate-500 transition hover:text-white"
                   >
                     {t(link.key)}
                   </Link>
@@ -75,12 +75,20 @@ export async function SiteFooter() {
                 <li key={link.key}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-500 transition hover:text-[var(--lk-teal-bright)]"
+                    className="text-sm text-slate-500 transition hover:text-white"
                   >
                     {t(link.key)}
                   </Link>
                 </li>
               ))}
+              <li>
+                <a
+                  href="/feed.xml"
+                  className="text-sm text-slate-500 transition hover:text-white"
+                >
+                  {t("feed")}
+                </a>
+              </li>
             </ul>
           </div>
         </div>

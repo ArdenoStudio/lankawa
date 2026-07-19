@@ -3,8 +3,9 @@ import { CseMarketCard } from "@/components/CseMarketCard";
 import { FuelHistoryChart, FxSparkline, MacroIndicatorCard } from "@/components/EconomyCards";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
 import { PulseCard } from "@/components/PulseCard";
+import { RemittanceCalculator } from "@/components/RemittanceCalculator";
 import { Link } from "@/i18n/navigation";
-import { getEconomyMacroSnapshot, getFxSeries } from "@/lib/economy";
+import { getEconomyMacroSnapshot, getFxSeries, getLatestFxRate } from "@/lib/economy";
 import { getFuelHistorySeries } from "@/lib/fuel";
 import { buildCseSnapshot } from "@/lib/integrations/cse";
 import { buildPulseSnapshot } from "@/lib/pulse";
@@ -21,6 +22,7 @@ export default async function EconomyPage({
   const snapshot = await buildPulseSnapshot();
   const macro = getEconomyMacroSnapshot();
   const fxSeries = await getFxSeries();
+  const latestFxRate = await getLatestFxRate();
   const fuelHistory = await getFuelHistorySeries(90);
   const cseSnapshot = await buildCseSnapshot();
   const economyMetrics = snapshot.metrics.filter((metric) =>
@@ -75,10 +77,18 @@ export default async function EconomyPage({
             title={t("fxSparklineTitle")}
             series={fxSeries}
             asOf={macro.asOf}
+            latestBand={latestFxRate}
+            labels={{
+              bandTitle: t("fxBandTitle"),
+              buy: t("fxBuy"),
+              sell: t("fxSell"),
+            }}
           />
           <FuelHistoryChart title={t("fuelHistoryTitle")} series={fuelHistory} />
         </div>
       </section>
+
+      <RemittanceCalculator rates={latestFxRate} />
 
       <CseMarketCard
         snapshot={cseSnapshot}
