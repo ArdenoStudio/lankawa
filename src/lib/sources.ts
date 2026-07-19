@@ -87,9 +87,9 @@ export const SOURCES: SourceDefinition[] = [
     cadenceMinutes: 525600,
     adapter: "partner",
     description:
-      "Hospitals, schools, and GN offices indexed by district (seed data).",
+      "Hospitals, MOH offices, police stations, schools, and GN offices indexed by district (seed data).",
     methodology:
-      "A curated seed directory covers representative facilities across all 25 districts. Not exhaustive — typically 3+ facilities per district until official open-data feeds are integrated.",
+      "A curated seed directory covers representative facilities across all 25 districts — typically 6+ facilities per district (hospital, divisional hospital, MOH, police, school, GN) until official open-data feeds are integrated.",
     metrics: ["public_services"],
   },
   {
@@ -193,6 +193,45 @@ export const SOURCES: SourceDefinition[] = [
     methodology:
       "Historical presidential results seeded from published EC totals. District figures are approximations aligned with national totals.",
     metrics: ["presidential_2015"],
+  },
+  {
+    id: "transport_directory_seed",
+    name: "Lankawa Transport Directory",
+    category: "transport",
+    url: "internal://transport",
+    cadenceMinutes: 525600,
+    adapter: "partner",
+    description:
+      "Major intercity bus routes, railway stations, and airports indexed by district.",
+    methodology:
+      "Static seed directory covering representative SLTB routes, SLR stations, and civil airports. No GTFS feed available for Sri Lanka.",
+    metrics: ["bus_routes", "railway_stations", "airports"],
+  },
+  {
+    id: "cost_of_living_seed",
+    name: "Lankawa Cost of Living Index",
+    category: "economy",
+    url: "internal://cost-of-living",
+    cadenceMinutes: 43200,
+    adapter: "partner",
+    description:
+      "District composite cost-of-living index from fuel, property, and food basket proxies.",
+    methodology:
+      "Weighted seed index combining Octane petrol 92 reference price, PropertyLK median bands, and estimated monthly food basket costs. Not an official NCPI publication.",
+    metrics: ["col_index", "food_basket_estimate"],
+  },
+  {
+    id: "environment_aqi_seed",
+    name: "Lankawa Air Quality Index",
+    category: "health",
+    url: "internal://environment",
+    cadenceMinutes: 1440,
+    adapter: "partner",
+    description:
+      "Representative AQI and PM2.5 bands by administrative district.",
+    methodology:
+      "IQAir-style representative seed data patterned on urban/rural density proxies. Not live sensor readings.",
+    metrics: ["aqi", "pm25"],
   },
   {
     id: "election_commission_2019",

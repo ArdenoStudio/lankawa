@@ -104,6 +104,12 @@ export function getServiceTypeLabelKey(type: PublicServiceType): string {
       return "typeSchool";
     case "gn_office":
       return "typeGnOffice";
+    case "police_station":
+      return "typePoliceStation";
+    case "moh_office":
+      return "typeMohOffice";
+    case "divisional_hospital":
+      return "typeDivisionalHospital";
     default: {
       const _exhaustive: never = type;
       return _exhaustive;

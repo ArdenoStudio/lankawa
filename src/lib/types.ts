@@ -166,7 +166,13 @@ export interface FloodStationLevel {
   timestamp: string;
 }
 
-export type PublicServiceType = "hospital" | "school" | "gn_office";
+export type PublicServiceType =
+  | "hospital"
+  | "school"
+  | "gn_office"
+  | "police_station"
+  | "moh_office"
+  | "divisional_hospital";
 
 export interface PublicServiceFacility {
   id: string;
@@ -253,12 +259,98 @@ export interface DengueSnapshot {
 
 export interface MpScorecardMember {
   id: string;
+  slug: string;
+  name: string;
+  nameSi?: string;
+  nameTa?: string;
   electoralDistrict: string;
   party: string;
   attendancePct: number;
   privateMemberBills: number;
   questionsAsked: number;
   committeeRoles: number;
+}
+
+export type TransportMode = "bus" | "rail" | "air";
+
+export interface BusRoute {
+  id: string;
+  routeNumber: string;
+  name: string;
+  nameSi?: string;
+  nameTa?: string;
+  originDistrict: string;
+  destinationDistrict: string;
+  viaDistricts: string[];
+  operator: string;
+  frequency: string;
+}
+
+export interface RailwayStation {
+  id: string;
+  name: string;
+  nameSi?: string;
+  nameTa?: string;
+  districtSlug: string;
+  line: string;
+  lat: number;
+  lng: number;
+  isMajor: boolean;
+}
+
+export interface Airport {
+  id: string;
+  name: string;
+  nameSi?: string;
+  nameTa?: string;
+  districtSlug: string;
+  iata: string;
+  lat: number;
+  lng: number;
+  isInternational: boolean;
+}
+
+export interface TransportCatalog {
+  sourceId: string;
+  sourceName: string;
+  asOf: string;
+  busRoutes: BusRoute[];
+  railwayStations: RailwayStation[];
+  airports: Airport[];
+}
+
+export interface CostOfLivingDistrict {
+  slug: string;
+  index: number;
+  fuelComponent: number;
+  propertyComponent: number;
+  foodBasketLkr: number;
+  rank: number;
+}
+
+export interface CostOfLivingSnapshot {
+  sourceId: string;
+  sourceName: string;
+  asOf: string;
+  nationalIndex: number;
+  fuelPricePetrol92: number;
+  districts: CostOfLivingDistrict[];
+}
+
+export type AqiBand = "good" | "moderate" | "unhealthy_sensitive" | "unhealthy" | "very_unhealthy";
+
+export interface EnvironmentDistrictStat {
+  slug: string;
+  aqi: number;
+  band: AqiBand;
+  pm25: number;
+}
+
+export interface EnvironmentSnapshot {
+  sourceId: string;
+  sourceName: string;
+  asOf: string;
+  districts: EnvironmentDistrictStat[];
 }
 
 export interface MpScorecardSnapshot {

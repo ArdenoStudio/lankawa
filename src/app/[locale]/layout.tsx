@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PwaRegister } from "@/components/PwaRegister";
+import { InstallPrompt } from "@/components/InstallPrompt";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
@@ -53,6 +54,7 @@ export default async function LocaleLayout({
       <body className="min-h-full bg-slate-950 text-slate-100 antialiased">
         <NextIntlClientProvider messages={messages}>
           <PwaRegister />
+          <InstallPrompt />
           <SiteHeader />
           <main className="mx-auto flex min-h-[calc(100vh-8rem)] w-full max-w-6xl flex-1 flex-col px-4 py-8">
             {children}

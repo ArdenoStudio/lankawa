@@ -11,6 +11,7 @@ import {
 import { getFloodStationsForDistrict } from "./flood-districts";
 import { getDengueDistrictStats } from "./health";
 import { getPublicServicesForDistrict } from "./services";
+import { getCostOfLivingForDistrict } from "./cost-of-living";
 
 export interface DistrictCompareRow {
   slug: string;
@@ -26,6 +27,7 @@ export interface DistrictCompareRow {
   floodStationCount: number;
   servicesCount: number;
   dengueCases: number | null;
+  costOfLivingIndex: number | null;
 }
 
 export function parseCompareDistricts(raw: string | null | undefined): string[] {
@@ -51,6 +53,7 @@ export function buildDistrictCompareRow(
   const election = getElectionDistrictResult(slug);
   const parliamentary = getParliamentaryDistrictForAdminDistrict(slug);
   const dengue = getDengueDistrictStats(slug);
+  const col = getCostOfLivingForDistrict(slug);
 
   let presidentialWinner: string | null = null;
   let presidentialShare: number | null = null;
@@ -82,6 +85,7 @@ export function buildDistrictCompareRow(
     floodStationCount: getFloodStationsForDistrict(slug).length,
     servicesCount: getPublicServicesForDistrict(slug).length,
     dengueCases: dengue?.cases ?? null,
+    costOfLivingIndex: col?.index ?? null,
   };
 }
 

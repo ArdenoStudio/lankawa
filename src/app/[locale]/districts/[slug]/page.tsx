@@ -32,6 +32,7 @@ import {
 } from "@/lib/provinces";
 import { getDengueDistrictStats } from "@/lib/health";
 import { getPublicServicesForDistrict } from "@/lib/services";
+import { getMpByElectoralDistrict } from "@/lib/civic";
 import { isVanniAdminDistrict } from "@/lib/election-swing";
 
 export async function generateStaticParams() {
@@ -70,6 +71,10 @@ export default async function DistrictDetailPage({
   const province = getProvinceForDistrict(district);
   const services = getPublicServicesForDistrict(slug);
   const dengueStats = getDengueDistrictStats(slug);
+  const parliamentaryElectoral = getParliamentaryDistrictForAdminDistrict(slug);
+  const mpMembers = parliamentaryElectoral
+    ? getMpByElectoralDistrict(parliamentaryElectoral.slug)
+    : getMpByElectoralDistrict(slug);
 
   let liveFloodStations: Awaited<ReturnType<typeof fetchFloodLevelsForDistrict>> = [];
   try {
@@ -314,6 +319,29 @@ export default async function DistrictDetailPage({
             <p className="font-medium text-white">{t("relatedLocalGov")}</p>
             <p className="mt-1 text-sm text-slate-400">{t("relatedLocalGovDesc")}</p>
           </Link>
+          <Link
+            href={`/transport?district=${slug}`}
+            className="rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-teal-400/30 hover:bg-white/10"
+          >
+            <p className="font-medium text-white">{t("relatedTransport")}</p>
+            <p className="mt-1 text-sm text-slate-400">{t("relatedTransportDesc")}</p>
+          </Link>
+          <Link
+            href={`/cost-of-living`}
+            className="rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-teal-400/30 hover:bg-white/10"
+          >
+            <p className="font-medium text-white">{t("relatedCostOfLiving")}</p>
+            <p className="mt-1 text-sm text-slate-400">{t("relatedCostOfLivingDesc")}</p>
+          </Link>
+          {mpMembers.length > 0 ? (
+            <Link
+              href={`/civic/${mpMembers[0].slug}`}
+              className="rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-teal-400/30 hover:bg-white/10"
+            >
+              <p className="font-medium text-white">{t("relatedCivic")}</p>
+              <p className="mt-1 text-sm text-slate-400">{t("relatedCivicDesc")}</p>
+            </Link>
+          ) : null}
         </div>
       </section>
     </div>

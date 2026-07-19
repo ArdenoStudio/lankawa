@@ -12,6 +12,33 @@
       "address": "Colombo"
     },
     {
+      "id": "colombo-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Colombo",
+      "nameSi": "Colombo divisional hospital",
+      "nameTa": "Colombo divisional hospital",
+      "districtSlug": "colombo",
+      "address": "Colombo"
+    },
+    {
+      "id": "colombo-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Colombo",
+      "nameSi": "MOH කාර්යාලය — Colombo",
+      "nameTa": "MOH அலுவலகம் — Colombo",
+      "districtSlug": "colombo",
+      "address": "Colombo"
+    },
+    {
+      "id": "colombo-police-station",
+      "type": "police_station",
+      "name": "Colombo Police Division",
+      "nameSi": "Colombo පොලිස් division",
+      "nameTa": "Colombo காவல்துறை பிரிவு",
+      "districtSlug": "colombo",
+      "address": "Colombo"
+    },
+    {
       "id": "colombo-school",
       "type": "school",
       "name": "Royal College Colombo",
@@ -35,6 +62,33 @@
       "name": "District General Hospital Gampaha",
       "nameSi": "ගම්පහ දistrict General Hospital",
       "nameTa": "கம்பஹா மாவட்ட பொது மருத்துவமனை",
+      "districtSlug": "gampaha",
+      "address": "Gampaha"
+    },
+    {
+      "id": "gampaha-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Gampaha",
+      "nameSi": "Gampaha divisional hospital",
+      "nameTa": "Gampaha divisional hospital",
+      "districtSlug": "gampaha",
+      "address": "Gampaha"
+    },
+    {
+      "id": "gampaha-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Gampaha",
+      "nameSi": "MOH කාර්යාලය — Gampaha",
+      "nameTa": "MOH அலுவலகம் — Gampaha",
+      "districtSlug": "gampaha",
+      "address": "Gampaha"
+    },
+    {
+      "id": "gampaha-police-station",
+      "type": "police_station",
+      "name": "Gampaha Police Division",
+      "nameSi": "Gampaha පොලිස් division",
+      "nameTa": "Gampaha காவல்துறை பிரிவு",
       "districtSlug": "gampaha",
       "address": "Gampaha"
     },
@@ -66,6 +120,33 @@
       "address": "Kalutara"
     },
     {
+      "id": "kalutara-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Kalutara",
+      "nameSi": "Kalutara divisional hospital",
+      "nameTa": "Kalutara divisional hospital",
+      "districtSlug": "kalutara",
+      "address": "Kalutara"
+    },
+    {
+      "id": "kalutara-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Kalutara",
+      "nameSi": "MOH කාර්යාලය — Kalutara",
+      "nameTa": "MOH அலுவலகம் — Kalutara",
+      "districtSlug": "kalutara",
+      "address": "Kalutara"
+    },
+    {
+      "id": "kalutara-police-station",
+      "type": "police_station",
+      "name": "Kalutara Police Division",
+      "nameSi": "Kalutara පොලිස් division",
+      "nameTa": "Kalutara காவல்துறை பிரிவு",
+      "districtSlug": "kalutara",
+      "address": "Kalutara"
+    },
+    {
       "id": "kalutara-school",
       "type": "school",
       "name": "Kalutara Vidyalaya",
@@ -89,6 +170,33 @@
       "name": "Teaching Hospital Kandy",
       "nameSi": "මහනුවර උගන්වන රෝහල",
       "nameTa": "கண்டி பTeaching மருத்துவமனை",
+      "districtSlug": "kandy",
+      "address": "Kandy"
+    },
+    {
+      "id": "kandy-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Kandy",
+      "nameSi": "Kandy divisional hospital",
+      "nameTa": "Kandy divisional hospital",
+      "districtSlug": "kandy",
+      "address": "Kandy"
+    },
+    {
+      "id": "kandy-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Kandy",
+      "nameSi": "MOH කාර්යාලය — Kandy",
+      "nameTa": "MOH அலுவலகம் — Kandy",
+      "districtSlug": "kandy",
+      "address": "Kandy"
+    },
+    {
+      "id": "kandy-police-station",
+      "type": "police_station",
+      "name": "Kandy Police Division",
+      "nameSi": "Kandy පොලිස් division",
+      "nameTa": "Kandy காவல்துறை பிரிவு",
       "districtSlug": "kandy",
       "address": "Kandy"
     },
@@ -120,6 +228,33 @@
       "address": "Matale"
     },
     {
+      "id": "matale-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Matale",
+      "nameSi": "Matale divisional hospital",
+      "nameTa": "Matale divisional hospital",
+      "districtSlug": "matale",
+      "address": "Matale"
+    },
+    {
+      "id": "matale-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Matale",
+      "nameSi": "MOH කාර්යාලය — Matale",
+      "nameTa": "MOH அலுவலகம் — Matale",
+      "districtSlug": "matale",
+      "address": "Matale"
+    },
+    {
+      "id": "matale-police-station",
+      "type": "police_station",
+      "name": "Matale Police Division",
+      "nameSi": "Matale පොලිස් division",
+      "nameTa": "Matale காவல்துறை பிரிவு",
+      "districtSlug": "matale",
+      "address": "Matale"
+    },
+    {
       "id": "matale-school",
       "type": "school",
       "name": "St. Thomas' College Matale",
@@ -143,6 +278,33 @@
       "name": "District General Hospital Nuwara Eliya",
       "nameSi": "නුවර එළිය දිස්ත්‍රික් ජeneral Hospital",
       "nameTa": "நுவரெலியா மாவட்ட பொது மருத்துவமனை",
+      "districtSlug": "nuwara-eliya",
+      "address": "Nuwara Eliya"
+    },
+    {
+      "id": "nuwara-eliya-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Nuwara Eliya",
+      "nameSi": "Nuwara Eliya divisional hospital",
+      "nameTa": "Nuwara Eliya divisional hospital",
+      "districtSlug": "nuwara-eliya",
+      "address": "Nuwara Eliya"
+    },
+    {
+      "id": "nuwara-eliya-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Nuwara Eliya",
+      "nameSi": "MOH කාර්යාලය — Nuwara Eliya",
+      "nameTa": "MOH அலுவலகம் — Nuwara Eliya",
+      "districtSlug": "nuwara-eliya",
+      "address": "Nuwara Eliya"
+    },
+    {
+      "id": "nuwara-eliya-police-station",
+      "type": "police_station",
+      "name": "Nuwara Eliya Police Division",
+      "nameSi": "Nuwara Eliya පොලිස් division",
+      "nameTa": "Nuwara Eliya காவல்துறை பிரிவு",
       "districtSlug": "nuwara-eliya",
       "address": "Nuwara Eliya"
     },
@@ -174,6 +336,33 @@
       "address": "Galle"
     },
     {
+      "id": "galle-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Galle",
+      "nameSi": "Galle divisional hospital",
+      "nameTa": "Galle divisional hospital",
+      "districtSlug": "galle",
+      "address": "Galle"
+    },
+    {
+      "id": "galle-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Galle",
+      "nameSi": "MOH කාර්යාලය — Galle",
+      "nameTa": "MOH அலுவலகம் — Galle",
+      "districtSlug": "galle",
+      "address": "Galle"
+    },
+    {
+      "id": "galle-police-station",
+      "type": "police_station",
+      "name": "Galle Police Division",
+      "nameSi": "Galle පොලිස් division",
+      "nameTa": "Galle காவல்துறை பிரிவு",
+      "districtSlug": "galle",
+      "address": "Galle"
+    },
+    {
       "id": "galle-school",
       "type": "school",
       "name": "Mahinda College Galle",
@@ -197,6 +386,33 @@
       "name": "Teaching Hospital Matara",
       "nameSi": "මාතර උගන්වන රෝහල",
       "nameTa": "மாத்தறை பTeaching மருத்துவமனை",
+      "districtSlug": "matara",
+      "address": "Matara"
+    },
+    {
+      "id": "matara-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Matara",
+      "nameSi": "Matara divisional hospital",
+      "nameTa": "Matara divisional hospital",
+      "districtSlug": "matara",
+      "address": "Matara"
+    },
+    {
+      "id": "matara-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Matara",
+      "nameSi": "MOH කාර්යාලය — Matara",
+      "nameTa": "MOH அலுவலகம் — Matara",
+      "districtSlug": "matara",
+      "address": "Matara"
+    },
+    {
+      "id": "matara-police-station",
+      "type": "police_station",
+      "name": "Matara Police Division",
+      "nameSi": "Matara පොලිස් division",
+      "nameTa": "Matara காவல்துறை பிரிவு",
       "districtSlug": "matara",
       "address": "Matara"
     },
@@ -228,6 +444,33 @@
       "address": "Hambantota"
     },
     {
+      "id": "hambantota-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Hambantota",
+      "nameSi": "Hambantota divisional hospital",
+      "nameTa": "Hambantota divisional hospital",
+      "districtSlug": "hambantota",
+      "address": "Hambantota"
+    },
+    {
+      "id": "hambantota-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Hambantota",
+      "nameSi": "MOH කාර්යාලය — Hambantota",
+      "nameTa": "MOH அலுவலகம் — Hambantota",
+      "districtSlug": "hambantota",
+      "address": "Hambantota"
+    },
+    {
+      "id": "hambantota-police-station",
+      "type": "police_station",
+      "name": "Hambantota Police Division",
+      "nameSi": "Hambantota පොලිස් division",
+      "nameTa": "Hambantota காவல்துறை பிரிவு",
+      "districtSlug": "hambantota",
+      "address": "Hambantota"
+    },
+    {
       "id": "hambantota-school",
       "type": "school",
       "name": "Ruhunu Vijayabahu Central College",
@@ -251,6 +494,33 @@
       "name": "Teaching Hospital Jaffna",
       "nameSi": "යාපනය උගන්වන රෝhopital",
       "nameTa": "யாழ்ப்பாணம் பTeaching மருத்துவமனை",
+      "districtSlug": "jaffna",
+      "address": "Jaffna"
+    },
+    {
+      "id": "jaffna-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Jaffna",
+      "nameSi": "Jaffna divisional hospital",
+      "nameTa": "Jaffna divisional hospital",
+      "districtSlug": "jaffna",
+      "address": "Jaffna"
+    },
+    {
+      "id": "jaffna-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Jaffna",
+      "nameSi": "MOH කාර්යාලය — Jaffna",
+      "nameTa": "MOH அலுவலகம் — Jaffna",
+      "districtSlug": "jaffna",
+      "address": "Jaffna"
+    },
+    {
+      "id": "jaffna-police-station",
+      "type": "police_station",
+      "name": "Jaffna Police Division",
+      "nameSi": "Jaffna පොලිස් division",
+      "nameTa": "Jaffna காவல்துறை பிரிவு",
       "districtSlug": "jaffna",
       "address": "Jaffna"
     },
@@ -282,6 +552,33 @@
       "address": "Kilinochchi"
     },
     {
+      "id": "kilinochchi-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Kilinochchi",
+      "nameSi": "Kilinochchi divisional hospital",
+      "nameTa": "Kilinochchi divisional hospital",
+      "districtSlug": "kilinochchi",
+      "address": "Kilinochchi"
+    },
+    {
+      "id": "kilinochchi-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Kilinochchi",
+      "nameSi": "MOH කාර්යාලය — Kilinochchi",
+      "nameTa": "MOH அலுவலகம் — Kilinochchi",
+      "districtSlug": "kilinochchi",
+      "address": "Kilinochchi"
+    },
+    {
+      "id": "kilinochchi-police-station",
+      "type": "police_station",
+      "name": "Kilinochchi Police Division",
+      "nameSi": "Kilinochchi පොලිස් division",
+      "nameTa": "Kilinochchi காவல்துறை பிரிவு",
+      "districtSlug": "kilinochchi",
+      "address": "Kilinochchi"
+    },
+    {
       "id": "kilinochchi-school",
       "type": "school",
       "name": "Kilinochchi Maha Vidyalayam",
@@ -305,6 +602,33 @@
       "name": "District General Hospital Mannar",
       "nameSi": "මන්නාරම දිස්ත්‍රික් ජeneral Hospital",
       "nameTa": "மன்னார் மாavட்ட பொது மருத்துவமனை",
+      "districtSlug": "mannar",
+      "address": "Mannar"
+    },
+    {
+      "id": "mannar-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Mannar",
+      "nameSi": "Mannar divisional hospital",
+      "nameTa": "Mannar divisional hospital",
+      "districtSlug": "mannar",
+      "address": "Mannar"
+    },
+    {
+      "id": "mannar-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Mannar",
+      "nameSi": "MOH කාර්යාලය — Mannar",
+      "nameTa": "MOH அலுவலகம் — Mannar",
+      "districtSlug": "mannar",
+      "address": "Mannar"
+    },
+    {
+      "id": "mannar-police-station",
+      "type": "police_station",
+      "name": "Mannar Police Division",
+      "nameSi": "Mannar පොලිස් division",
+      "nameTa": "Mannar காவல்துறை பிரிவு",
       "districtSlug": "mannar",
       "address": "Mannar"
     },
@@ -336,6 +660,33 @@
       "address": "Vavuniya"
     },
     {
+      "id": "vavuniya-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Vavuniya",
+      "nameSi": "Vavuniya divisional hospital",
+      "nameTa": "Vavuniya divisional hospital",
+      "districtSlug": "vavuniya",
+      "address": "Vavuniya"
+    },
+    {
+      "id": "vavuniya-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Vavuniya",
+      "nameSi": "MOH කාර්යාලය — Vavuniya",
+      "nameTa": "MOH அலுவலகம் — Vavuniya",
+      "districtSlug": "vavuniya",
+      "address": "Vavuniya"
+    },
+    {
+      "id": "vavuniya-police-station",
+      "type": "police_station",
+      "name": "Vavuniya Police Division",
+      "nameSi": "Vavuniya පොලිස් division",
+      "nameTa": "Vavuniya காவல்துறை பிரிவு",
+      "districtSlug": "vavuniya",
+      "address": "Vavuniya"
+    },
+    {
       "id": "vavuniya-school",
       "type": "school",
       "name": "Vavuniya Tamil Maha Vidyalayam",
@@ -359,6 +710,33 @@
       "name": "District General Hospital Mullaitivu",
       "nameSi": "මුලතිව් දිස්ත්‍රික් ජeneral Hospital",
       "nameTa": "முல்லைத்தீவு மாavட்ட பொது மருத்துவமனை",
+      "districtSlug": "mullaitivu",
+      "address": "Mullaitivu"
+    },
+    {
+      "id": "mullaitivu-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Mullaitivu",
+      "nameSi": "Mullaitivu divisional hospital",
+      "nameTa": "Mullaitivu divisional hospital",
+      "districtSlug": "mullaitivu",
+      "address": "Mullaitivu"
+    },
+    {
+      "id": "mullaitivu-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Mullaitivu",
+      "nameSi": "MOH කාර්යාලය — Mullaitivu",
+      "nameTa": "MOH அலுவலகம் — Mullaitivu",
+      "districtSlug": "mullaitivu",
+      "address": "Mullaitivu"
+    },
+    {
+      "id": "mullaitivu-police-station",
+      "type": "police_station",
+      "name": "Mullaitivu Police Division",
+      "nameSi": "Mullaitivu පොලිස් division",
+      "nameTa": "Mullaitivu காவல்துறை பிரிவு",
       "districtSlug": "mullaitivu",
       "address": "Mullaitivu"
     },
@@ -390,6 +768,33 @@
       "address": "Batticaloa"
     },
     {
+      "id": "batticaloa-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Batticaloa",
+      "nameSi": "Batticaloa divisional hospital",
+      "nameTa": "Batticaloa divisional hospital",
+      "districtSlug": "batticaloa",
+      "address": "Batticaloa"
+    },
+    {
+      "id": "batticaloa-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Batticaloa",
+      "nameSi": "MOH කාර්යාලය — Batticaloa",
+      "nameTa": "MOH அலுவலகம் — Batticaloa",
+      "districtSlug": "batticaloa",
+      "address": "Batticaloa"
+    },
+    {
+      "id": "batticaloa-police-station",
+      "type": "police_station",
+      "name": "Batticaloa Police Division",
+      "nameSi": "Batticaloa පොලිස් division",
+      "nameTa": "Batticaloa காவல்துறை பிரிவு",
+      "districtSlug": "batticaloa",
+      "address": "Batticaloa"
+    },
+    {
       "id": "batticaloa-school",
       "type": "school",
       "name": "St. Michael's College Batticaloa",
@@ -413,6 +818,33 @@
       "name": "District General Hospital Ampara",
       "nameSi": "අම්පාර දිස්ත්‍රික් ජeneral Hospital",
       "nameTa": "அம்பாறை மாavட்ட பொது மருத்துவமனை",
+      "districtSlug": "ampara",
+      "address": "Ampara"
+    },
+    {
+      "id": "ampara-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Ampara",
+      "nameSi": "Ampara divisional hospital",
+      "nameTa": "Ampara divisional hospital",
+      "districtSlug": "ampara",
+      "address": "Ampara"
+    },
+    {
+      "id": "ampara-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Ampara",
+      "nameSi": "MOH කාර්යාලය — Ampara",
+      "nameTa": "MOH அலுவலகம் — Ampara",
+      "districtSlug": "ampara",
+      "address": "Ampara"
+    },
+    {
+      "id": "ampara-police-station",
+      "type": "police_station",
+      "name": "Ampara Police Division",
+      "nameSi": "Ampara පොලිස් division",
+      "nameTa": "Ampara காவல்துறை பிரிவு",
       "districtSlug": "ampara",
       "address": "Ampara"
     },
@@ -444,6 +876,33 @@
       "address": "Trincomalee"
     },
     {
+      "id": "trincomalee-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Trincomalee",
+      "nameSi": "Trincomalee divisional hospital",
+      "nameTa": "Trincomalee divisional hospital",
+      "districtSlug": "trincomalee",
+      "address": "Trincomalee"
+    },
+    {
+      "id": "trincomalee-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Trincomalee",
+      "nameSi": "MOH කාර්යාලය — Trincomalee",
+      "nameTa": "MOH அலுவலகம் — Trincomalee",
+      "districtSlug": "trincomalee",
+      "address": "Trincomalee"
+    },
+    {
+      "id": "trincomalee-police-station",
+      "type": "police_station",
+      "name": "Trincomalee Police Division",
+      "nameSi": "Trincomalee පොලිස් division",
+      "nameTa": "Trincomalee காவல்துறை பிரிவு",
+      "districtSlug": "trincomalee",
+      "address": "Trincomalee"
+    },
+    {
       "id": "trincomalee-school",
       "type": "school",
       "name": "St. Joseph's College Trincomalee",
@@ -467,6 +926,33 @@
       "name": "Teaching Hospital Kurunegala",
       "nameSi": "කurunegala උගන්වන රෝhopital",
       "nameTa": "கurunegala பTeaching மருத்துவமனை",
+      "districtSlug": "kurunegala",
+      "address": "Kurunegala"
+    },
+    {
+      "id": "kurunegala-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Kurunegala",
+      "nameSi": "Kurunegala divisional hospital",
+      "nameTa": "Kurunegala divisional hospital",
+      "districtSlug": "kurunegala",
+      "address": "Kurunegala"
+    },
+    {
+      "id": "kurunegala-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Kurunegala",
+      "nameSi": "MOH කාර්යාලය — Kurunegala",
+      "nameTa": "MOH அலுவலகம் — Kurunegala",
+      "districtSlug": "kurunegala",
+      "address": "Kurunegala"
+    },
+    {
+      "id": "kurunegala-police-station",
+      "type": "police_station",
+      "name": "Kurunegala Police Division",
+      "nameSi": "Kurunegala පොලිස් division",
+      "nameTa": "Kurunegala காவல்துறை பிரிவு",
       "districtSlug": "kurunegala",
       "address": "Kurunegala"
     },
@@ -498,6 +984,33 @@
       "address": "Puttalam"
     },
     {
+      "id": "puttalam-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Puttalam",
+      "nameSi": "Puttalam divisional hospital",
+      "nameTa": "Puttalam divisional hospital",
+      "districtSlug": "puttalam",
+      "address": "Puttalam"
+    },
+    {
+      "id": "puttalam-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Puttalam",
+      "nameSi": "MOH කාර්යාලය — Puttalam",
+      "nameTa": "MOH அலுவலகம் — Puttalam",
+      "districtSlug": "puttalam",
+      "address": "Puttalam"
+    },
+    {
+      "id": "puttalam-police-station",
+      "type": "police_station",
+      "name": "Puttalam Police Division",
+      "nameSi": "Puttalam පොලිස් division",
+      "nameTa": "Puttalam காவல்துறை பிரிவு",
+      "districtSlug": "puttalam",
+      "address": "Puttalam"
+    },
+    {
       "id": "puttalam-school",
       "type": "school",
       "name": "Puttalam Central College",
@@ -521,6 +1034,33 @@
       "name": "Teaching Hospital Anuradhapura",
       "nameSi": "අනුරාධපුරය උගන්වන රෝhopital",
       "nameTa": "அனுராதபுரம் பTeaching மருத்துவமனை",
+      "districtSlug": "anuradhapura",
+      "address": "Anuradhapura"
+    },
+    {
+      "id": "anuradhapura-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Anuradhapura",
+      "nameSi": "Anuradhapura divisional hospital",
+      "nameTa": "Anuradhapura divisional hospital",
+      "districtSlug": "anuradhapura",
+      "address": "Anuradhapura"
+    },
+    {
+      "id": "anuradhapura-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Anuradhapura",
+      "nameSi": "MOH කාර්යාලය — Anuradhapura",
+      "nameTa": "MOH அலுவலகம் — Anuradhapura",
+      "districtSlug": "anuradhapura",
+      "address": "Anuradhapura"
+    },
+    {
+      "id": "anuradhapura-police-station",
+      "type": "police_station",
+      "name": "Anuradhapura Police Division",
+      "nameSi": "Anuradhapura පොලිස් division",
+      "nameTa": "Anuradhapura காவல்துறை பிரிவு",
       "districtSlug": "anuradhapura",
       "address": "Anuradhapura"
     },
@@ -552,6 +1092,33 @@
       "address": "Polonnaruwa"
     },
     {
+      "id": "polonnaruwa-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Polonnaruwa",
+      "nameSi": "Polonnaruwa divisional hospital",
+      "nameTa": "Polonnaruwa divisional hospital",
+      "districtSlug": "polonnaruwa",
+      "address": "Polonnaruwa"
+    },
+    {
+      "id": "polonnaruwa-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Polonnaruwa",
+      "nameSi": "MOH කාර්යාලය — Polonnaruwa",
+      "nameTa": "MOH அலுவலகம் — Polonnaruwa",
+      "districtSlug": "polonnaruwa",
+      "address": "Polonnaruwa"
+    },
+    {
+      "id": "polonnaruwa-police-station",
+      "type": "police_station",
+      "name": "Polonnaruwa Police Division",
+      "nameSi": "Polonnaruwa පොලිස් division",
+      "nameTa": "Polonnaruwa காவல்துறை பிரிவு",
+      "districtSlug": "polonnaruwa",
+      "address": "Polonnaruwa"
+    },
+    {
       "id": "polonnaruwa-school",
       "type": "school",
       "name": "Polonnaruwa Royal Central College",
@@ -575,6 +1142,33 @@
       "name": "Teaching Hospital Badulla",
       "nameSi": "බදුල්ල උගන්වන රෝhopital",
       "nameTa": "பbadulla பTeaching மaruththuvamanai",
+      "districtSlug": "badulla",
+      "address": "Badulla"
+    },
+    {
+      "id": "badulla-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Badulla",
+      "nameSi": "Badulla divisional hospital",
+      "nameTa": "Badulla divisional hospital",
+      "districtSlug": "badulla",
+      "address": "Badulla"
+    },
+    {
+      "id": "badulla-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Badulla",
+      "nameSi": "MOH කාර්යාලය — Badulla",
+      "nameTa": "MOH அலுவலகம் — Badulla",
+      "districtSlug": "badulla",
+      "address": "Badulla"
+    },
+    {
+      "id": "badulla-police-station",
+      "type": "police_station",
+      "name": "Badulla Police Division",
+      "nameSi": "Badulla පොලිස් division",
+      "nameTa": "Badulla காவல்துறை பிரிவு",
       "districtSlug": "badulla",
       "address": "Badulla"
     },
@@ -606,6 +1200,33 @@
       "address": "Monaragala"
     },
     {
+      "id": "monaragala-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Monaragala",
+      "nameSi": "Monaragala divisional hospital",
+      "nameTa": "Monaragala divisional hospital",
+      "districtSlug": "monaragala",
+      "address": "Monaragala"
+    },
+    {
+      "id": "monaragala-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Monaragala",
+      "nameSi": "MOH කාර්යාලය — Monaragala",
+      "nameTa": "MOH அலுவலகம் — Monaragala",
+      "districtSlug": "monaragala",
+      "address": "Monaragala"
+    },
+    {
+      "id": "monaragala-police-station",
+      "type": "police_station",
+      "name": "Monaragala Police Division",
+      "nameSi": "Monaragala පොලිස් division",
+      "nameTa": "Monaragala காவல்துறை பிரிவு",
+      "districtSlug": "monaragala",
+      "address": "Monaragala"
+    },
+    {
       "id": "monaragala-school",
       "type": "school",
       "name": "Monaragala Central College",
@@ -633,6 +1254,33 @@
       "address": "Ratnapura"
     },
     {
+      "id": "ratnapura-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Ratnapura",
+      "nameSi": "Ratnapura divisional hospital",
+      "nameTa": "Ratnapura divisional hospital",
+      "districtSlug": "ratnapura",
+      "address": "Ratnapura"
+    },
+    {
+      "id": "ratnapura-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Ratnapura",
+      "nameSi": "MOH කාර්යාලය — Ratnapura",
+      "nameTa": "MOH அலுவலகம் — Ratnapura",
+      "districtSlug": "ratnapura",
+      "address": "Ratnapura"
+    },
+    {
+      "id": "ratnapura-police-station",
+      "type": "police_station",
+      "name": "Ratnapura Police Division",
+      "nameSi": "Ratnapura පොලිස් division",
+      "nameTa": "Ratnapura காவல்துறை பிரிவு",
+      "districtSlug": "ratnapura",
+      "address": "Ratnapura"
+    },
+    {
       "id": "ratnapura-school",
       "type": "school",
       "name": "Sri Sumangala College Ratnapura",
@@ -656,6 +1304,33 @@
       "name": "District General Hospital Kegalle",
       "nameSi": "කෑගල්ල දිස්ත්‍රික් ජeneral Hospital",
       "nameTa": "கegalle மாavட்ட பொது மaruththuvamanai",
+      "districtSlug": "kegalle",
+      "address": "Kegalle"
+    },
+    {
+      "id": "kegalle-divisional-hospital",
+      "type": "divisional_hospital",
+      "name": "Divisional Hospital Kegalle",
+      "nameSi": "Kegalle divisional hospital",
+      "nameTa": "Kegalle divisional hospital",
+      "districtSlug": "kegalle",
+      "address": "Kegalle"
+    },
+    {
+      "id": "kegalle-moh-office",
+      "type": "moh_office",
+      "name": "MOH Office — Kegalle",
+      "nameSi": "MOH කාර්යාලය — Kegalle",
+      "nameTa": "MOH அலுவலகம் — Kegalle",
+      "districtSlug": "kegalle",
+      "address": "Kegalle"
+    },
+    {
+      "id": "kegalle-police-station",
+      "type": "police_station",
+      "name": "Kegalle Police Division",
+      "nameSi": "Kegalle පොලිස් division",
+      "nameTa": "Kegalle காவல்துறை பிரிவு",
       "districtSlug": "kegalle",
       "address": "Kegalle"
     },

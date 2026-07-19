@@ -60,6 +60,13 @@ export default async function HealthPage({
 
       <HealthViewToggle districts={snapshot.districts} locale={locale} />
 
+      <p className="text-sm text-slate-500">
+        {t("environmentLink")}{" "}
+        <Link href="/environment" className="text-teal-300 hover:text-teal-200">
+          {t("environmentLinkAction")}
+        </Link>
+      </p>
+
       <p className="text-sm text-slate-500">{t("disclaimer")}</p>
     </div>
   );

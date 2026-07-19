@@ -11,7 +11,14 @@ import {
 } from "@/lib/services";
 import type { PublicServiceFacility, PublicServiceType } from "@/lib/types";
 
-const ALL_TYPES: PublicServiceType[] = ["hospital", "school", "gn_office"];
+const ALL_TYPES: PublicServiceType[] = [
+  "hospital",
+  "divisional_hospital",
+  "moh_office",
+  "police_station",
+  "school",
+  "gn_office",
+];
 
 export function ServicesDirectory({
   initialDistrict,

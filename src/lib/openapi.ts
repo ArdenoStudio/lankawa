@@ -2,7 +2,7 @@ export const openApiSpec = {
   openapi: "3.1.0",
   info: {
     title: "Lankawa Public API",
-    version: "0.4.0",
+    version: "0.5.0",
     description:
       "Public civic intelligence API for Sri Lanka. Every metric includes source provenance and freshness tiers.",
   },
@@ -88,7 +88,7 @@ export const openApiSpec = {
           {
             name: "type",
             in: "query",
-            schema: { type: "string", enum: ["hospital", "school", "gn_office"] },
+            schema: { type: "string", enum: ["hospital", "school", "gn_office", "police_station", "moh_office", "divisional_hospital"] },
           },
           { name: "q", in: "query", schema: { type: "string" } },
         ],
@@ -163,6 +163,39 @@ export const openApiSpec = {
           { name: "q", in: "query", schema: { type: "string" } },
         ],
         responses: { "200": { description: "Filtered local bodies list" } },
+      },
+    },
+    "/transport": {
+      get: {
+        summary: "Transport directory",
+        parameters: [
+          { name: "district", in: "query", schema: { type: "string" } },
+          { name: "q", in: "query", schema: { type: "string" } },
+        ],
+        responses: { "200": { description: "Bus routes, railway stations, and airports" } },
+      },
+    },
+    "/cost-of-living": {
+      get: {
+        summary: "District cost of living index",
+        responses: { "200": { description: "Composite index from fuel, property, and food basket seeds" } },
+      },
+    },
+    "/export/{dataset}": {
+      get: {
+        summary: "Dataset export",
+        parameters: [
+          {
+            name: "dataset",
+            in: "path",
+            required: true,
+            schema: { type: "string", enum: ["districts", "elections", "services"] },
+          },
+        ],
+        responses: {
+          "200": { description: "GeoJSON or JSON download" },
+          "404": { description: "Unknown dataset" },
+        },
       },
     },
   },
@@ -294,6 +327,41 @@ export const apiEndpoints = [
     summaryKey: "localGovernmentSummary" as const,
     descriptionKey: "localGovernmentDescription" as const,
     example: `{ "totalCount": 327, "count": 1, "bodies": [{ "id": "...", "type": "MC" }] }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/transport?district=colombo",
+    summaryKey: "transportSummary" as const,
+    descriptionKey: "transportDescription" as const,
+    example: `{ "busRoutes": [...], "railwayStations": [...], "airports": [...] }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/cost-of-living",
+    summaryKey: "costOfLivingSummary" as const,
+    descriptionKey: "costOfLivingDescription" as const,
+    example: `{ "nationalIndex": 72, "districts": [{ "slug": "colombo", "index": 98 }] }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/export/districts",
+    summaryKey: "exportDistrictsSummary" as const,
+    descriptionKey: "exportDistrictsDescription" as const,
+    example: "GeoJSON FeatureCollection download",
+  },
+  {
+    method: "GET",
+    path: "/api/v1/export/elections",
+    summaryKey: "exportElectionsSummary" as const,
+    descriptionKey: "exportElectionsDescription" as const,
+    example: `{ "presidential": {...}, "parliamentary": {...} }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/export/services",
+    summaryKey: "exportServicesSummary" as const,
+    descriptionKey: "exportServicesDescription" as const,
+    example: `{ "facilities": [...], "sourceId": "public_services_seed" }`,
   },
   {
     method: "GET",

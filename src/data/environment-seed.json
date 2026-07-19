@@ -1,0 +1,157 @@
+{
+  "sourceId": "environment_aqi_seed",
+  "sourceName": "Lankawa air quality index (seed — IQAir-style representative)",
+  "asOf": "2026-07-01",
+  "districts": [
+    {
+      "slug": "colombo",
+      "aqi": 78,
+      "band": "moderate",
+      "pm25": 24
+    },
+    {
+      "slug": "gampaha",
+      "aqi": 65,
+      "band": "moderate",
+      "pm25": 19
+    },
+    {
+      "slug": "kalutara",
+      "aqi": 52,
+      "band": "moderate",
+      "pm25": 14
+    },
+    {
+      "slug": "kandy",
+      "aqi": 48,
+      "band": "good",
+      "pm25": 12
+    },
+    {
+      "slug": "matale",
+      "aqi": 42,
+      "band": "good",
+      "pm25": 10
+    },
+    {
+      "slug": "nuwara-eliya",
+      "aqi": 28,
+      "band": "good",
+      "pm25": 6
+    },
+    {
+      "slug": "galle",
+      "aqi": 44,
+      "band": "good",
+      "pm25": 11
+    },
+    {
+      "slug": "matara",
+      "aqi": 40,
+      "band": "good",
+      "pm25": 10
+    },
+    {
+      "slug": "hambantota",
+      "aqi": 36,
+      "band": "good",
+      "pm25": 9
+    },
+    {
+      "slug": "jaffna",
+      "aqi": 55,
+      "band": "moderate",
+      "pm25": 16
+    },
+    {
+      "slug": "kilinochchi",
+      "aqi": 32,
+      "band": "good",
+      "pm25": 8
+    },
+    {
+      "slug": "mannar",
+      "aqi": 30,
+      "band": "good",
+      "pm25": 7
+    },
+    {
+      "slug": "vavuniya",
+      "aqi": 38,
+      "band": "good",
+      "pm25": 9
+    },
+    {
+      "slug": "mullaitivu",
+      "aqi": 26,
+      "band": "good",
+      "pm25": 6
+    },
+    {
+      "slug": "batticaloa",
+      "aqi": 46,
+      "band": "good",
+      "pm25": 11
+    },
+    {
+      "slug": "ampara",
+      "aqi": 41,
+      "band": "good",
+      "pm25": 10
+    },
+    {
+      "slug": "trincomalee",
+      "aqi": 43,
+      "band": "good",
+      "pm25": 10
+    },
+    {
+      "slug": "kurunegala",
+      "aqi": 50,
+      "band": "moderate",
+      "pm25": 13
+    },
+    {
+      "slug": "puttalam",
+      "aqi": 45,
+      "band": "good",
+      "pm25": 11
+    },
+    {
+      "slug": "anuradhapura",
+      "aqi": 39,
+      "band": "good",
+      "pm25": 9
+    },
+    {
+      "slug": "polonnaruwa",
+      "aqi": 37,
+      "band": "good",
+      "pm25": 9
+    },
+    {
+      "slug": "badulla",
+      "aqi": 34,
+      "band": "good",
+      "pm25": 8
+    },
+    {
+      "slug": "monaragala",
+      "aqi": 33,
+      "band": "good",
+      "pm25": 8
+    },
+    {
+      "slug": "ratnapura",
+      "aqi": 47,
+      "band": "good",
+      "pm25": 11
+    },
+    {
+      "slug": "kegalle",
+      "aqi": 49,
+      "band": "good",
+      "pm25": 12
+    }
+  ]
+}

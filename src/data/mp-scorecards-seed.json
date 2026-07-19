@@ -6,6 +6,10 @@
   "members": [
     {
       "id": "mp-colombo-01",
+      "slug": "colombo",
+      "name": "Sample MP — Colombo",
+      "nameSi": "නියෝජ්‍ය — කොළඹ",
+      "nameTa": "மாsample MP — கொழும்பு",
       "electoralDistrict": "colombo",
       "party": "NPP",
       "attendancePct": 87,
@@ -14,7 +18,22 @@
       "committeeRoles": 3
     },
     {
+      "id": "mp-gampaha-01",
+      "slug": "gampaha",
+      "name": "Sample MP — Gampaha",
+      "electoralDistrict": "gampaha",
+      "party": "NPP",
+      "attendancePct": 84,
+      "privateMemberBills": 1,
+      "questionsAsked": 10,
+      "committeeRoles": 2
+    },
+    {
       "id": "mp-kandy-01",
+      "slug": "kandy",
+      "name": "Sample MP — Kandy",
+      "nameSi": "නියෝජ්‍ය — මහනුවර",
+      "nameTa": "மாsample MP — கண்டி",
       "electoralDistrict": "kandy",
       "party": "NPP",
       "attendancePct": 92,
@@ -24,6 +43,8 @@
     },
     {
       "id": "mp-galle-01",
+      "slug": "galle",
+      "name": "Sample MP — Galle",
       "electoralDistrict": "galle",
       "party": "SJB",
       "attendancePct": 78,
@@ -33,6 +54,9 @@
     },
     {
       "id": "mp-jaffna-01",
+      "slug": "jaffna",
+      "name": "Sample MP — Jaffna",
+      "nameTa": "மாsample MP — யாழ்ப்பாணம்",
       "electoralDistrict": "jaffna",
       "party": "ITAK",
       "attendancePct": 94,
@@ -41,7 +65,20 @@
       "committeeRoles": 4
     },
     {
+      "id": "mp-vanni-01",
+      "slug": "vanni",
+      "name": "Sample MP — Vanni",
+      "electoralDistrict": "vanni",
+      "party": "ITAK",
+      "attendancePct": 91,
+      "privateMemberBills": 2,
+      "questionsAsked": 12,
+      "committeeRoles": 3
+    },
+    {
       "id": "mp-kurunegala-01",
+      "slug": "kurunegala",
+      "name": "Sample MP — Kurunegala",
       "electoralDistrict": "kurunegala",
       "party": "NPP",
       "attendancePct": 81,
@@ -51,12 +88,58 @@
     },
     {
       "id": "mp-badulla-01",
+      "slug": "badulla",
+      "name": "Sample MP — Badulla",
       "electoralDistrict": "badulla",
       "party": "NPP",
       "attendancePct": 85,
       "privateMemberBills": 0,
       "questionsAsked": 6,
       "committeeRoles": 1
+    },
+    {
+      "id": "mp-batticaloa-01",
+      "slug": "batticaloa",
+      "name": "Sample MP — Batticaloa",
+      "electoralDistrict": "batticaloa",
+      "party": "ITAK",
+      "attendancePct": 89,
+      "privateMemberBills": 1,
+      "questionsAsked": 8,
+      "committeeRoles": 2
+    },
+    {
+      "id": "mp-anuradhapura-01",
+      "slug": "anuradhapura",
+      "name": "Sample MP — Anuradhapura",
+      "electoralDistrict": "anuradhapura",
+      "party": "NPP",
+      "attendancePct": 83,
+      "privateMemberBills": 0,
+      "questionsAsked": 5,
+      "committeeRoles": 1
+    },
+    {
+      "id": "mp-ratnapura-01",
+      "slug": "ratnapura",
+      "name": "Sample MP — Ratnapura",
+      "electoralDistrict": "ratnapura",
+      "party": "NPP",
+      "attendancePct": 80,
+      "privateMemberBills": 1,
+      "questionsAsked": 4,
+      "committeeRoles": 1
+    },
+    {
+      "id": "mp-trincomalee-01",
+      "slug": "trincomalee",
+      "name": "Sample MP — Trincomalee",
+      "electoralDistrict": "trincomalee",
+      "party": "SJB",
+      "attendancePct": 86,
+      "privateMemberBills": 0,
+      "questionsAsked": 7,
+      "committeeRoles": 2
     }
   ]
 }

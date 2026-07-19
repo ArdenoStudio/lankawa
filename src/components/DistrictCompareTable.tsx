@@ -67,6 +67,12 @@ export function DistrictCompareTable({ rows }: { rows: DistrictCompareRow[] }) {
       format: (row) =>
         row.dengueCases != null ? row.dengueCases.toLocaleString() : "—",
     },
+    {
+      key: "costOfLivingIndex",
+      label: t("costOfLiving"),
+      format: (row) =>
+        row.costOfLivingIndex != null ? String(row.costOfLivingIndex) : "—",
+    },
   ];
 
   return (

@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-/** @type {Record<string, { hospital: string; hospitalSi: string; hospitalTa: string; school: string; schoolSi: string; schoolTa: string; gn: string; gnSi: string; gnTa: string; address: string }>} */
+/** @type {Record<string, { hospital: string; hospitalSi: string; hospitalTa: string; school: string; schoolSi: string; schoolTa: string; gn: string; gnSi: string; gnTa: string; address: string; police: string; policeSi: string; policeTa: string; moh: string; mohSi: string; mohTa: string; divHospital: string; divHospitalSi: string; divHospitalTa: string }>} */
 const DISTRICT_FACILITIES = {
   colombo: {
     hospital: "National Hospital of Sri Lanka",
@@ -23,6 +23,15 @@ const DISTRICT_FACILITIES = {
     gnSi: "කොළඹ දිස්ත්‍රික් ලේකම් කාර්යාලය",
     gnTa: "கொழும்பு மாவட்ட செcretariat",
     address: "Colombo",
+    police: "Colombo Division Police Headquarters",
+    policeSi: "කොළඹ ප්‍රාදේශීය පoliisi මූලස්ථානය",
+    policeTa: "கொழும்பு பிரிவு காவல்துறை தலைமையகம்",
+    moh: "Colombo MOH Office — Borella",
+    mohSi: "කොළඹ MOH කාර්යාලය — බොරැල්ල",
+    mohTa: "கொழும்பு MOH அலுவலகம் — பொறella",
+    divHospital: "Colombo South Teaching Hospital",
+    divHospitalSi: "කොළඹ දකුණු උගන්වන රෝහල",
+    divHospitalTa: "கொழும்பு தெற்கு Teaching மaruththuvamanai",
   },
   gampaha: {
     hospital: "District General Hospital Gampaha",
@@ -316,11 +325,19 @@ const DISTRICT_FACILITIES = {
 
 const SLUGS = Object.keys(DISTRICT_FACILITIES);
 
+function titleCase(slug) {
+  return slug
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
 /** @type {import('../src/lib/types.js').PublicServiceFacility[]} */
 const facilities = [];
 
 for (const slug of SLUGS) {
   const d = DISTRICT_FACILITIES[slug];
+  const label = titleCase(slug);
   facilities.push(
     {
       id: `${slug}-hospital`,
@@ -328,6 +345,33 @@ for (const slug of SLUGS) {
       name: d.hospital,
       nameSi: d.hospitalSi,
       nameTa: d.hospitalTa,
+      districtSlug: slug,
+      address: d.address,
+    },
+    {
+      id: `${slug}-divisional-hospital`,
+      type: "divisional_hospital",
+      name: `Divisional Hospital ${label}`,
+      nameSi: `${label} divisional hospital`,
+      nameTa: `${label} divisional hospital`,
+      districtSlug: slug,
+      address: d.address,
+    },
+    {
+      id: `${slug}-moh-office`,
+      type: "moh_office",
+      name: `MOH Office — ${label}`,
+      nameSi: `MOH කාර්යාලය — ${label}`,
+      nameTa: `MOH அலுவலகம் — ${label}`,
+      districtSlug: slug,
+      address: d.address,
+    },
+    {
+      id: `${slug}-police-station`,
+      type: "police_station",
+      name: `${label} Police Division`,
+      nameSi: `${label} පොලිස් division`,
+      nameTa: `${label} காவல்துறை பிரிவு`,
       districtSlug: slug,
       address: d.address,
     },

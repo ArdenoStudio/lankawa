@@ -1,0 +1,209 @@
+{
+  "sourceId": "cost_of_living_seed",
+  "sourceName": "Lankawa cost of living index (seed)",
+  "asOf": "2026-07-01",
+  "nationalIndex": 50,
+  "fuelPricePetrol92": 363,
+  "districts": [
+    {
+      "slug": "colombo",
+      "index": 100,
+      "fuelComponent": 100,
+      "propertyComponent": 100,
+      "foodBasketLkr": 70000,
+      "rank": 1
+    },
+    {
+      "slug": "gampaha",
+      "index": 67,
+      "fuelComponent": 100,
+      "propertyComponent": 44,
+      "foodBasketLkr": 54379,
+      "rank": 2
+    },
+    {
+      "slug": "kandy",
+      "index": 58,
+      "fuelComponent": 100,
+      "propertyComponent": 29,
+      "foodBasketLkr": 50253,
+      "rank": 3
+    },
+    {
+      "slug": "kalutara",
+      "index": 56,
+      "fuelComponent": 100,
+      "propertyComponent": 25,
+      "foodBasketLkr": 49074,
+      "rank": 4
+    },
+    {
+      "slug": "galle",
+      "index": 55,
+      "fuelComponent": 100,
+      "propertyComponent": 23,
+      "foodBasketLkr": 48484,
+      "rank": 5
+    },
+    {
+      "slug": "jaffna",
+      "index": 52,
+      "fuelComponent": 100,
+      "propertyComponent": 19,
+      "foodBasketLkr": 47305,
+      "rank": 6
+    },
+    {
+      "slug": "matara",
+      "index": 51,
+      "fuelComponent": 100,
+      "propertyComponent": 17,
+      "foodBasketLkr": 46716,
+      "rank": 7
+    },
+    {
+      "slug": "kurunegala",
+      "index": 50,
+      "fuelComponent": 100,
+      "propertyComponent": 16,
+      "foodBasketLkr": 46421,
+      "rank": 8
+    },
+    {
+      "slug": "ratnapura",
+      "index": 49,
+      "fuelComponent": 100,
+      "propertyComponent": 14,
+      "foodBasketLkr": 45832,
+      "rank": 9
+    },
+    {
+      "slug": "trincomalee",
+      "index": 48,
+      "fuelComponent": 100,
+      "propertyComponent": 13,
+      "foodBasketLkr": 45537,
+      "rank": 10
+    },
+    {
+      "slug": "badulla",
+      "index": 48,
+      "fuelComponent": 100,
+      "propertyComponent": 12,
+      "foodBasketLkr": 45242,
+      "rank": 11
+    },
+    {
+      "slug": "batticaloa",
+      "index": 47,
+      "fuelComponent": 100,
+      "propertyComponent": 9,
+      "foodBasketLkr": 44653,
+      "rank": 12
+    },
+    {
+      "slug": "anuradhapura",
+      "index": 46,
+      "fuelComponent": 100,
+      "propertyComponent": 9,
+      "foodBasketLkr": 44505,
+      "rank": 13
+    },
+    {
+      "slug": "matale",
+      "index": 43,
+      "fuelComponent": 100,
+      "propertyComponent": 4,
+      "foodBasketLkr": 43032,
+      "rank": 14
+    },
+    {
+      "slug": "nuwara-eliya",
+      "index": 43,
+      "fuelComponent": 100,
+      "propertyComponent": 4,
+      "foodBasketLkr": 43032,
+      "rank": 15
+    },
+    {
+      "slug": "hambantota",
+      "index": 43,
+      "fuelComponent": 100,
+      "propertyComponent": 4,
+      "foodBasketLkr": 43032,
+      "rank": 16
+    },
+    {
+      "slug": "kilinochchi",
+      "index": 43,
+      "fuelComponent": 100,
+      "propertyComponent": 4,
+      "foodBasketLkr": 43032,
+      "rank": 17
+    },
+    {
+      "slug": "mannar",
+      "index": 43,
+      "fuelComponent": 100,
+      "propertyComponent": 4,
+      "foodBasketLkr": 43032,
+      "rank": 18
+    },
+    {
+      "slug": "vavuniya",
+      "index": 43,
+      "fuelComponent": 100,
+      "propertyComponent": 4,
+      "foodBasketLkr": 43032,
+      "rank": 19
+    },
+    {
+      "slug": "mullaitivu",
+      "index": 43,
+      "fuelComponent": 100,
+      "propertyComponent": 4,
+      "foodBasketLkr": 43032,
+      "rank": 20
+    },
+    {
+      "slug": "ampara",
+      "index": 43,
+      "fuelComponent": 100,
+      "propertyComponent": 4,
+      "foodBasketLkr": 43032,
+      "rank": 21
+    },
+    {
+      "slug": "puttalam",
+      "index": 43,
+      "fuelComponent": 100,
+      "propertyComponent": 4,
+      "foodBasketLkr": 43032,
+      "rank": 22
+    },
+    {
+      "slug": "polonnaruwa",
+      "index": 43,
+      "fuelComponent": 100,
+      "propertyComponent": 4,
+      "foodBasketLkr": 43032,
+      "rank": 23
+    },
+    {
+      "slug": "monaragala",
+      "index": 43,
+      "fuelComponent": 100,
+      "propertyComponent": 4,
+      "foodBasketLkr": 43032,
+      "rank": 24
+    },
+    {
+      "slug": "kegalle",
+      "index": 43,
+      "fuelComponent": 100,
+      "propertyComponent": 4,
+      "foodBasketLkr": 43032,
+      "rank": 25
+    }
+  ]
+}

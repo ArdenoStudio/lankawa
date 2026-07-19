@@ -1,6 +1,20 @@
 # Lankawa Roadmap
 
-Phase 6 shipped July 2026. This document captures research from Phase 4–6 development and recommendations for Phase 7+.
+Phase 7 shipped July 2026 (feature sprint — infra deferred). Phase 6 shipped July 2026. This document captures delivered work and recommendations for Phase 8+.
+
+## Phase 7 Delivered
+
+| Feature | Status |
+|---------|--------|
+| Expanded public services | ✅ Police stations, MOH offices, divisional hospitals for all 25 districts (153 facilities) |
+| Transport directory | ✅ `/transport` with bus routes, railway, airports + lazy MapLibre map |
+| Data export | ✅ `/developers` download UI + `/api/v1/export/{districts,elections,services}` |
+| Cost of living index | ✅ `/cost-of-living` ranked table + `/compare` integration |
+| PWA offline expansion | ✅ SW v2 caches district API profiles + pulse snapshot; install prompt |
+| Environment / AQI seed | ✅ `/environment` district AQI table; link from `/health` |
+| Embeddable widgets | ✅ `/embed` preview + `/embed/pulse`, `/embed/fuel`, `/embed/fx` |
+| MP scorecards expansion | ✅ 12 sample MPs + `/civic/[slug]` constituency pages |
+| API v0.5 | ✅ `/transport`, `/cost-of-living`, `/export/{dataset}` + OpenAPI update |
 
 ## Phase 6 Delivered
 
@@ -48,7 +62,7 @@ Phase 6 shipped July 2026. This document captures research from Phase 4–6 deve
 
 ## Data Limitations & Seed Caveats
 
-1. **Public services:** Representative facilities per district sourced from MoH hospital lists, MoE school directories, and district secretariat references. Not exhaustive — typically 3+ facilities per district (1 hospital, 1 school, 1 GN office). Colombo, Kandy have additional landmark entries.
+1. **Public services:** Representative facilities per district sourced from MoH hospital lists, MoE school directories, and district secretariat references. Phase 7 adds police, MOH, and divisional hospital entries (6 per district + extras) — not exhaustive official gazette lists.
 2. **2019 presidential baseline:** Sri Lanka's prior presidential election was November 2019 (Gotabaya Rajapaksa vs Sajith Premadasa). Used as the "2020 comparison baseline" for swing charts; district figures are seeded approximations aligned with published national totals, not digitized official district ledgers.
 3. **Vanni districts:** Kilinochchi, Mannar, Mullaitivu, and Vavuniya share aggregated Vanni electoral-district presidential totals in official returns — individual admin-district splits are not published separately.
 4. **Flood history:** Depends on lk-flood-api availability; sparklines degrade gracefully when the upstream API is down.
@@ -61,6 +75,36 @@ Phase 6 shipped July 2026. This document captures research from Phase 4–6 deve
 11. **Property prices:** District median land price bands are representative seed data aligned with PropertyLK patterns. Server-side adapter attempts live fetch from the partner API; falls back to seed when unavailable. Not a property valuation service.
 12. **Historical elections (2010, 2015):** District-level presidential results are seeded approximations aligned with published national totals — not digitized official district ledgers.
 13. **Local government directory:** 327 seed bodies (MC, UC, PS) covering major councils and Pradeshiya Sabhas per district — not an exhaustive official gazette list of 340+ bodies.
+14. **Transport directory:** Static seed of major intercity bus routes, SLR stations, and airports — no GTFS or live timetable data.
+15. **Cost of living index:** Composite seed from fuel reference price, property bands, and food basket estimates — not official NCPI/CPI district series.
+16. **Air quality:** IQAir-style representative AQI bands by district — not live sensor network data.
+
+---
+
+## Phase 8 — Infrastructure Sprint (Next)
+
+### P0 — Live data & platform
+
+1. **Real-time ingest pipeline** — Supabase + cron for budget, tenders, MP records, dengue, property
+2. **Live dengue ingest** — Replace seed with Epidemiology Unit weekly scrape/API
+3. **Live PropertyLK adapter** — Wire partner API when production endpoint is stable
+4. **Live e-GP tenders** — Replace seed tender feed with procurement portal ingest
+5. **Environment ingest** — Replace AQI seed with live sensor/API when available
+
+### P1 — Differentiation
+
+6. **Notification preferences** — Flood alert subscriptions (requires auth — Supabase)
+7. **Full Hansard MP ingest** — Replace seed scorecards with real attendance records
+8. **API webhooks docs** — Rate-limit headers, webhook documentation for partners
+9. **LLM civic assistant** — Grounded only on Lankawa sources with citation cards
+10. **Third-party widget CDN** — Documented embed SDK beyond iframe preview
+
+### P2 — Platform
+
+11. **Tamil/Sinhala voice search**
+12. **Citizen report layer** — Crowdsourced potholes, outages moderated in-platform
+13. **Court backlog & HRCSL metrics** — PDF extraction pipeline
+14. **Local government councillor records** — Meeting minutes and member lists
 
 ---
 
@@ -72,15 +116,15 @@ Research across existing portals (Election Commission, CBSL, Disaster Management
 |-----|---------------------------|
 | **Unified district key** | Most portals use inconsistent geography; Lankawa's 25-district atlas is already the right abstraction |
 | **Budget & expenditure tracker** | Phase 5 MVP shipped — extend with provincial budgets and year-over-year charts |
-| **Government tenders (Procurement)** | Phase 5 seed feed shipped — integrate live e-GP in Phase 7 |
-| **MP attendance & voting** | Phase 5 seed scorecards shipped — full Hansard ingest in Phase 7 |
-| **Dengue & disease maps** | Phase 6 choropleth shipped — live Epidemiology Unit ingest in Phase 7 |
+| **Government tenders (Procurement)** | Phase 5 seed feed shipped — integrate live e-GP in Phase 8 |
+| **MP attendance & voting** | Phase 7 seed scorecards shipped — full Hansard ingest in Phase 8 |
+| **Dengue & disease maps** | Phase 6 choropleth shipped — live Epidemiology Unit ingest in Phase 8 |
 | **Fuel price history** | ✅ Phase 5 — extend to district-level transport cost proxies |
-| **Bus & rail connectivity** | No open GTFS for Sri Lanka; static route maps per district would help |
+| **Bus & rail connectivity** | ✅ Phase 7 static directory — live GTFS if ever published |
 | **Court case backlog / HRCSL** | Human rights and judicial metrics are PDF-only |
 | **Local government (Pradeshiya Sabha)** | ✅ Phase 6 directory shipped — extend to councillor records |
-| **Climate & air quality** | No AQI layer by city/district |
-| **Cost of living index** | NCPI exists monthly but not district-granular or visualized |
+| **Climate & air quality** | ✅ Phase 7 AQI seed — live ingest in Phase 8 |
+| **Cost of living index** | ✅ Phase 7 composite seed — NCPI district proxies when available |
 | **Property / housing pulse** | ✅ Phase 6 PropertyLK-style module shipped |
 
 **Lankawa's moat:** trilingual, in-platform (no link-outs), provenance on every number, district-first navigation, dark civic UX.
@@ -93,51 +137,14 @@ In-platform modules (not external links) aligned with the SuvenSeo / Ardeno ecos
 
 | Module | Integration approach |
 |--------|---------------------|
-| **Octane (fuel)** | ✅ Phase 5 — fuel history sparklines on `/economy`; extend to district transport cards |
-| **PropertyLK** | ✅ Phase 6 — district median land price bands + choropleth on `/property` |
+| **Octane (fuel)** | ✅ Phase 5 — fuel history sparklines on `/economy`; cost-of-living fuel component in Phase 7 |
+| **PropertyLK** | ✅ Phase 6 — district median land price bands + choropleth on `/property`; COL property component Phase 7 |
 | **lk-flood-api** | Already integrated; extend to push notifications tier on `/disaster` |
-| **Shared auth (future)** | Single sign-on across Ardeno apps for saved districts / alerts — Phase 7+ |
+| **Shared auth (future)** | Single sign-on across Ardeno apps for saved districts / alerts — Phase 8+ |
 | **Unified search** | ✅ Phase 6 — property + local government indexed in GlobalSearch |
 
 All integrations must follow Lankawa rules: freshness tiers, `/sources/[id]` provenance, no external UI links.
 
 ---
 
-## Phase 7 Recommendations
-
-### P0 — Infrastructure & live data
-
-1. **Real-time ingest pipeline** — Supabase + cron for budget, tenders, MP records, dengue, property
-2. **Live dengue ingest** — Replace seed with Epidemiology Unit weekly scrape/API
-3. **Live PropertyLK adapter** — Wire partner API when production endpoint is stable
-4. **Live e-GP tenders** — Replace seed tender feed with procurement portal ingest
-
-### P1 — Differentiation
-
-5. **Local services expansion** — Police stations, divisional hospitals, MOH offices
-6. **Notification preferences** — Flood alert subscriptions (requires auth — Supabase)
-7. **Offline PWA expansion** — Cache full district profiles + election data offline
-8. **API webhooks docs** — Rate-limit headers, webhook documentation for partners
-9. **Bus & rail static maps** — Per-district connectivity cards (no GTFS available)
-10. **Full Hansard MP ingest** — Replace seed scorecards with real attendance records
-
-### P2 — Platform
-
-11. **Embeddable widgets** — `<lankawa-district slug="colombo">` for partners (still served from lankawa.vercel.app)
-12. **Data export** — CSV/GeoJSON download from API with same provenance metadata
-13. **LLM civic assistant** — Grounded only on Lankawa sources with citation cards
-14. **Tamil/Sinhala voice search**
-
----
-
-## Phase 7+ Vision
-
-- Citizen report layer (crowdsourced potholes, outages) moderated in-platform
-- Court backlog & HRCSL metrics from PDF extraction pipeline
-- Climate & AQI layer by city/district
-- District-granular cost of living index from NCPI proxies
-- Local government councillor records and meeting minutes
-
----
-
-*Last updated: Phase 6 completion, July 2026*
+*Last updated: Phase 7 completion, July 2026*

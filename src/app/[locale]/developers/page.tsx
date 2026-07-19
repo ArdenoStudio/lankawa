@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { DataExportPanel } from "@/components/DataExportPanel";
 import { apiEndpoints } from "@/lib/openapi";
 
 export default async function DevelopersPage({
@@ -22,6 +23,19 @@ export default async function DevelopersPage({
         <h2 className="text-lg font-semibold text-white">{t("overviewTitle")}</h2>
         <p className="mt-2 text-slate-300">{t("overviewBody")}</p>
         <p className="mt-3 text-sm text-slate-400">{t("baseUrl")}</p>
+      </section>
+
+      <DataExportPanel />
+
+      <section className="rounded-2xl border border-white/10 bg-white/5 p-5">
+        <h2 className="text-lg font-semibold text-white">{t("embedTitle")}</h2>
+        <p className="mt-2 text-slate-300">{t("embedBody")}</p>
+        <Link
+          href="/embed"
+          className="mt-4 inline-block text-sm text-teal-300 hover:text-teal-200"
+        >
+          {t("embedLink")}
+        </Link>
       </section>
 
       <section className="space-y-4">

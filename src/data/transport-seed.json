@@ -1,0 +1,294 @@
+{
+  "sourceId": "transport_directory_seed",
+  "sourceName": "Lankawa transport directory (seed)",
+  "asOf": "2026-07-01",
+  "busRoutes": [
+    {
+      "id": "bus-1",
+      "routeNumber": "1",
+      "name": "Colombo — Kandy",
+      "nameSi": "කොළඹ — මහනුවර",
+      "nameTa": "கொழும்பு — கண்டி",
+      "originDistrict": "colombo",
+      "destinationDistrict": "kandy",
+      "viaDistricts": [
+        "gampaha",
+        "kegalle"
+      ],
+      "operator": "SLTB",
+      "frequency": "Every 15–30 min"
+    },
+    {
+      "id": "bus-138",
+      "routeNumber": "138",
+      "name": "Colombo — Galle",
+      "nameSi": "කොළඹ — ගාල්ල",
+      "nameTa": "கொழும்பு — காலி",
+      "originDistrict": "colombo",
+      "destinationDistrict": "galle",
+      "viaDistricts": [
+        "kalutara",
+        "matara"
+      ],
+      "operator": "SLTB / Private",
+      "frequency": "Every 20 min"
+    },
+    {
+      "id": "bus-48",
+      "routeNumber": "48",
+      "name": "Colombo — Jaffna",
+      "nameSi": "කොළඹ — යාපනය",
+      "nameTa": "கொழும்பு — யாழ்ப்பாணம்",
+      "originDistrict": "colombo",
+      "destinationDistrict": "jaffna",
+      "viaDistricts": [
+        "kurunegala",
+        "anuradhapura",
+        "vavuniya"
+      ],
+      "operator": "SLTB",
+      "frequency": "Daily express"
+    },
+    {
+      "id": "bus-87",
+      "routeNumber": "87",
+      "name": "Colombo — Badulla",
+      "nameSi": "කොළඹ — බදුල්ල",
+      "nameTa": "கொழும்பு — பadulla",
+      "originDistrict": "colombo",
+      "destinationDistrict": "badulla",
+      "viaDistricts": [
+        "kegalle",
+        "kandy",
+        "nuwara-eliya"
+      ],
+      "operator": "SLTB",
+      "frequency": "Hourly"
+    },
+    {
+      "id": "bus-245",
+      "routeNumber": "245",
+      "name": "Colombo — Trincomalee",
+      "nameSi": "කොළඹ — ත්‍රිකුණාමලය",
+      "nameTa": "கொழும்பு — திருகோணமலை",
+      "originDistrict": "colombo",
+      "destinationDistrict": "trincomalee",
+      "viaDistricts": [
+        "kurunegala",
+        "anuradhapura",
+        "polonnaruwa"
+      ],
+      "operator": "SLTB",
+      "frequency": "Daily"
+    },
+    {
+      "id": "bus-602",
+      "routeNumber": "602",
+      "name": "Kandy — Nuwara Eliya",
+      "nameSi": "මහනුවර — නuwara Eliya",
+      "nameTa": "கண்டி — நுவரெலியா",
+      "originDistrict": "kandy",
+      "destinationDistrict": "nuwara-eliya",
+      "viaDistricts": [
+        "matale"
+      ],
+      "operator": "Private",
+      "frequency": "Every 30 min"
+    },
+    {
+      "id": "bus-350",
+      "routeNumber": "350",
+      "name": "Galle — Hambantota",
+      "nameSi": "ගාල්ල — හම්බන්තොට",
+      "nameTa": "காலி — அம்பாantota",
+      "originDistrict": "galle",
+      "destinationDistrict": "hambantota",
+      "viaDistricts": [
+        "matara"
+      ],
+      "operator": "SLTB",
+      "frequency": "Hourly"
+    },
+    {
+      "id": "bus-770",
+      "routeNumber": "770",
+      "name": "Kurunegala — Anuradhapura",
+      "nameSi": "කurunegala — අනuradhapura",
+      "nameTa": "கurunegala — அனuradhapura",
+      "originDistrict": "kurunegala",
+      "destinationDistrict": "anuradhapura",
+      "viaDistricts": [
+        "puttalam"
+      ],
+      "operator": "SLTB",
+      "frequency": "Every 45 min"
+    }
+  ],
+  "railwayStations": [
+    {
+      "id": "fort",
+      "name": "Colombo Fort",
+      "nameSi": "කොළඹ කොටුව",
+      "nameTa": "கொழும்பு Fort",
+      "districtSlug": "colombo",
+      "line": "Main Line",
+      "lat": 6.9344,
+      "lng": 79.8428,
+      "isMajor": true
+    },
+    {
+      "id": "maradana",
+      "name": "Maradana",
+      "districtSlug": "colombo",
+      "line": "Coastal Line",
+      "lat": 6.9297,
+      "lng": 79.8597,
+      "isMajor": true
+    },
+    {
+      "id": "kandy",
+      "name": "Kandy",
+      "nameSi": "මහනුවර",
+      "nameTa": "கண்டி",
+      "districtSlug": "kandy",
+      "line": "Main Line",
+      "lat": 7.2906,
+      "lng": 80.6337,
+      "isMajor": true
+    },
+    {
+      "id": "galle",
+      "name": "Galle",
+      "nameSi": "ගාල්ල",
+      "nameTa": "காலி",
+      "districtSlug": "galle",
+      "line": "Coastal Line",
+      "lat": 6.0329,
+      "lng": 80.217,
+      "isMajor": true
+    },
+    {
+      "id": "matara",
+      "name": "Matara",
+      "districtSlug": "matara",
+      "line": "Coastal Line",
+      "lat": 5.9485,
+      "lng": 80.5353,
+      "isMajor": true
+    },
+    {
+      "id": "badulla",
+      "name": "Badulla",
+      "districtSlug": "badulla",
+      "line": "Main Line",
+      "lat": 6.9934,
+      "lng": 81.055,
+      "isMajor": true
+    },
+    {
+      "id": "anuradhapura",
+      "name": "Anuradhapura",
+      "districtSlug": "anuradhapura",
+      "line": "Northern Line",
+      "lat": 8.3114,
+      "lng": 80.4037,
+      "isMajor": true
+    },
+    {
+      "id": "jaffna",
+      "name": "Jaffna",
+      "districtSlug": "jaffna",
+      "line": "Northern Line",
+      "lat": 9.6615,
+      "lng": 80.0255,
+      "isMajor": true
+    },
+    {
+      "id": "trincomalee",
+      "name": "Trincomalee",
+      "districtSlug": "trincomalee",
+      "line": "Trincomalee Line",
+      "lat": 8.5874,
+      "lng": 81.2152,
+      "isMajor": true
+    },
+    {
+      "id": "batticaloa",
+      "name": "Batticaloa",
+      "districtSlug": "batticaloa",
+      "line": "Batticaloa Line",
+      "lat": 7.7102,
+      "lng": 81.6924,
+      "isMajor": true
+    },
+    {
+      "id": "polgahawela",
+      "name": "Polgahawela",
+      "districtSlug": "kurunegala",
+      "line": "Main Line",
+      "lat": 7.335,
+      "lng": 80.297,
+      "isMajor": false
+    },
+    {
+      "id": "ratnapura",
+      "name": "Ratnapura",
+      "districtSlug": "ratnapura",
+      "line": "Ratnapura Line",
+      "lat": 6.6828,
+      "lng": 80.3992,
+      "isMajor": false
+    },
+    {
+      "id": "nuwara-eliya",
+      "name": "Nanu Oya",
+      "nameSi": "නanu Oya",
+      "nameTa": "Nanu Oya",
+      "districtSlug": "nuwara-eliya",
+      "line": "Main Line",
+      "lat": 6.9497,
+      "lng": 80.7892,
+      "isMajor": false
+    }
+  ],
+  "airports": [
+    {
+      "id": "bia",
+      "name": "Bandaranaike International Airport",
+      "nameSi": "බandaranaayake අantararaashtreeya vimana",
+      "nameTa": "Bandaranaike சarbbaraashtreeya vimana",
+      "districtSlug": "gampaha",
+      "iata": "CMB",
+      "lat": 7.1808,
+      "lng": 79.8841,
+      "isInternational": true
+    },
+    {
+      "id": "mria",
+      "name": "Mattala Rajapaksa International Airport",
+      "districtSlug": "hambantota",
+      "iata": "HRI",
+      "lat": 6.2845,
+      "lng": 81.1241,
+      "isInternational": true
+    },
+    {
+      "id": "jaf",
+      "name": "Jaffna International Airport",
+      "districtSlug": "jaffna",
+      "iata": "JAF",
+      "lat": 9.7923,
+      "lng": 80.0701,
+      "isInternational": true
+    },
+    {
+      "id": "btc",
+      "name": "Batticaloa Airport",
+      "districtSlug": "batticaloa",
+      "iata": "BTC",
+      "lat": 7.7058,
+      "lng": 81.6788,
+      "isInternational": false
+    }
+  ]
+}

@@ -28,7 +28,10 @@
     "developers": "සංවර්ධක",
     "openMenu": "මෙනුව විවෘත කරන්න",
     "closeMenu": "මෙනුව වසන්න",
-    "property": "ගොඩනැගිලි"
+    "property": "ගොඩනැගිලි",
+    "transport": "ප්‍රවාහන",
+    "costOfLiving": "ජීවන වියදම",
+    "environment": "පරිසර"
   },
   "home": {
     "eyebrow": "ජාතික සිවිල් බුද්ධිය",
@@ -82,7 +85,13 @@
     "relatedProperty": "Property pulse",
     "relatedPropertyDesc": "Median land price bands for this district",
     "relatedLocalGov": "Local government",
-    "relatedLocalGovDesc": "Municipal councils and Pradeshiya Sabhas"
+    "relatedLocalGovDesc": "Municipal councils and Pradeshiya Sabhas",
+    "relatedTransport": "Transport",
+    "relatedTransportDesc": "Bus routes, railway stations, and airports",
+    "relatedCostOfLiving": "Cost of living",
+    "relatedCostOfLivingDesc": "District index with fuel, property, and food basket",
+    "relatedCivic": "MP scorecard",
+    "relatedCivicDesc": "Sample parliamentary attendance and activity"
   },
   "provinces": {
     "title": "පළාත්",
@@ -207,6 +216,9 @@
     "allDistricts": "සියලු දිස්ත්‍රික්",
     "allTypes": "සියලු types",
     "typeHospital": "රෝහල",
+    "typeDivisionalHospital": "Divisional hospital",
+    "typeMohOffice": "MOH office",
+    "typePoliceStation": "Police station",
     "typeSchool": "පාසල",
     "typeGnOffice": "GN office",
     "resultsCount": "facilities {count}",
@@ -333,7 +345,26 @@
     "electionHistorySummary": "Election history",
     "electionHistoryDescription": "Multi-cycle presidential summaries and parliamentary seat history.",
     "localGovernmentSummary": "Local government directory",
-    "localGovernmentDescription": "Filter MC, UC, and PS bodies by district, type, or search query."
+    "localGovernmentDescription": "Filter MC, UC, and PS bodies by district, type, or search query.",
+    "transportSummary": "Transport directory",
+    "transportDescription": "Bus routes, railway stations, and airports filterable by district.",
+    "costOfLivingSummary": "Cost of living index",
+    "costOfLivingDescription": "District composite index from fuel, property, and food basket seeds.",
+    "exportDistrictsSummary": "Export districts GeoJSON",
+    "exportDistrictsDescription": "Download simplified district boundaries.",
+    "exportElectionsSummary": "Export elections JSON",
+    "exportElectionsDescription": "Download presidential and parliamentary 2024 seed datasets.",
+    "exportServicesSummary": "Export services JSON",
+    "exportServicesDescription": "Download the full public services directory seed.",
+    "exportTitle": "Data export",
+    "exportBody": "Download curated datasets from the Lankawa API.",
+    "export_districts": "District boundaries",
+    "export_elections": "Election results",
+    "export_services": "Public services",
+    "exportDownload": "Download",
+    "embedTitle": "Embeddable widgets",
+    "embedBody": "Same-origin iframe widgets for pulse, fuel, and FX.",
+    "embedLink": "Open embed preview"
   },
   "budget": {
     "title": "ජාතික අයවැය Tracker",
@@ -393,7 +424,9 @@
     "mapError": "Unable to load map",
     "mapLegendHigh": "High case count",
     "mapLegendModerate": "Moderate",
-    "mapLegendLow": "Lower cases"
+    "mapLegendLow": "Lower cases",
+    "environmentLink": "See also",
+    "environmentLinkAction": "air quality by district"
   },
   "compare": {
     "title": "දිස්ත්‍රික් Compare",
@@ -410,7 +443,77 @@
     "floodStations": "Flood stations",
     "services": "පොදu services",
     "dengueCases": "දengue rog (week)",
+    "costOfLiving": "Cost of living index",
     "empty": "Picker භාවිතයෙන් compare කිරීමට districts select කරන්න."
+  },
+  "transport": {
+    "title": "Transport Directory",
+    "subtitle": "Major intercity bus routes, railway stations, and airports.",
+    "source": "Source",
+    "searchPlaceholder": "Search routes or stations…",
+    "allDistricts": "All districts",
+    "tab_bus": "Bus routes",
+    "tab_rail": "Railway",
+    "tab_air": "Airports",
+    "mapTitle": "Major railway stations",
+    "mapCaption": "Pins show major SLR stations.",
+    "international": "International",
+    "domestic": "Domestic",
+    "noResults": "No transport entries match your filters.",
+    "disclaimer": "Static seed directory — representative routes and stations only."
+  },
+  "costOfLiving": {
+    "title": "Cost of Living Index",
+    "subtitle": "District-level index combining fuel, property, and food basket estimates.",
+    "asOf": "As of {date}",
+    "nationalIndex": "National index",
+    "fuelPrice": "Petrol 92 reference",
+    "compareCta": "Compare districts",
+    "compareLink": "Open compare",
+    "tableTitle": "Ranked by index",
+    "rank": "Rank",
+    "district": "District",
+    "index": "Index",
+    "foodBasket": "Food basket (est.)",
+    "property": "Property score",
+    "compare": "Compare",
+    "vsNational": "base {base}",
+    "disclaimer": "Seed composite index — for illustration only."
+  },
+  "environment": {
+    "title": "Environment & Air Quality",
+    "subtitle": "Representative AQI bands by district.",
+    "asOf": "As of {date}",
+    "district": "District",
+    "aqi": "AQI",
+    "pm25": "PM2.5",
+    "band": "Band",
+    "bandGood": "Good",
+    "bandModerate": "Moderate",
+    "bandUnhealthySensitive": "Unhealthy (sensitive)",
+    "bandUnhealthy": "Unhealthy",
+    "bandVeryUnhealthy": "Very unhealthy",
+    "healthLink": "See also the",
+    "healthLinkAction": "health pulse (dengue)",
+    "disclaimer": "Representative seed data — not live sensor readings."
+  },
+  "embed": {
+    "title": "Embeddable Widgets",
+    "subtitle": "Preview same-origin Lankawa widgets for pulse, fuel, and FX.",
+    "developersLink": "Developer documentation",
+    "widget_pulse": "Pulse widget",
+    "widget_pulseDesc": "Top live metrics from the national pulse.",
+    "widget_fuel": "Fuel widget",
+    "widget_fuelDesc": "Current CPC petrol and diesel prices.",
+    "widget_fx": "FX widget",
+    "widget_fxDesc": "USD/LKR sell rate from CBSL.",
+    "disclaimer": "Widgets served from Lankawa — no external UI links."
+  },
+  "pwa": {
+    "installTitle": "Install Lankawa",
+    "installBody": "Add to your home screen for faster district profiles and offline maps.",
+    "installAction": "Install",
+    "installDismiss": "Not now"
   },
   "civic": {
     "title": "MP Scorecards",
@@ -421,6 +524,9 @@
     "questions": "Questions asked",
     "committees": "Committee roles",
     "viewDistrict": "Electoral district බලන්න",
+    "viewScorecard": "View scorecard",
+    "viewAdminDistrict": "View admin district",
+    "back": "Back to civic",
     "disclaimer": "Illustrative seed data only. Manthri.lk හෝ official Hansard records scrape නොකරයි."
   },
   "tenders": {

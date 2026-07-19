@@ -35,10 +35,10 @@ export function MpScorecardList({
                 <p className="mt-1 text-sm text-slate-400">{member.party}</p>
               </div>
               <Link
-                href={`/elections/parliamentary/${member.electoralDistrict}`}
+                href={`/civic/${member.slug}`}
                 className="text-xs text-teal-300 hover:text-teal-200"
               >
-                {t("viewDistrict")}
+                {t("viewScorecard")}
               </Link>
             </div>
             <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
