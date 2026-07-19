@@ -34,6 +34,7 @@ export default async function SourceDetailPage({
     economy: t("categories.economy"),
     disaster: t("categories.disaster"),
     energy: t("categories.energy"),
+    environment: t("categories.environment"),
     health: t("categories.health"),
     civic: t("categories.civic"),
     transport: t("categories.transport"),

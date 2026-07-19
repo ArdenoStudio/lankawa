@@ -1,17 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Lankawa">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 100" role="img" aria-label="Lankawa">
   <defs>
     <linearGradient id="lk-teal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#2dd4bf"/>
       <stop offset="100%" stop-color="#0d9488"/>
     </linearGradient>
-    <radialGradient id="bg-glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#0d9488" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="#020617" stop-opacity="0"/>
-    </radialGradient>
   </defs>
-  <rect width="512" height="512" rx="96" fill="#020617"/>
-  <rect width="512" height="512" rx="96" fill="url(#bg-glow)"/>
-  <g transform="translate(128, 96) scale(8)">
+  <!-- Mark (centered, larger) -->
+  <g transform="translate(44, 4) scale(1.6)">
     <path
       d="M16 4c-4 2-7 6-8 10-1.5 5 0 10 3 14 2.5 3.5 5 4.5 5 4.5s2.5-1 5-4.5c3-4 4.5-9 3-14-1-4-4-8-8-10z"
       fill="url(#lk-teal-grad)"
@@ -26,4 +21,15 @@
     />
     <circle cx="9" cy="15" r="1.75" fill="#d4a24c"/>
   </g>
+  <!-- Wordmark -->
+  <text
+    x="60"
+    y="88"
+    text-anchor="middle"
+    font-family="ui-sans-serif, system-ui, 'Noto Sans', sans-serif"
+    font-size="22"
+    font-weight="700"
+    fill="#f8fafc"
+    letter-spacing="-0.02em"
+  >Lank<tspan fill="#2dd4bf">awa</tspan></text>
 </svg>

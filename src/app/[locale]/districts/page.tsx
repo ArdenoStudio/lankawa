@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { DistrictGrid } from "@/components/DistrictCard";
 import { DistrictMapLazy } from "@/components/DistrictMapLazy";
+import { PageHeader } from "@/components/ui/PageHeader";
 
 export default async function DistrictsPage({
   params,
@@ -13,10 +14,7 @@ export default async function DistrictsPage({
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-semibold text-white">{t("title")}</h1>
-        <p className="mt-2 max-w-2xl text-slate-400">{t("subtitle")}</p>
-      </div>
+      <PageHeader title={t("title")} subtitle={t("subtitle")} />
       <DistrictMapLazy locale={locale} />
       <DistrictGrid locale={locale} />
     </div>

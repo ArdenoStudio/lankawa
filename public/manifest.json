@@ -1,11 +1,11 @@
 {
   "name": "Lankawa — Sri Lanka Civic Intelligence",
   "short_name": "Lankawa",
-  "description": "Unified civic data across economy, districts, disasters, and public services.",
+  "description": "Sri Lanka's all-in-one civic intelligence platform. Built for Sri Lankans, by Sri Lankans.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#020617",
-  "theme_color": "#0f766e",
+  "theme_color": "#0d9488",
   "lang": "en",
   "icons": [
     {
@@ -18,7 +18,7 @@
       "src": "/icons/icon-512.svg",
       "sizes": "512x512",
       "type": "image/svg+xml",
-      "purpose": "any"
+      "purpose": "any maskable"
     }
   ]
 }

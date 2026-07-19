@@ -4,6 +4,7 @@ export type SourceCategory =
   | "economy"
   | "disaster"
   | "energy"
+  | "environment"
   | "health"
   | "civic"
   | "transport";

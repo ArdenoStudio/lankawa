@@ -3,7 +3,13 @@ import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { Link } from "@/i18n/navigation";
 import type { PulseMetric } from "@/lib/types";
 
-const STRIP_IDS = ["usd_lkr", "fuel_petrol_92", "fuel_diesel", "flood_stations"] as const;
+const STRIP_IDS = [
+  "usd_lkr",
+  "fuel_petrol_92",
+  "weather_colombo",
+  "power_status",
+  "flood_stations",
+] as const;
 
 function pickStripMetrics(metrics: PulseMetric[]): PulseMetric[] {
   const picked: PulseMetric[] = [];
@@ -13,7 +19,7 @@ function pickStripMetrics(metrics: PulseMetric[]): PulseMetric[] {
       picked.push(metric);
     }
   }
-  return picked.slice(0, 4);
+  return picked.slice(0, 5);
 }
 
 export async function PulseStrip({ metrics }: { metrics: PulseMetric[] }) {
@@ -35,7 +41,7 @@ export async function PulseStrip({ metrics }: { metrics: PulseMetric[] }) {
           key={metric.id}
           href={metric.provenancePath}
           role="listitem"
-          className="group inline-flex min-w-0 flex-1 basis-[calc(50%-0.25rem)] items-center gap-2 rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2.5 transition hover:border-teal-400/30 hover:bg-slate-950/80 sm:basis-auto sm:px-4"
+          className="group inline-flex min-w-0 flex-1 basis-[calc(50%-0.25rem)] items-center gap-2 rounded-xl border border-[var(--lk-border)] bg-[var(--lk-surface)]/60 px-3 py-2.5 transition hover:border-[var(--lk-teal-bright)]/30 hover:bg-[var(--lk-surface-elevated)]/80 sm:basis-auto sm:px-4"
         >
           <div className="min-w-0 flex-1">
             <p className="truncate text-[11px] font-medium uppercase tracking-wide text-slate-500">

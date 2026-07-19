@@ -17,7 +17,7 @@ export async function SourceHealthBar({
 
   return (
     <section
-      className="rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3"
+      className="lk-card px-4 py-3"
       aria-label={t("sourcesTitle")}
     >
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

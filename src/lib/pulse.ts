@@ -3,12 +3,29 @@ import { getLatestObservation, isDatabaseConfigured, savePulseSnapshot } from ".
 import { fetchLatestCbslFxRate } from "./integrations/cbsl";
 import { fetchFloodAlertSummary } from "./integrations/flood";
 import { fetchOctanePrices, pickCpcPrice } from "./integrations/octane";
+import { fetchPowerStatus } from "./integrations/power";
 import { getPropertyData } from "./integrations/propertylk";
 import { getVehicleData } from "./integrations/vehicle";
+import { fetchColomboWeather } from "./integrations/weather";
 import { formatPropertyPrice } from "./property";
 import { formatVehiclePrice } from "./vehicle";
 import { getSource, getSourceProvenancePath } from "./sources";
-import type { PulseMetric, PulseSnapshot, SourceHealth } from "./types";
+import type { FreshnessTier, PulseMetric, PulseSnapshot, SourceHealth } from "./types";
+
+export const TODAY_METRIC_IDS = [
+  "usd_lkr",
+  "fuel_petrol_92",
+  "fuel_diesel",
+  "weather_colombo",
+  "power_status",
+  "flood_stations",
+] as const;
+
+export function getTodayPulseMetrics(metrics: PulseMetric[]): PulseMetric[] {
+  return TODAY_METRIC_IDS.map((id) => metrics.find((metric) => metric.id === id)).filter(
+    (metric): metric is PulseMetric => metric != null,
+  );
+}
 
 const FX_FALLBACK_RATE = 302.5;
 const FX_FALLBACK_DATE = "2026-07-18T00:00:00.000Z";
@@ -246,15 +263,140 @@ async function buildFxMetric(checkedAt: string): Promise<{
   }
 }
 
+async function buildWeatherMetric(checkedAt: string): Promise<{
+  metric: PulseMetric;
+  health: SourceHealth;
+}> {
+  const source = getSource("open_meteo")!;
+
+  try {
+    const weather = await fetchColomboWeather();
+    const tier = computeFreshnessTier(weather.observedAt, source.cadenceMinutes);
+
+    return {
+      metric: {
+        id: "weather_colombo",
+        label: "Colombo weather",
+        value: weather.temp.toFixed(1),
+        unit: "°C",
+        observedAt: weather.observedAt,
+        tier,
+        sourceId: source.id,
+        provenancePath: getSourceProvenancePath(source.id),
+        note: `${weather.label}${weather.precipitation > 0 ? ` · ${weather.precipitation.toFixed(1)} mm` : ""}`,
+      },
+      health: {
+        id: source.id,
+        name: source.name,
+        category: source.category,
+        tier,
+        lastSuccessAt: weather.observedAt,
+        lastCheckedAt: checkedAt,
+        error: null,
+        provenancePath: getSourceProvenancePath(source.id),
+      },
+    };
+  } catch (error) {
+    const tier: FreshnessTier = "down";
+
+    return {
+      metric: {
+        id: "weather_colombo",
+        label: "Colombo weather",
+        value: "—",
+        unit: "°C",
+        observedAt: null,
+        tier,
+        sourceId: source.id,
+        provenancePath: getSourceProvenancePath(source.id),
+        note: "Open-Meteo unavailable",
+      },
+      health: {
+        id: source.id,
+        name: source.name,
+        category: source.category,
+        tier,
+        lastSuccessAt: null,
+        lastCheckedAt: checkedAt,
+        error: error instanceof Error ? error.message : "Unknown error",
+        provenancePath: getSourceProvenancePath(source.id),
+      },
+    };
+  }
+}
+
+async function buildPowerMetric(checkedAt: string): Promise<{
+  metric: PulseMetric;
+  health: SourceHealth;
+}> {
+  const source = getSource("ceb_power")!;
+
+  try {
+    const power = await fetchPowerStatus();
+    const tier = computeFreshnessTier(power.observedAt, source.cadenceMinutes);
+
+    return {
+      metric: {
+        id: "power_status",
+        label: "Power supply",
+        value: power.status === "normal" ? "Normal" : power.status === "scheduled" ? "Scheduled cuts" : "Unknown",
+        observedAt: power.observedAt,
+        tier,
+        sourceId: source.id,
+        provenancePath: power.provenancePath,
+        note: power.summary,
+      },
+      health: {
+        id: source.id,
+        name: source.name,
+        category: source.category,
+        tier,
+        lastSuccessAt: power.observedAt,
+        lastCheckedAt: checkedAt,
+        error: null,
+        provenancePath: getSourceProvenancePath(source.id),
+      },
+    };
+  } catch (error) {
+    const tier: FreshnessTier = "unknown";
+
+    return {
+      metric: {
+        id: "power_status",
+        label: "Power supply",
+        value: "Unknown",
+        observedAt: null,
+        tier,
+        sourceId: source.id,
+        provenancePath: "/disaster",
+        note: "Power status unavailable",
+      },
+      health: {
+        id: source.id,
+        name: source.name,
+        category: source.category,
+        tier,
+        lastSuccessAt: null,
+        lastCheckedAt: checkedAt,
+        error: error instanceof Error ? error.message : "Unknown error",
+        provenancePath: getSourceProvenancePath(source.id),
+      },
+    };
+  }
+}
+
 export async function buildPulseSnapshot(): Promise<PulseSnapshot> {
   const checkedAt = new Date().toISOString();
-  const [fuel, flood, fx, propertySnapshot, vehicleSnapshot] = await Promise.all([
-    buildFuelMetrics(checkedAt),
-    buildFloodData(checkedAt),
-    buildFxMetric(checkedAt),
-    getPropertyData(),
-    getVehicleData(),
-  ]);
+  const [fuel, flood, fx, weather, power, propertySnapshot, vehicleSnapshot] =
+    await Promise.all([
+      buildFuelMetrics(checkedAt),
+      buildFloodData(checkedAt),
+      buildFxMetric(checkedAt),
+      buildWeatherMetric(checkedAt),
+      buildPowerMetric(checkedAt),
+      getPropertyData(),
+      getVehicleData(),
+    ]);
 
   const normalStations =
     flood.flood.find((item) => item.alertLevel === "NORMAL")?.count ?? 0;
@@ -275,6 +417,8 @@ export async function buildPulseSnapshot(): Promise<PulseSnapshot> {
   const metrics: PulseMetric[] = [
     fx.metric,
     ...fuel.metrics,
+    weather.metric,
+    power.metric,
     ...(colomboProperty
       ? [
           {
@@ -337,7 +481,7 @@ export async function buildPulseSnapshot(): Promise<PulseSnapshot> {
     generatedAt: checkedAt,
     metrics,
     flood: flood.flood,
-    sources: [fx.health, fuel.health, flood.health],
+    sources: [fx.health, fuel.health, flood.health, weather.health, power.health],
   };
 
   if (isDatabaseConfigured()) {

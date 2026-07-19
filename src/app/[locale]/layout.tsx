@@ -7,6 +7,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { PwaRegister } from "@/components/PwaRegister";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { routing } from "@/i18n/routing";
+import { metadata as brandMetadata } from "@/lib/brand";
 import "../globals.css";
 
 const notoSans = Noto_Sans({
@@ -45,11 +46,23 @@ export async function generateMetadata({
     title: t("title"),
     description: t("description"),
     manifest: "/manifest.json",
-    themeColor: "#0f766e",
+    themeColor: brandMetadata.themeColor,
     icons: {
-      icon: "/favicon.svg",
-      shortcut: "/favicon.svg",
-      apple: "/icons/icon-192.svg",
+      icon: brandMetadata.favicon,
+      shortcut: brandMetadata.favicon,
+      apple: brandMetadata.icons["192"],
+    },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      images: [brandMetadata.ogImage],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+      images: [brandMetadata.ogImage],
     },
   };
 }

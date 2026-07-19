@@ -336,6 +336,32 @@ export const SOURCES: SourceDefinition[] = [
       "Historical presidential results seeded from published EC totals. Used as swing baseline for 2024 comparisons.",
     metrics: ["presidential_2019"],
   },
+  {
+    id: "open_meteo",
+    name: "Open-Meteo Forecast API",
+    category: "environment",
+    url: "https://api.open-meteo.com",
+    cadenceMinutes: 60,
+    adapter: "api",
+    description:
+      "Current temperature, precipitation, and weather conditions for Colombo.",
+    methodology:
+      "Lankawa polls the Open-Meteo forecast endpoint for Colombo coordinates (6.9271°N, 79.8612°E) with WMO weather codes mapped to short labels. Observations refresh hourly on the home pulse.",
+    metrics: ["weather_colombo"],
+  },
+  {
+    id: "ceb_power",
+    name: "Ceylon Electricity Board — Outage Notices",
+    category: "disaster",
+    url: "internal://disaster",
+    cadenceMinutes: 1440,
+    adapter: "scrape",
+    description:
+      "National power supply status and scheduled outage summaries.",
+    methodology:
+      "Seed status reports normal supply with no scheduled outages until a live CEB notice feed is integrated. Outage context and flood monitoring are grouped on the disaster hub.",
+    metrics: ["power_status"],
+  },
 ];
 
 export function getSource(id: string): SourceDefinition | undefined {

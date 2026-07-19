@@ -1,19 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { GlobalSearch } from "@/components/GlobalSearch";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
+import { Logo } from "@/components/brand/Logo";
 
 const primaryLinks = [
   { href: "/districts", key: "districts" },
-  { href: "/elections", key: "elections" },
-  { href: "/economy", key: "economy" },
-  { href: "/services", key: "services" },
+  { href: "/explore", key: "explore" },
 ] as const;
 
 const moreLinks = [
+  { href: "/elections", key: "elections" },
+  { href: "/economy", key: "economy" },
+  { href: "/services", key: "services" },
   { href: "/provinces", key: "provinces" },
   { href: "/disaster", key: "disaster" },
   { href: "/budget", key: "budget" },
@@ -38,10 +41,19 @@ const mobileSections = [
   {
     key: "explore",
     links: [
+      { href: "/explore", key: "explore" },
       { href: "/districts", key: "districts" },
       { href: "/provinces", key: "provinces" },
-      { href: "/elections", key: "elections" },
       { href: "/compare", key: "compare" },
+    ],
+  },
+  {
+    key: "governance",
+    links: [
+      { href: "/elections", key: "elections" },
+      { href: "/budget", key: "budget" },
+      { href: "/civic", key: "civic" },
+      { href: "/tenders", key: "tenders" },
     ],
   },
   {
@@ -60,8 +72,7 @@ const mobileSections = [
     links: [
       { href: "/services", key: "services" },
       { href: "/disaster", key: "disaster" },
-      { href: "/civic", key: "civic" },
-      { href: "/tenders", key: "tenders" },
+      { href: "/ardeno", key: "ardeno" },
       { href: "/assistant", key: "assistant" },
     ],
   },
@@ -182,22 +193,28 @@ export function SiteHeader() {
   const t = useTranslations("nav");
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 8);
+    }
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
+    <header
+      className={clsx(
+        "sticky top-0 z-40 border-b bg-slate-950/80 backdrop-blur-md transition-shadow duration-300",
+        scrolled
+          ? "border-[var(--lk-teal)]/20 shadow-[0_4px_24px_rgba(13,148,136,0.08)]"
+          : "border-white/10",
+      )}
+    >
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3">
-        <Link
-          href="/"
-          className="flex shrink-0 items-center gap-2 text-lg font-semibold text-white"
-        >
-          <span
-            className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-teal-500/15 text-sm text-teal-300 ring-1 ring-teal-500/30"
-            aria-hidden="true"
-          >
-            L
-          </span>
-          Lankawa
-        </Link>
+        <Logo variant="full" markSize={28} />
 
         <nav className="hidden items-center gap-1 lg:flex lg:flex-1 lg:justify-center">
           {primaryLinks.map((link) => (

@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "ලංකාව — ශ්‍රී ලංකා සිවිල් බුද්ධිය",
-    "description": "සියලු ශ්‍රී ලාංකිකයන් සඳහා ප්‍රසිද්ධ දත්ත. ආර්ථික, දිස්ත්‍රික්, විපත් සහ පොදු සේවා දත්ත එක් තැනක.",
+    "title": "ලංකාව — ශ්‍රී ලංකාවේ සිවිල් බුද්ධි වේදිකාව",
+    "description": "දිවයින සඳහා එක් වේදිකාවක්. ආර්ථික, දිස්ත්‍රික්, මැතිවරණ, විපත් සහ පොදු සේවා — සෑම අගයකටම දත්ත ප්‍රවේණිය. ශ්‍රී ලාංකිකයන් සඳහා, ශ්‍රී ලාංකිකයන් විසින්.",
     "districtTitle": "දිස්ත්‍රික් පැතිකඩ",
     "districtDescription": "{province} පළාතේ {name} දිස්ත්‍රික්කය. ජනගහනය {population}. ලංකාව මත civic දත්ත.",
     "provinceTitle": "පළාත් පැතිකඩ",
@@ -39,15 +39,16 @@
     "assistant": "සහායක",
     "more": "තවත්",
     "explore": "ගවේෂණය",
+    "governance": "පාලනය",
     "data": "දත්ත",
     "about": "ගැන"
   },
   "home": {
-    "eyebrow": "ජාතික සිවිල් බුද්ධිය",
-    "title": "සෑම ශ්‍රී ලාංකිකයකුටම — සියල්ල ප්‍රසිද්ධ",
-    "subtitle": "ආර්ථික, දිස්ත්‍රික්, විපත්, මැතිවරණ සහ පොදු සේවා — සෑම අගයකටම දත්ත ප්‍රවේණිය.",
+    "eyebrow": "ශ්‍රී ලංකාවේ සිවිල් වේදිකාව",
+    "title": "දිවයින සඳහා එක් වේදිකාවක්",
+    "subtitle": "ආර්ථික, දිස්ත්‍රික්, මැතිවරණ, විපත් සහ පොදු සේවා — සෑම අගයකටම දත්ත ප්‍රවේණිය සමඟ එක්තැනක.",
     "pulseTitle": "සජීවී නාඩි",
-    "pulseSubtitle": "විනිමය, ඉන්ධන, දේපළ සහ ගංවතුර නිරීක්ෂණ — ප්‍රසිද්ධ කාලසටහනකට අනුව.",
+    "pulseSubtitle": "විනිමය, ඉන්ධන, කොළඹ කාලගුණය, විදුලි සැපයුම සහ ගංවතුර නිරීක්ෂණ — ප්‍රසිද්ධ කාලසටහනකට අනුව.",
     "pulseLive": "දැන් සජීවී",
     "pulseStripLabel": "සජීවී සිවිල් දර්ශක",
     "modulesTitle": "වේදිකාව ගවේෂණය කරන්න",
@@ -59,10 +60,14 @@
     "districtsSubtitle": "දිස්ත්‍රික් 6ක් පෙරදසුන — සියල්ල සඳහා පූර්ණ නකාශය බලන්න.",
     "viewDistricts": "දිස්ත්‍රික් බලන්න",
     "viewEconomy": "සම්පූර්ණ ආර්ථික දසුන",
+    "viewDisaster": "විපත් කේන්ද්‍රය",
     "exploreDistricts": "දිස්ත්‍රික් ගවේෂණය",
+    "ctaExplore": "වේදිකාව ගවේෂණය",
+    "ctaDisaster": "විපත්",
     "ctaEconomy": "ආර්ථිකය",
-    "ctaElections": "මැතිවරණ",
-    "ctaServices": "සේවා",
+    "exploreCtaTitle": "මැතිවරණ, සිවිල් දත්ත, දේපළ සහ තවත්",
+    "exploreCtaSubtitle": "සම්පූර්ණ Lankawa මොඩියුල නාමාවලිය — මැතිවරණ, අයවැය, Ardeno stack, ප්‍රවාහන සහ වේදිකා මෙවලම්.",
+    "viewExplore": "සියලු මොඩියුල බලන්න",
     "ardenoTitle": "Ardeno living-cost stack",
     "ardenoSubtitle": "Fuel, property, vehicles, and food — integrated in-platform from sister platforms.",
     "viewArdeno": "Open Ardeno hub",
@@ -100,6 +105,84 @@
     "compare": {
       "title": "සංසන්ධනය",
       "description": "දිස්ත්‍රික් side-by-side සංසන්ධන වගු."
+    },
+    "provinces": {
+      "title": "පළාත්",
+      "description": "දිස්ත්‍රික් සාරාංශ සහිත පළාත් නවය."
+    },
+    "localGovernment": {
+      "title": "ප්‍රාදේශීය සංවිධාන",
+      "description": "නගර සභා, නගර සභා සහ ප්‍රාදේශීය සභා."
+    },
+    "civic": {
+      "title": "සිවිල්",
+      "description": "ජනපති MP ස්කෝර්කාඩ් සහ පාර්ලිමේන්තු ක්‍රියාකාරකම්."
+    },
+    "tenders": {
+      "title": "ඇණවුම්",
+      "description": "දිස්ත්‍රික් අනුව රජයේ ඇණවුම් දැන්වීම්."
+    },
+    "costOfLiving": {
+      "title": "ජීවන වියදම",
+      "description": "දිස්ත්‍රික් සංයුක්ත ජීවන වියදම් දර්ශකය."
+    },
+    "ardeno": {
+      "title": "Ardeno stack",
+      "description": "ඉන්ධන, දේපළ, වාහන සහ ආහාර ජීවන වියදම් ඒකාබද්ධ කිරීම."
+    },
+    "food": {
+      "title": "ආහාර",
+      "description": "මූලික ආහාර මිල සහ දිස්ත්‍රික් ආහාර වියදම්."
+    },
+    "vehicles": {
+      "title": "වාහන",
+      "description": "භාවිතා වාහන මධ්‍යන්ය සහ ජනප්‍රිය වර්ග."
+    },
+    "services": {
+      "title": "සේවා",
+      "description": "දිස්ත්‍රික් අනුව රෝහල්, පාසල්, පොලිසි සහ GN කාර්යාල."
+    },
+    "environment": {
+      "title": "පරිසර",
+      "description": "දිස්ත්‍රික් අනුව නියෝජනාත්මක වායු ගුණත්ව පරාස."
+    },
+    "disaster": {
+      "title": "විපත්",
+      "description": "ගංවතුර නිරීක්ෂණ, විදුලි තත්ත්වය සහ හදිසි සන්දර්භය."
+    },
+    "assistant": {
+      "title": "සහායක",
+      "description": "Lankawa දත්ත මත පදනම් වූ සිවිල් Q&A."
+    },
+    "status": {
+      "title": "තත්ත්වය",
+      "description": "API සහ දත්ත නල මාර්ග සෞඛ්‍ය උපකරණ පුවරුව."
+    },
+    "sources": {
+      "title": "මූලාශ්‍ර",
+      "description": "සෑම දත්ත කට්ටලයකටම ප්‍රවේණිය, කාලසටහන සහ ක්‍රමවේදය."
+    },
+    "developers": {
+      "title": "සංවර්ධක",
+      "description": "විවෘත API ලේඛන, එබ්ඩ් සහ අපනයන මෙවලම්."
+    }
+  },
+  "explore": {
+    "eyebrow": "මොඩියුල නාමාවලිය",
+    "title": "Lankawa ගවේෂණය",
+    "subtitle": "මැතිවරණ, සිවිල් දත්ත, ආර්ථිකය, ප්‍රවාහන සහ වේදිකා මෙවලම් — මාතෘකා අනුව සංවිධානය කර ඇත.",
+    "ardenoTitle": "Ardeno living-cost stack",
+    "ardenoSubtitle": "Fuel, property, vehicles, and food — integrated in-platform from sister platforms.",
+    "viewArdeno": "Open Ardeno hub",
+    "districtsTitle": "දිස්ත්‍රික් නකාශය",
+    "districtsSubtitle": "දිස්ත්‍රික් 6ක් පෙරදසුන — සියල්ල සඳහා පූර්ණ නකාශය බලන්න.",
+    "viewDistricts": "දිස්ත්‍රික් බලන්න",
+    "sections": {
+      "civicGeography": "සිවිල් සහ භූගෝලීය",
+      "electionsGovernance": "මැතිවරණ සහ පාලනය",
+      "economyLiving": "ආර්ථිකය සහ ජීවනය",
+      "servicesTransport": "සේවා සහ ප්‍රවාහන",
+      "platform": "වේදිකාව"
     }
   },
   "districts": {
@@ -285,6 +368,12 @@
     "resultsCount": "facilities {count}",
     "noResults": "filters වලට ගැලපෙන facilities නැත."
   },
+  "brand": {
+    "tagline": "ශ්‍රී ලාංකිකයන් සඳහා, ශ්‍රී ලාංකිකයන් විසින්.",
+    "taglineShort": "ශ්‍රී ලාංකිකයන් සඳහා, ශ්‍රී ලාංකිකයන් විසින්",
+    "mission": "ශ්‍රී ලංකාවේ සියල්ල එක් තැනින් සිවිල් බුද්ධි වේදිකාව",
+    "builtBy": "සෑම ශ්‍රී ලාංකිකයකුටම පාරදෘශ්‍ය, ප්‍රවේශයෙන් යුතු පොදු දත්ත හිමි විය යුතුයි — දස ගණනක වෙබ් අඩවි සොයා නොයා."
+  },
   "about": {
     "eyebrow": "Lankawa ගැන",
     "title": "Mission සහ දත්ත මූලාශ්‍ර",
@@ -316,7 +405,7 @@
     "unknown": "නොදනී"
   },
   "footer": {
-    "built": "ශ්‍රී ලංකාව සඳහා නිර්මාණය කළ",
+    "built": "ශ්‍රී ලාංකිකයන් සඳහා, ශ්‍රී ලාංකිකයන් විසින්",
     "about": "ගැන",
     "sources": "දත්ත මූලාශ්‍ර",
     "developers": "සංවර්ධක",
@@ -327,6 +416,7 @@
     "economy": "ආර්ථිකය",
     "platform": "වේදිකාව",
     "explore": "ගවේෂණය",
+    "exploreHub": "ගවේෂණ කේන්ද්‍රය",
     "legal": "නීතිමය",
     "disclaimer": "වියාචනය",
     "version": "අනුවාදය {version}",
@@ -356,6 +446,7 @@
       "economy": "ආර්ථිකය",
       "disaster": "විපත්",
       "energy": "ශක්තිය",
+      "environment": "පරිසර",
       "health": "සෞඛ්‍ය",
       "civic": "සිවිල්",
       "transport": "ප්‍රවාහන"

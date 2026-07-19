@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { Logo } from "@/components/brand/Logo";
+import { BrandTagline } from "@/components/brand/BrandTagline";
 
 const platformLinks = [
   { href: "/about", key: "about" },
@@ -9,9 +11,9 @@ const platformLinks = [
 ] as const;
 
 const exploreLinks = [
+  { href: "/explore", key: "exploreHub" },
   { href: "/districts", key: "districts" },
   { href: "/elections", key: "elections" },
-  { href: "/services", key: "services" },
   { href: "/economy", key: "economy" },
 ] as const;
 
@@ -22,13 +24,12 @@ export async function SiteFooter() {
 
   return (
     <footer className="mt-auto border-t border-white/10 bg-slate-950/50">
+      <div className="lk-brand-stripe" aria-hidden="true" />
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-3 lg:col-span-1">
-            <Link href="/" className="text-lg font-semibold text-white">
-              Lankawa
-            </Link>
-            <p className="text-sm leading-relaxed text-slate-500">{t("built")}</p>
+            <Logo variant="full" markSize={24} />
+            <BrandTagline short />
             <p className="text-xs text-slate-600">
               {t("version", { version: "0.1.0" })}
             </p>
@@ -41,7 +42,7 @@ export async function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-500 transition hover:text-teal-300"
+                    className="text-sm text-slate-500 transition hover:text-[var(--lk-teal-bright)]"
                   >
                     {t(link.key)}
                   </Link>
@@ -57,7 +58,7 @@ export async function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-500 transition hover:text-teal-300"
+                    className="text-sm text-slate-500 transition hover:text-[var(--lk-teal-bright)]"
                   >
                     {t(link.key)}
                   </Link>
@@ -73,7 +74,7 @@ export async function SiteFooter() {
                 <li key={link.key}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-500 transition hover:text-teal-300"
+                    className="text-sm text-slate-500 transition hover:text-[var(--lk-teal-bright)]"
                   >
                     {t(link.key)}
                   </Link>

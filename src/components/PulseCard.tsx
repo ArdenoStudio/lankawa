@@ -7,7 +7,7 @@ export async function PulseCard({ metric }: { metric: PulseMetric }) {
   const t = await getTranslations("pulse");
 
   return (
-    <article className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
+    <article className="lk-card p-5">
       <div className="mb-3 flex items-center justify-between gap-3">
         <h3 className="text-sm font-medium text-slate-300">{metric.label}</h3>
         <FreshnessBadge tier={metric.tier} />

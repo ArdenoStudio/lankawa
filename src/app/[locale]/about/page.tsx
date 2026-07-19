@@ -1,5 +1,8 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { BrandMark } from "@/components/brand/BrandMark";
+import { BrandTagline } from "@/components/brand/BrandTagline";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { getSourceProvenancePath, SOURCES } from "@/lib/sources";
 
 export default async function AboutPage({
@@ -10,16 +13,25 @@ export default async function AboutPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("about");
+  const brand = await getTranslations("brand");
 
   return (
     <div className="space-y-10">
-      <div>
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-teal-300">
-          {t("eyebrow")}
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold text-white">{t("title")}</h1>
-        <p className="mt-3 max-w-2xl text-lg text-slate-400">{t("subtitle")}</p>
-      </div>
+      <PageHeader eyebrow={t("eyebrow")} title={t("title")} subtitle={t("subtitle")} />
+
+      <section className="lk-card relative overflow-hidden p-6 md:p-8">
+        <div
+          className="pointer-events-none absolute -right-8 -top-8 opacity-[0.06]"
+          aria-hidden="true"
+        >
+          <BrandMark size={200} />
+        </div>
+        <div className="relative space-y-4">
+          <h2 className="text-xl font-semibold text-white">{brand("mission")}</h2>
+          <BrandTagline />
+          <p className="max-w-2xl text-slate-400">{brand("builtBy")}</p>
+        </div>
+      </section>
 
       <section className="space-y-3">
         <h2 className="text-xl font-semibold text-white">{t("missionTitle")}</h2>
@@ -32,11 +44,11 @@ export default async function AboutPage({
           {SOURCES.map((source) => (
             <li
               key={source.id}
-              className="rounded-xl border border-white/10 bg-white/5 px-4 py-3"
+              className="lk-card px-4 py-3"
             >
               <Link
                 href={getSourceProvenancePath(source.id)}
-                className="font-medium text-teal-300 hover:text-teal-200"
+                className="font-medium text-[var(--lk-teal-bright)] hover:text-teal-200"
               >
                 {source.name}
               </Link>
@@ -48,7 +60,7 @@ export default async function AboutPage({
         </ul>
         <Link
           href="/sources"
-          className="inline-block text-sm text-teal-300 hover:text-teal-200"
+          className="inline-block text-sm text-[var(--lk-teal-bright)] hover:text-teal-200"
         >
           {t("freshnessLink")}
         </Link>
@@ -77,10 +89,7 @@ export default async function AboutPage({
       <section className="space-y-3">
         <h2 className="text-xl font-semibold text-white">{t("apiTitle")}</h2>
         <p className="max-w-2xl text-slate-400">{t("apiBody")}</p>
-        <Link
-          href="/developers"
-          className="inline-flex rounded-full bg-teal-500 px-4 py-2 text-sm font-medium text-slate-950 hover:bg-teal-400"
-        >
+        <Link href="/developers" className="lk-btn-primary">
           {t("apiLink")}
         </Link>
       </section>

@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Lankawa — Sri Lanka Civic Intelligence",
-    "description": "Everything public, for every Sri Lankan. Unified civic data across economy, districts, disasters, and public services.",
+    "title": "Lankawa — Sri Lanka's Civic Intelligence Platform",
+    "description": "One platform for the island. Economy, districts, elections, disasters, and public services — with provenance on every number. Built for Sri Lankans, by Sri Lankans.",
     "districtTitle": "District Profile",
     "districtDescription": "{name} district in {province} province. Population {population}. Civic data on Lankawa.",
     "provinceTitle": "Province Profile",
@@ -39,15 +39,16 @@
     "assistant": "Assistant",
     "more": "More",
     "explore": "Explore",
+    "governance": "Governance",
     "data": "Data",
     "about": "About"
   },
   "home": {
-    "eyebrow": "National civic intelligence",
-    "title": "Everything public, for every Sri Lankan",
-    "subtitle": "Unified civic data across economy, districts, disasters, elections, and public services — with provenance on every number.",
+    "eyebrow": "Sri Lanka's civic platform",
+    "title": "One platform for the entire island",
+    "subtitle": "Economy, districts, elections, disasters, and public services — unified with provenance on every number.",
     "pulseTitle": "Live pulse",
-    "pulseSubtitle": "Exchange rates, fuel prices, property bands, and flood monitoring — refreshed on a public cadence.",
+    "pulseSubtitle": "Exchange rates, fuel prices, Colombo weather, power status, and flood monitoring — refreshed on a public cadence.",
     "pulseLive": "Live now",
     "pulseStripLabel": "Live civic indicators",
     "modulesTitle": "Explore the platform",
@@ -59,10 +60,14 @@
     "districtsSubtitle": "A preview of six districts — browse the full atlas for all 25.",
     "viewDistricts": "Browse districts",
     "viewEconomy": "Full economy view",
+    "viewDisaster": "Disaster hub",
     "exploreDistricts": "Explore districts",
+    "ctaExplore": "Explore platform",
+    "ctaDisaster": "Disaster",
     "ctaEconomy": "Economy",
-    "ctaElections": "Elections",
-    "ctaServices": "Services",
+    "exploreCtaTitle": "Elections, civic data, property, and more",
+    "exploreCtaSubtitle": "The full Lankawa module directory — elections, budget, Ardeno stack, transport, and platform tools.",
+    "viewExplore": "Explore all modules",
     "ardenoTitle": "Ardeno living-cost stack",
     "ardenoSubtitle": "Fuel, property, vehicles, and food — integrated in-platform from sister platforms.",
     "viewArdeno": "Open Ardeno hub",
@@ -100,6 +105,84 @@
     "compare": {
       "title": "Compare",
       "description": "Side-by-side district comparison tables."
+    },
+    "provinces": {
+      "title": "Provinces",
+      "description": "Nine provinces with aggregated district summaries."
+    },
+    "localGovernment": {
+      "title": "Local government",
+      "description": "Municipal councils, urban councils, and Pradeshiya Sabhas."
+    },
+    "civic": {
+      "title": "Civic",
+      "description": "MP scorecards and parliamentary activity samples."
+    },
+    "tenders": {
+      "title": "Tenders",
+      "description": "Government procurement notices by district."
+    },
+    "costOfLiving": {
+      "title": "Cost of living",
+      "description": "District composite living-cost index."
+    },
+    "ardeno": {
+      "title": "Ardeno stack",
+      "description": "Integrated fuel, property, vehicle, and food living costs."
+    },
+    "food": {
+      "title": "Food",
+      "description": "Staple prices and district meal-cost bands."
+    },
+    "vehicles": {
+      "title": "Vehicles",
+      "description": "Used vehicle medians and popular makes."
+    },
+    "services": {
+      "title": "Services",
+      "description": "Hospitals, schools, police, and GN offices by district."
+    },
+    "environment": {
+      "title": "Environment",
+      "description": "Representative air quality bands by district."
+    },
+    "disaster": {
+      "title": "Disaster",
+      "description": "Flood monitoring, power status, and emergency context."
+    },
+    "assistant": {
+      "title": "Assistant",
+      "description": "Civic Q&A grounded in Lankawa datasets."
+    },
+    "status": {
+      "title": "Status",
+      "description": "API and data pipeline health dashboard."
+    },
+    "sources": {
+      "title": "Sources",
+      "description": "Provenance, cadence, and methodology for every dataset."
+    },
+    "developers": {
+      "title": "Developers",
+      "description": "Open API docs, embeds, and export tools."
+    }
+  },
+  "explore": {
+    "eyebrow": "Module directory",
+    "title": "Explore Lankawa",
+    "subtitle": "Elections, civic data, economy, transport, and platform tools — organized by topic.",
+    "ardenoTitle": "Ardeno living-cost stack",
+    "ardenoSubtitle": "Fuel, property, vehicles, and food — integrated in-platform from sister platforms.",
+    "viewArdeno": "Open Ardeno hub",
+    "districtsTitle": "District atlas",
+    "districtsSubtitle": "A preview of six districts — browse the full atlas for all 25.",
+    "viewDistricts": "Browse districts",
+    "sections": {
+      "civicGeography": "Civic & geography",
+      "electionsGovernance": "Elections & governance",
+      "economyLiving": "Economy & living",
+      "servicesTransport": "Services & transport",
+      "platform": "Platform"
     }
   },
   "districts": {
@@ -285,6 +368,12 @@
     "resultsCount": "{count} facilities",
     "noResults": "No facilities match your filters."
   },
+  "brand": {
+    "tagline": "Built for Sri Lankans, by Sri Lankans.",
+    "taglineShort": "Built for Sri Lankans, by Sri Lankans",
+    "mission": "Sri Lanka's all-in-one civic intelligence platform",
+    "builtBy": "We believe every Sri Lankan deserves transparent, accessible public data — without visiting dozens of separate websites."
+  },
   "about": {
     "eyebrow": "About Lankawa",
     "title": "Mission & data sources",
@@ -316,7 +405,7 @@
     "unknown": "Unknown"
   },
   "footer": {
-    "built": "Built for Sri Lanka",
+    "built": "Built for Sri Lankans, by Sri Lankans",
     "about": "About",
     "sources": "Data sources",
     "developers": "Developers",
@@ -327,6 +416,7 @@
     "economy": "Economy",
     "platform": "Platform",
     "explore": "Explore",
+    "exploreHub": "Explore hub",
     "legal": "Legal",
     "disclaimer": "Disclaimer",
     "version": "Version {version}",
@@ -356,6 +446,7 @@
       "economy": "Economy",
       "disaster": "Disaster",
       "energy": "Energy",
+      "environment": "Environment",
       "health": "Health",
       "civic": "Civic",
       "transport": "Transport"
