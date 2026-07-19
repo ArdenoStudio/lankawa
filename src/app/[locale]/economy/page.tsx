@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CseMarketCard } from "@/components/CseMarketCard";
 import { FuelHistoryChart, FxSparkline, MacroIndicatorCard } from "@/components/EconomyCards";
+import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
 import { PulseCard } from "@/components/PulseCard";
 import { Link } from "@/i18n/navigation";
 import { getEconomyMacroSnapshot, getFxSeries } from "@/lib/economy";
@@ -32,6 +33,8 @@ export default async function EconomyPage({
         <h1 className="text-3xl font-semibold text-white">{t("title")}</h1>
         <p className="mt-2 max-w-2xl text-slate-400">{t("subtitle")}</p>
       </div>
+
+      <InlineExplainerBanner slug="fx-rates" />
 
       <section className="space-y-4">
         <div className="flex flex-wrap items-end justify-between gap-3">

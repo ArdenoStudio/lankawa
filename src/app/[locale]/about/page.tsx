@@ -74,6 +74,12 @@ export default async function AboutPage({
           <li>{t("freshnessStale")}</li>
           <li>{t("freshnessDown")}</li>
         </ul>
+        <Link
+          href="/learn"
+          className="inline-block text-sm text-[var(--lk-teal-bright)] hover:text-teal-200"
+        >
+          {t("learnLink")}
+        </Link>
       </section>
 
       <section className="space-y-3">

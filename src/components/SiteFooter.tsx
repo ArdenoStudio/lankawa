@@ -5,6 +5,7 @@ import { BrandTagline } from "@/components/brand/BrandTagline";
 
 const platformLinks = [
   { href: "/about", key: "about" },
+  { href: "/learn", key: "learn" },
   { href: "/sources", key: "sources" },
   { href: "/developers", key: "developers" },
   { href: "/status", key: "status" },

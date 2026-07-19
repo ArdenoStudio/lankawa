@@ -33,6 +33,7 @@ const moreLinks = [
   { href: "/tenders", key: "tenders" },
   { href: "/assistant", key: "assistant" },
   { href: "/status", key: "status" },
+  { href: "/learn", key: "learn" },
   { href: "/sources", key: "sources" },
   { href: "/developers", key: "developers" },
 ] as const;
@@ -80,6 +81,7 @@ const mobileSections = [
     key: "more",
     links: [
       { href: "/status", key: "status" },
+      { href: "/learn", key: "learn" },
       { href: "/sources", key: "sources" },
       { href: "/developers", key: "developers" },
       { href: "/about", key: "about" },

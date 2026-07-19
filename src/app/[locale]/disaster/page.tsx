@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
 import { fetchPowerStatus } from "@/lib/integrations/power";
 import { buildPulseSnapshot } from "@/lib/pulse";
 
@@ -64,6 +65,8 @@ export default async function DisasterPage({
           <p className="mt-4 text-xs text-slate-500">{t("powerSourceNote")}</p>
         </article>
       </section>
+
+      <InlineExplainerBanner slug="flood-levels" />
 
       <section className="space-y-4">
         <div>

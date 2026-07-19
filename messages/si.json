@@ -41,7 +41,8 @@
     "explore": "ගවේෂණය",
     "governance": "පාලනය",
     "data": "දත්ත",
-    "about": "ගැන"
+    "about": "ගැන",
+    "learn": "මගපෙන්වීම්"
   },
   "home": {
     "eyebrow": "ශ්‍රී ලංකාවේ සිවිල් වේදිකාව",
@@ -438,7 +439,8 @@
     "apiLink": "View developer docs",
     "platformTitle": "සියල්ල එක තැනක",
     "platformBody": "සියලු දත්ත, documentation, සහ source attribution ලංකාව මත ජීවත් වේ. metrics explore කිරීමට, methodology තේරුම් ගැනීමට, හෝ පොදු API භාවිතා කිරීමට මෙම platform ඉතිරි කිරීමට අවශ්‍ය නැත.",
-    "freshnessLink": "දත්ත මූලාශ්‍ර explore කරන්න"
+    "freshnessLink": "දත්ත මූලාශ්‍ර explore කරන්න",
+    "learnLink": "Transparency guides කියවන්න"
   },
   "freshness": {
     "fresh": "නැවුම්",
@@ -451,6 +453,7 @@
     "about": "ගැන",
     "sources": "දත්ත මූලාශ්‍ර",
     "developers": "සංවර්ධක",
+    "learn": "මගපෙන්වීම්",
     "status": "තත්ත්වය",
     "districts": "දිස්ත්‍රික්",
     "elections": "මැතිවරණ",
@@ -916,6 +919,201 @@
       "colombo": "Tell me about Colombo district",
       "flood": "How many flood stations are active?",
       "elections": "Who won the 2024 presidential election?"
+    }
+  },
+  "learn": {
+    "eyebrow": "විශ්වාසය සහ පාරදෘශ්‍යතාව",
+    "title": "Lankawa කියවන්නේ කෙසේ ද",
+    "subtitle": "ඔබ දකින අගයන් සඳහා සරල මගපෙන්වීම් — jargon නැත, spin නැත. අප පෙන්වන්නේ මොනවා ද, කොහින් ද, නොදන්නා දේ මොනවා ද.",
+    "trustPreamble": "Lankawa රජයේ ආයතනයක් නොවේ. මෙම මගපෙන්වීම් methodology පැහැදිලි කරයි — අගයක් විශ්වාස කළ යුතු ද, primary source එකෙන් verify කළ යුතු ද ඔබ decide කර ගන්න.",
+    "readTime": "minutes {minutes} ක කියවීම",
+    "viewGuide": "මගපෙන්වීම කියවන්න",
+    "inlineEyebrow": "Unbiased explainer",
+    "back": "සියලු මගපෙන්වීම්",
+    "demoTitle": "Lankawa මත ඔබ දකින දේ",
+    "explainerTitle": "මෙයින් අදහස් වන්නේ",
+    "trustTitle": "අප claim නොකරන දේ",
+    "relatedTitle": "Context තුළ බලන්න",
+    "topics": {
+      "economy": "ආර්ථිකය",
+      "disaster": "විපත්",
+      "platform": "වේදිකාව"
+    },
+    "relatedPaths": {
+      "/": "Home pulse",
+      "/economy": "ආර්ථිකය",
+      "/disaster": "විපත් hub",
+      "/districts": "දිස්ත්‍රික් atlas",
+      "/status": "Status dashboard",
+      "/sources": "දත්ත මූලාශ්‍ර",
+      "/about": "ගැන",
+      "/explore": "Explore modules"
+    },
+    "items": {
+      "fxRates": {
+        "title": "USD/LKR exchange rates ක්‍රියා කරන්නේ කෙසේ ද",
+        "summary": "Lankawa CBSL selling rates පෙන්වන්නේ why, buy/sell අර්ථය, bank quote වෙනස් විය හැකි why.",
+        "inlineHint": "Headline USD/LKR figure එක CBSL selling rate — සෑම counter/remittance quote එකක්ම නොවේ.",
+        "intro": "CBSL daily table Lankawa ingest කර headline number ලෙස selling rate පෙන්වයි.",
+        "demoIntro": "Home සහ Economy pulse card shape — buy සහ sell rates ද visible.",
+        "trustNote": "අප හෙට exchange rate predict, money changer recommend, හෝ commercial counter CBSL table match guarantee නොකරමු.",
+        "sections": [
+          "CBSL US dollar buy/sell rates වෙන වෙනම publish කරයි. Banks licensed dealers margins/fees add කළ හැක.",
+          "Lankawa headline = CBSL selling rate. Buying rate card note තුළ.",
+          "Rates CBSL business-day schedule අනුව update — continuous forex screen නොවේ.",
+          "Remittance/import/settlement සඳහා bank/exchange counter සමඟ compare කරන්න."
+        ],
+        "demo": {
+          "cardLabel": "USD / LKR",
+          "headlineNote": "Headline = CBSL selling rate",
+          "buyLabel": "Buying rate",
+          "buyHint": "Dealers USD CBSLට sell කරන විට ලැබෙන rate",
+          "sellLabel": "Selling rate",
+          "sellHint": "Lankawa headline number ලෙස පෙන්වයි",
+          "footnote": "Illustrative values — live numbers Home/Economy.",
+          "step1": "CBSL daily table publish",
+          "step2": "Lankawa buy + sell ingest",
+          "step3": "අවශ්‍ය නම් counter එකෙන් verify"
+        }
+      },
+      "floodLevels": {
+        "title": "River flood alert levels අර්ථය",
+        "summary": "NORMAL, ALERT, WARNING, DANGER — water height station thresholds සමඟ map වීම.",
+        "inlineHint": "Alert colours river height vs station thresholds — evacuation orders නොවේ.",
+        "intro": "lk-flood-api river gauges aggregate කරයි. Stations වලට thresholds වෙනස්.",
+        "demoIntro": "Station card current level (m) alert/warning/danger thresholds සමඟ compare.",
+        "trustNote": "Gauges preparedness input එකක් — DMC bulletins/local warnings replace නොකරයි.",
+        "sections": [
+          "Water level metres — gauge point river height, street flood depth නොවේ.",
+          "NORMAL = alert threshold යට. ALERT = first threshold — monitoring, public danger necessarily නොවේ.",
+          "WARNING/DANGER station-specific. One river WARNING another river same risk නොවේ.",
+          "Remarks/timestamps upstream feed. History unavailable නම් sparklines degrade gracefully."
+        ],
+        "demo": {
+          "stationName": "Peradeniya (Mahaweli)",
+          "riverName": "Mahaweli Ganga · illustrative",
+          "currentLevel": "Current level",
+          "alertLevel": "Alert threshold",
+          "warningLevel": "Warning threshold",
+          "dangerLevel": "Danger threshold",
+          "alertLine": "Alert line",
+          "warningLine": "Warning line",
+          "dangerLine": "Danger line",
+          "levels": {
+            "normal": "Alert threshold යට — routine monitoring.",
+            "alert": "First threshold — forecasts/upstream rain watch.",
+            "warning": "Significant rise — local guidance අනුව prepare.",
+            "danger": "Highest threshold — DMC/local authority instructions follow."
+          }
+        }
+      },
+      "freshness": {
+        "title": "Freshness badges කියවන්නේ කෙසේ ද",
+        "summary": "Fresh, Stale, Down — act කිරීමට පෙර අර්ථය.",
+        "inlineHint": "Live metrics freshness tier carry කරයි — stale data silent නොවේ.",
+        "intro": "Last fetch vs expected cadence compare. Pulse, sources, status badges.",
+        "demoIntro": "Badge = upstream confirm කළ අවසන් වර — event happened time නොවේ.",
+        "trustNote": "Fresh = source recently responded — every use case correct නොවේ. Down = unreachable; fallback elsewhere labelled.",
+        "sections": [
+          "Fresh: expected cadence තුළ response.",
+          "Stale: older than expected — context; time-sensitive decisions verify.",
+          "Down: adapter failed — /status check.",
+          "Badges pipeline health — official urgency levels නොවේ."
+        ],
+        "demo": {
+          "sampleMetric": "Sample pulse metric",
+          "asOf": "Last successful fetch · illustrative",
+          "statusLinkPrefix": "Sources බලන්න",
+          "statusLinkLabel": "status dashboard",
+          "statusLinkSuffix": " — last errors සමඟ.",
+          "tiers": {
+            "fresh": {
+              "body": "Expected cadence තුළ fetched.",
+              "action": "Daily checks සඳහා good default."
+            },
+            "stale": {
+              "body": "Expected ට older — delayed/cached upstream.",
+              "action": "Context; timing matters නම් verify."
+            },
+            "down": {
+              "body": "Last check unreachable.",
+              "action": "/status or source page before relying."
+            }
+          }
+        }
+      },
+      "provenance": {
+        "title": "සෑම අගයක්ම කොහින් ද",
+        "summary": "Pulse card → registered source → upstream publisher chain.",
+        "inlineHint": "Provenance link tap — methodology, cadence, last fetch.",
+        "intro": "Metrics source registry map. Adapter type, cadence, health documented.",
+        "demoIntro": "Number → publishing organisation chain follow.",
+        "trustNote": "We aggregate — official statistics originate නොකරමු. Formal use authority verify.",
+        "sections": [
+          "Pulse metrics /sources/[id] methodology, adapter, freshness.",
+          "API integrations JSON fetch; scrapes public pages schedule.",
+          "Partner feeds live + seed fallback — seed vs live guide.",
+          "/api/v1/* same provenance — hidden sources නැත."
+        ],
+        "demo": {
+          "previewLabel": "Example provenance link",
+          "previewMetric": "USD / LKR · CBSL daily exchange rates",
+          "previewLink": "CBSL FX source page",
+          "steps": {
+            "metric": {
+              "label": "Lankawa මත",
+              "title": "Pulse card or module table",
+              "body": "Value, unit, observed time, freshness badge."
+            },
+            "source": {
+              "label": "Source registry",
+              "title": "/sources/cbsl_fx",
+              "body": "Methodology, cadence, adapter, last fetch."
+            },
+            "upstream": {
+              "label": "Upstream publisher",
+              "title": "Central Bank of Sri Lanka",
+              "body": "Data originate organisation — source page link."
+            }
+          }
+        }
+      },
+      "seedVsLive": {
+        "title": "Live data vs illustrative seed",
+        "summary": "Live feeds today vs representative seed modules.",
+        "inlineHint": "Seed/fallback clearly labelled — approximations live official series mistaken නොවේ.",
+        "intro": "Live adapters + seed datasets. Limitations /about + modules open.",
+        "demoIntro": "Live vs seed snapshot — /status current health.",
+        "trustNote": "Seed live surveillance/official ledgers නොවේ. Fallback freshness/sources reflect.",
+        "sections": [
+          "Live: CBSL FX, Octane fuel, flood API, weather, CEB, CSE, news RSS.",
+          "Seed: dengue, MPs, tenders, local gov, elections approx, COL composites.",
+          "Mixed: property/vehicle partner API + seed fallback.",
+          "30+ green days live expand — /status matters to you."
+        ],
+        "demo": {
+          "module": "Module",
+          "status": "Status",
+          "meaning": "Meaning",
+          "kinds": {
+            "live": "Live adapter",
+            "seed": "Seed data",
+            "mixed": "Live + fallback"
+          },
+          "liveTitle": "Live adapter",
+          "liveBody": "Upstream API/scrape public cadence. Freshness badges.",
+          "seedTitle": "Illustrative seed",
+          "seedBody": "Published formats aligned sample — UI/demos, not operational.",
+          "rows": {
+            "fx": { "name": "USD / LKR", "note": "CBSL scrape + DB ingest" },
+            "fuel": { "name": "Fuel prices", "note": "Octane API + cache" },
+            "flood": { "name": "Flood stations", "note": "lk-flood-api levels" },
+            "dengue": { "name": "Dengue cases", "note": "Representative seed — not live" },
+            "property": { "name": "Property medians", "note": "Partner API or seed bands" },
+            "tenders": { "name": "Tender feed", "note": "Static seed — not live e-GP" }
+          }
+        }
+      }
     }
   }
 }

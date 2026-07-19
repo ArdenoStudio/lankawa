@@ -41,7 +41,8 @@
     "explore": "ஆராயுங்கள்",
     "governance": "ஆளுமை",
     "data": "தரவு",
-    "about": "பற்றி"
+    "about": "பற்றி",
+    "learn": "வழிகாட்டிகள்"
   },
   "home": {
     "eyebrow": "இலங்கையின் சிவில் தளம்",
@@ -438,7 +439,8 @@
     "apiLink": "View developer docs",
     "platformTitle": "அனைத்தும் ஒரே இடத்தில்",
     "platformBody": "அனைத்து தரவு, documentation, மூல attribution-ம் லங்காவாவில் உள்ளன. metrics explore, methodology புரிந்துகொள்ள, அல்லது பொது API பயன்படுத்த இந்த platform-ஐ விடத் தேவையில்லை.",
-    "freshnessLink": "தரவு மூலங்களை ஆராயுங்கள்"
+    "freshnessLink": "தரவு மூலங்களை ஆராயுங்கள்",
+    "learnLink": "வெளிப்படைத்தன்மை வழிகாட்டிகளைப் படியுங்கள்"
   },
   "freshness": {
     "fresh": "புதிய",
@@ -451,6 +453,7 @@
     "about": "பற்றி",
     "sources": "தரவு மூலங்கள்",
     "developers": "டெவலப்பர்கள்",
+    "learn": "வழிகாட்டிகள்",
     "status": "நிலை",
     "districts": "மாவட்டங்கள்",
     "elections": "தேர்தல்",
@@ -916,6 +919,201 @@
       "colombo": "Tell me about Colombo district",
       "flood": "How many flood stations are active?",
       "elections": "Who won the 2024 presidential election?"
+    }
+  },
+  "learn": {
+    "eyebrow": "நம்பிக்கை & வெளிப்படைத்தன்மை",
+    "title": "லங்காவாவை எப்படி படிப்பது",
+    "subtitle": "நீங்கள் பார்க்கும் எண்களுக்கான எளிய வழிகாட்டிகள் — jargon இல்லை, partisan spin இல்லை. நாம் என்ன காட்டுகிறோம், எங்கிருந்து, என்ன தெரியாது என்பதை விளக்குகிறோம்.",
+    "trustPreamble": "லங்காவா அரசு நிறுவனம் அல்ல. methodology விளக்க — எண்ணை நம்பலாமா, primary source-ல verify செய்யலாமா என்று நீங்கள் முடிவு.",
+    "readTime": "{minutes} நிமிட வாசிப்பு",
+    "viewGuide": "வழிகாட்டியைப் படியுங்கள்",
+    "inlineEyebrow": "Unbiased explainer",
+    "back": "அனைத்து வழிகாட்டிகள்",
+    "demoTitle": "லங்காவாவில் நீங்கள் பார்ப்பது",
+    "explainerTitle": "இதன் அர்த்தம்",
+    "trustTitle": "நாம் claim செய்யாதவை",
+    "relatedTitle": "Context-ல் பாருங்கள்",
+    "topics": {
+      "economy": "பொருளாதாரம்",
+      "disaster": "பேரிடம்",
+      "platform": "மேடை"
+    },
+    "relatedPaths": {
+      "/": "Home pulse",
+      "/economy": "பொருளாதாரம்",
+      "/disaster": "பேரிட hub",
+      "/districts": "மாவட்ட atlas",
+      "/status": "Status dashboard",
+      "/sources": "தரவு மூலங்கள்",
+      "/about": "பற்றி",
+      "/explore": "Explore modules"
+    },
+    "items": {
+      "fxRates": {
+        "title": "USD/LKR exchange rates எப்படி வேலை செய்கின்றன",
+        "summary": "Lankawa CBSL selling rates ஏன் காட்டுகிறது, buy/sell அர்த்தம், bank quote வேறுபடலாம்.",
+        "inlineHint": "Headline USD/LKR = CBSL selling rate — எல்லா counter/remittance quote-உம் அல்ல.",
+        "intro": "CBSL daily table Lankawa ingest — headline = selling rate.",
+        "demoIntro": "Home/Economy pulse card shape — buy + sell visible.",
+        "trustNote": "நாளை rate predict, money changer recommend, commercial counter CBSL match guarantee இல்லை.",
+        "sections": [
+          "CBSL US dollar buy/sell வேறு publish. Banks margins/fees add.",
+          "Lankawa headline = CBSL selling rate. Buying rate card note-ல.",
+          "Rates CBSL business-day schedule — continuous forex screen அல்ல.",
+          "Remittance/import/settlement — bank/exchange counter compare."
+        ],
+        "demo": {
+          "cardLabel": "USD / LKR",
+          "headlineNote": "Headline = CBSL selling rate",
+          "buyLabel": "Buying rate",
+          "buyHint": "Dealers USD CBSL-க்கு sell — rate",
+          "sellLabel": "Selling rate",
+          "sellHint": "Lankawa headline number",
+          "footnote": "Illustrative — live Home/Economy.",
+          "step1": "CBSL daily table",
+          "step2": "Lankawa buy + sell ingest",
+          "step3": "தேவையெனில் counter verify"
+        }
+      },
+      "floodLevels": {
+        "title": "River flood alert levels அர்த்தம்",
+        "summary": "NORMAL, ALERT, WARNING, DANGER — water height vs station thresholds.",
+        "inlineHint": "Alert colours river height — evacuation orders அல்ல.",
+        "intro": "lk-flood-api river gauges aggregate. Station thresholds வேறு.",
+        "demoIntro": "Station card level (m) vs alert/warning/danger thresholds.",
+        "trustNote": "Gauges preparedness input — DMC/local warnings replace அல்ல.",
+        "sections": [
+          "Water level metres — gauge height, street depth அல்ல.",
+          "NORMAL = alert threshold கீழ். ALERT = first threshold — monitoring.",
+          "WARNING/DANGER station-specific.",
+          "Remarks/timestamps upstream. History unavailable — sparklines degrade."
+        ],
+        "demo": {
+          "stationName": "Peradeniya (Mahaweli)",
+          "riverName": "Mahaweli Ganga · illustrative",
+          "currentLevel": "Current level",
+          "alertLevel": "Alert threshold",
+          "warningLevel": "Warning threshold",
+          "dangerLevel": "Danger threshold",
+          "alertLine": "Alert line",
+          "warningLine": "Warning line",
+          "dangerLine": "Danger line",
+          "levels": {
+            "normal": "Alert threshold கீழ் — routine monitoring.",
+            "alert": "First threshold — forecasts watch.",
+            "warning": "Significant rise — local guidance prepare.",
+            "danger": "Highest threshold — DMC/local instructions."
+          }
+        }
+      },
+      "freshness": {
+        "title": "Freshness badges எப்படி படிப்பது",
+        "summary": "Fresh, Stale, Down — act செய்வதற்கு முன்.",
+        "inlineHint": "Live metrics freshness tier — stale silent அல்ல.",
+        "intro": "Last fetch vs cadence. Pulse, sources, status badges.",
+        "demoIntro": "Badge = upstream confirm time — event time அல்ல.",
+        "trustNote": "Fresh = recently responded — every use case correct அல்ல.",
+        "sections": [
+          "Fresh: expected cadence-க்குள்.",
+          "Stale: older — context; verify if timing matters.",
+          "Down: failed — /status check.",
+          "Badges pipeline health — official urgency அல்ல."
+        ],
+        "demo": {
+          "sampleMetric": "Sample pulse metric",
+          "asOf": "Last fetch · illustrative",
+          "statusLinkPrefix": "Sources பாருங்கள்",
+          "statusLinkLabel": "status dashboard",
+          "statusLinkSuffix": " — last errors உடன்.",
+          "tiers": {
+            "fresh": {
+              "body": "Expected cadence-க்குள் fetched.",
+              "action": "Daily checks default."
+            },
+            "stale": {
+              "body": "Older than expected.",
+              "action": "Context; verify if needed."
+            },
+            "down": {
+              "body": "Unreachable last check.",
+              "action": "/status before relying."
+            }
+          }
+        }
+      },
+      "provenance": {
+        "title": "எல்லா எண்களும் எங்கிருந்து",
+        "summary": "Pulse card → source → upstream publisher chain.",
+        "inlineHint": "Provenance link — methodology, cadence, last fetch.",
+        "intro": "Metrics source registry. Adapter, cadence, health documented.",
+        "demoIntro": "Number → publishing organisation chain.",
+        "trustNote": "We aggregate — formal use authority verify.",
+        "sections": [
+          "Pulse /sources/[id] methodology, adapter, freshness.",
+          "API JSON; scrapes scheduled.",
+          "Partner live + seed fallback.",
+          "/api/v1/* same provenance."
+        ],
+        "demo": {
+          "previewLabel": "Example provenance link",
+          "previewMetric": "USD / LKR · CBSL daily exchange rates",
+          "previewLink": "CBSL FX source page",
+          "steps": {
+            "metric": {
+              "label": "லங்காவாவில்",
+              "title": "Pulse card or table",
+              "body": "Value, unit, time, freshness badge."
+            },
+            "source": {
+              "label": "Source registry",
+              "title": "/sources/cbsl_fx",
+              "body": "Methodology, cadence, adapter, last fetch."
+            },
+            "upstream": {
+              "label": "Upstream publisher",
+              "title": "Central Bank of Sri Lanka",
+              "body": "Data originate org — source page link."
+            }
+          }
+        }
+      },
+      "seedVsLive": {
+        "title": "Live data vs illustrative seed",
+        "summary": "Live feeds today vs representative seed modules.",
+        "inlineHint": "Seed/fallback labelled — approximations mistaken அல்ல.",
+        "intro": "Live adapters + seed. Limitations /about open.",
+        "demoIntro": "Live vs seed — /status health.",
+        "trustNote": "Seed surveillance/ledgers அல்ல.",
+        "sections": [
+          "Live: CBSL FX, Octane, flood, weather, CEB, CSE, news.",
+          "Seed: dengue, MPs, tenders, local gov, elections, COL.",
+          "Mixed: property/vehicle partner + seed.",
+          "30+ green days expand — /status check."
+        ],
+        "demo": {
+          "module": "Module",
+          "status": "Status",
+          "meaning": "Meaning",
+          "kinds": {
+            "live": "Live adapter",
+            "seed": "Seed data",
+            "mixed": "Live + fallback"
+          },
+          "liveTitle": "Live adapter",
+          "liveBody": "Upstream API/scrape. Freshness badges.",
+          "seedTitle": "Illustrative seed",
+          "seedBody": "Sample aligned formats — not operational.",
+          "rows": {
+            "fx": { "name": "USD / LKR", "note": "CBSL scrape + DB" },
+            "fuel": { "name": "Fuel prices", "note": "Octane API + cache" },
+            "flood": { "name": "Flood stations", "note": "lk-flood-api" },
+            "dengue": { "name": "Dengue cases", "note": "Seed — not live" },
+            "property": { "name": "Property medians", "note": "Partner or seed" },
+            "tenders": { "name": "Tender feed", "note": "Static seed" }
+          }
+        }
+      }
     }
   }
 }

@@ -41,7 +41,8 @@
     "explore": "Explore",
     "governance": "Governance",
     "data": "Data",
-    "about": "About"
+    "about": "About",
+    "learn": "Guides"
   },
   "home": {
     "eyebrow": "Sri Lanka's civic platform",
@@ -438,7 +439,8 @@
     "apiLink": "View developer docs",
     "platformTitle": "Everything in one place",
     "platformBody": "All data, documentation, and source attribution live on Lankawa. You never need to leave this platform to explore metrics, understand methodology, or use the public API.",
-    "freshnessLink": "Explore data sources"
+    "freshnessLink": "Explore data sources",
+    "learnLink": "Read our transparency guides"
   },
   "freshness": {
     "fresh": "Fresh",
@@ -451,6 +453,7 @@
     "about": "About",
     "sources": "Data sources",
     "developers": "Developers",
+    "learn": "Guides",
     "status": "Status",
     "districts": "Districts",
     "elections": "Elections",
@@ -918,6 +921,219 @@
       "colombo": "Tell me about Colombo district",
       "flood": "How many flood stations are active?",
       "elections": "Who won the 2024 presidential election?"
+    }
+  },
+  "learn": {
+    "eyebrow": "Trust & transparency",
+    "title": "How to read Lankawa",
+    "subtitle": "Plain-language guides to the numbers you see — no jargon, no spin. We explain what we show, where it comes from, and what we do not know.",
+    "trustPreamble": "Lankawa is not a government agency. These guides explain our methodology so you can decide when to trust a number and when to verify with the primary source.",
+    "readTime": "{minutes} min read",
+    "viewGuide": "Read guide",
+    "inlineEyebrow": "Unbiased explainer",
+    "back": "All guides",
+    "demoTitle": "What you see on Lankawa",
+    "explainerTitle": "What this means",
+    "trustTitle": "What we will not claim",
+    "relatedTitle": "See it in context",
+    "topics": {
+      "economy": "Economy",
+      "disaster": "Disaster",
+      "platform": "Platform"
+    },
+    "relatedPaths": {
+      "/": "Home pulse",
+      "/economy": "Economy",
+      "/disaster": "Disaster hub",
+      "/districts": "District atlas",
+      "/status": "Status dashboard",
+      "/sources": "Data sources",
+      "/about": "About",
+      "/explore": "Explore modules"
+    },
+    "items": {
+      "fxRates": {
+        "title": "How USD/LKR exchange rates work",
+        "summary": "Why Lankawa shows CBSL selling rates, what buy/sell means, and why your bank may differ.",
+        "inlineHint": "The headline USD/LKR figure is the Central Bank selling rate — not every counter or remittance quote.",
+        "intro": "Every morning Sri Lankans check the dollar rate. Lankawa pulls the official daily table from the Central Bank of Sri Lanka (CBSL) and shows the selling rate as the headline number.",
+        "demoIntro": "This is the same shape as the pulse card on Home and Economy — with both buy and sell rates visible.",
+        "trustNote": "We do not predict tomorrow's rate, recommend a money changer, or guarantee that any commercial counter will match CBSL's published table.",
+        "sections": [
+          "CBSL publishes a daily reference table with separate buying and selling rates for the US dollar. Banks and licensed money changers use these as a benchmark, but they may add margins, fees, or inventory limits.",
+          "Lankawa's headline USD/LKR value is the CBSL selling rate — the rate at which the central bank would sell dollars to licensed dealers on that business day. The buying rate (shown in the card note) is what dealers receive when selling dollars back.",
+          "Rates update on CBSL's business-day schedule, not continuously like a forex trading screen. A Fresh badge means we fetched the latest published table within our expected cadence; Stale means the table is older than expected but still displayed.",
+          "If you are remitting, importing, or settling a large invoice, compare the CBSL reference with your bank or exchange counter — Lankawa is a civic reference, not a quote for your transaction."
+        ],
+        "demo": {
+          "cardLabel": "USD / LKR",
+          "headlineNote": "Headline = CBSL selling rate",
+          "buyLabel": "Buying rate",
+          "buyHint": "What dealers receive when selling USD to CBSL",
+          "sellLabel": "Selling rate",
+          "sellHint": "Shown as Lankawa's headline number",
+          "footnote": "Illustrative values — live numbers appear on Home and Economy.",
+          "step1": "CBSL publishes a daily table",
+          "step2": "Lankawa ingests buy + sell",
+          "step3": "You verify at your counter if needed"
+        }
+      },
+      "floodLevels": {
+        "title": "What river flood alert levels mean",
+        "summary": "NORMAL, ALERT, WARNING, and DANGER — how water height maps to station thresholds.",
+        "inlineHint": "Alert colours reflect river height against station-specific thresholds — not evacuation orders.",
+        "intro": "Lankawa aggregates river gauge readings from the public lk-flood-api, which tracks Irrigation Department and DMC-linked stations. Each station has its own threshold lines.",
+        "demoIntro": "A station card compares current water level (metres) against alert, warning, and danger thresholds set for that river reach.",
+        "trustNote": "River gauges are one input for preparedness. They do not replace DMC bulletins, local authority warnings, or on-the-ground judgment during heavy rain.",
+        "sections": [
+          "Water level is measured in metres above a station datum — essentially how high the river is at that gauge point, not how deep floodwater is in your street.",
+          "NORMAL means the level is below the station's alert threshold. ALERT means the level crossed the first threshold — increased monitoring, not necessarily public danger.",
+          "WARNING and DANGER are progressively higher thresholds for that specific station. A WARNING at one river does not mean the same risk at another — each gauge has different geography.",
+          "Remarks and timestamps come from the upstream feed. If history is unavailable, sparklines degrade gracefully — we show what we have and mark freshness honestly."
+        ],
+        "demo": {
+          "stationName": "Peradeniya (Mahaweli)",
+          "riverName": "Mahaweli Ganga · illustrative",
+          "currentLevel": "Current level",
+          "alertLevel": "Alert threshold",
+          "warningLevel": "Warning threshold",
+          "dangerLevel": "Danger threshold",
+          "alertLine": "Alert line",
+          "warningLine": "Warning line",
+          "dangerLine": "Danger line",
+          "levels": {
+            "normal": "Below alert threshold — routine monitoring.",
+            "alert": "First threshold crossed — watch forecasts and upstream rain.",
+            "warning": "Significant rise — prepare according to local guidance.",
+            "danger": "Highest station threshold — follow DMC and local authority instructions."
+          }
+        }
+      },
+      "freshness": {
+        "title": "How to read freshness badges",
+        "summary": "Fresh, Stale, and Down — what each tier means before you act on a number.",
+        "inlineHint": "Every live metric carries a freshness tier so stale data is never silent.",
+        "intro": "Lankawa compares the last successful fetch time against each source's expected update cadence. Badges appear on pulse cards, source pages, and the status dashboard.",
+        "demoIntro": "The badge on a metric tells you how recently we confirmed the upstream source — not whether the underlying event happened.",
+        "trustNote": "Fresh does not mean \"correct for every use case\" — only that the source responded recently. Down means we could not reach the source; we may show a cached or seed fallback elsewhere with clear labelling.",
+        "sections": [
+          "Fresh: the source responded within its expected cadence (for example, CBSL FX within roughly a business day, flood levels within about ten minutes to an hour depending on upstream).",
+          "Stale: data is older than expected but still available. Useful for context — verify before time-sensitive decisions.",
+          "Down: the adapter failed or the upstream API is unreachable. Check /status for the last error and whether a fallback is in use.",
+          "Badges describe our pipeline health, not official urgency levels. A Fresh flood reading can still be alarming; a Stale FX rate may still be the latest CBSL table."
+        ],
+        "demo": {
+          "sampleMetric": "Sample pulse metric",
+          "asOf": "As of last successful fetch · illustrative",
+          "statusLinkPrefix": "See every source on the",
+          "statusLinkLabel": "status dashboard",
+          "statusLinkSuffix": " — including last error messages.",
+          "tiers": {
+            "fresh": {
+              "body": "Fetched within the expected cadence for this source.",
+              "action": "Good default for daily checks."
+            },
+            "stale": {
+              "body": "Older than expected — upstream may be delayed or cached.",
+              "action": "Use for context; verify if timing matters."
+            },
+            "down": {
+              "body": "Source unreachable on last check.",
+              "action": "Open /status or the source page before relying on the number."
+            }
+          }
+        }
+      },
+      "provenance": {
+        "title": "Where every number comes from",
+        "summary": "From pulse card to registered source to upstream publisher — full attribution chain.",
+        "inlineHint": "Tap any metric's provenance link to see methodology, cadence, and last fetch time.",
+        "intro": "Every metric on Lankawa maps to an entry in our source registry. We document adapter type (API, scheduled scrape, or partner feed), update cadence, and live health.",
+        "demoIntro": "Follow the chain from the number you see to the organisation that publishes the underlying data.",
+        "trustNote": "We aggregate and normalise — we do not originate official statistics. Election results, budgets, and health surveillance should be confirmed with the publishing authority when used in formal contexts.",
+        "sections": [
+          "Pulse metrics link to /sources/[id] pages with methodology text, adapter type, and freshness history.",
+          "API integrations (flood API, Octane fuel, Open-Meteo weather) fetch structured JSON. Scrapes (CBSL FX, CEB power) parse public pages on a schedule.",
+          "Partner feeds (PropertyLK, Vehicle platform, Life/Ariva) attempt live calls with honest fallback to seed data when upstream is unavailable — see the seed vs live guide.",
+          "The public /api/v1/* JSON API exposes the same provenance paths developers see in the UI — no hidden sources."
+        ],
+        "demo": {
+          "previewLabel": "Example provenance link",
+          "previewMetric": "USD / LKR · CBSL daily exchange rates",
+          "previewLink": "View CBSL FX source page",
+          "steps": {
+            "metric": {
+              "label": "On Lankawa",
+              "title": "Pulse card or module table",
+              "body": "You see the value, unit, observed time, and a freshness badge."
+            },
+            "source": {
+              "label": "Source registry",
+              "title": "/sources/cbsl_fx",
+              "body": "Methodology, cadence, adapter type, and last successful fetch."
+            },
+            "upstream": {
+              "label": "Upstream publisher",
+              "title": "Central Bank of Sri Lanka",
+              "body": "The organisation that originates the data — linked from the source page."
+            }
+          }
+        }
+      },
+      "seedVsLive": {
+        "title": "Live data vs illustrative seed",
+        "summary": "Which modules fetch live feeds today — and which use representative seed data.",
+        "inlineHint": "We label seed and fallback data clearly so approximations are never mistaken for live official series.",
+        "intro": "Lankawa ships with both live adapters and curated seed datasets. Seed modules let the platform stay usable while ingest pipelines are built — we document limitations openly in /about and on each module.",
+        "demoIntro": "A honest snapshot of what is live today versus representative seed — check /status for current health.",
+        "trustNote": "Seed data is never presented as live surveillance or official ledger extracts. When an adapter falls back to seed, freshness and source pages reflect that.",
+        "sections": [
+          "Live today: CBSL FX, Octane fuel, lk-flood-api levels, Open-Meteo weather, CEB power checks, CSE market board (with cache), and news RSS — subject to upstream availability.",
+          "Representative seed: dengue weekly tables, MP scorecards, tender notices, local government directory completeness, historical election approximations, and cost-of-living composites.",
+          "Mixed: property and vehicle modules attempt partner API calls but fall back to seed bands when upstream errors — watch freshness and source notes on those pages.",
+          "We expand live coverage as adapters stay green for 30+ days — see docs/ROADMAP.md. If a module matters to you, /status shows whether it is actually live right now."
+        ],
+        "demo": {
+          "module": "Module",
+          "status": "Status",
+          "meaning": "What that means",
+          "kinds": {
+            "live": "Live adapter",
+            "seed": "Seed data",
+            "mixed": "Live + fallback"
+          },
+          "liveTitle": "Live adapter",
+          "liveBody": "Fetched from an upstream API or scheduled scrape on a public cadence. Freshness badges apply.",
+          "seedTitle": "Illustrative seed",
+          "seedBody": "Curated sample aligned with published formats — useful for UI and demos, not operational response.",
+          "rows": {
+            "fx": {
+              "name": "USD / LKR",
+              "note": "CBSL daily table via scrape + DB ingest"
+            },
+            "fuel": {
+              "name": "Fuel prices",
+              "note": "Octane partner API with cache"
+            },
+            "flood": {
+              "name": "Flood stations",
+              "note": "lk-flood-api river levels"
+            },
+            "dengue": {
+              "name": "Dengue cases",
+              "note": "Representative weekly seed — not live surveillance"
+            },
+            "property": {
+              "name": "Property medians",
+              "note": "Partner API when healthy; seed bands otherwise"
+            },
+            "tenders": {
+              "name": "Tender feed",
+              "note": "Static seed notices — not live e-GP"
+            }
+          }
+        }
+      }
     }
   }
 }
