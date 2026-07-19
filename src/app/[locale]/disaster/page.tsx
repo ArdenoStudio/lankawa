@@ -1,5 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { EarthquakePanel } from "@/components/EarthquakePanel";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
+import { fetchEarthquakeSnapshot } from "@/lib/integrations/earthquake";
 import { fetchPowerStatus } from "@/lib/integrations/power";
 import { buildPulseSnapshot } from "@/lib/pulse";
 
@@ -11,9 +13,10 @@ export default async function DisasterPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("disaster");
-  const [snapshot, power] = await Promise.all([
+  const [snapshot, power, earthquakes] = await Promise.all([
     buildPulseSnapshot(),
     fetchPowerStatus(),
+    fetchEarthquakeSnapshot(),
   ]);
 
   return (
@@ -67,6 +70,47 @@ export default async function DisasterPage({
       </section>
 
       <InlineExplainerBanner slug="flood-levels" />
+
+      <EarthquakePanel
+        snapshot={earthquakes}
+        locale={locale}
+        labels={{
+          title: t("earthquakeTitle"),
+          subtitle: t("earthquakeSubtitle"),
+          emptyTitle: t("earthquakeEmptyTitle"),
+          emptyBody: t("earthquakeEmptyBody", {
+            minMagnitude: earthquakes.minMagnitude,
+            days: earthquakes.queryWindowDays,
+          }),
+          emptyScopeNote: t("earthquakeEmptyScopeNote", {
+            minLat: earthquakes.bbox.minLat,
+            maxLat: earthquakes.bbox.maxLat,
+            minLon: earthquakes.bbox.minLon,
+            maxLon: earthquakes.bbox.maxLon,
+          }),
+          emptyOffshoreNote: t("earthquakeEmptyOffshoreNote"),
+          errorTitle: t("earthquakeErrorTitle"),
+          errorBody: t("earthquakeErrorBody"),
+          magnitude: t("earthquakeMagnitude"),
+          depth: t("earthquakeDepth"),
+          coordinates: t("earthquakeCoordinates"),
+          occurredAt: t("earthquakeOccurredAt"),
+          tsunamiFlag: t("earthquakeTsunamiFlag"),
+          windowLabel: t("earthquakeWindowLabel", {
+            days: earthquakes.queryWindowDays,
+            minMagnitude: earthquakes.minMagnitude,
+          }),
+          bboxLabel: t("earthquakeBboxLabel", {
+            minLat: earthquakes.bbox.minLat,
+            maxLat: earthquakes.bbox.maxLat,
+            minLon: earthquakes.bbox.minLon,
+            maxLon: earthquakes.bbox.maxLon,
+          }),
+          sourceNote: t("earthquakeSourceNote"),
+          provenance: t("earthquakeProvenance"),
+          countLabel: t("earthquakeCountLabel", { count: earthquakes.events.length }),
+        }}
+      />
 
       <section className="space-y-4">
         <div>

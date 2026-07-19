@@ -350,6 +350,19 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["weather_colombo"],
   },
   {
+    id: "usgs_earthquake",
+    name: "USGS Earthquake Event API",
+    category: "disaster",
+    url: "https://earthquake.usgs.gov/fdsnws/event/1/",
+    cadenceMinutes: 60,
+    adapter: "api",
+    description:
+      "Recent earthquake catalog entries within Sri Lanka's land bounding box.",
+    methodology:
+      "Lankawa queries the USGS FDSN Event Web Service with the same Sri Lanka land bounds used on district maps (79.5°E–82.1°E, 5.9°N–9.9°N), a rolling 30-day window, and magnitude ≥ 2.5. Results are shown as-is with no severity scoring — an empty list means USGS has no qualifying events in that box, not that seismic risk is zero. Offshore Indian Ocean events outside the land bbox are excluded by design.",
+    metrics: ["earthquake_events"],
+  },
+  {
     id: "ceb_power",
     name: "CEB Care — Power Outages",
     category: "disaster",
