@@ -15,8 +15,8 @@ export function formatCadence(minutes: number): string {
 }
 
 export function formatAdapter(
-  adapter: "api" | "scrape" | "partner",
-  labels: Record<"api" | "scrape" | "partner", string>,
+  adapter: "api" | "scrape" | "partner" | "seed",
+  labels: Record<"api" | "scrape" | "partner" | "seed", string>,
 ): string {
   return labels[adapter];
 }

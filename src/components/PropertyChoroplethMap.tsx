@@ -222,7 +222,7 @@ export function PropertyChoroplethMap({
         mapRef.current = null;
       }
     };
-  }, [locale, maxMedian, snapshot.asOf, t]);
+  }, [locale, maxMedian, snapshot.asOf, snapshot.districts, t]);
 
   if (error) {
     return (

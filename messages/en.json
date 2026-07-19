@@ -596,6 +596,15 @@
       "source": "Source provenance",
       "decision": "PUCSL domestic tariff",
       "none": "—"
+    },
+    "worldPump": {
+      "title": "Regional pump compare",
+      "subtitle": "Sri Lanka petrol 92 vs curated South/Southeast Asia retail peers (USD/L).",
+      "seedBadge": "Seed",
+      "liveBadge": "Live",
+      "asOf": "Peer seed as of {date}",
+      "methodology": "Methodology:",
+      "empty": "Regional pump comparison unavailable."
     }
   },
   "search": {
@@ -733,7 +742,8 @@
     "adapters": {
       "api": "API integration",
       "scrape": "Scheduled scrape",
-      "partner": "Partner feed"
+      "partner": "Partner feed",
+      "seed": "Seed snapshot"
     }
   },
   "developers": {

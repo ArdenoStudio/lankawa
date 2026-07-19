@@ -50,8 +50,6 @@ export function EarthquakePanel({
     countLabel: string;
   };
 }) {
-  const bbox = snapshot.bbox;
-
   return (
     <section className="space-y-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -65,7 +63,10 @@ export function EarthquakePanel({
       <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
         <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
           <p>{labels.windowLabel}</p>
-          <p>{labels.bboxLabel}</p>
+          <p>
+            {labels.bboxLabel}: {snapshot.bbox.minLat},{snapshot.bbox.minLon} →{" "}
+            {snapshot.bbox.maxLat},{snapshot.bbox.maxLon}
+          </p>
         </div>
 
         {snapshot.error ? (

@@ -15,6 +15,7 @@ import { NcpiInflationCard } from "@/components/NcpiInflationCard";
 import { PucslTariffCard } from "@/components/PucslTariffCard";
 import { PulseCard } from "@/components/PulseCard";
 import { RemittanceCalculator } from "@/components/RemittanceCalculator";
+import { WorldPumpCompare } from "@/components/WorldPumpCompare";
 import { Link } from "@/i18n/navigation";
 import { getEconomyMacroSnapshot, getFxSeries, getLatestFxRate } from "@/lib/economy";
 import { getForeignDebtSnapshot } from "@/lib/foreign-debt";
@@ -26,6 +27,7 @@ import { getNcpiSnapshot } from "@/lib/ncpi";
 import { getPucslTariffSnapshot } from "@/lib/pucsl";
 import { buildPulseSnapshot } from "@/lib/pulse";
 import { getSource, getSourceProvenancePath } from "@/lib/sources";
+import { getWorldPumpSnapshot } from "@/lib/world-pump";
 
 export default async function EconomyPage({
   params,
@@ -51,6 +53,14 @@ export default async function EconomyPage({
   const tariffSnapshot = getPucslTariffSnapshot();
   const fxSource = getSource("cbsl_fx");
   const fuelSource = getSource("octane_fuel");
+  const petrolMetric = snapshot.metrics.find(
+    (metric) => metric.id === "fuel_petrol_92",
+  );
+  const usdMetric = snapshot.metrics.find((metric) => metric.id === "usd_lkr");
+  const worldPump = getWorldPumpSnapshot({
+    sriLankaPetrolLkr: petrolMetric ? Number(petrolMetric.value) : null,
+    usdLkr: usdMetric ? Number(usdMetric.value) : latestFxRate?.sellRate ?? null,
+  });
   const economyMetrics = snapshot.metrics.filter((metric) =>
     ["usd_lkr", "fuel_petrol_92", "fuel_diesel"].includes(metric.id),
   );
@@ -186,6 +196,18 @@ export default async function EconomyPage({
               from: t("fuelRevisionsFrom"),
               to: t("fuelRevisionsTo"),
               empty: t("fuelRevisionsEmpty"),
+            }}
+          />
+          <WorldPumpCompare
+            snapshot={worldPump}
+            labels={{
+              title: t("worldPump.title"),
+              subtitle: t("worldPump.subtitle"),
+              seedBadge: t("worldPump.seedBadge"),
+              liveBadge: t("worldPump.liveBadge"),
+              asOf: t("worldPump.asOf"),
+              methodology: t("worldPump.methodology"),
+              empty: t("worldPump.empty"),
             }}
           />
           <DebtCompositionCard
