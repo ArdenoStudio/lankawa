@@ -4,17 +4,18 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { DISTRICTS, getDistrictName } from "@/lib/districts";
-import { filterTenders } from "@/lib/tenders";
 import type { TenderNotice, TenderStatus } from "@/lib/types";
 
 export function TenderFeed({
   initialDistrict,
   initialQuery,
   ministryLabels,
+  notices,
 }: {
   initialDistrict?: string;
   initialQuery?: string;
   ministryLabels: Record<string, string>;
+  notices: TenderNotice[];
 }) {
   const t = useTranslations("tenders");
   const [query, setQuery] = useState(initialQuery ?? "");
@@ -23,12 +24,30 @@ export function TenderFeed({
 
   const results = useMemo(
     () =>
-      filterTenders({
-        q: query,
-        district: district || undefined,
-        status: status || undefined,
+      notices.filter((notice) => {
+        const normalizedQuery = query.trim().toLowerCase();
+        if (district && notice.district !== district) {
+          return false;
+        }
+        if (status && notice.status !== status) {
+          return false;
+        }
+        if (!normalizedQuery) {
+          return true;
+        }
+
+        return [
+          notice.title,
+          notice.reference,
+          notice.ministry,
+          notice.district,
+          notice.province,
+        ]
+          .join(" ")
+          .toLowerCase()
+          .includes(normalizedQuery);
       }),
-    [query, district, status],
+    [query, district, status, notices],
   );
 
   function formatValue(value: number): string {

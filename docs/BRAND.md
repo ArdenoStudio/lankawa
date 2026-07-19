@@ -71,9 +71,10 @@ The tricolor stripe (maroon / teal / gold) appears in the footer and OG image â€
 
 | Role | Font | Notes |
 |------|------|-------|
-| Latin UI | Noto Sans | Primary interface text |
-| Sinhala | Noto Sans Sinhala | Automatic via locale |
-| Tamil | Noto Sans Tamil | Automatic via locale |
+| Latin display | Cal Sans | Brand, hero, section titles (`.font-display`) |
+| Latin UI | Inter | Body copy and UI chrome |
+| Sinhala | Noto Sans Sinhala | Automatic via `html:lang(si)` |
+| Tamil | Noto Sans Tamil | Automatic via `html:lang(ta)` |
 
 Use `BrandTagline` for taglines to ensure correct script rendering per locale.
 

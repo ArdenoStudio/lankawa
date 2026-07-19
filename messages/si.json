@@ -46,10 +46,10 @@
   },
   "home": {
     "eyebrow": "ශ්‍රී ලංකාවේ සිවිල් වේදිකාව",
-    "title": "දිවයින සඳහා එක් වේදිකාවක්",
-    "subtitle": "ආර්ථික, දිස්ත්‍රික්, මැතිවරණ, විපත් සහ පොදු සේවා — සෑම අගයකටම දත්ත ප්‍රවේණිය සමඟ එක්තැනක.",
-    "pulseTitle": "සජීවී නාඩි",
-    "pulseSubtitle": "විනිමය, ඉන්ධන, කොළඹ කාලගුණය, විදුලි සැපයුම සහ ගංවතුර නිරීක්ෂණ — ප්‍රසිද්ධ කාලසටහනකට අනුව.",
+    "title": "ශ‍රී ලංකාව සඳහා ඔබේ උදෑසන පරීක්ෂාව",
+    "subtitle": "විනිමය, ඉන්ධන, කාලගුණය සහ විදුලිය — සෑම අගයකටම මූලාශ්‍රය සමඟ.",
+    "pulseTitle": "අද",
+    "pulseSubtitle": "උදේ වැදගත් දේ — ප්‍රසිද්ධ කාලසටහනකට අනුව යාවත්කාලීන වේ.",
     "pulseLive": "දැන් සජීවී",
     "pulseStripLabel": "සජීවී සිවිල් දර්ශක",
     "modulesTitle": "වේදිකාව ගවේෂණය කරන්න",
@@ -62,7 +62,7 @@
     "viewDistricts": "දිස්ත්‍රික් බලන්න",
     "viewEconomy": "සම්පූර්ණ ආර්ථික දසුන",
     "viewDisaster": "විපත් කේන්ද්‍රය",
-    "exploreDistricts": "දිස්ත්‍රික් ගවේෂණය",
+    "exploreDistricts": "දිස්ත්‍රික් බලන්න",
     "ctaExplore": "වේදිකාව ගවේෂණය",
     "ctaDisaster": "විපත්",
     "ctaEconomy": "ආර්ථිකය",
@@ -72,7 +72,15 @@
     "ardenoTitle": "Ardeno living-cost stack",
     "ardenoSubtitle": "Fuel, property, vehicles, and food — integrated in-platform from sister platforms.",
     "viewArdeno": "Open Ardeno hub",
-    "disclaimer": "ප්‍රසිද්ධ මූලාශ්‍ර වලින් එකතු කළ දත්ත. නිල රජයේ ප්‍රකාශනයක් නොවේ."
+    "disclaimer": "ප්‍රසිද්ධ මූලාශ්‍ර වලින් එකතු කළ දත්ත. නිල රජයේ ප්‍රකාශනයක් නොවේ.",
+    "viewStatus": "මූලාශ්‍ර තත්ත්වය",
+    "depthTitle": "තවත් ගැඹුරට",
+    "depthSubtitle": "දිස්ත‍රික්, ආර්ථිකය, විපත්, මගපෙන්වීම් සහ සම්පූර්ණ මොඩියුල නාමාවලිය.",
+    "depthDistricts": "දිස්ත්‍රික්",
+    "depthEconomy": "ආර්ථිකය",
+    "depthDisaster": "විපත්",
+    "depthExplore": "ගවේෂණය",
+    "depthLearn": "මගපෙන්වීම්"
   },
   "modules": {
     "districts": {
@@ -170,7 +178,7 @@
   },
   "news": {
     "title": "ශ්‍රී ලංකා පුවත් නාඩි",
-    "subtitle": "Daily Mirror සහ Ada Derana ප්‍රසිද්ධ RSS පෝෂ් වලින් නවතම ශීර්ෂ පාඨ.",
+    "subtitle": "සිංහල, දෙමළ සහ ඉංග්‍රීසි ප්‍රසිද්ධ RSS පෝෂ් වලින් නවතම ශීර්ෂ පාඨ.",
     "viewAll": "සියලු ශීර්ෂ පාඨ",
     "viewSource": "මූලාශ්‍රය බලන්න",
     "provenance": "ප්‍රසිද්ධ RSS පෝෂ් වලින් එකතු කළ දත්ත",
@@ -178,6 +186,26 @@
     "headlineCount": "ශීර්ෂ පාඨ {count}ක් නිරීක්ෂණය කරයි",
     "sourceMirror": "Daily Mirror",
     "sourceAda": "Ada Derana"
+  },
+  "brief": {
+    "eyebrow": "උදෑසන සාරාංශය",
+    "title": "අද උදේ දැනගත යුතු දේ",
+    "subtitle": "ශ්‍රී ලංකාවේ නවතම පුවත් ශීර්ෂ පාඨ වලින් සාදන කෙටි සාරාංශය.",
+    "freshness": "මූලාශ්‍ර ශීර්ෂ පාඨ {count} · ජනනය කළේ {date}",
+    "viewSource": "පුවත් ප්‍රවේණිය බලන්න",
+    "translationNote": "සිංහල දසුනේ අතුරුමුහුණත් වචන පරිවර්තනය කර ඇත. AI provider එකක් නොමැති heuristic සාරාංශ source headlines ඉංග්‍රීසි ලෙස තබා ගත හැක."
+  },
+  "cricket": {
+    "eyebrow": "ශ්‍රී ලංකා ක්‍රිකට්",
+    "title": "අද තරගය",
+    "subtitle": "ශ්‍රී ලංකා තරගයක් අද සජීවී හෝ ආරම්භ වීමට ඇත්නම් පමණක් පෙන්වයි.",
+    "live": "සජීවී",
+    "upcoming": "අද",
+    "startsAt": "ආරම්භය {date}",
+    "venue": "ස්ථානය: {venue}",
+    "timeUnavailable": "වේලාව නොමැත",
+    "provenance": "ක්‍රිකට් දත්ත මූලාශ්‍රය",
+    "viewSource": "මූලාශ්‍රය බලන්න"
   },
   "explore": {
     "eyebrow": "මොඩියුල නාමාවලිය",
@@ -512,7 +540,8 @@
       "environment": "පරිසර",
       "health": "සෞඛ්‍ය",
       "civic": "සිවිල්",
-      "transport": "ප්‍රවාහන"
+      "transport": "ප්‍රවාහන",
+      "sports": "ක්‍රීඩා"
     },
     "adapters": {
       "api": "API ඒකාබද්ධතාව",
@@ -719,7 +748,9 @@
     "property": "Property score",
     "compare": "Compare",
     "vsNational": "base {base}",
-    "disclaimer": "Seed composite index — for illustration only."
+    "disclaimer": "Seed composite index — for illustration only.",
+    "methodologyLink": "ක්‍රමවේදය කියවන්න",
+    "disclaimerLive": "සජීවී සහෝදර ආදාන මත යාවත්කාලීන සංයුක්තය. නිල NCPI ප්‍රකාශනයක් නොවේ."
   },
   "environment": {
     "title": "Environment & Air Quality",
@@ -850,7 +881,10 @@
     "monthlyBasket": "Monthly basket",
     "restaurantIndex": "Restaurant index",
     "intensity": "Relative cost",
-    "disclaimer": "Representative food price intelligence — not official NCPI. Seed fallback used when FoodLK endpoints are unavailable."
+    "disclaimer": "Representative food price intelligence — not official NCPI. Seed fallback used when FoodLK endpoints are unavailable.",
+    "disclaimerLife": "FoodLK API unavailable. Headline figures from Ariva Life Platform food layer; district meal bands are seed until FoodLK recovers.",
+    "disclaimerSeed": "Seed fallback — FoodLK and Life Platform food endpoints unavailable. Representative figures only.",
+    "bannerLife": "FoodLK temporarily unreachable. Staple/basket figures from Ariva Life Platform food adapter — not live FoodLK scrapes."
   },
   "ardeno": {
     "eyebrow": "Sister platforms",
@@ -1123,15 +1157,49 @@
           "seedTitle": "Illustrative seed",
           "seedBody": "Published formats aligned sample — UI/demos, not operational.",
           "rows": {
-            "fx": { "name": "USD / LKR", "note": "CBSL scrape + DB ingest" },
-            "fuel": { "name": "Fuel prices", "note": "Octane API + cache" },
-            "flood": { "name": "Flood stations", "note": "lk-flood-api levels" },
-            "dengue": { "name": "Dengue cases", "note": "Representative seed — not live" },
-            "property": { "name": "Property medians", "note": "Partner API or seed bands" },
-            "tenders": { "name": "Tender feed", "note": "Static seed — not live e-GP" }
+            "fx": {
+              "name": "USD / LKR",
+              "note": "CBSL scrape + DB ingest"
+            },
+            "fuel": {
+              "name": "Fuel prices",
+              "note": "Octane API + cache"
+            },
+            "flood": {
+              "name": "Flood stations",
+              "note": "lk-flood-api levels"
+            },
+            "dengue": {
+              "name": "Dengue cases",
+              "note": "Representative seed — not live"
+            },
+            "property": {
+              "name": "Property medians",
+              "note": "Partner API or seed bands"
+            },
+            "tenders": {
+              "name": "Tender feed",
+              "note": "Static seed — not live e-GP"
+            }
           }
         }
       }
     }
+  },
+  "a11y": {
+    "skipToContent": "ප්‍රධාන අන්තර්ගතය වෙත යන්න"
+  },
+  "costOfLivingMethodology": {
+    "title": "ජීවන වියදම් ක්‍රමවේදය",
+    "subtitle": "Lankawa දිස්‍ත්‍රික් සංයුක්ත දර්ශකය ගොඩනගන ආකාරය — සහ එය නොවන දේ.",
+    "back": "ජීවන වියදම",
+    "inputsTitle": "සජීවී ආදාන",
+    "inputFuel": "Octane CPC පෙට්‍රල් 92 ජාතික යොමු මිල.",
+    "inputProperty": "PropertyLK දිස්ත්‍රික් මධ්‍ය අගයන් — කොළඹට සාපේක්ෂව.",
+    "inputFood": "FoodLK හෝ Ariva Life අත්‍යවශ්‍ය කූඩය; නැත්නම් බීජ ආහාර ඇස්තමේන්තු.",
+    "methodTitle": "සංයුක්ත ක්‍රමය",
+    "methodBody": "සජීවී ආදාන තිබේ නම් ජාතික පෙට්‍රල් යොමුව සහ ආහාර කූඩ යාවත්කාලීන වේ. දේපල සංරචකය PropertyLK මත පදනම් වේ. සහෝදරයන් නොමැති නම් බීජ දත්ත පෙන්වයි.",
+    "limitsTitle": "සීමා",
+    "limitsBody": "මෙය නිල NCPI/CCPI දත්ත නොවේ. සිවිල් සංසන්දනය සඳහා පමණි."
   }
 }

@@ -9,6 +9,12 @@ const NEWS_CADENCE_MINUTES = 30;
 const CACHE_PATH = path.join(process.cwd(), "ingest", "output", "sl_news.json");
 const FETCH_TIMEOUT_MS = 12_000;
 
+interface NewsFeedDefinition {
+  id: string;
+  name: string;
+  url: string;
+}
+
 export const SL_NEWS_FEEDS = [
   {
     id: "daily_mirror",
@@ -20,7 +26,27 @@ export const SL_NEWS_FEEDS = [
     name: "Ada Derana",
     url: "https://adaderana.lk/rss.php",
   },
-] as const;
+  {
+    id: "lankadeepa",
+    name: "Lankadeepa",
+    url: "https://www.lankadeepa.lk/rss/latest_news/1",
+  },
+  {
+    id: "tamil_guardian",
+    name: "Tamil Guardian",
+    url: "https://www.tamilguardian.com/rss.xml",
+  },
+  {
+    id: "economynext",
+    name: "EconomyNext",
+    url: "https://economynext.com/feed/",
+  },
+  {
+    id: "newswire",
+    name: "Newswire",
+    url: "https://www.newswire.lk/feed/",
+  },
+] satisfies NewsFeedDefinition[];
 
 export interface NewsHeadline {
   title: string;
@@ -53,6 +79,29 @@ const ITEM_RE = /<item\b[\s\S]*?<\/item>/gi;
 const TAG_RE = (tag: string) =>
   new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, "i");
 
+function getRuntimeNewsFeeds(): NewsFeedDefinition[] {
+  const coreFeeds = SL_NEWS_FEEDS.filter(
+    (feed) => feed.id === "daily_mirror" || feed.id === "ada_derana",
+  );
+  const envFeeds = (process.env.NEWS_RSS_FEEDS ?? "")
+    .split(",")
+    .map((url) => url.trim())
+    .filter(Boolean)
+    .map((url, index) => ({
+      id: `custom_rss_${index + 1}`,
+      name: `Custom RSS ${index + 1}`,
+      url,
+    }));
+
+  const byUrl = new Map<string, NewsFeedDefinition>();
+  const defaultFeeds = envFeeds.length > 0 ? coreFeeds : SL_NEWS_FEEDS;
+  for (const feed of [...defaultFeeds, ...envFeeds]) {
+    byUrl.set(feed.url, feed);
+  }
+
+  return [...byUrl.values()];
+}
+
 function decodeEntities(value: string): string {
   return value
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
@@ -67,6 +116,16 @@ function decodeEntities(value: string): string {
 
 function stripTags(value: string): string {
   return decodeEntities(value.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
+}
+
+function normalizeHeadlineTitle(title: string): string {
+  return title
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/https?:\/\/\S+/g, "")
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function parseRssDate(value: string | undefined): string {
@@ -178,8 +237,9 @@ async function readIngestCache(): Promise<NewsPulse | null> {
 
 async function fetchLiveNewsPulse(): Promise<NewsPulse> {
   const fetchedAt = new Date().toISOString();
+  const feeds = getRuntimeNewsFeeds();
   const results = await Promise.allSettled(
-    SL_NEWS_FEEDS.map((feed) => fetchFeed(feed.id, feed.url)),
+    feeds.map((feed) => fetchFeed(feed.id, feed.url)),
   );
 
   const seen = new Set<string>();
@@ -190,10 +250,12 @@ async function fetchLiveNewsPulse(): Promise<NewsPulse> {
       continue;
     }
     for (const headline of result.value) {
-      if (seen.has(headline.url)) {
+      const normalizedTitle = normalizeHeadlineTitle(headline.title);
+      const dedupeKey = normalizedTitle || headline.url;
+      if (seen.has(dedupeKey)) {
         continue;
       }
-      seen.add(headline.url);
+      seen.add(dedupeKey);
       headlines.push(headline);
     }
   }

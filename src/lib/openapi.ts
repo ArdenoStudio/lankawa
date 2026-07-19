@@ -2,12 +2,48 @@ export const openApiSpec = {
   openapi: "3.1.0",
   info: {
     title: "Lankawa Public API",
-    version: "0.7.0",
+    version: "0.8.0",
     description:
       "Public civic intelligence API for Sri Lanka. Every metric includes source provenance and freshness tiers.",
   },
   servers: [{ url: "/api/v1" }],
   paths: {
+    "/news": {
+      get: {
+        summary: "Sri Lanka news pulse",
+        responses: {
+          "200": {
+            description:
+              "Recent RSS headlines from EN/SI/TA outlets with freshness provenance",
+          },
+        },
+      },
+    },
+    "/cse": {
+      get: {
+        summary: "Colombo Stock Exchange snapshot",
+        responses: {
+          "200": { description: "ASPI/S&P SL20, movers, and market summary" },
+        },
+      },
+    },
+    "/brief": {
+      get: {
+        summary: "Trilingual morning brief",
+        parameters: [
+          {
+            name: "locale",
+            in: "query",
+            schema: { type: "string", enum: ["en", "si", "ta"] },
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Quality-gated morning brief bullets derived from news pulse",
+          },
+        },
+      },
+    },
     "/health": {
       get: {
         summary: "Source health and freshness",
@@ -132,10 +168,40 @@ export const openApiSpec = {
         responses: { "200": { description: "FY 2024/25 and 2025/26 budget seed data" } },
       },
     },
+    "/environment": {
+      get: {
+        summary: "Air quality snapshot",
+        responses: { "200": { description: "District AQI and PM2.5 readings with live OpenAQ overlay when available" } },
+      },
+    },
+    "/tenders": {
+      get: {
+        summary: "Government procurement tender notices",
+        parameters: [
+          { name: "district", in: "query", schema: { type: "string" } },
+          { name: "province", in: "query", schema: { type: "string" } },
+          { name: "category", in: "query", schema: { type: "string", enum: ["goods", "works", "services"] } },
+          { name: "status", in: "query", schema: { type: "string", enum: ["open", "closing_soon", "closed"] } },
+          { name: "q", in: "query", schema: { type: "string" } },
+        ],
+        responses: { "200": { description: "Filtered tender notices with live PROMISe fallback provenance" } },
+      },
+    },
     "/health/dengue": {
       get: {
         summary: "Weekly dengue statistics",
-        responses: { "200": { description: "District-level dengue case counts (seed)" } },
+        responses: {
+          "200": {
+            description:
+              "District-level dengue case counts with Epidemiology Unit live parse when available",
+          },
+        },
+      },
+    },
+    "/analytics/event": {
+      post: {
+        summary: "Retention analytics event (no PII)",
+        responses: { "200": { description: "Accepted retention event" } },
       },
     },
     "/property": {

@@ -46,10 +46,10 @@
   },
   "home": {
     "eyebrow": "Sri Lanka's civic platform",
-    "title": "One platform for the entire island",
-    "subtitle": "Economy, districts, elections, disasters, and public services — unified with provenance on every number.",
-    "pulseTitle": "Live pulse",
-    "pulseSubtitle": "Exchange rates, fuel prices, Colombo weather, power status, and flood monitoring — refreshed on a public cadence.",
+    "title": "Your morning check for Sri Lanka",
+    "subtitle": "FX, fuel, weather, and power — with provenance on every number.",
+    "pulseTitle": "Today",
+    "pulseSubtitle": "What matters this morning — refreshed on a public cadence.",
     "pulseLive": "Live now",
     "pulseStripLabel": "Live civic indicators",
     "modulesTitle": "Explore the platform",
@@ -62,10 +62,18 @@
     "viewDistricts": "Browse districts",
     "viewEconomy": "Full economy view",
     "viewDisaster": "Disaster hub",
-    "exploreDistricts": "Explore districts",
+    "viewStatus": "Source status",
+    "exploreDistricts": "Browse districts",
     "ctaExplore": "Explore platform",
     "ctaDisaster": "Disaster",
     "ctaEconomy": "Economy",
+    "depthTitle": "Go deeper",
+    "depthSubtitle": "Districts, economy, disaster, guides, and the full module directory.",
+    "depthDistricts": "Districts",
+    "depthEconomy": "Economy",
+    "depthDisaster": "Disaster",
+    "depthExplore": "Explore",
+    "depthLearn": "Guides",
     "exploreCtaTitle": "Elections, civic data, property, and more",
     "exploreCtaSubtitle": "The full Lankawa module directory — elections, budget, Ardeno stack, transport, and platform tools.",
     "viewExplore": "Explore all modules",
@@ -73,6 +81,9 @@
     "ardenoSubtitle": "Fuel, property, vehicles, and food — integrated in-platform from sister platforms.",
     "viewArdeno": "Open Ardeno hub",
     "disclaimer": "Aggregated from public sources. Not an official government publication."
+  },
+  "a11y": {
+    "skipToContent": "Skip to main content"
   },
   "modules": {
     "districts": {
@@ -170,7 +181,7 @@
   },
   "news": {
     "title": "Sri Lanka news pulse",
-    "subtitle": "Latest headlines from public RSS feeds — Daily Mirror and Ada Derana.",
+    "subtitle": "Latest headlines from public Sinhala, Tamil, and English RSS feeds.",
     "viewAll": "All headlines",
     "viewSource": "View source",
     "provenance": "Aggregated from public RSS feeds",
@@ -178,6 +189,26 @@
     "headlineCount": "{count} headlines tracked",
     "sourceMirror": "Daily Mirror",
     "sourceAda": "Ada Derana"
+  },
+  "brief": {
+    "eyebrow": "Morning brief",
+    "title": "What to know this morning",
+    "subtitle": "A compact brief generated from the latest Sri Lanka headlines.",
+    "freshness": "{count} source headlines · generated {date}",
+    "viewSource": "View news provenance",
+    "translationNote": "Sinhala and Tamil views use translated interface strings. Heuristic briefs may keep source headlines in English unless an AI provider is configured."
+  },
+  "cricket": {
+    "eyebrow": "Sri Lanka cricket",
+    "title": "Match today",
+    "subtitle": "Shown only when a Sri Lanka match is live or upcoming today.",
+    "live": "Live",
+    "upcoming": "Today",
+    "startsAt": "Starts {date}",
+    "venue": "Venue: {venue}",
+    "timeUnavailable": "time unavailable",
+    "provenance": "Cricket data source",
+    "viewSource": "View source"
   },
   "explore": {
     "eyebrow": "Module directory",
@@ -512,7 +543,8 @@
       "environment": "Environment",
       "health": "Health",
       "civic": "Civic",
-      "transport": "Transport"
+      "transport": "Transport",
+      "sports": "Sports"
     },
     "adapters": {
       "api": "API integration",
@@ -721,7 +753,9 @@
     "property": "Property score",
     "compare": "Compare",
     "vsNational": "base {base}",
-    "disclaimer": "Seed composite index — not an official NCPI or CPI publication. For illustration only."
+    "disclaimer": "Seed composite index — not an official NCPI or CPI publication. For illustration only.",
+    "methodologyLink": "Read methodology",
+    "disclaimerLive": "Composite refreshed from live federation inputs where available. Not an official NCPI publication."
   },
   "environment": {
     "title": "Environment & Air Quality",
@@ -852,7 +886,10 @@
     "monthlyBasket": "Monthly basket",
     "restaurantIndex": "Restaurant index",
     "intensity": "Relative cost",
-    "disclaimer": "Representative food price intelligence — not official NCPI. Seed fallback used when FoodLK endpoints are unavailable."
+    "disclaimer": "Representative food price intelligence — not official NCPI. Seed fallback used when FoodLK endpoints are unavailable.",
+    "disclaimerLife": "FoodLK API was unavailable at fetch time. Headline figures come from the Ariva Life Platform food federation layer; district meal bands use Lankawa seed estimates until FoodLK recovers.",
+    "disclaimerSeed": "Showing seed fallback data — FoodLK and Life Platform food endpoints were unavailable. Figures are representative, not live market quotes.",
+    "bannerLife": "FoodLK is temporarily unreachable. Staple and basket figures come from the Ariva Life Platform food adapter — representative estimates, not live FoodLK scrapes."
   },
   "ardeno": {
     "eyebrow": "Sister platforms",
@@ -1153,5 +1190,18 @@
         }
       }
     }
+  },
+  "costOfLivingMethodology": {
+    "title": "Cost of living methodology",
+    "subtitle": "How Lankawa builds the district composite index — and what it is not.",
+    "back": "Cost of living",
+    "inputsTitle": "Live inputs",
+    "inputFuel": "Octane CPC petrol 92 reference price (national).",
+    "inputProperty": "PropertyLK district median land bands, Colombo-normalized for the property component.",
+    "inputFood": "FoodLK or Ariva Life essentials basket when available; otherwise seed food basket estimates.",
+    "methodTitle": "Composite method",
+    "methodBody": "When live federation inputs are available, Lankawa refreshes the national petrol reference and rescales district food baskets from the essentials estimate. Property components use live PropertyLK medians relative to Colombo. District ranks come from a blended index (seed structure + live components). If partners are offline, the published seed snapshot is shown with seed provenance.",
+    "limitsTitle": "Limits",
+    "limitsBody": "This is not official NCPI, CCPI, or Department of Census and Statistics HIES data. It is a civic comparison tool with provenance badges. Do not use it for wage setting or formal inflation claims."
   }
 }

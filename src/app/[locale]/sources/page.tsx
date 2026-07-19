@@ -24,6 +24,7 @@ export default async function SourcesPage({
     health: t("categories.health"),
     civic: t("categories.civic"),
     transport: t("categories.transport"),
+    sports: t("categories.sports"),
   } satisfies Record<
     (typeof SOURCES)[number]["category"],
     string

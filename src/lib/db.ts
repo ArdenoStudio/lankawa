@@ -211,20 +211,31 @@ export async function upsertObservations(
     source_id: string;
     metric: string;
     value: number;
-    unit: string;
+    unit: string | null;
     observed_at: string;
+    meta?: Record<string, unknown>;
   }>,
 ): Promise<number> {
   if (rows.length === 0) {
     return 0;
   }
 
+  // Persist core observation columns; meta is best-effort when the column exists.
+  const payload = rows.map(({ source_id, metric, value, unit, observed_at, meta }) => ({
+    source_id,
+    metric,
+    value,
+    unit,
+    observed_at,
+    ...(meta ? { meta } : {}),
+  }));
+
   await dbFetch("observations", {
     method: "POST",
     headers: {
       Prefer: "resolution=merge-duplicates,return=minimal",
     },
-    body: JSON.stringify(rows),
+    body: JSON.stringify(payload),
   });
 
   return rows.length;

@@ -1,10 +1,15 @@
 import dengueData from "@/data/dengue-seed.json";
+import { fetchLiveDengueSnapshot } from "./integrations/dengue";
 import type { DengueSnapshot, DengueRiskLevel } from "./types";
 
 const snapshot = dengueData as DengueSnapshot;
 
 export function getDengueSnapshot(): DengueSnapshot {
   return snapshot;
+}
+
+export async function getDengueData(): Promise<DengueSnapshot> {
+  return (await fetchLiveDengueSnapshot()) ?? snapshot;
 }
 
 export function getDengueDistrictStats(slug: string) {

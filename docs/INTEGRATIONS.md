@@ -7,9 +7,9 @@ This document describes how Lankawa integrates the Ardeno sister platforms: Octa
 | Platform | Adapter | Live status (Jul 2026) | Lankawa module | Seed fallback |
 |----------|---------|------------------------|----------------|-----------------|
 | **Octane** | `src/lib/integrations/octane.ts` | ✅ Live (`/v1/prices/latest`, `/v1/prices/history`) | Home pulse, `/economy`, `/api/v1/fuel/history` | Static CPC series in `src/lib/fuel.ts`; pulse uses last-known CPC prices |
-| **PropertyLK** | `src/lib/integrations/propertylk.ts` | ⚠️ Intermittent (production API often times out) | `/property`, `/api/v1/property`, pulse property metric | `src/data/property-seed.json` — explicit seed notice on page when live fetch fails |
+| **PropertyLK** | `src/lib/integrations/propertylk.ts` | ✅ Live via `GET /districts` (was wrong path `/api/v1/districts`) | `/property`, `/api/v1/property`, pulse property metric | `src/data/property-seed.json` — seed when fetch fails |
 | **Vehicle Platform** | `src/lib/integrations/vehicle.ts` | ✅ Live | `/vehicles`, `/api/v1/vehicles`, pulse vehicle metric | `src/data/vehicle-seed.json` |
-| **Food Platform** | `src/lib/integrations/food.ts` | ❌ Direct endpoints return HTTP 500 | `/food`, `/api/v1/food`, COL food link | `src/data/food-seed.json`; tries Life Platform food domain as secondary live source |
+| **Food Platform** | `src/lib/integrations/food.ts` | ❌ Direct `/api/v1/*` still HTTP 500 | `/food`, `/api/v1/food`, COL food link | Life food domain labeled `life_platform_food` (not FoodLK live); else seed |
 | **Life Platform** | `src/lib/integrations/life.ts` | ✅ Live (`/api/v1/life/overview`) | `/ardeno`, `/api/v1/life`, home Ardeno cards | `src/lib/life.ts` seed overview |
 | **Open-Meteo (weather)** | `src/lib/integrations/weather.ts` | ✅ Live | Home pulse, hero strip | Unavailable → `—` with tier `down` |
 | **CEB power** | `src/lib/integrations/power.ts` | ✅ Live (CEB Care scrape) | Home pulse, `/disaster` | `unknown` status when CEB Care unreachable — never fake normal |
@@ -48,7 +48,7 @@ NEWS_RSS_FEEDS=https://www.dailymirror.lk/rss/1,https://www.adaderana.lk/rss.php
 
 **Endpoints tried**
 
-- `GET {PROPERTYLK_API_URL}/api/v1/districts` — property page, `/api/v1/property`, pulse
+- `GET {PROPERTYLK_API_URL}/districts` — property page, `/api/v1/property`, pulse (maps `{district,count,avg_price}` → Lankawa snapshot)
 
 **Fallback**
 
@@ -217,3 +217,10 @@ Reference endpoints (from Chime probe, Jul 2026): `aspiData`, `snpData`, `tradeS
 - Power: live CEB Care on home pulse + disaster hub ✅
 - CSE: live `cse.lk` adapter on economy pulse; seed fallback ✅
 - News RSS: live RSS parse + ingest cache fallback ✅
+- PropertyLK path fix: `GET /districts` with 12s timeout ✅
+- Food honesty: Life federation labeled separately from FoodLK live ✅
+- Cron ingest: FX + weather + power + CSE + news + macro → observations ✅
+- Pulse DB-first for FX/weather/power/CSE/news when DB configured ✅
+- OpenAQ / tenders / dengue adapters with seed fallback ✅
+- Morning brief (`/api/v1/brief`) + cricket card + retention analytics ✅
+- COL composite + methodology page ✅

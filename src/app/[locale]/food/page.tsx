@@ -14,11 +14,12 @@ export default async function FoodPage({
   setRequestLocale(locale);
   const t = await getTranslations("food");
   const snapshot = await getFoodData();
+  const provenance = snapshot.provenance ?? "seed";
 
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-semibold text-white">{t("title")}</h1>
+        <h1 className="font-display text-3xl font-semibold text-white">{t("title")}</h1>
         <p className="mt-2 max-w-2xl text-slate-400">{t("subtitle")}</p>
         <p className="mt-2 text-sm text-slate-500">
           {t("asOf", { date: snapshot.asOf })} ·{" "}
@@ -29,6 +30,11 @@ export default async function FoodPage({
             {snapshot.sourceName}
           </Link>
         </p>
+        {provenance === "life_federation" ? (
+          <p className="mt-3 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
+            {t("bannerLife")}
+          </p>
+        ) : null}
       </div>
 
       <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -68,7 +74,13 @@ export default async function FoodPage({
         <FoodDistrictTable locale={locale} snapshot={snapshot} />
       </section>
 
-      <p className="text-sm text-slate-500">{t("disclaimer")}</p>
+      <p className="text-sm text-slate-500">
+        {provenance === "seed"
+          ? t("disclaimerSeed")
+          : provenance === "life_federation"
+            ? t("disclaimerLife")
+            : t("disclaimer")}
+      </p>
     </div>
   );
 }

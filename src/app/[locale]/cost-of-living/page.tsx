@@ -1,7 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CostOfLivingTable } from "@/components/CostOfLivingTable";
 import { Link } from "@/i18n/navigation";
-import { getCostOfLivingSnapshot } from "@/lib/cost-of-living";
+import { getCostOfLivingData } from "@/lib/cost-of-living";
 import { getSourceProvenancePath } from "@/lib/sources";
 
 export default async function CostOfLivingPage({
@@ -12,12 +12,15 @@ export default async function CostOfLivingPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("costOfLiving");
-  const snapshot = getCostOfLivingSnapshot();
+  const snapshot = await getCostOfLivingData();
+  const isComposite = snapshot.sourceId === "cost_of_living_composite";
 
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-semibold text-white">{t("title")}</h1>
+        <h1 className="font-display text-3xl font-semibold text-white">
+          {t("title")}
+        </h1>
         <p className="mt-2 max-w-2xl text-slate-400">{t("subtitle")}</p>
         <p className="mt-2 text-sm text-slate-500">
           {t("asOf", { date: snapshot.asOf })} ·{" "}
@@ -26,6 +29,13 @@ export default async function CostOfLivingPage({
             className="text-teal-300 hover:text-teal-200"
           >
             {snapshot.sourceName}
+          </Link>
+          {" · "}
+          <Link
+            href="/cost-of-living/methodology"
+            className="text-teal-300 hover:text-teal-200"
+          >
+            {t("methodologyLink")}
           </Link>
         </p>
       </div>
@@ -67,10 +77,12 @@ export default async function CostOfLivingPage({
 
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-white">{t("tableTitle")}</h2>
-        <CostOfLivingTable locale={locale} />
+        <CostOfLivingTable locale={locale} snapshot={snapshot} />
       </section>
 
-      <p className="text-sm text-slate-500">{t("disclaimer")}</p>
+      <p className="text-sm text-slate-500">
+        {isComposite ? t("disclaimerLive") : t("disclaimer")}
+      </p>
     </div>
   );
 }

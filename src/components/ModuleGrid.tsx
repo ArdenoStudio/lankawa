@@ -146,9 +146,9 @@ export function ModuleGrid({
 }: {
   sections?: readonly ModuleSection[];
 }) {
-  if (sections && sections.length > 0) {
-    const t = useTranslations("explore");
+  const t = useTranslations("explore");
 
+  if (sections && sections.length > 0) {
     return (
       <div className="space-y-10">
         {sections.map((section) => (

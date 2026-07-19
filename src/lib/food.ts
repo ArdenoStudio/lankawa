@@ -17,4 +17,9 @@ export function formatFoodPrice(value: number): string {
   return value.toLocaleString();
 }
 
-export { getFoodData } from "./integrations/food";
+export {
+  getFoodData,
+  getFoodDistrictMealCosts,
+  type FoodFetchResult,
+  type FoodProvenance,
+} from "./integrations/food";

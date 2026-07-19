@@ -1,8 +1,19 @@
 # Lankawa Master Plan — UI Redo + Platform Completion
 
-**Status:** Active planning (July 2026)  
+**Status:** Implementation in progress (July 2026) — Phases A–F scaffolding landed on `cursor/master-plan-ui-and-integrations-3c69`  
 **Owner:** Ardeno Studio  
 **Product:** Lankawa is the umbrella. Sister apps stay APIs. Lanka Monitor is a UI/UX donor, not a second deploy.
+
+### Progress snapshot
+
+| Phase | Status |
+|-------|--------|
+| A UI morning surface | Done — brand-first hero, Today grid, NewsPulse, depth rail, Cal Sans + Inter |
+| B Federation fixes | Done — PropertyLK `/districts`, Food Life-federation honesty, status provenance |
+| C Ingest purity | Done — cron FX/weather/power/CSE/news/macro; pulse DB-first; freshness walk test; canary route |
+| D Live civic layers | Partial — OpenAQ/tenders/dengue adapters with seed fallback; upstream coverage varies |
+| E Differentiators | Partial — SI/TA RSS, morning brief + quality gate, cricket card; pgvector cluster deferred |
+| F Depth & launch | Partial — COL composite + methodology, llms.txt/OpenAPI, D1/D7 retention beacon |
 
 ---
 

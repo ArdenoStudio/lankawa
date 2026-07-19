@@ -1,3 +1,4 @@
+import { getLatestObservation, isDatabaseConfigured } from "../db";
 import { computeFreshnessTier } from "../freshness";
 import { getSource, getSourceProvenancePath } from "../sources";
 import type { FreshnessTier, PulseMetric, SourceHealth } from "../types";
@@ -17,6 +18,13 @@ const MAX_GROUP_GEO_LOOKUPS = 4;
 const PRESENT_OUTAGE_CONCURRENCY = 4;
 
 export type PowerSupplyStatus = "normal" | "scheduled" | "outage" | "unknown";
+
+const POWER_STATUS_FROM_VALUE: PowerSupplyStatus[] = [
+  "normal",
+  "scheduled",
+  "outage",
+  "unknown",
+];
 
 export interface PowerStatus {
   status: PowerSupplyStatus;
@@ -522,6 +530,40 @@ function powerStatusLabel(status: PowerSupplyStatus): string {
   }
 }
 
+function powerContribution(
+  source: NonNullable<ReturnType<typeof getSource>>,
+  checkedAt: string,
+  power: PowerStatus,
+): { metric: PulseMetric; health: SourceHealth } {
+  const tier =
+    power.status === "unknown"
+      ? ("unknown" satisfies FreshnessTier)
+      : computeFreshnessTier(power.observedAt, source.cadenceMinutes);
+
+  return {
+    metric: {
+      id: "power_status",
+      label: "Power supply",
+      value: powerStatusLabel(power.status),
+      observedAt: power.status === "unknown" ? null : power.observedAt,
+      tier,
+      sourceId: source.id,
+      provenancePath: power.provenancePath,
+      note: power.summary,
+    },
+    health: {
+      id: source.id,
+      name: source.name,
+      category: source.category,
+      tier,
+      lastSuccessAt: power.status === "unknown" ? null : power.observedAt,
+      lastCheckedAt: checkedAt,
+      error: power.status === "unknown" ? power.summary : null,
+      provenancePath: getSourceProvenancePath(source.id),
+    },
+  };
+}
+
 export async function buildPowerPulseMetric(checkedAt: string): Promise<{
   metric: PulseMetric;
   health: SourceHealth;
@@ -529,34 +571,24 @@ export async function buildPowerPulseMetric(checkedAt: string): Promise<{
   const source = getSource("ceb_power")!;
 
   try {
-    const power = await fetchPowerStatus();
-    const tier =
-      power.status === "unknown"
-        ? ("unknown" satisfies FreshnessTier)
-        : computeFreshnessTier(power.observedAt, source.cadenceMinutes);
+    if (isDatabaseConfigured()) {
+      const dbObservation = await getLatestObservation(source.id, "power_status");
+      if (dbObservation) {
+        const status =
+          POWER_STATUS_FROM_VALUE[Math.round(dbObservation.value)] ?? "unknown";
+        return powerContribution(source, checkedAt, {
+          status,
+          summary: `Persisted CEB status: ${powerStatusLabel(status)}`,
+          affectedAreas: [],
+          observedAt: dbObservation.observedAt,
+          sourceId: "ceb_power",
+          provenancePath: "/disaster",
+        });
+      }
+    }
 
-    return {
-      metric: {
-        id: "power_status",
-        label: "Power supply",
-        value: powerStatusLabel(power.status),
-        observedAt: power.status === "unknown" ? null : power.observedAt,
-        tier,
-        sourceId: source.id,
-        provenancePath: power.provenancePath,
-        note: power.summary,
-      },
-      health: {
-        id: source.id,
-        name: source.name,
-        category: source.category,
-        tier,
-        lastSuccessAt: power.status === "unknown" ? null : power.observedAt,
-        lastCheckedAt: checkedAt,
-        error: power.status === "unknown" ? power.summary : null,
-        provenancePath: getSourceProvenancePath(source.id),
-      },
-    };
+    const power = await fetchPowerStatus();
+    return powerContribution(source, checkedAt, power);
   } catch (error) {
     const tier: FreshnessTier = "unknown";
 

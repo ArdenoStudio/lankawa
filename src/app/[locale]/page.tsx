@@ -1,6 +1,10 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { CricketCard } from "@/components/CricketCard";
+import { MorningBrief } from "@/components/MorningBrief";
+import { NewsPulse } from "@/components/NewsPulse";
 import { PulseCard } from "@/components/PulseCard";
 import { HeroSection } from "@/components/HeroSection";
+import { RetentionBeacon } from "@/components/RetentionBeacon";
 import { SourceHealthBar } from "@/components/SourceHealthBar";
 import { Link } from "@/i18n/navigation";
 import { buildPulseSnapshot, getTodayPulseMetrics } from "@/lib/pulse";
@@ -17,44 +21,65 @@ export default async function HomePage({
   const todayMetrics = getTodayPulseMetrics(snapshot.metrics);
 
   return (
-    <div className="space-y-12 md:space-y-16">
-      <HeroSection metrics={todayMetrics} />
+    <div className="space-y-10 md:space-y-14">
+      <RetentionBeacon locale={locale} />
+      <HeroSection />
 
-      <section className="space-y-5">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h2 className="text-2xl font-semibold text-white">{t("pulseTitle")}</h2>
-            <p className="mt-2 text-slate-400">{t("pulseSubtitle")}</p>
-          </div>
-          <Link
-            href="/disaster"
-            className="text-sm font-medium text-teal-300 hover:text-teal-200"
-          >
-            {t("viewDisaster")}
-          </Link>
+      <section className="space-y-5" id="today">
+        <div>
+          <h2 className="font-display text-2xl font-semibold text-white">
+            {t("pulseTitle")}
+          </h2>
+          <p className="mt-2 text-slate-400">{t("pulseSubtitle")}</p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {todayMetrics.map((metric) => (
-            <PulseCard key={metric.id} metric={metric} />
+          {todayMetrics.map((metric, index) => (
+            <div
+              key={metric.id}
+              className="animate-[lk-fade-up_0.4s_ease-out_both]"
+              style={{ animationDelay: `${index * 45}ms` }}
+            >
+              <PulseCard metric={metric} />
+            </div>
           ))}
         </div>
       </section>
 
-      <section className="lk-card p-6 md:p-8">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 className="text-xl font-semibold text-white">{t("exploreCtaTitle")}</h2>
-            <p className="mt-2 max-w-xl text-sm text-slate-400">{t("exploreCtaSubtitle")}</p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Link href="/explore" className="lk-btn-primary">
-              {t("ctaExplore")}
-            </Link>
-            <Link href="/districts" className="lk-btn-secondary">
-              {t("viewDistricts")}
-            </Link>
-          </div>
+      <CricketCard />
+
+      <MorningBrief locale={locale} />
+
+      <NewsPulse />
+
+      <section className="space-y-3 border-t border-white/10 pt-8">
+        <div>
+          <h2 className="font-display text-xl font-semibold text-white">
+            {t("depthTitle")}
+          </h2>
+          <p className="mt-2 max-w-xl text-sm text-slate-400">
+            {t("depthSubtitle")}
+          </p>
         </div>
+        <nav
+          aria-label={t("depthTitle")}
+          className="flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium"
+        >
+          <Link href="/districts" className="text-teal-300 hover:text-teal-200">
+            {t("depthDistricts")}
+          </Link>
+          <Link href="/economy" className="text-teal-300 hover:text-teal-200">
+            {t("depthEconomy")}
+          </Link>
+          <Link href="/disaster" className="text-teal-300 hover:text-teal-200">
+            {t("depthDisaster")}
+          </Link>
+          <Link href="/explore" className="text-teal-300 hover:text-teal-200">
+            {t("depthExplore")}
+          </Link>
+          <Link href="/learn" className="text-teal-300 hover:text-teal-200">
+            {t("depthLearn")}
+          </Link>
+        </nav>
       </section>
 
       <SourceHealthBar sources={snapshot.sources} />

@@ -3,15 +3,18 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { getDistrict, getDistrictName } from "@/lib/districts";
-import {
-  getAqiBandColor,
-  getAqiBandLabelKey,
-  getRankedEnvironmentDistricts,
-} from "@/lib/environment";
+import { getAqiBandColor, getAqiBandLabelKey } from "@/lib/environment";
+import type { EnvironmentDistrictStat } from "@/lib/types";
 
-export function EnvironmentDistrictTable({ locale }: { locale: string }) {
+export function EnvironmentDistrictTable({
+  locale,
+  districts,
+}: {
+  locale: string;
+  districts: EnvironmentDistrictStat[];
+}) {
   const t = useTranslations("environment");
-  const districts = getRankedEnvironmentDistricts();
+  const rankedDistricts = [...districts].sort((a, b) => b.aqi - a.aqi);
 
   return (
     <div className="overflow-x-auto rounded-2xl border border-white/10">
@@ -25,7 +28,7 @@ export function EnvironmentDistrictTable({ locale }: { locale: string }) {
           </tr>
         </thead>
         <tbody>
-          {districts.map((row) => {
+          {rankedDistricts.map((row) => {
             const district = getDistrict(row.slug);
             if (!district) {
               return null;

@@ -275,6 +275,41 @@ async function buildNewsData(checkedAt: string): Promise<{
   const source = getSource("news_rss")!;
 
   try {
+    if (isDatabaseConfigured()) {
+      const dbObservation = await getLatestObservation(source.id, "headline_count");
+      if (dbObservation) {
+        const tier = computeFreshnessTier(
+          dbObservation.observedAt,
+          source.cadenceMinutes,
+        );
+        return {
+          contribution: {
+            metric: {
+              id: "news_headlines",
+              label: "Sri Lanka news",
+              value: String(Math.round(dbObservation.value)),
+              unit: "headlines",
+              observedAt: dbObservation.observedAt,
+              tier,
+              sourceId: source.id,
+              provenancePath: getSourceProvenancePath(source.id),
+              note: "From ingest cache",
+            },
+            health: {
+              id: source.id,
+              name: source.name,
+              category: source.category,
+              tier,
+              lastSuccessAt: dbObservation.observedAt,
+              lastCheckedAt: checkedAt,
+              error: null,
+              provenancePath: getSourceProvenancePath(source.id),
+            },
+          },
+        };
+      }
+    }
+
     const pulse = await fetchNewsPulse();
     return { contribution: buildNewsPulseMetric(checkedAt, pulse) };
   } catch (error) {
@@ -313,6 +348,41 @@ async function buildCseData(checkedAt: string): Promise<{
   const source = getSource(CSE_SOURCE_ID)!;
 
   try {
+    if (isDatabaseConfigured()) {
+      const dbObservation = await getLatestObservation(source.id, "cse_aspi");
+      if (dbObservation) {
+        const tier = computeFreshnessTier(
+          dbObservation.observedAt,
+          source.cadenceMinutes,
+        );
+        return {
+          metric: {
+            id: "cse_aspi",
+            label: "ASPI",
+            value: dbObservation.value.toLocaleString(undefined, {
+              maximumFractionDigits: 2,
+            }),
+            unit: "pts",
+            observedAt: dbObservation.observedAt,
+            tier,
+            sourceId: source.id,
+            provenancePath: getSourceProvenancePath(source.id),
+            note: "From ingest cache",
+          },
+          health: {
+            id: source.id,
+            name: source.name,
+            category: source.category,
+            tier,
+            lastSuccessAt: dbObservation.observedAt,
+            lastCheckedAt: checkedAt,
+            error: null,
+            provenancePath: getSourceProvenancePath(source.id),
+          },
+        };
+      }
+    }
+
     const snapshot = await buildCseSnapshot();
     return {
       metric: buildCsePulseMetricFromSnapshot(checkedAt, snapshot),
