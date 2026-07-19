@@ -1,6 +1,22 @@
 # Lankawa Roadmap
 
-Phase 7 shipped July 2026 (feature sprint — infra deferred). Phase 6 shipped July 2026. This document captures delivered work and recommendations for Phase 8+.
+Phase 8 shipped July 2026 (infrastructure + live data). Phase 7 shipped July 2026. This document captures delivered work and recommendations for Phase 9+.
+
+## Phase 8 Delivered
+
+| Feature | Status |
+|---------|--------|
+| Supabase/Postgres schema | ✅ `001_initial.sql` + `002_phase8.sql` (pulse_snapshots, ingest_runs, export_audit, events) |
+| Database integration | ✅ `src/lib/db.ts` read/write when Supabase env vars set; `DATABASE_URL` for migrations |
+| Pulse DB preference | ✅ FX prefers DB observations, falls back to live CBSL scrape |
+| Ingest cron | ✅ `/api/cron/ingest` with `CRON_SECRET` Bearer validation + CBSL FX persistence |
+| Pulse persistence | ✅ Snapshots stored on successful pulse build; `/api/v1/pulse/history` (30 days) |
+| Status dashboard | ✅ `/status` — all sources, freshness, last error (in-platform) |
+| Civic assistant MVP | ✅ `/assistant` — rule-based FAQ + optional OpenAI RAG over Lankawa JSON |
+| API rate limiting | ✅ 60 req/min per IP on `/api/v1/*` via middleware |
+| Platform health | ✅ `GET /api/v1/status` — DB connected, sources fresh, version |
+| Deployment docs | ✅ `docs/DEPLOYMENT.md`, updated `.env.example`, GitHub Actions ingest secrets |
+| API v0.6 | ✅ `/status`, `/pulse/history`, `/assistant` + OpenAPI update |
 
 ## Phase 7 Delivered
 
@@ -81,7 +97,38 @@ Phase 7 shipped July 2026 (feature sprint — infra deferred). Phase 6 shipped J
 
 ---
 
-## Phase 8 — Infrastructure Sprint (Next)
+## Phase 9 — Next Sprint
+
+### P0 — Live data expansion
+
+1. **Live dengue ingest** — Replace seed with Epidemiology Unit weekly scrape/API
+2. **Live e-GP tenders** — Replace seed tender feed with procurement portal ingest
+3. **Live PropertyLK adapter** — Wire partner API when production endpoint is stable
+4. **Environment ingest** — Replace AQI seed with live sensor/API when available
+5. **Budget & macro ingest** — Scheduled CBSL/Verité updates into observations table
+
+### P1 — Differentiation
+
+6. **Notification preferences** — Flood alert subscriptions (requires auth — Supabase)
+7. **Full Hansard MP ingest** — Replace seed scorecards with real attendance records
+8. **API webhooks docs** — Rate-limit headers, webhook documentation for partners
+9. **Assistant expansion** — Citation cards, district-scoped context, Sinhala/Tamil queries
+10. **Third-party widget SDK** — Documented embed SDK beyond iframe preview; optional CDN bundle
+
+### P2 — Platform
+
+11. **Tamil/Sinhala voice search**
+12. **Citizen report layer** — Crowdsourced potholes, outages moderated in-platform
+13. **Court backlog & HRCSL metrics** — PDF extraction pipeline
+14. **Local government councillor records** — Meeting minutes and member lists
+15. **Custom domain** — Production domain with Vercel DNS + edge caching tuning
+
+---
+
+## Phase 8 — Infrastructure Sprint (Delivered July 2026)
+
+<details>
+<summary>Original Phase 8 plan (superseded by delivered table above)</summary>
 
 ### P0 — Live data & platform
 
@@ -105,6 +152,8 @@ Phase 7 shipped July 2026 (feature sprint — infra deferred). Phase 6 shipped J
 12. **Citizen report layer** — Crowdsourced potholes, outages moderated in-platform
 13. **Court backlog & HRCSL metrics** — PDF extraction pipeline
 14. **Local government councillor records** — Meeting minutes and member lists
+
+</details>
 
 ---
 
@@ -147,4 +196,4 @@ All integrations must follow Lankawa rules: freshness tiers, `/sources/[id]` pro
 
 ---
 
-*Last updated: Phase 7 completion, July 2026*
+*Last updated: Phase 8 completion, July 2026*

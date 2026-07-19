@@ -23,6 +23,8 @@ const links = [
   { href: "/compare", key: "compare" },
   { href: "/civic", key: "civic" },
   { href: "/tenders", key: "tenders" },
+  { href: "/assistant", key: "assistant" },
+  { href: "/status", key: "status" },
   { href: "/sources", key: "sources" },
   { href: "/developers", key: "developers" },
 ] as const;

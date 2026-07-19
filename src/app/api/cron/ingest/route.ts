@@ -1,70 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isDatabaseConfigured } from "@/lib/db";
+import {
+  isDatabaseConfigured,
+  recordIngestRun,
+  reportSourceHealth,
+  upsertObservations,
+} from "@/lib/db";
 import { fetchCbslFxRates } from "@/lib/integrations/cbsl";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
-
-async function upsertObservations(
-  rows: Array<{
-    source_id: string;
-    metric: string;
-    value: number;
-    unit: string;
-    observed_at: string;
-  }>,
-): Promise<void> {
-  const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL ?? null;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? null;
-
-  if (!url || !key) {
-    throw new Error("Database not configured");
-  }
-
-  const response = await fetch(`${url.replace(/\/$/, "")}/rest/v1/observations`, {
-    method: "POST",
-    headers: {
-      apikey: key,
-      Authorization: `Bearer ${key}`,
-      "Content-Type": "application/json",
-      Prefer: "resolution=merge-duplicates,return=minimal",
-    },
-    body: JSON.stringify(rows),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Observation upsert failed (${response.status})`);
-  }
-}
-
-async function reportHealth(payload: {
-  source_id: string;
-  ok: boolean;
-  latency_ms: number;
-  observations_count: number;
-  error: string | null;
-  consecutive_failures: number;
-}): Promise<void> {
-  const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL ?? null;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? null;
-
-  if (!url || !key) {
-    return;
-  }
-
-  await fetch(`${url.replace(/\/$/, "")}/rest/v1/source_health`, {
-    method: "POST",
-    headers: {
-      apikey: key,
-      Authorization: `Bearer ${key}`,
-      "Content-Type": "application/json",
-      Prefer: "return=minimal",
-    },
-    body: JSON.stringify(payload),
-  });
-}
 
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
@@ -74,7 +18,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const started = Date.now();
+  const startedAt = new Date().toISOString();
+  const startedMs = Date.now();
   let error: string | null = null;
   let count = 0;
 
@@ -105,15 +50,30 @@ export async function GET(request: NextRequest) {
     error = caught instanceof Error ? caught.message : "Unknown error";
   }
 
-  const latencyMs = Date.now() - started;
-  await reportHealth({
-    source_id: "cbsl_fx",
-    ok: error == null,
-    latency_ms: latencyMs,
-    observations_count: count,
-    error,
-    consecutive_failures: error ? 1 : 0,
-  });
+  const latencyMs = Date.now() - startedMs;
+  const finishedAt = new Date().toISOString();
+
+  if (isDatabaseConfigured()) {
+    await reportSourceHealth({
+      source_id: "cbsl_fx",
+      ok: error == null,
+      latency_ms: latencyMs,
+      observations_count: count,
+      error,
+      consecutive_failures: error ? 1 : 0,
+    }).catch(() => undefined);
+
+    await recordIngestRun({
+      sourceId: "cbsl_fx",
+      startedAt,
+      finishedAt,
+      ok: error == null,
+      observationsCount: count,
+      latencyMs,
+      error,
+      triggerSource: "vercel_cron",
+    }).catch(() => undefined);
+  }
 
   if (error) {
     return NextResponse.json({ ok: false, error }, { status: 500 });

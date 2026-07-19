@@ -31,7 +31,9 @@
     "property": "Property",
     "transport": "Transport",
     "costOfLiving": "Cost of living",
-    "environment": "Environment"
+    "environment": "Environment",
+    "status": "Status",
+    "assistant": "Assistant"
   },
   "home": {
     "eyebrow": "National civic intelligence",
@@ -356,6 +358,12 @@
     "exportElectionsDescription": "Download presidential and parliamentary 2024 seed datasets.",
     "exportServicesSummary": "Export services JSON",
     "exportServicesDescription": "Download the full public services directory seed.",
+    "platformStatusSummary": "Platform status",
+    "platformStatusDescription": "Database connectivity, source freshness counts, API version, and ingest schedule.",
+    "pulseHistorySummary": "Pulse history",
+    "pulseHistoryDescription": "Stored pulse snapshots for the last 30 days (requires database).",
+    "assistantSummary": "Civic assistant",
+    "assistantDescription": "POST a question; receive an answer grounded on Lankawa API data with citations.",
     "exportTitle": "Data export",
     "exportBody": "Download curated datasets from the Lankawa API — same provenance as in-app data.",
     "export_districts": "District boundaries",
@@ -610,5 +618,43 @@
     "resultsCount": "{count} bodies",
     "noResults": "No local bodies match your filters.",
     "disclaimer": "Representative seed directory — not an exhaustive official gazette list."
+  },
+  "status": {
+    "title": "Platform status",
+    "subtitle": "Source health dashboard for all registered data feeds — freshness, last check, and errors.",
+    "disclaimer": "Internal-style monitoring view. All provenance links stay in-platform.",
+    "tierCount": {
+      "fresh": "Fresh",
+      "stale": "Stale",
+      "down": "Down",
+      "unknown": "Unknown"
+    },
+    "table": {
+      "source": "Source",
+      "category": "Category",
+      "freshness": "Freshness",
+      "lastChecked": "Last checked",
+      "lastSuccess": "Last success",
+      "error": "Last error"
+    }
+  },
+  "assistant": {
+    "title": "Civic assistant",
+    "subtitle": "Ask questions about districts, pulse metrics, elections, and public services — answers come only from Lankawa data.",
+    "groundingNote": "Grounded on Lankawa API data only. No external links. Optional LLM when OPENAI_API_KEY is configured.",
+    "emptyState": "Ask a question to get started.",
+    "inputPlaceholder": "e.g. What's the USD/LKR rate?",
+    "submit": "Ask",
+    "thinking": "Searching Lankawa data…",
+    "errorFallback": "Could not reach the assistant. Try again.",
+    "modeRule": "Rule-based answer from Lankawa data",
+    "modeLlm": "LLM answer grounded on fetched Lankawa JSON",
+    "disclaimer": "Not official government advice. Verify critical numbers on the relevant Lankawa module.",
+    "suggestions": {
+      "usd": "What's the USD/LKR rate?",
+      "colombo": "Tell me about Colombo district",
+      "flood": "How many flood stations are active?",
+      "elections": "Who won the 2024 presidential election?"
+    }
   }
 }

@@ -31,7 +31,9 @@
     "property": "ගොඩනැගිලි",
     "transport": "ප්‍රවාහන",
     "costOfLiving": "ජීවන වියදම",
-    "environment": "පරිසර"
+    "environment": "පරිසර",
+    "status": "තත්ත්වය",
+    "assistant": "සහායක"
   },
   "home": {
     "eyebrow": "ජාතික සිවිල් බුද්ධිය",
@@ -356,6 +358,12 @@
     "exportElectionsDescription": "Download presidential and parliamentary 2024 seed datasets.",
     "exportServicesSummary": "Export services JSON",
     "exportServicesDescription": "Download the full public services directory seed.",
+    "platformStatusSummary": "වේදිකා තත්ත්වය",
+    "platformStatusDescription": "Database connectivity, source freshness counts, API version, සහ ingest schedule.",
+    "pulseHistorySummary": "Pulse history",
+    "pulseHistoryDescription": "Stored pulse snapshots for the last 30 days (database අවශ්‍ය).",
+    "assistantSummary": "Civic assistant",
+    "assistantDescription": "POST a question; receive an answer grounded on Lankawa API data with citations.",
     "exportTitle": "Data export",
     "exportBody": "Download curated datasets from the Lankawa API.",
     "export_districts": "District boundaries",
@@ -610,5 +618,43 @@
     "resultsCount": "{count} bodies",
     "noResults": "No local bodies match your filters.",
     "disclaimer": "Representative seed directory — not an exhaustive official gazette list."
+  },
+  "status": {
+    "title": "වේදිකා තත්ත්වය",
+    "subtitle": "සියලු data feeds සඳහා source health dashboard — freshness, last check, සහ errors.",
+    "disclaimer": "Internal-style monitoring view. සියලු provenance links in-platform.",
+    "tierCount": {
+      "fresh": "Fresh",
+      "stale": "Stale",
+      "down": "Down",
+      "unknown": "Unknown"
+    },
+    "table": {
+      "source": "Source",
+      "category": "Category",
+      "freshness": "Freshness",
+      "lastChecked": "Last checked",
+      "lastSuccess": "Last success",
+      "error": "Last error"
+    }
+  },
+  "assistant": {
+    "title": "Civic assistant",
+    "subtitle": "දිස්ත්‍රික්, pulse metrics, elections, සහ public services ගැන අසන්න — answers Lankawa data only.",
+    "groundingNote": "Grounded on Lankawa API data only. No external links.",
+    "emptyState": "Ask a question to get started.",
+    "inputPlaceholder": "e.g. What's the USD/LKR rate?",
+    "submit": "Ask",
+    "thinking": "Searching Lankawa data…",
+    "errorFallback": "Could not reach the assistant. Try again.",
+    "modeRule": "Rule-based answer from Lankawa data",
+    "modeLlm": "LLM answer grounded on fetched Lankawa JSON",
+    "disclaimer": "Not official government advice.",
+    "suggestions": {
+      "usd": "What's the USD/LKR rate?",
+      "colombo": "Tell me about Colombo district",
+      "flood": "How many flood stations are active?",
+      "elections": "Who won the 2024 presidential election?"
+    }
   }
 }

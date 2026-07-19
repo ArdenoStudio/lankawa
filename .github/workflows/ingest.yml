@@ -22,5 +22,19 @@ jobs:
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
           BOT_CONTACT_URL: https://github.com/SuvenSeo/lankawa
         run: python -m ingest.run
+
+      - name: Trigger Vercel cron (optional)
+        continue-on-error: true
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          DEPLOY_URL: https://lankawa.vercel.app
+        run: |
+          if [ -n "$CRON_SECRET" ]; then
+            curl -sf -H "Authorization: Bearer $CRON_SECRET" "$DEPLOY_URL/api/cron/ingest"
+          else
+            echo "CRON_SECRET not set — skipping Vercel cron trigger"
+          fi

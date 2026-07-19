@@ -1,4 +1,4 @@
-import type { FreshnessTier } from "./types";
+import type { FreshnessTier, PulseSnapshot } from "./types";
 
 export interface DbObservation {
   sourceId: string;
@@ -14,6 +14,28 @@ export interface DbSourceHealth {
   checkedAt: string;
   error: string | null;
   tier: FreshnessTier;
+}
+
+export interface DbSourceStatusRow {
+  id: string;
+  name: string;
+  category: string;
+  cadenceMinutes: number;
+  lastCheckedAt: string | null;
+  lastOk: boolean | null;
+  lastError: string | null;
+  freshnessTier: FreshnessTier;
+}
+
+export interface IngestRunRecord {
+  sourceId: string;
+  startedAt: string;
+  finishedAt: string;
+  ok: boolean;
+  observationsCount: number;
+  latencyMs: number;
+  error: string | null;
+  triggerSource: string;
 }
 
 interface DbConfig {
@@ -37,7 +59,30 @@ function getDbConfig(): DbConfig | null {
 }
 
 export function isDatabaseConfigured(): boolean {
-  return getDbConfig() !== null;
+  if (getDbConfig() !== null) {
+    return true;
+  }
+  return Boolean(process.env.DATABASE_URL?.trim());
+}
+
+export async function isDatabaseConnected(): Promise<boolean> {
+  const config = getDbConfig();
+  if (!config) {
+    return false;
+  }
+
+  try {
+    const response = await fetch(`${config.url}/rest/v1/sources?select=id&limit=1`, {
+      headers: {
+        apikey: config.key,
+        Authorization: `Bearer ${config.key}`,
+      },
+      cache: "no-store",
+    });
+    return response.ok;
+  } catch {
+    return false;
+  }
 }
 
 async function dbFetch<T>(
@@ -127,4 +172,186 @@ export async function getLatestSourceHealth(
     error: row.error,
     tier: row.ok ? "fresh" : "down",
   };
+}
+
+export async function getAllSourceStatusFromDb(): Promise<
+  DbSourceStatusRow[]
+> {
+  const rows = await dbFetch<
+    Array<{
+      id: string;
+      name: string;
+      category: string;
+      cadence_minutes: number;
+      last_checked_at: string | null;
+      last_ok: boolean | null;
+      last_error: string | null;
+      freshness_tier: FreshnessTier;
+    }>
+  >("source_status?select=id,name,category,cadence_minutes,last_checked_at,last_ok,last_error,freshness_tier");
+
+  if (!rows) {
+    return [];
+  }
+
+  return rows.map((row) => ({
+    id: row.id,
+    name: row.name,
+    category: row.category,
+    cadenceMinutes: row.cadence_minutes,
+    lastCheckedAt: row.last_checked_at,
+    lastOk: row.last_ok,
+    lastError: row.last_error,
+    freshnessTier: row.freshness_tier,
+  }));
+}
+
+export async function upsertObservations(
+  rows: Array<{
+    source_id: string;
+    metric: string;
+    value: number;
+    unit: string;
+    observed_at: string;
+  }>,
+): Promise<number> {
+  if (rows.length === 0) {
+    return 0;
+  }
+
+  await dbFetch("observations", {
+    method: "POST",
+    headers: {
+      Prefer: "resolution=merge-duplicates,return=minimal",
+    },
+    body: JSON.stringify(rows),
+  });
+
+  return rows.length;
+}
+
+export async function reportSourceHealth(payload: {
+  source_id: string;
+  ok: boolean;
+  latency_ms: number;
+  observations_count: number;
+  error: string | null;
+  consecutive_failures: number;
+}): Promise<void> {
+  await dbFetch("source_health", {
+    method: "POST",
+    headers: {
+      Prefer: "return=minimal",
+    },
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function savePulseSnapshot(
+  snapshot: PulseSnapshot,
+): Promise<void> {
+  await dbFetch("pulse_snapshots", {
+    method: "POST",
+    headers: {
+      Prefer: "resolution=merge-duplicates,return=minimal",
+    },
+    body: JSON.stringify({
+      generated_at: snapshot.generatedAt,
+      payload: snapshot,
+    }),
+  });
+}
+
+export async function getPulseHistory(
+  days = 30,
+): Promise<Array<{ generatedAt: string; snapshot: PulseSnapshot }>> {
+  const since = new Date();
+  since.setDate(since.getDate() - days);
+  const sinceIso = since.toISOString();
+
+  const rows = await dbFetch<
+    Array<{ generated_at: string; payload: PulseSnapshot }>
+  >(
+    `pulse_snapshots?generated_at=gte.${encodeURIComponent(sinceIso)}&select=generated_at,payload&order=generated_at.desc&limit=500`,
+  );
+
+  if (!rows) {
+    return [];
+  }
+
+  return rows.map((row) => ({
+    generatedAt: row.generated_at,
+    snapshot: row.payload,
+  }));
+}
+
+export async function recordIngestRun(
+  record: IngestRunRecord,
+): Promise<void> {
+  await dbFetch("ingest_runs", {
+    method: "POST",
+    headers: {
+      Prefer: "return=minimal",
+    },
+    body: JSON.stringify({
+      source_id: record.sourceId,
+      started_at: record.startedAt,
+      finished_at: record.finishedAt,
+      ok: record.ok,
+      observations_count: record.observationsCount,
+      latency_ms: record.latencyMs,
+      error: record.error,
+      trigger_source: record.triggerSource,
+    }),
+  });
+}
+
+export async function recordExportAudit(payload: {
+  dataset: string;
+  clientIp: string | null;
+  format: string;
+}): Promise<void> {
+  if (!getDbConfig()) {
+    return;
+  }
+
+  try {
+    await dbFetch("export_audit", {
+      method: "POST",
+      headers: {
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify({
+        dataset: payload.dataset,
+        client_ip: payload.clientIp,
+        format: payload.format,
+      }),
+    });
+  } catch {
+    // Non-blocking audit trail
+  }
+}
+
+export async function recordEvent(
+  eventType: string,
+  payload: Record<string, unknown> = {},
+): Promise<void> {
+  if (!getDbConfig()) {
+    return;
+  }
+
+  try {
+    await dbFetch("events", {
+      method: "POST",
+      headers: {
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify({
+        event_type: eventType,
+        payload,
+      }),
+    });
+  } catch {
+    // Non-blocking event log
+  }
 }

@@ -1,5 +1,5 @@
 import { computeFreshnessTier } from "./freshness";
-import { getLatestObservation } from "./db";
+import { getLatestObservation, isDatabaseConfigured, savePulseSnapshot } from "./db";
 import { fetchLatestCbslFxRate } from "./integrations/cbsl";
 import { fetchFloodAlertSummary } from "./integrations/flood";
 import { fetchOctanePrices, pickCpcPrice } from "./integrations/octane";
@@ -274,12 +274,20 @@ export async function buildPulseSnapshot(): Promise<PulseSnapshot> {
     },
   ];
 
-  return {
+  const snapshot: PulseSnapshot = {
     generatedAt: checkedAt,
     metrics,
     flood: flood.flood,
     sources: [fx.health, fuel.health, flood.health],
   };
+
+  if (isDatabaseConfigured()) {
+    savePulseSnapshot(snapshot).catch(() => {
+      // Non-blocking persistence
+    });
+  }
+
+  return snapshot;
 }
 
 export async function buildHealthSnapshot(): Promise<SourceHealth[]> {

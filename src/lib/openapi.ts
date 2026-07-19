@@ -2,7 +2,7 @@ export const openApiSpec = {
   openapi: "3.1.0",
   info: {
     title: "Lankawa Public API",
-    version: "0.5.0",
+    version: "0.6.0",
     description:
       "Public civic intelligence API for Sri Lanka. Every metric includes source provenance and freshness tiers.",
   },
@@ -198,6 +198,39 @@ export const openApiSpec = {
         },
       },
     },
+    "/status": {
+      get: {
+        summary: "Platform health (DB, sources, version)",
+        responses: { "200": { description: "Platform status snapshot" } },
+      },
+    },
+    "/pulse/history": {
+      get: {
+        summary: "Pulse snapshot history (last 30 days, requires DB)",
+        responses: {
+          "200": { description: "Historical pulse snapshots" },
+          "503": { description: "Database not configured" },
+        },
+      },
+    },
+    "/assistant": {
+      post: {
+        summary: "Civic assistant Q&A grounded on Lankawa data",
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: { question: { type: "string" } },
+                required: ["question"],
+              },
+            },
+          },
+        },
+        responses: { "200": { description: "Answer with citations" } },
+      },
+    },
   },
 } as const;
 
@@ -369,5 +402,26 @@ export const apiEndpoints = [
     summaryKey: "openApiSummary" as const,
     descriptionKey: "openApiDescription" as const,
     example: `{ "openapi": "3.1.0", "info": { ... }, "paths": { ... } }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/status",
+    summaryKey: "platformStatusSummary" as const,
+    descriptionKey: "platformStatusDescription" as const,
+    example: `{ "version": "0.6.0", "database": { "configured": true, "connected": true }, "sources": { "fresh": 3 } }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/pulse/history",
+    summaryKey: "pulseHistorySummary" as const,
+    descriptionKey: "pulseHistoryDescription" as const,
+    example: `{ "days": 30, "count": 42, "snapshots": [...] }`,
+  },
+  {
+    method: "POST",
+    path: "/api/v1/assistant",
+    summaryKey: "assistantSummary" as const,
+    descriptionKey: "assistantDescription" as const,
+    example: `{ "question": "USD rate?", "answer": "...", "citations": [...], "mode": "rule" }`,
   },
 ] as const;

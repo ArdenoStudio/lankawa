@@ -4,19 +4,20 @@
 
 Lankawa is Sri Lanka's national civic intelligence platform — unifying public data across economy, districts, disasters, and public services with source provenance and freshness on every number.
 
-## Modules (Phase 1 MVP)
+## Modules
 
 - **Pulse** — FX, fuel prices (Octane API), flood station monitoring
 - **District Atlas** — All 25 districts with population, area, province
-- **Disaster** — Flood alert summary via [lk-flood-api](https://lk-flood-api.vercel.app)
-- **Public API** — `/api/v1/health`, `/api/v1/pulse`, `/api/v1/districts`
+- **Status** — Source health dashboard at `/status`
+- **Civic Assistant** — Grounded Q&A at `/assistant`
+- **Public API** — `/api/v1/*` with rate limiting and OpenAPI spec
 
 ## Stack
 
 - Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4
 - `next-intl` — English, Sinhala, Tamil
-- Python ingest workers (ported from lanka-monitor patterns)
-- PostgreSQL + PostGIS (planned via Supabase/Neon)
+- Python ingest workers + optional Supabase/Postgres persistence
+- Vercel cron for daily CBSL FX ingest
 
 ## Development
 
@@ -27,26 +28,25 @@ npm run dev
 
 Open [http://localhost:3000/en](http://localhost:3000/en)
 
-## Environment
+## Deployment
 
-Copy `.env.example` to `.env.local`:
+See **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** for Vercel env vars, Supabase/Neon setup, cron schedule, and smoke-test URLs.
 
-```bash
-OCTANE_API_BASE=https://octane-api.fly.dev
-FLOOD_API_BASE=https://lk-flood-api.vercel.app
-DATABASE_URL=postgresql://...
-BOT_CONTACT_URL=https://github.com/SuvenSeo/lankawa
-```
+Copy `.env.example` to `.env.local` for local overrides.
 
-## API
+## API (v0.6)
 
 | Endpoint | Description |
 |----------|-------------|
+| `GET /api/v1/status` | Platform health (DB, sources, version) |
 | `GET /api/v1/health` | Source freshness registry |
 | `GET /api/v1/pulse` | Live pulse snapshot |
+| `GET /api/v1/pulse/history` | Pulse history (30 days, requires DB) |
+| `POST /api/v1/assistant` | Civic assistant Q&A |
 | `GET /api/v1/districts` | All 25 districts |
-| `GET /api/v1/districts/{slug}` | Single district profile |
 | `GET /api/v1/openapi.json` | OpenAPI 3.1 spec |
+
+Public API routes are rate-limited to 60 req/min per IP.
 
 ## Principles
 
@@ -55,6 +55,7 @@ BOT_CONTACT_URL=https://github.com/SuvenSeo/lankawa
 3. **Trilingual by default** — en / si / ta
 4. **Compose, don't monolith** — integrate Octane, lk-flood-api, lanka_data
 5. **Honest about gaps** — show what's missing
+6. **Graceful fallback** — DB and LLM are enhancements, not requirements
 
 ## Related Projects
 

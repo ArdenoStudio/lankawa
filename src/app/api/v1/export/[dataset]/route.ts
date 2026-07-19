@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { recordExportAudit } from "@/lib/db";
 import { getPresidentialElection2024 } from "@/lib/elections";
 import { getParliamentaryElection2024 } from "@/lib/elections";
 import { getPublicServicesCatalog } from "@/lib/services";
@@ -13,7 +14,7 @@ function isValidDataset(value: string): value is ExportDataset {
 }
 
 export async function GET(
-  _request: Request,
+  request: NextRequest,
   context: { params: Promise<{ dataset: string }> },
 ) {
   const { dataset } = await context.params;
@@ -21,6 +22,17 @@ export async function GET(
   if (!isValidDataset(dataset)) {
     return NextResponse.json({ error: "Unknown dataset" }, { status: 404 });
   }
+
+  const clientIp =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    request.headers.get("x-real-ip") ??
+    null;
+
+  recordExportAudit({
+    dataset,
+    clientIp,
+    format: dataset === "districts" ? "geojson" : "json",
+  }).catch(() => undefined);
 
   switch (dataset) {
     case "districts": {
