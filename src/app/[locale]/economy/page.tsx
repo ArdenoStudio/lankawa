@@ -6,6 +6,7 @@ import { PulseCard } from "@/components/PulseCard";
 import { RemittanceCalculator } from "@/components/RemittanceCalculator";
 import { Link } from "@/i18n/navigation";
 import { getEconomyMacroSnapshot, getFxSeries, getLatestFxRate } from "@/lib/economy";
+import { fetchLatestCbslGoldRate } from "@/lib/integrations/cbsl";
 import { getFuelHistorySeries } from "@/lib/fuel";
 import { buildCseSnapshot } from "@/lib/integrations/cse";
 import { buildPulseSnapshot } from "@/lib/pulse";
@@ -25,6 +26,7 @@ export default async function EconomyPage({
   const latestFxRate = await getLatestFxRate();
   const fuelHistory = await getFuelHistorySeries(90);
   const cseSnapshot = await buildCseSnapshot();
+  const goldRate = await fetchLatestCbslGoldRate();
   const economyMetrics = snapshot.metrics.filter((metric) =>
     ["usd_lkr", "fuel_petrol_92", "fuel_diesel"].includes(metric.id),
   );
@@ -46,6 +48,38 @@ export default async function EconomyPage({
           {economyMetrics.map((metric) => (
             <PulseCard key={metric.id} metric={metric} />
           ))}
+          {goldRate ? (
+            <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-sm text-slate-500">{t("gold.eyebrow")}</p>
+                  <h3 className="mt-1 text-lg font-semibold text-white">
+                    {t("gold.title")}
+                  </h3>
+                </div>
+                <Link
+                  href={getSourceProvenancePath("cbsl_gold")}
+                  className="text-xs text-slate-400 hover:text-white"
+                >
+                  {t("gold.provenance")}
+                </Link>
+              </div>
+              <p className="mt-3 text-3xl font-semibold text-white">
+                {goldRate.priceLkr.toLocaleString(locale, {
+                  maximumFractionDigits: 0,
+                })}
+                <span className="ml-1 text-base font-normal text-slate-400">
+                  LKR
+                </span>
+              </p>
+              <p className="mt-1 text-xs text-slate-500">{t("gold.unit")}</p>
+              <p className="mt-3 text-xs text-slate-500">
+                {t("gold.asOf", {
+                  date: new Date(goldRate.observedAt).toLocaleDateString(locale),
+                })}
+              </p>
+            </article>
+          ) : null}
         </div>
       </section>
 

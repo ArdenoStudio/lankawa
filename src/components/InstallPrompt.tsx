@@ -25,15 +25,11 @@ export function InstallPrompt() {
   const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
   const [dismissed, setDismissed] = useState(() => {
     if (typeof window === "undefined") {
-      return false;
+      return true;
     }
     return localStorage.getItem("lankawa-pwa-dismissed") === "1";
   });
-  const [allowed, setAllowed] = useState(false);
-
-  useEffect(() => {
-    setAllowed(habitAllowsInstall());
-  }, []);
+  const [allowed] = useState(() => habitAllowsInstall());
 
   useEffect(() => {
     if (typeof window === "undefined" || dismissed || !allowed) {

@@ -1,16 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { readHomeDistrict, writeHomeDistrict } from "@/lib/preferences";
 
 export function DistrictPinButton({ slug }: { slug: string }) {
   const t = useTranslations("homeDistrict");
-  const [pinned, setPinned] = useState(false);
-
-  useEffect(() => {
-    setPinned(readHomeDistrict(window.localStorage) === slug);
-  }, [slug]);
+  const [pinned, setPinned] = useState(() => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+    return readHomeDistrict(window.localStorage) === slug;
+  });
 
   function toggle() {
     if (pinned) {

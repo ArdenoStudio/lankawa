@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { DISTRICTS, getDistrict, getDistrictName } from "@/lib/districts";
@@ -8,22 +8,17 @@ import { readHomeDistrict, writeHomeDistrict } from "@/lib/preferences";
 
 export function HomeDistrictPin({ locale }: { locale: string }) {
   const t = useTranslations("homeDistrict");
-  const [slug, setSlug] = useState<string | null>(null);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setSlug(readHomeDistrict(window.localStorage));
-    setReady(true);
-  }, []);
+  const [slug, setSlug] = useState<string | null>(() => {
+    if (typeof window === "undefined") {
+      return null;
+    }
+    return readHomeDistrict(window.localStorage);
+  });
 
   function handleChange(next: string) {
     const value = next || null;
     writeHomeDistrict(window.localStorage, value);
     setSlug(value);
-  }
-
-  if (!ready) {
-    return null;
   }
 
   const district = slug ? getDistrict(slug) : undefined;

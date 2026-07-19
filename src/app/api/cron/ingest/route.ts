@@ -6,7 +6,7 @@ import {
   upsertObservations,
 } from "@/lib/db";
 import { getEconomyMacroSnapshot } from "@/lib/economy";
-import { fetchCbslFxRates } from "@/lib/integrations/cbsl";
+import { fetchCbslFxRates, fetchCbslGoldRates } from "@/lib/integrations/cbsl";
 import { buildCseSnapshot } from "@/lib/integrations/cse";
 import { fetchNewsPulse } from "@/lib/integrations/news";
 import { fetchPowerStatus } from "@/lib/integrations/power";
@@ -96,6 +96,24 @@ export async function GET(request: NextRequest) {
           observed_at: rate.observedAt,
         },
       ]);
+    }),
+    runSource("cbsl_gold", async () => {
+      const rates = await fetchCbslGoldRates();
+      if (!rates) {
+        throw new Error("CBSL gold rates unavailable");
+      }
+
+      return rates.map((rate) => ({
+        source_id: "cbsl_gold",
+        metric: "gold_lkr_troy_ounce",
+        value: rate.priceLkr,
+        unit: "LKR",
+        observed_at: rate.observedAt,
+        meta: {
+          date: rate.date,
+          unit: rate.unit,
+        },
+      }));
     }),
     runSource("open_meteo", async () => {
       const weather = await fetchColomboWeather();
