@@ -13,7 +13,18 @@ export async function fetchFloodAlertSummary(): Promise<FloodAlertSummary[]> {
     throw new Error(`Flood API returned ${response.status}`);
   }
 
-  return response.json() as Promise<FloodAlertSummary[]>;
+  const raw = (await response.json()) as Array<{
+    alert_level?: string;
+    alertLevel?: string;
+    count: number;
+    stations: string[];
+  }>;
+
+  return raw.map((item) => ({
+    alertLevel: item.alertLevel ?? item.alert_level ?? "UNKNOWN",
+    count: item.count,
+    stations: item.stations,
+  }));
 }
 
 export async function fetchFloodHealth(): Promise<{ status: string }> {
