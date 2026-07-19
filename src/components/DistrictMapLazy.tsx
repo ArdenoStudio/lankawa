@@ -1,8 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import type { DistrictMapProps } from "@/components/DistrictMap";
 
-export const DistrictMapLazy = dynamic(
+const DistrictMap = dynamic(
   () => import("@/components/DistrictMap").then((mod) => mod.DistrictMap),
   {
     ssr: false,
@@ -13,3 +14,7 @@ export const DistrictMapLazy = dynamic(
     ),
   },
 );
+
+export function DistrictMapLazy(props: DistrictMapProps) {
+  return <DistrictMap {...props} />;
+}

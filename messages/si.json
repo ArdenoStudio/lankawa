@@ -6,6 +6,7 @@
   "nav": {
     "home": "මුල් පිටුව",
     "districts": "දිස්ත්‍රික්",
+    "elections": "මැතිවරණ",
     "disaster": "විපත්",
     "economy": "ආර්ථිකය",
     "api": "API",
@@ -30,7 +31,40 @@
     "area": "ප්‍රදේශය",
     "province": "පළාත",
     "capital": "අගනගරය",
-    "back": "දිස්ත්‍රික් වෙත ආපසු"
+    "density": "ජනගහන ඝනත්වය",
+    "back": "දිස්ත්‍රික් වෙත ආපසු",
+    "provinceContext": "දිස්ත්‍රික් {count} · පළාත් ජනගහනයෙන් {share}%",
+    "election2024": "ජනාධිපති 2024",
+    "firstPreference": "පළමු preferance",
+    "relatedTitle": "Related",
+    "relatedElections": "මැතිවරණ ප්‍රතිඵල",
+    "relatedElectionsDesc": "මෙම දිස්ත්‍රික්කයේ 2024 ජනාධිපති ඡන්ද විස්තර",
+    "relatedDisaster": "විපත් සහ ගංවතුර",
+    "relatedDisasterDesc": "ජාතික ගංගා මධ්‍යස්ථාන නිරීක්ෂණය",
+    "relatedDisasterStations": "මෙම දිස්ත්‍රික්කයේ ගංවතුර මධ්‍යස්ථාන {count}",
+    "relatedEconomy": "ආර්ථික නාඩි",
+    "relatedEconomyDesc": "විනිමය අනුපාත, ඉන්ධන මිල සහ macro indicators",
+    "floodStations": "ගංවතුර මධ්‍යස්ථාන"
+  },
+  "elections": {
+    "eyebrow": "මැතිවරණ බුද්ධිය",
+    "title": "ජනාධිපති මැතිවරණ 2024",
+    "subtitle": "ශ්‍රී ලංකා මැතිවරණ කොමිසමේ දිස්ත්‍රික් පළමු preferance ප්‍රතිඵල.",
+    "nationalWinner": "ජාතික ජයග්‍රාහක",
+    "firstPreference": "පළමු preferance",
+    "afterPreferences": "preferences පසු",
+    "electionDate": "මැතිවරණ දිනය",
+    "turnout": "ඡන්ද participation",
+    "districtsWon": "දිස්ත්‍රික් ජය",
+    "source": "මූලාශ්‍රය",
+    "mapTitle": "දිස්ත්‍රික් අනුව ප්‍රතිඵල",
+    "byDistrict": "සියලු දිස්ත්‍රික්",
+    "back": "මැතිවරණ වෙත ආපසු",
+    "districtSubtitle": "ජනාධිපති මැතිවරණ දිස්ත්‍රික් ප්‍රතිඵල",
+    "districtWinner": "දිස්ත්‍රික් ජයග්‍රාහක (1st preference)",
+    "validVotes": "වලංගු ඡන්ද",
+    "voteBreakdown": "ඡන්ද විස්තර",
+    "viewDistrict": "දිස්ත්‍රික් profile බලන්න"
   },
   "disaster": {
     "title": "විපත් සහ ගංවතුර",
@@ -42,6 +76,32 @@
     "title": "ආර්ථික නාඩි",
     "subtitle": "විනිමය අනුපාත, ඉන්ධන මිල සහ සාර්ව ඉන්දිකATORS."
   },
+  "search": {
+    "label": "දිස්ත්‍රික් සොයන්න",
+    "placeholder": "දිස්ත්‍රික් සොයන්න…",
+    "noResults": "දිස්ත්‍රික් හමු නොවීය"
+  },
+  "about": {
+    "eyebrow": "Lankawa ගැන",
+    "title": "Mission සහ දත්ත මූලාශ්‍ර",
+    "subtitle": "ශ්‍රී ලංකාව සඳහා විවෘත civic intelligence — public sources වලින් provenance සමඟ.",
+    "missionTitle": "Mission",
+    "missionBody": "Lankawa සෑම ශ්‍රී ලාංකිකයෙකුටම public civic data accessible කරයි. අපි economy, disaster, electoral, සහ geographic data 25 administrative districts වටා unify කරමු.",
+    "sourcesTitle": "දත්ත මූලාශ්‍ර",
+    "refreshEvery": "minutes {minutes} කට refresh",
+    "electionSource": "ශ්‍රී ලංකා මැතිවරණ කොමිසම",
+    "electionSourceNote": "ජනාධිපති 2024 දිස්ත්‍රික් ප්‍රතිඵල (static seed)",
+    "freshnessTitle": "දත්ත freshness",
+    "freshnessBody": "Live metrics freshness tier එකක් පෙන්වයි:",
+    "freshnessFresh": "Fresh — expected cadence තුළ fetch",
+    "freshnessStale": "Stale — expected ට වඩා පැරණි",
+    "freshnessDown": "Down — source unreachable",
+    "disclaimerTitle": "Disclaimer",
+    "disclaimerBody": "Lankawa public APIs වලින් data aggregate කරයි. නිල රජයේ publication එකක් නොවේ.",
+    "apiTitle": "Public API",
+    "apiBody": "සියලු data versioned JSON API හරහා available.",
+    "apiLink": "OpenAPI spec බලන්න"
+  },
   "freshness": {
     "fresh": "නැවුම්",
     "stale": "පැරණි",
@@ -50,6 +110,7 @@
   },
   "footer": {
     "built": "ශ්‍රී ලංකාව සඳහා නිර්මාණය කළ",
+    "about": "About",
     "github": "GitHub"
   }
 }

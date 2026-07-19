@@ -17,7 +17,7 @@ export default async function DistrictsPage({
         <h1 className="text-3xl font-semibold text-white">{t("title")}</h1>
         <p className="mt-2 max-w-2xl text-slate-400">{t("subtitle")}</p>
       </div>
-      <DistrictMapLazy />
+      <DistrictMapLazy locale={locale} />
       <DistrictGrid locale={locale} />
     </div>
   );

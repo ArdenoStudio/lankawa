@@ -45,6 +45,12 @@ const openApi = {
         },
       },
     },
+    "/api/v1/elections": {
+      get: {
+        summary: "Presidential election 2024 summary and district results",
+        responses: { "200": { description: "Election data snapshot" } },
+      },
+    },
   },
 };
 

@@ -6,6 +6,7 @@
   "nav": {
     "home": "Home",
     "districts": "Districts",
+    "elections": "Elections",
     "disaster": "Disaster",
     "economy": "Economy",
     "api": "API",
@@ -30,7 +31,40 @@
     "area": "Area",
     "province": "Province",
     "capital": "Capital",
-    "back": "Back to districts"
+    "density": "Population density",
+    "back": "Back to districts",
+    "provinceContext": "{count} districts · {share}% of province population",
+    "election2024": "Presidential 2024",
+    "firstPreference": "first preference",
+    "relatedTitle": "Related",
+    "relatedElections": "Election results",
+    "relatedElectionsDesc": "2024 presidential vote breakdown for this district",
+    "relatedDisaster": "Disaster & flood",
+    "relatedDisasterDesc": "National river station monitoring",
+    "relatedDisasterStations": "{count} flood monitoring stations in this district",
+    "relatedEconomy": "Economic pulse",
+    "relatedEconomyDesc": "Exchange rates, fuel prices, and macro indicators",
+    "floodStations": "Flood stations"
+  },
+  "elections": {
+    "eyebrow": "Electoral intelligence",
+    "title": "Presidential Election 2024",
+    "subtitle": "District-level first-preference results from the Election Commission of Sri Lanka.",
+    "nationalWinner": "National winner",
+    "firstPreference": "first preference",
+    "afterPreferences": "after preferences",
+    "electionDate": "Election date",
+    "turnout": "Turnout",
+    "districtsWon": "districts won",
+    "source": "Source",
+    "mapTitle": "Results by district",
+    "byDistrict": "All districts",
+    "back": "Back to elections",
+    "districtSubtitle": "Presidential election district results",
+    "districtWinner": "District winner (1st preference)",
+    "validVotes": "Valid votes",
+    "voteBreakdown": "Vote breakdown",
+    "viewDistrict": "View district profile"
   },
   "disaster": {
     "title": "Disaster & Flood",
@@ -42,6 +76,32 @@
     "title": "Economic Pulse",
     "subtitle": "Exchange rates, fuel prices, and macro indicators."
   },
+  "search": {
+    "label": "Search districts",
+    "placeholder": "Search districts…",
+    "noResults": "No districts found"
+  },
+  "about": {
+    "eyebrow": "About Lankawa",
+    "title": "Mission & data sources",
+    "subtitle": "Open civic intelligence for Sri Lanka — aggregated from public sources with provenance on every metric.",
+    "missionTitle": "Mission",
+    "missionBody": "Lankawa makes public civic data accessible to every Sri Lankan. We unify economy, disaster, electoral, and geographic data around the 25 administrative districts — the universal key for understanding the country.",
+    "sourcesTitle": "Data sources",
+    "refreshEvery": "Refreshes every {minutes} minutes",
+    "electionSource": "Election Commission of Sri Lanka",
+    "electionSourceNote": "Presidential 2024 district results (static seed)",
+    "freshnessTitle": "Data freshness",
+    "freshnessBody": "Live metrics show a freshness tier based on when the source was last successfully fetched:",
+    "freshnessFresh": "Fresh — fetched within the expected cadence",
+    "freshnessStale": "Stale — older than expected but still available",
+    "freshnessDown": "Down — source unreachable or errored",
+    "disclaimerTitle": "Disclaimer",
+    "disclaimerBody": "Lankawa aggregates data from public and partner APIs. It is not an official government publication. Always verify critical information with primary sources.",
+    "apiTitle": "Public API",
+    "apiBody": "All data is available via a versioned JSON API with OpenAPI documentation.",
+    "apiLink": "View OpenAPI spec"
+  },
   "freshness": {
     "fresh": "Fresh",
     "stale": "Stale",
@@ -50,6 +110,7 @@
   },
   "footer": {
     "built": "Built for Sri Lanka",
+    "about": "About",
     "github": "GitHub"
   }
 }

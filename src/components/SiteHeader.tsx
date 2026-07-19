@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
+import { DistrictSearch } from "@/components/DistrictSearch";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 
 const links = [
   { href: "/", key: "home" },
   { href: "/districts", key: "districts" },
+  { href: "/elections", key: "elections" },
   { href: "/disaster", key: "disaster" },
   { href: "/economy", key: "economy" },
 ] as const;
@@ -63,12 +65,16 @@ export function SiteHeader() {
 
   return (
     <header className="border-b border-white/10 bg-slate-950/80 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-4">
         <Link href="/" className="text-lg font-semibold text-white">
           Lankawa
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <div className="order-3 w-full md:order-none md:w-auto md:flex-1 md:max-w-xs md:mx-4">
+          <DistrictSearch />
+        </div>
+
+        <nav className="hidden items-center gap-1 lg:flex">
           <NavLinks pathname={pathname} />
         </nav>
 
@@ -76,7 +82,7 @@ export function SiteHeader() {
           <LocaleSwitcher />
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-full border border-white/10 p-2 text-slate-200 hover:bg-white/5 md:hidden"
+            className="inline-flex items-center justify-center rounded-full border border-white/10 p-2 text-slate-200 hover:bg-white/5 lg:hidden"
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
             aria-label={menuOpen ? t("closeMenu") : t("openMenu")}
@@ -108,7 +114,7 @@ export function SiteHeader() {
       {menuOpen ? (
         <nav
           id="mobile-nav"
-          className="border-t border-white/10 px-4 py-3 md:hidden"
+          className="border-t border-white/10 px-4 py-3 lg:hidden"
         >
           <div className="flex flex-col gap-1">
             <NavLinks

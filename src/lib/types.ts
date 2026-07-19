@@ -63,3 +63,42 @@ export interface PulseSnapshot {
   flood: FloodAlertSummary[];
   sources: SourceHealth[];
 }
+
+export type ElectionCandidateId =
+  | "akd"
+  | "premadasa"
+  | "wickremesinghe"
+  | "others";
+
+export interface ElectionCandidate {
+  id: ElectionCandidateId;
+  name: string;
+  party: string;
+  votes: number;
+  percentage: number;
+  finalPercentage?: number;
+}
+
+export interface ElectionDistrictResult {
+  slug: string;
+  winner: ElectionCandidateId;
+  turnout: number;
+  validVotes: number;
+  results: Record<ElectionCandidateId, number>;
+  electoralDistrict?: string;
+  note?: string;
+}
+
+export interface PresidentialElection {
+  id: string;
+  type: "presidential";
+  date: string;
+  sourceUrl: string;
+  sourceName: string;
+  nationalWinner: ElectionCandidateId;
+  turnout: number;
+  validVotes: number;
+  registeredElectors: number;
+  candidates: ElectionCandidate[];
+  districts: ElectionDistrictResult[];
+}

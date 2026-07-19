@@ -6,6 +6,7 @@
   "nav": {
     "home": "முகப்பு",
     "districts": "மாவட்டங்கள்",
+    "elections": "தேர்தல்",
     "disaster": "பேரிடர்",
     "economy": "பொருளாதாரம்",
     "api": "API",
@@ -30,7 +31,40 @@
     "area": "பரப்பளவு",
     "province": "மாகாணம்",
     "capital": "தலைநகர்",
-    "back": "மாவட்டங்களுக்குத் திரும்பு"
+    "density": "மக்கள்தொகை அடர்த்தி",
+    "back": "மாவட்டங்களுக்குத் திரும்பு",
+    "provinceContext": "{count} மாவட்டங்கள் · மாகாண மக்கள்தொகையில் {share}%",
+    "election2024": "ஜனாதிபதி 2024",
+    "firstPreference": "முதல் preference",
+    "relatedTitle": "Related",
+    "relatedElections": "தேர்தல் முடிவுகள்",
+    "relatedElectionsDesc": "இந்த மாவட்டத்தின் 2024 ஜனாதிபதி வாக்கு விவரம்",
+    "relatedDisaster": "பேரிடர் & வெள்ளம்",
+    "relatedDisasterDesc": "தேசிய நதி நிலை கண்காணிப்பு",
+    "relatedDisasterStations": "இந்த மாவட்டத்தில் {count} வெள்ள நிலையங்கள்",
+    "relatedEconomy": "பொருளாதார நிலை",
+    "relatedEconomyDesc": "நாணய விகிதங்கள், எரிபொருள் விலைகள் மற்றும் macro indicators",
+    "floodStations": "வெள்ள நிலையங்கள்"
+  },
+  "elections": {
+    "eyebrow": "தேர்தல் நுண்ணறிவு",
+    "title": "ஜனாதிபதி தேர்தல் 2024",
+    "subtitle": "இலங்கை தேர்தல் ஆணையத்தின் மாவட்ட முதல் preference முடிவுகள்.",
+    "nationalWinner": "தேசிய victor",
+    "firstPreference": "முதல் preference",
+    "afterPreferences": "preferences பிறகு",
+    "electionDate": "தேர்தல் தேதி",
+    "turnout": "வாக்கு participation",
+    "districtsWon": "மாவட்ட victories",
+    "source": "மூலம்",
+    "mapTitle": "மாவட்ட வாரியான முடிவுகள்",
+    "byDistrict": "அனைத்து மாவட்டங்கள்",
+    "back": "தேர்தலுக்குத் திரும்பு",
+    "districtSubtitle": "ஜனாதிபதி தேர்தல் மாவட்ட முடிவுகள்",
+    "districtWinner": "மாவட்ட victor (1st preference)",
+    "validVotes": "செல்லுபடியான வாக்குகள்",
+    "voteBreakdown": "வாக்கு விவரம்",
+    "viewDistrict": "மாவட்ட profile பார்க்க"
   },
   "disaster": {
     "title": "பேரிடர் & வெள்ளம்",
@@ -42,6 +76,32 @@
     "title": "பொருளாதார நிலை",
     "subtitle": "நாணய விகிதங்கள், எரிபொருள் விலைகள் மற்றும் பெரும் குறிகாட்டிகள்."
   },
+  "search": {
+    "label": "மாவட்டங்களைத் தேடு",
+    "placeholder": "மாவட்டங்களைத் தேடு…",
+    "noResults": "மாவட்டங்கள் கிடைக்கவில்லை"
+  },
+  "about": {
+    "eyebrow": "Lankawa பற்றி",
+    "title": "Mission & data sources",
+    "subtitle": "இலங்கைக்கான open civic intelligence — public sources-லிருந்து provenance உடன்.",
+    "missionTitle": "Mission",
+    "missionBody": "Lankawa ஒவ்வொரு இலங்கையருக்கும் public civic data accessible ஆக்குகிறது. economy, disaster, electoral, geographic data-வை 25 administrative districts சுற்றி unify செய்கிறோம்.",
+    "sourcesTitle": "தரவு மூலங்கள்",
+    "refreshEvery": "{minutes} நிமிடங்களுக்கு refresh",
+    "electionSource": "இலங்கை தேர்தல் ஆணையம்",
+    "electionSourceNote": "ஜனாதிபதி 2024 மாவட்ட முடிவுகள் (static seed)",
+    "freshnessTitle": "தரவு freshness",
+    "freshnessBody": "Live metrics freshness tier காட்டுகின்றன:",
+    "freshnessFresh": "Fresh — expected cadence-க்குள் fetch",
+    "freshnessStale": "Stale — expected-ஐ விட பழைய",
+    "freshnessDown": "Down — source unreachable",
+    "disclaimerTitle": "Disclaimer",
+    "disclaimerBody": "Lankawa public APIs-லிருந்து data aggregate செய்கிறது. அதிகாரப்பூர்வ அரசு publication அல்ல.",
+    "apiTitle": "Public API",
+    "apiBody": "அனைத்து data versioned JSON API வழியாக available.",
+    "apiLink": "OpenAPI spec பார்க்க"
+  },
   "freshness": {
     "fresh": "புதிய",
     "stale": "பழைய",
@@ -50,6 +110,7 @@
   },
   "footer": {
     "built": "இலங்கைக்காக உருவாக்கப்பட்டது",
+    "about": "About",
     "github": "GitHub"
   }
 }

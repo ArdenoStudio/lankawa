@@ -1,0 +1,228 @@
+{
+  "id": "presidential-2024",
+  "type": "presidential",
+  "date": "2024-09-21",
+  "sourceUrl": "https://results.elections.gov.lk/pre2024/",
+  "sourceName": "Election Commission of Sri Lanka",
+  "nationalWinner": "akd",
+  "turnout": 79.46,
+  "validVotes": 13319616,
+  "registeredElectors": 17140354,
+  "candidates": [
+    {
+      "id": "akd",
+      "name": "Anura Kumara Dissanayake",
+      "party": "NPP",
+      "votes": 5634915,
+      "percentage": 42.31,
+      "finalPercentage": 55.89
+    },
+    {
+      "id": "premadasa",
+      "name": "Sajith Premadasa",
+      "party": "SJB",
+      "votes": 4363035,
+      "percentage": 32.76,
+      "finalPercentage": 44.11
+    },
+    {
+      "id": "wickremesinghe",
+      "name": "Ranil Wickremesinghe",
+      "party": "IND",
+      "votes": 2299767,
+      "percentage": 17.27
+    },
+    {
+      "id": "others",
+      "name": "Other candidates",
+      "party": "—",
+      "votes": 1021899,
+      "percentage": 7.66
+    }
+  ],
+  "districts": [
+    {
+      "slug": "ampara",
+      "winner": "premadasa",
+      "turnout": 77.41,
+      "validVotes": 423397,
+      "results": { "akd": 108971, "premadasa": 200384, "wickremesinghe": 86589, "others": 27453 }
+    },
+    {
+      "slug": "anuradhapura",
+      "winner": "akd",
+      "turnout": 82.69,
+      "validVotes": 603686,
+      "results": { "akd": 285944, "premadasa": 202289, "wickremesinghe": 82152, "others": 33301 }
+    },
+    {
+      "slug": "badulla",
+      "winner": "premadasa",
+      "turnout": 82.81,
+      "validVotes": 568924,
+      "results": { "akd": 197283, "premadasa": 219674, "wickremesinghe": 115138, "others": 36829 }
+    },
+    {
+      "slug": "batticaloa",
+      "winner": "premadasa",
+      "turnout": 72.83,
+      "validVotes": 318648,
+      "results": { "akd": 38832, "premadasa": 139110, "wickremesinghe": 91132, "others": 49574 }
+    },
+    {
+      "slug": "colombo",
+      "winner": "akd",
+      "turnout": 77.39,
+      "validVotes": 1334390,
+      "results": { "akd": 629963, "premadasa": 342108, "wickremesinghe": 281436, "others": 80883 }
+    },
+    {
+      "slug": "galle",
+      "winner": "akd",
+      "turnout": 80.31,
+      "validVotes": 712820,
+      "results": { "akd": 366721, "premadasa": 189555, "wickremesinghe": 107336, "others": 49208 }
+    },
+    {
+      "slug": "gampaha",
+      "winner": "akd",
+      "turnout": 79.09,
+      "validVotes": 1458389,
+      "results": { "akd": 809410, "premadasa": 349550, "wickremesinghe": 216028, "others": 83401 }
+    },
+    {
+      "slug": "hambantota",
+      "winner": "akd",
+      "turnout": 83.22,
+      "validVotes": 427062,
+      "results": { "akd": 221913, "premadasa": 131503, "wickremesinghe": 33217, "others": 40429 }
+    },
+    {
+      "slug": "jaffna",
+      "winner": "others",
+      "turnout": 66.93,
+      "validVotes": 371688,
+      "results": { "akd": 27086, "premadasa": 121177, "wickremesinghe": 84558, "others": 138867 }
+    },
+    {
+      "slug": "kalutara",
+      "winner": "akd",
+      "turnout": 81.4,
+      "validVotes": 817518,
+      "results": { "akd": 387764, "premadasa": 236307, "wickremesinghe": 143285, "others": 50162 }
+    },
+    {
+      "slug": "kandy",
+      "winner": "akd",
+      "turnout": 80.38,
+      "validVotes": 933516,
+      "results": { "akd": 394534, "premadasa": 323998, "wickremesinghe": 162707, "others": 52277 }
+    },
+    {
+      "slug": "kegalle",
+      "winner": "akd",
+      "turnout": 81.95,
+      "validVotes": 569679,
+      "results": { "akd": 247179, "premadasa": 185930, "wickremesinghe": 106510, "others": 30060 }
+    },
+    {
+      "slug": "kilinochchi",
+      "winner": "premadasa",
+      "turnout": 74.05,
+      "validVotes": 217269,
+      "results": { "akd": 21412, "premadasa": 95422, "wickremesinghe": 52573, "others": 47862 },
+      "electoralDistrict": "vanni",
+      "note": "Reported at Vanni electoral district by the Election Commission"
+    },
+    {
+      "slug": "kurunegala",
+      "winner": "akd",
+      "turnout": 81.12,
+      "validVotes": 1130293,
+      "results": { "akd": 544763, "premadasa": 368290, "wickremesinghe": 146520, "others": 70720 }
+    },
+    {
+      "slug": "mannar",
+      "winner": "premadasa",
+      "turnout": 74.05,
+      "validVotes": 217269,
+      "results": { "akd": 21412, "premadasa": 95422, "wickremesinghe": 52573, "others": 47862 },
+      "electoralDistrict": "vanni",
+      "note": "Reported at Vanni electoral district by the Election Commission"
+    },
+    {
+      "slug": "matale",
+      "winner": "akd",
+      "turnout": 80.85,
+      "validVotes": 339734,
+      "results": { "akd": 140544, "premadasa": 121803, "wickremesinghe": 53829, "others": 23558 }
+    },
+    {
+      "slug": "matara",
+      "winner": "akd",
+      "turnout": 81.32,
+      "validVotes": 548329,
+      "results": { "akd": 287662, "premadasa": 147462, "wickremesinghe": 79249, "others": 33956 }
+    },
+    {
+      "slug": "monaragala",
+      "winner": "akd",
+      "turnout": 85.62,
+      "validVotes": 335082,
+      "results": { "akd": 140269, "premadasa": 134238, "wickremesinghe": 35728, "others": 24847 }
+    },
+    {
+      "slug": "mullaitivu",
+      "winner": "premadasa",
+      "turnout": 74.05,
+      "validVotes": 217269,
+      "results": { "akd": 21412, "premadasa": 95422, "wickremesinghe": 52573, "others": 47862 },
+      "electoralDistrict": "vanni",
+      "note": "Reported at Vanni electoral district by the Election Commission"
+    },
+    {
+      "slug": "nuwara-eliya",
+      "winner": "premadasa",
+      "turnout": 80.72,
+      "validVotes": 473935,
+      "results": { "akd": 105057, "premadasa": 201814, "wickremesinghe": 138619, "others": 28445 }
+    },
+    {
+      "slug": "polonnaruwa",
+      "winner": "akd",
+      "turnout": 82.19,
+      "validVotes": 283801,
+      "results": { "akd": 130880, "premadasa": 100730, "wickremesinghe": 36908, "others": 15283 }
+    },
+    {
+      "slug": "puttalam",
+      "winner": "akd",
+      "turnout": 72.08,
+      "validVotes": 470095,
+      "results": { "akd": 207134, "premadasa": 173382, "wickremesinghe": 60719, "others": 28860 }
+    },
+    {
+      "slug": "ratnapura",
+      "winner": "akd",
+      "turnout": 81.95,
+      "validVotes": 741900,
+      "results": { "akd": 291708, "premadasa": 257721, "wickremesinghe": 145038, "others": 47433 }
+    },
+    {
+      "slug": "trincomalee",
+      "winner": "premadasa",
+      "turnout": 77.64,
+      "validVotes": 239461,
+      "results": { "akd": 49886, "premadasa": 120588, "wickremesinghe": 40496, "others": 28491 }
+    },
+    {
+      "slug": "vavuniya",
+      "winner": "premadasa",
+      "turnout": 74.05,
+      "validVotes": 217269,
+      "results": { "akd": 21412, "premadasa": 95422, "wickremesinghe": 52573, "others": 47862 },
+      "electoralDistrict": "vanni",
+      "note": "Reported at Vanni electoral district by the Election Commission"
+    }
+  ]
+}
