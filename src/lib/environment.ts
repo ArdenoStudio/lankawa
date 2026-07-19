@@ -41,15 +41,15 @@ export function getAqiBandLabelKey(band: AqiBand): string {
 export function getAqiBandColor(band: AqiBand): string {
   switch (band) {
     case "good":
-      return "#14b8a6";
+      return "#e5e5e5";
     case "moderate":
-      return "#eab308";
+      return "#d4d4d4";
     case "unhealthy_sensitive":
-      return "#f97316";
+      return "#a3a3a3";
     case "unhealthy":
-      return "#ef4444";
+      return "#ffffff";
     case "very_unhealthy":
-      return "#7c3aed";
+      return "#737373";
     default: {
       const _exhaustive: never = band;
       return _exhaustive;

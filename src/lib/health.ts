@@ -19,11 +19,11 @@ export function getDengueDistrictStats(slug: string) {
 export function getDengueRiskColor(level: DengueRiskLevel): string {
   switch (level) {
     case "high":
-      return "#f87171";
+      return "#ffffff";
     case "moderate":
-      return "#fbbf24";
+      return "#a3a3a3";
     case "low":
-      return "#34d399";
+      return "#d4d4d4";
     default: {
       const _exhaustive: never = level;
       return _exhaustive;

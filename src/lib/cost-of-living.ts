@@ -125,13 +125,13 @@ export function formatColIndex(index: number): string {
 export function getColIndexColor(index: number, nationalIndex: number): string {
   const ratio = index / nationalIndex;
   if (ratio >= 1.2) {
-    return "#0f766e";
+    return "#f5f5f5";
   }
   if (ratio >= 1.0) {
-    return "#14b8a6";
+    return "#e5e5e5";
   }
   if (ratio >= 0.85) {
-    return "#2dd4bf";
+    return "#d4d4d4";
   }
-  return "#99f6e4";
+  return "#737373";
 }

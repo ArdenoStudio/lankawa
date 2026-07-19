@@ -1,6 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { BrandMark } from "@/components/brand/BrandMark";
 import { BrandTagline } from "@/components/brand/BrandTagline";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { getSourceProvenancePath, SOURCES } from "@/lib/sources";
@@ -20,16 +19,12 @@ export default async function AboutPage({
       <PageHeader eyebrow={t("eyebrow")} title={t("title")} subtitle={t("subtitle")} />
 
       <section className="lk-card relative overflow-hidden p-6 md:p-8">
-        <div
-          className="pointer-events-none absolute -right-8 -top-8 opacity-[0.06]"
-          aria-hidden="true"
-        >
-          <BrandMark size={200} />
-        </div>
         <div className="relative space-y-4">
-          <h2 className="text-xl font-semibold text-white">{brand("mission")}</h2>
+          <h2 className="font-display text-xl font-semibold text-white">
+            {brand("mission")}
+          </h2>
           <BrandTagline />
-          <p className="max-w-2xl text-slate-400">{brand("builtBy")}</p>
+          <p className="max-w-2xl text-neutral-400">{brand("builtBy")}</p>
         </div>
       </section>
 
