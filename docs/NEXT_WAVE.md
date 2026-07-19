@@ -15,9 +15,12 @@ W  Watchdog → Lankawa-native       ✅ Land Pulse deepen + Debt Pulse
 5 Alert pins (localStorage)       ✅ home firing strip
 4 NBRO/DMC landslide layers       ✅ panel + flood/landslide map toggle
 5b Morning-brief email            ✅ opt-in + cron (needs Resend/Supabase secrets)
+6 District WhatsApp share cards   ✅ ShareDistrictCard on district pages
+7 Octane CPC revision steps       ✅ /economy + /api/v1/fuel/revisions
+8 Split API rate buckets          ✅ default/export/assistant/subscribe
 ```
 
-Backlog wave complete for planned items. Year-2 satellite ETL stays parked.
+Backlog wave complete for planned items. Year-2 satellite ETL, world pump compare, protest tracker, and Entity Sport cricket stay parked.
 
 ---
 

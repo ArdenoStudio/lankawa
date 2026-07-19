@@ -205,6 +205,14 @@
     "error": "பகிர முடியவில்லை. பக்கத்திலிருந்து copy செய்யுங்கள்.",
     "footer": "Source: Lankawa"
   },
+  "shareDistrict": {
+    "title": "Lankawa · {name} district",
+    "button": "Share district card",
+    "hint": "Share sheet or copy for WhatsApp / village groups.",
+    "copied": "District card copied.",
+    "error": "Could not share. Try copying from the page.",
+    "footer": "Source: Lankawa — not an official government publication."
+  },
   "brief": {
     "eyebrow": "காலை சுருக்கம்",
     "title": "இன்று காலை அறிய வேண்டியது",
@@ -269,6 +277,9 @@
     "liveFloodTitle": "நேரடி வெள்ள நிலையங்கள்",
     "liveFloodNone": "இந்த மாவட்டத்திற்கு வரைபடமாக்கப்பட்ட நதி நிலையங்கள் இல்லை.",
     "liveFloodUnavailable": "நிலையங்கள் வரைபடமாக்கப்பட்டுள்ளன ஆனால் நேரடி அளவீடுகள் தற்காலிகமாக கிடைக்கவில்லை.",
+    "shareFloodSummary": "{elevated} elevated of {total} stations",
+    "shareLandLabel": "Land pulse 2018→2024",
+    "shareLandValue": "Greenery {greenery} · Built-up {built}",
     "relatedProvince": "மாகாண சுயவிவரம்",
     "relatedProvinceDesc": "இந்த மாகாணத்தில் தொகுக்கப்பட்ட stats மற்றும் மாவட்டங்கள்",
     "relatedParliamentary": "நாடாளுமன்ற முடிவுகள்",
@@ -464,6 +475,12 @@
     "fxBuy": "Buy",
     "fxSell": "Sell",
     "fuelHistoryTitle": "எரிபொருள் விலை (90 நாள் trend)",
+    "fuelRevisionsTitle": "CPC revision steps",
+    "fuelRevisionsSubtitle": "Official petrol 92 and auto diesel price changes from the Octane partner API.",
+    "fuelRevisionsDate": "Effective",
+    "fuelRevisionsFrom": "from",
+    "fuelRevisionsTo": "to",
+    "fuelRevisionsEmpty": "No recent CPC revisions available.",
     "gold": {
       "eyebrow": "CBSL தங்கம்",
       "title": "தினசரி தங்க விலை",
@@ -799,7 +816,9 @@
     "changesSummary": "Product changelog",
     "changesDescription": "Curated Lankawa surface changelog entries.",
     "subscribeSummary": "Morning brief subscribe",
-    "subscribeDescription": "Double opt-in email subscription for the cached morning brief."
+    "subscribeDescription": "Double opt-in email subscription for the cached morning brief.",
+    "fuelRevisionsSummary": "Fuel revision steps",
+    "fuelRevisionsDescription": "CPC petrol 92 and auto diesel official revision events with price deltas from Octane."
   },
   "budget": {
     "title": "தேசிய பட்ஜெட் Tracker",

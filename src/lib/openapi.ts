@@ -495,6 +495,13 @@ export const apiEndpoints = [
   },
   {
     method: "GET",
+    path: "/api/v1/fuel/revisions?limit=8",
+    summaryKey: "fuelRevisionsSummary" as const,
+    descriptionKey: "fuelRevisionsDescription" as const,
+    example: `{ "limit": 8, "steps": [{ "fuelType": "petrol_92", "deltaLkr": -20 }] }`,
+  },
+  {
+    method: "GET",
     path: "/api/v1/budget",
     summaryKey: "budgetSummary" as const,
     descriptionKey: "budgetDescription" as const,

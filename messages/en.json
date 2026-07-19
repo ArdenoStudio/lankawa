@@ -214,6 +214,14 @@
     "error": "Could not share. Try copying from the page.",
     "footer": "Source: Lankawa"
   },
+  "shareDistrict": {
+    "title": "Lankawa · {name} district",
+    "button": "Share district card",
+    "hint": "Share sheet or copy for WhatsApp / village groups.",
+    "copied": "District card copied.",
+    "error": "Could not share. Try copying from the page.",
+    "footer": "Source: Lankawa — not an official government publication."
+  },
   "brief": {
     "eyebrow": "Morning brief",
     "title": "What to know this morning",
@@ -278,6 +286,9 @@
     "liveFloodTitle": "Live flood stations",
     "liveFloodNone": "No river monitoring stations mapped to this district.",
     "liveFloodUnavailable": "Stations mapped but live readings are temporarily unavailable.",
+    "shareFloodSummary": "{elevated} elevated of {total} stations",
+    "shareLandLabel": "Land pulse 2018→2024",
+    "shareLandValue": "Greenery {greenery} · Built-up {built}",
     "relatedProvince": "Province profile",
     "relatedProvinceDesc": "Aggregated stats and districts in this province",
     "relatedParliamentary": "Parliamentary results",
@@ -473,6 +484,12 @@
     "fxBuy": "Buy",
     "fxSell": "Sell",
     "fuelHistoryTitle": "Fuel prices (90-day trend)",
+    "fuelRevisionsTitle": "CPC revision steps",
+    "fuelRevisionsSubtitle": "Official petrol 92 and auto diesel price changes from the Octane partner API.",
+    "fuelRevisionsDate": "Effective",
+    "fuelRevisionsFrom": "from",
+    "fuelRevisionsTo": "to",
+    "fuelRevisionsEmpty": "No recent CPC revisions available.",
     "gold": {
       "eyebrow": "CBSL gold",
       "title": "Daily gold price",
@@ -745,6 +762,8 @@
     "floodHistoryDescription": "Historical water levels for a river monitoring station with freshness tier.",
     "fuelHistorySummary": "Fuel price history",
     "fuelHistoryDescription": "CPC petrol 92 and auto diesel price series from the Octane partner API.",
+    "fuelRevisionsSummary": "Fuel revision steps",
+    "fuelRevisionsDescription": "CPC petrol 92 and auto diesel official revision events with price deltas from Octane.",
     "budgetSummary": "National budget",
     "budgetDescription": "FY 2024/25 and 2025/26 revenue, expenditure, and sector allocations (seed).",
     "dengueSummary": "Dengue weekly statistics",

@@ -205,6 +205,14 @@
     "error": "Share කළ නොහැකි විය. පිටුවෙන් copy කරන්න.",
     "footer": "Source: Lankawa"
   },
+  "shareDistrict": {
+    "title": "Lankawa · {name} district",
+    "button": "Share district card",
+    "hint": "Share sheet or copy for WhatsApp / village groups.",
+    "copied": "District card copied.",
+    "error": "Could not share. Try copying from the page.",
+    "footer": "Source: Lankawa — not an official government publication."
+  },
   "brief": {
     "eyebrow": "උදෑසන සාරාංශය",
     "title": "අද උදේ දැනගත යුතු දේ",
@@ -269,6 +277,9 @@
     "liveFloodTitle": "සජීවී ගංවතුර මධ්‍යස්ථාන",
     "liveFloodNone": "මෙම දිස්ත්‍රික්කයට map කළ ගංගා මධ්‍යස්ථාන නැත.",
     "liveFloodUnavailable": "මධ්‍යස්ථාන map කළ නමුත් live readings තාවකාලිකව unavailable.",
+    "shareFloodSummary": "{elevated} elevated of {total} stations",
+    "shareLandLabel": "Land pulse 2018→2024",
+    "shareLandValue": "Greenery {greenery} · Built-up {built}",
     "relatedProvince": "පළාත් පැතිකඩ",
     "relatedProvinceDesc": "මෙම පළාතේ එකතු stats සහ දිස්ත්‍රික්",
     "relatedParliamentary": "පාර්ලිමේන්තු ප්‍රතිඵල",
@@ -463,7 +474,13 @@
     "fxBandTitle": "CBSL indicative buy/sell band",
     "fxBuy": "Buy",
     "fxSell": "Sell",
-    "fuelHistoryTitle": "ඉන්ධන මිල (90 දin trend)",
+    "fuelHistoryTitle": "Fuel prices (90-day trend)",
+    "fuelRevisionsTitle": "CPC revision steps",
+    "fuelRevisionsSubtitle": "Official petrol 92 and auto diesel price changes from the Octane partner API.",
+    "fuelRevisionsDate": "Effective",
+    "fuelRevisionsFrom": "from",
+    "fuelRevisionsTo": "to",
+    "fuelRevisionsEmpty": "No recent CPC revisions available.",
     "gold": {
       "eyebrow": "CBSL රන්",
       "title": "දෛනික රන් මිල",
@@ -799,7 +816,9 @@
     "changesSummary": "Product changelog",
     "changesDescription": "Curated Lankawa surface changelog entries.",
     "subscribeSummary": "Morning brief subscribe",
-    "subscribeDescription": "Double opt-in email subscription for the cached morning brief."
+    "subscribeDescription": "Double opt-in email subscription for the cached morning brief.",
+    "fuelRevisionsSummary": "Fuel revision steps",
+    "fuelRevisionsDescription": "CPC petrol 92 and auto diesel official revision events with price deltas from Octane."
   },
   "budget": {
     "title": "ජාතික අයවැය Tracker",

@@ -21,25 +21,25 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 | Atom feed + CSV export + sitemap | Syndication/SEO | ✅ |
 | Home district pin + PWA shell | Retention/offline | ✅ |
 | Monochrome signed deltas | A11y after B&W | ✅ |
-| CBSL gold card on `/economy` | High habit, reuses CBSL | D next |
+| CBSL gold card on `/economy` | High habit, reuses CBSL | ✅ |
 | LAUGFS/Litro LPG scrape + seed fallback | Household energy | D partial ✅ |
-| Met Dept WARNING/ADVISORY card | Disaster | F |
+| Met Dept WARNING/ADVISORY card | Disaster | ✅ |
 | Coconut Index flow/root UI | COL honesty | F1 |
 
 ## High-value backlog
 
 - Suba Delta / Week Ledger / home-district pin (localStorage) ✅ (week ledger + home pin + morning deltas)
-- Alert pins + morning brief email + Atom delta feeds ✅ (pins + brief opt-in shipped; Atom news feed already live)
-- Economy: FX buy–sell band, Octane revision steps, world pump compare ✅ (band/remittance shipped; world pump deferred)
+- Alert pins + morning brief email + Atom delta feeds ✅ (pins + brief opt-in shipped; Atom news feed already live; ops docs in DEPLOYMENT.md)
+- Economy: FX buy–sell band, Octane revision steps, world pump compare ✅ (band/remittance + CPC revision steps shipped; world pump deferred)
 - Disaster map + DMC landslide + NBRO baseline ✅
 - Trilingual AI brief (fact-ledger + downgrade ladder)
 - Cricket: economy card + post-match 24h metric (CricAPI 100/day)
 - Journalist citation cards + chart export ✅
-- Split API rate buckets + CSV exports + `/changes` ✅ (`/changes` + expanded exports)
+- Split API rate buckets + CSV exports + `/changes` ✅ (buckets + `/changes` + expanded exports)
 - PWA offline morning shell + habit-gated install
 - NCPI monthly + PUCSL tariff blocks ✅
-- Remittance calculator for diaspora
-- Village WhatsApp share cards + Data Saver mode ✅ (morning check share + local Data Saver shipped; village cards still open)
+- Remittance calculator for diaspora ✅
+- Village WhatsApp share cards + Data Saver mode ✅ (morning check + district share cards + Data Saver)
 
 ## Recently shipped / partial
 
