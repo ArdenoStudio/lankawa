@@ -1,6 +1,8 @@
 # Lankawa Roadmap
 
-Phase 8 shipped July 2026 (infrastructure + live data). Phase 7 shipped July 2026. This document captures delivered work and recommendations for Phase 9+.
+**Active sequencing:** see [`docs/MASTER_PLAN.md`](./MASTER_PLAN.md) — UI redo (Phase A), federation fixes (B), ingest purity (C), then live civic / brief / launch (D–F). When this file and the master plan disagree, the master plan wins until this roadmap is updated.
+
+Phase 8 shipped July 2026 (infrastructure + live data). Phase 7 shipped July 2026. This document captures delivered work and the Phase 9 backlog (partially superseded by the master plan).
 
 ## Phase 8 Delivered
 

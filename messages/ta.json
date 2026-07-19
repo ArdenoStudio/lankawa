@@ -41,14 +41,15 @@
     "explore": "ஆராயுங்கள்",
     "governance": "ஆளுமை",
     "data": "தரவு",
-    "about": "பற்றி"
+    "about": "பற்றி",
+    "learn": "வழிகாட்டிகள்"
   },
   "home": {
     "eyebrow": "இலங்கையின் சிவில் தளம்",
-    "title": "தீவு முழுவதற்கும் ஒரே தளம்",
-    "subtitle": "பொருளாதாரம், மாவட்டங்கள், தேர்தல், பேரிடர் மற்றும் பொது சேவைகள் — ஒவ்வொரு எண்ணுக்கும் தரவு மூலத்துடன் ஒருங்கிணைக்கப்பட்டது.",
-    "pulseTitle": "நேரடி நிலை",
-    "pulseSubtitle": "நாணயம், எரிபொருள், கொழும்பு வானிலை, மின்சார நிலை மற்றும் வெள்ள கண்காணிப்பு — பொது இடைவெளியில் புதுப்பிக்கப்படுகிறது.",
+    "title": "இலங்கைக்கான உங்கள் காலை சரிபார்ப்பு",
+    "subtitle": "நாணயம், எரிபொருள், வானிலை மற்றும் மின்சாரம் — ஒவ்வொரு எண்ணுக்கும் மூலம்.",
+    "pulseTitle": "இன்று",
+    "pulseSubtitle": "இன்று காலை முக்கியமானவை — பொது இடைவெளியில் புதுப்பிக்கப்படும்.",
     "pulseLive": "இப்போது நேரடி",
     "pulseStripLabel": "நேரடி சிவில் குறிகாட்டிகள்",
     "modulesTitle": "மேடையை ஆராயுங்கள்",
@@ -61,7 +62,7 @@
     "viewDistricts": "மாவட்டங்களைப் பார்க்க",
     "viewEconomy": "முழு பொருளாதாரக் காட்சி",
     "viewDisaster": "பேரிடர் மையம்",
-    "exploreDistricts": "மாவட்டங்களை ஆராயுங்கள்",
+    "exploreDistricts": "மாவட்டங்களைப் பார்க்க",
     "ctaExplore": "மேடையை ஆராயுங்கள்",
     "ctaDisaster": "பேரிடர்",
     "ctaEconomy": "பொருளாதாரம்",
@@ -71,7 +72,15 @@
     "ardenoTitle": "Ardeno living-cost stack",
     "ardenoSubtitle": "Fuel, property, vehicles, and food — integrated in-platform from sister platforms.",
     "viewArdeno": "Open Ardeno hub",
-    "disclaimer": "பொது மூலங்களிலிருந்து தொகுக்கப்பட்டது. அதிகாரப்பூர்வ அரசு வெளியீடு அல்ல."
+    "disclaimer": "பொது மூலங்களிலிருந்து தொகுக்கப்பட்டது. அதிகாரப்பூர்வ அரசு வெளியீடு அல்ல.",
+    "viewStatus": "மூல நிலை",
+    "depthTitle": "ஆழமாகச் செல்லுங்கள்",
+    "depthSubtitle": "மாவட்டங்கள், பொருளாதாரம், பேரிடர், வழிகாட்டிகள் மற்றும் முழு தொகுதி அடைவு.",
+    "depthDistricts": "மாவட்டங்கள்",
+    "depthEconomy": "பொருளாதாரம்",
+    "depthDisaster": "பேரிடர்",
+    "depthExplore": "ஆராயுங்கள்",
+    "depthLearn": "வழிகாட்டிகள்"
   },
   "modules": {
     "districts": {
@@ -169,7 +178,7 @@
   },
   "news": {
     "title": "இலங்கை செய்தி துடிப்பு",
-    "subtitle": "Daily Mirror மற்றும் Ada Derana பொது RSS ஊட்டங்களிலிருந்து சமீபத்திய தலைப்புகள்.",
+    "subtitle": "சிங்களம், தமிழ் மற்றும் ஆங்கில பொது RSS ஊட்டங்களிலிருந்து சமீபத்திய தலைப்புகள்.",
     "viewAll": "அனைத்து தலைப்புகள்",
     "viewSource": "மூலத்தைக் காண்க",
     "provenance": "பொது RSS ஊட்டங்களிலிருந்து தொகுக்கப்பட்டது",
@@ -177,6 +186,26 @@
     "headlineCount": "{count} தலைப்புகள் கண்காணிக்கப்படுகின்றன",
     "sourceMirror": "Daily Mirror",
     "sourceAda": "Ada Derana"
+  },
+  "brief": {
+    "eyebrow": "காலை சுருக்கம்",
+    "title": "இன்று காலை அறிய வேண்டியது",
+    "subtitle": "சமீபத்திய இலங்கை தலைப்புகளிலிருந்து உருவாக்கப்பட்ட குறுக்கமான சுருக்கம்.",
+    "freshness": "{count} மூல தலைப்புகள் · உருவாக்கியது {date}",
+    "viewSource": "செய்தி மூலத்தைப் பார்க்க",
+    "translationNote": "தமிழ் காட்சியில் இடைமுக சொற்கள் மொழிபெயர்க்கப்பட்டுள்ளன. AI provider அமைக்கப்படவில்லை என்றால் heuristic சுருக்கங்கள் source headlines-ஐ ஆங்கிலத்தில் வைத்திருக்கலாம்."
+  },
+  "cricket": {
+    "eyebrow": "இலங்கை கிரிக்கெட்",
+    "title": "இன்றைய போட்டி",
+    "subtitle": "இன்று இலங்கை போட்டி live அல்லது upcoming ஆக இருந்தால் மட்டுமே காட்டப்படும்.",
+    "live": "நேரடி",
+    "upcoming": "இன்று",
+    "startsAt": "தொடக்கம் {date}",
+    "venue": "இடம்: {venue}",
+    "timeUnavailable": "நேரம் கிடைக்கவில்லை",
+    "provenance": "கிரிக்கெட் தரவு மூலம்",
+    "viewSource": "மூலத்தைப் பார்க்க"
   },
   "explore": {
     "eyebrow": "தொகுதி அடைவு",
@@ -353,7 +382,25 @@
     "powerAffectedAreas": "பாதிக்கப்பட்ட பகுதிகள்",
     "powerNoAffectedAreas": "சமீபத்திய CEB Care சோதனையில் பாதிக்கப்பட்ட பகுதிகள் எதுவும் அறிவிக்கப்படவில்லை.",
     "powerObservedAt": "சோதனை {time}",
-    "powerSourceNote": "மூலம்: CEB Care தேவை மேலாண்மை அட்டவணை மற்றும் தற்போதைய தடை வரைபடம் (cebcare.ceb.lk)."
+    "powerSourceNote": "மூலம்: CEB Care தேவை மேலாண்மை அட்டவணை மற்றும் தற்போதைய தடை வரைபடம் (cebcare.ceb.lk).",
+    "earthquakeTitle": "நிலநடுக்க கண்காணிப்பு",
+    "earthquakeSubtitle": "இலங்கை நிலப்பரப்புக்குள் USGS பதிவுகள் — தீவிரம் மதிப்பீடு இல்லாமல்.",
+    "earthquakeEmptyTitle": "தகுதியான நிலநடுக்கங்கள் இல்லை",
+    "earthquakeEmptyBody": "கடந்த {days} நாட்களில் இலங்கை நில bounding boxக்குள் magnitude {minMagnitude}+ நிகழ்வுகள் USGS-ல் இல்லை.",
+    "earthquakeEmptyScopeNote": "Monitoring box: {minLat}°N–{maxLat}°N, {minLon}°E–{maxLon}°E (district map bounds).",
+    "earthquakeEmptyOffshoreNote": "இந்த நில boxக்கு வெளியே Indian Ocean offshore நிகழ்வுகள் இங்கே பட்டியலிடப்படாது.",
+    "earthquakeErrorTitle": "நிலநடுக்க feed unavailable",
+    "earthquakeErrorBody": "USGS Event API-யை அணுக முடியவில்லை. Lankawa cache/estimate தரவைக் காட்டாது.",
+    "earthquakeMagnitude": "Magnitude",
+    "earthquakeDepth": "Depth",
+    "earthquakeCoordinates": "Coordinates",
+    "earthquakeOccurredAt": "Observed {time}",
+    "earthquakeTsunamiFlag": "Tsunami flag",
+    "earthquakeWindowLabel": "Window: last {days} days · magnitude ≥ {minMagnitude}",
+    "earthquakeBboxLabel": "Box: {minLat}°N–{maxLat}°N, {minLon}°E–{maxLon}°E",
+    "earthquakeSourceNote": "Source: USGS FDSN Event Web Service (earthquake.usgs.gov).",
+    "earthquakeProvenance": "Data provenance",
+    "earthquakeCountLabel": "{count, plural, one {# event in window} other {# events in window}}"
   },
   "economy": {
     "title": "பொருளாதார நிலை",
@@ -438,7 +485,8 @@
     "apiLink": "View developer docs",
     "platformTitle": "அனைத்தும் ஒரே இடத்தில்",
     "platformBody": "அனைத்து தரவு, documentation, மூல attribution-ம் லங்காவாவில் உள்ளன. metrics explore, methodology புரிந்துகொள்ள, அல்லது பொது API பயன்படுத்த இந்த platform-ஐ விடத் தேவையில்லை.",
-    "freshnessLink": "தரவு மூலங்களை ஆராயுங்கள்"
+    "freshnessLink": "தரவு மூலங்களை ஆராயுங்கள்",
+    "learnLink": "வெளிப்படைத்தன்மை வழிகாட்டிகளைப் படியுங்கள்"
   },
   "freshness": {
     "fresh": "புதிய",
@@ -451,6 +499,7 @@
     "about": "பற்றி",
     "sources": "தரவு மூலங்கள்",
     "developers": "டெவலப்பர்கள்",
+    "learn": "வழிகாட்டிகள்",
     "status": "நிலை",
     "districts": "மாவட்டங்கள்",
     "elections": "தேர்தல்",
@@ -491,7 +540,8 @@
       "environment": "சுற்றுச்சூழல்",
       "health": "சுகாதாரம்",
       "civic": "சிவில்",
-      "transport": "போக்குவரத்து"
+      "transport": "போக்குவரத்து",
+      "sports": "விளையாட்டு"
     },
     "adapters": {
       "api": "API ஒருங்கிணைப்பு",
@@ -698,7 +748,9 @@
     "property": "Property score",
     "compare": "Compare",
     "vsNational": "base {base}",
-    "disclaimer": "Seed composite index — for illustration only."
+    "disclaimer": "Seed composite index — for illustration only.",
+    "methodologyLink": "முறைமையைப் படியுங்கள்",
+    "disclaimerLive": "கிடைக்கும் நேரடி உள்ளீடுகளிலிருந்து புதுப்பிக்கப்பட்ட கூட்டு. அதிகாரப்பூர்வ NCPI அல்ல."
   },
   "environment": {
     "title": "Environment & Air Quality",
@@ -829,7 +881,10 @@
     "monthlyBasket": "Monthly basket",
     "restaurantIndex": "Restaurant index",
     "intensity": "Relative cost",
-    "disclaimer": "Representative food price intelligence — not official NCPI. Seed fallback used when FoodLK endpoints are unavailable."
+    "disclaimer": "Representative food price intelligence — not official NCPI. Seed fallback used when FoodLK endpoints are unavailable.",
+    "disclaimerLife": "FoodLK API கிடைக்கவில்லை. தலைப்பு எண்கள் Ariva Life Platform food அடுக்கிலிருந்து; மாவட்ட meal bands seed மதிப்பீடுகள்.",
+    "disclaimerSeed": "Seed தரவு காட்டப்படுகிறது — FoodLK மற்றும் Life Platform food முனைகள் கிடைக்கவில்லை. பிரதிநிதி எண்கள் மட்டும்.",
+    "bannerLife": "FoodLK தற்காலிகமாக கிடைக்கவில்லை. முக்கிய மற்றும் basket எண்கள் Ariva Life Platform food adapter-லிருந்து — live FoodLK scrape அல்ல."
   },
   "ardeno": {
     "eyebrow": "Sister platforms",
@@ -917,5 +972,234 @@
       "flood": "How many flood stations are active?",
       "elections": "Who won the 2024 presidential election?"
     }
+  },
+  "learn": {
+    "eyebrow": "நம்பிக்கை & வெளிப்படைத்தன்மை",
+    "title": "லங்காவாவை எப்படி படிப்பது",
+    "subtitle": "நீங்கள் பார்க்கும் எண்களுக்கான எளிய வழிகாட்டிகள் — jargon இல்லை, partisan spin இல்லை. நாம் என்ன காட்டுகிறோம், எங்கிருந்து, என்ன தெரியாது என்பதை விளக்குகிறோம்.",
+    "trustPreamble": "லங்காவா அரசு நிறுவனம் அல்ல. methodology விளக்க — எண்ணை நம்பலாமா, primary source-ல verify செய்யலாமா என்று நீங்கள் முடிவு.",
+    "readTime": "{minutes} நிமிட வாசிப்பு",
+    "viewGuide": "வழிகாட்டியைப் படியுங்கள்",
+    "inlineEyebrow": "Unbiased explainer",
+    "back": "அனைத்து வழிகாட்டிகள்",
+    "demoTitle": "லங்காவாவில் நீங்கள் பார்ப்பது",
+    "explainerTitle": "இதன் அர்த்தம்",
+    "trustTitle": "நாம் claim செய்யாதவை",
+    "relatedTitle": "Context-ல் பாருங்கள்",
+    "topics": {
+      "economy": "பொருளாதாரம்",
+      "disaster": "பேரிடம்",
+      "platform": "மேடை"
+    },
+    "relatedPaths": {
+      "/": "Home pulse",
+      "/economy": "பொருளாதாரம்",
+      "/disaster": "பேரிட hub",
+      "/districts": "மாவட்ட atlas",
+      "/status": "Status dashboard",
+      "/sources": "தரவு மூலங்கள்",
+      "/about": "பற்றி",
+      "/explore": "Explore modules"
+    },
+    "items": {
+      "fxRates": {
+        "title": "USD/LKR exchange rates எப்படி வேலை செய்கின்றன",
+        "summary": "Lankawa CBSL selling rates ஏன் காட்டுகிறது, buy/sell அர்த்தம், bank quote வேறுபடலாம்.",
+        "inlineHint": "Headline USD/LKR = CBSL selling rate — எல்லா counter/remittance quote-உம் அல்ல.",
+        "intro": "CBSL daily table Lankawa ingest — headline = selling rate.",
+        "demoIntro": "Home/Economy pulse card shape — buy + sell visible.",
+        "trustNote": "நாளை rate predict, money changer recommend, commercial counter CBSL match guarantee இல்லை.",
+        "sections": [
+          "CBSL US dollar buy/sell வேறு publish. Banks margins/fees add.",
+          "Lankawa headline = CBSL selling rate. Buying rate card note-ல.",
+          "Rates CBSL business-day schedule — continuous forex screen அல்ல.",
+          "Remittance/import/settlement — bank/exchange counter compare."
+        ],
+        "demo": {
+          "cardLabel": "USD / LKR",
+          "headlineNote": "Headline = CBSL selling rate",
+          "buyLabel": "Buying rate",
+          "buyHint": "Dealers USD CBSL-க்கு sell — rate",
+          "sellLabel": "Selling rate",
+          "sellHint": "Lankawa headline number",
+          "footnote": "Illustrative — live Home/Economy.",
+          "step1": "CBSL daily table",
+          "step2": "Lankawa buy + sell ingest",
+          "step3": "தேவையெனில் counter verify"
+        }
+      },
+      "floodLevels": {
+        "title": "River flood alert levels அர்த்தம்",
+        "summary": "NORMAL, ALERT, WARNING, DANGER — water height vs station thresholds.",
+        "inlineHint": "Alert colours river height — evacuation orders அல்ல.",
+        "intro": "lk-flood-api river gauges aggregate. Station thresholds வேறு.",
+        "demoIntro": "Station card level (m) vs alert/warning/danger thresholds.",
+        "trustNote": "Gauges preparedness input — DMC/local warnings replace அல்ல.",
+        "sections": [
+          "Water level metres — gauge height, street depth அல்ல.",
+          "NORMAL = alert threshold கீழ். ALERT = first threshold — monitoring.",
+          "WARNING/DANGER station-specific.",
+          "Remarks/timestamps upstream. History unavailable — sparklines degrade."
+        ],
+        "demo": {
+          "stationName": "Peradeniya (Mahaweli)",
+          "riverName": "Mahaweli Ganga · illustrative",
+          "currentLevel": "Current level",
+          "alertLevel": "Alert threshold",
+          "warningLevel": "Warning threshold",
+          "dangerLevel": "Danger threshold",
+          "alertLine": "Alert line",
+          "warningLine": "Warning line",
+          "dangerLine": "Danger line",
+          "levels": {
+            "normal": "Alert threshold கீழ் — routine monitoring.",
+            "alert": "First threshold — forecasts watch.",
+            "warning": "Significant rise — local guidance prepare.",
+            "danger": "Highest threshold — DMC/local instructions."
+          }
+        }
+      },
+      "freshness": {
+        "title": "Freshness badges எப்படி படிப்பது",
+        "summary": "Fresh, Stale, Down — act செய்வதற்கு முன்.",
+        "inlineHint": "Live metrics freshness tier — stale silent அல்ல.",
+        "intro": "Last fetch vs cadence. Pulse, sources, status badges.",
+        "demoIntro": "Badge = upstream confirm time — event time அல்ல.",
+        "trustNote": "Fresh = recently responded — every use case correct அல்ல.",
+        "sections": [
+          "Fresh: expected cadence-க்குள்.",
+          "Stale: older — context; verify if timing matters.",
+          "Down: failed — /status check.",
+          "Badges pipeline health — official urgency அல்ல."
+        ],
+        "demo": {
+          "sampleMetric": "Sample pulse metric",
+          "asOf": "Last fetch · illustrative",
+          "statusLinkPrefix": "Sources பாருங்கள்",
+          "statusLinkLabel": "status dashboard",
+          "statusLinkSuffix": " — last errors உடன்.",
+          "tiers": {
+            "fresh": {
+              "body": "Expected cadence-க்குள் fetched.",
+              "action": "Daily checks default."
+            },
+            "stale": {
+              "body": "Older than expected.",
+              "action": "Context; verify if needed."
+            },
+            "down": {
+              "body": "Unreachable last check.",
+              "action": "/status before relying."
+            }
+          }
+        }
+      },
+      "provenance": {
+        "title": "எல்லா எண்களும் எங்கிருந்து",
+        "summary": "Pulse card → source → upstream publisher chain.",
+        "inlineHint": "Provenance link — methodology, cadence, last fetch.",
+        "intro": "Metrics source registry. Adapter, cadence, health documented.",
+        "demoIntro": "Number → publishing organisation chain.",
+        "trustNote": "We aggregate — formal use authority verify.",
+        "sections": [
+          "Pulse /sources/[id] methodology, adapter, freshness.",
+          "API JSON; scrapes scheduled.",
+          "Partner live + seed fallback.",
+          "/api/v1/* same provenance."
+        ],
+        "demo": {
+          "previewLabel": "Example provenance link",
+          "previewMetric": "USD / LKR · CBSL daily exchange rates",
+          "previewLink": "CBSL FX source page",
+          "steps": {
+            "metric": {
+              "label": "லங்காவாவில்",
+              "title": "Pulse card or table",
+              "body": "Value, unit, time, freshness badge."
+            },
+            "source": {
+              "label": "Source registry",
+              "title": "/sources/cbsl_fx",
+              "body": "Methodology, cadence, adapter, last fetch."
+            },
+            "upstream": {
+              "label": "Upstream publisher",
+              "title": "Central Bank of Sri Lanka",
+              "body": "Data originate org — source page link."
+            }
+          }
+        }
+      },
+      "seedVsLive": {
+        "title": "Live data vs illustrative seed",
+        "summary": "Live feeds today vs representative seed modules.",
+        "inlineHint": "Seed/fallback labelled — approximations mistaken அல்ல.",
+        "intro": "Live adapters + seed. Limitations /about open.",
+        "demoIntro": "Live vs seed — /status health.",
+        "trustNote": "Seed surveillance/ledgers அல்ல.",
+        "sections": [
+          "Live: CBSL FX, Octane, flood, weather, CEB, CSE, news.",
+          "Seed: dengue, MPs, tenders, local gov, elections, COL.",
+          "Mixed: property/vehicle partner + seed.",
+          "30+ green days expand — /status check."
+        ],
+        "demo": {
+          "module": "Module",
+          "status": "Status",
+          "meaning": "Meaning",
+          "kinds": {
+            "live": "Live adapter",
+            "seed": "Seed data",
+            "mixed": "Live + fallback"
+          },
+          "liveTitle": "Live adapter",
+          "liveBody": "Upstream API/scrape. Freshness badges.",
+          "seedTitle": "Illustrative seed",
+          "seedBody": "Sample aligned formats — not operational.",
+          "rows": {
+            "fx": {
+              "name": "USD / LKR",
+              "note": "CBSL scrape + DB"
+            },
+            "fuel": {
+              "name": "Fuel prices",
+              "note": "Octane API + cache"
+            },
+            "flood": {
+              "name": "Flood stations",
+              "note": "lk-flood-api"
+            },
+            "dengue": {
+              "name": "Dengue cases",
+              "note": "Seed — not live"
+            },
+            "property": {
+              "name": "Property medians",
+              "note": "Partner or seed"
+            },
+            "tenders": {
+              "name": "Tender feed",
+              "note": "Static seed"
+            }
+          }
+        }
+      }
+    }
+  },
+  "a11y": {
+    "skipToContent": "முதன்மை உள்ளடக்கத்திற்குச் செல்"
+  },
+  "costOfLivingMethodology": {
+    "title": "வாழ்க்கைச் செலவு முறைமை",
+    "subtitle": "Lankawa மாவட்ட கூட்டுக் குறியீட்டை எவ்வாறு உருவாக்குகிறது — அது என்ன அல்ல.",
+    "back": "வாழ்க்கைச் செலவு",
+    "inputsTitle": "நேரடி உள்ளீடுகள்",
+    "inputFuel": "Octane CPC பெட்ரோல் 92 தேசிய குறிப்பு விலை.",
+    "inputProperty": "PropertyLK மாவட்ட இடைநிலைகள் — கொழும்புக்கு ஒப்பீடு.",
+    "inputFood": "FoodLK அல்லது Ariva Life அத்தியாவசியக் கூடை; இல்லையெனில் விதை உணவு மதிப்பீடு.",
+    "methodTitle": "கூட்டு முறை",
+    "methodBody": "நேரடி உள்ளீடுகள் கிடைக்கும்போது பெட்ரோல் குறிப்பும் உணவுக் கூடையும் புதுப்பிக்கப்படும். சொத்து கூறு PropertyLK அடிப்படையிலானது. பங்குதாரர்கள் இல்லையெனில் விதைத் தரவு காட்டப்படும்.",
+    "limitsTitle": "வரம்புகள்",
+    "limitsBody": "இது அதிகாரப்பூர்வ NCPI/CCPI தரவு அல்ல. குடிமை ஒப்பீட்டுக்காக மட்டும்."
   }
 }

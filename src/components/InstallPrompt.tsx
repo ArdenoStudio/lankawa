@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
-import { BrandMark } from "@/components/brand/BrandMark";
-
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
@@ -52,9 +50,8 @@ export function InstallPrompt() {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-40 mx-auto max-w-md rounded-2xl border border-[var(--lk-teal)]/30 bg-slate-900/95 p-4 shadow-xl backdrop-blur sm:left-auto">
+    <div className="fixed bottom-4 left-4 right-4 z-40 mx-auto max-w-md rounded-2xl border border-white/20 bg-black/95 p-4 shadow-xl backdrop-blur sm:left-auto">
       <div className="flex items-start gap-3">
-        <BrandMark size={36} />
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-white">{t("installTitle")}</p>
           <p className="mt-1 text-xs text-slate-400">{t("installBody")}</p>

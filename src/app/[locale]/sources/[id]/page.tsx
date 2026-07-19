@@ -38,6 +38,7 @@ export default async function SourceDetailPage({
     health: t("categories.health"),
     civic: t("categories.civic"),
     transport: t("categories.transport"),
+    sports: t("categories.sports"),
   } satisfies Record<(typeof source)["category"], string>;
 
   const adapters = {

@@ -33,6 +33,7 @@ const moreLinks = [
   { href: "/tenders", key: "tenders" },
   { href: "/assistant", key: "assistant" },
   { href: "/status", key: "status" },
+  { href: "/learn", key: "learn" },
   { href: "/sources", key: "sources" },
   { href: "/developers", key: "developers" },
 ] as const;
@@ -80,6 +81,7 @@ const mobileSections = [
     key: "more",
     links: [
       { href: "/status", key: "status" },
+      { href: "/learn", key: "learn" },
       { href: "/sources", key: "sources" },
       { href: "/developers", key: "developers" },
       { href: "/about", key: "about" },
@@ -214,7 +216,7 @@ export function SiteHeader() {
       )}
     >
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3">
-        <Logo variant="full" markSize={28} />
+        <Logo variant="wordmark" />
 
         <nav className="hidden items-center gap-1 lg:flex lg:flex-1 lg:justify-center">
           {primaryLinks.map((link) => (

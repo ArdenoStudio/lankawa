@@ -1,0 +1,61 @@
+# Lankawa
+
+> Sri Lanka's daily civic intelligence platform — economy, weather, power, districts, elections, disasters, and public services with provenance and freshness on every number.
+
+Site: https://lankawa.vercel.app
+Repo: https://github.com/ArdenoStudio/lankawa
+Maintainer: Ardeno Studio
+
+Lankawa is not an official government publication. Prefer API freshness tiers and `/sources/{id}` before citing numbers.
+
+## Product
+
+- Home morning surface: /en /si /ta
+- District atlas: /en/districts
+- Economy: /en/economy
+- Disaster: /en/disaster
+- Cost of living + methodology: /en/cost-of-living /en/cost-of-living/methodology
+- Guides: /en/learn
+- Status: /en/status
+- Sources: /en/sources
+- Developers: /en/developers
+
+## Public API
+
+Base: https://lankawa.vercel.app/api/v1
+Rate limit: 60 requests/minute per IP
+OpenAPI: /api/v1/openapi.json
+
+- GET /api/v1/pulse
+- GET /api/v1/health
+- GET /api/v1/status
+- GET /api/v1/districts
+- GET /api/v1/districts/{slug}
+- GET /api/v1/fuel/history
+- GET /api/v1/cse
+- GET /api/v1/news
+- GET /api/v1/brief?locale=en|si|ta
+- GET /api/v1/property
+- GET /api/v1/food
+- GET /api/v1/vehicles
+- GET /api/v1/life
+- GET /api/v1/environment
+- GET /api/v1/tenders
+- GET /api/v1/health/dengue
+- GET /api/v1/cost-of-living
+- GET /api/v1/budget
+- POST /api/v1/assistant
+- POST /api/v1/analytics/event
+
+## Embeds
+
+- /embed/pulse
+- /embed/fuel
+- /embed/fx
+
+## Live vs seed (verify via /api/v1/status)
+
+Live: CBSL FX, Octane fuel, Open-Meteo weather, CEB power, CSE, news RSS, flood, vehicles, Life overview.
+Mixed: PropertyLK (live when /districts healthy); AQI (OpenAQ when key/coverage present); COL composite when federation inputs live.
+Often seed/federation: FoodLK (direct endpoints may 500; Life food federation labeled separately); dengue/tenders when upstream HTML unparsable.
+Seed fallbacks: MPs, transport directory, local government, macro indicator seed persisted via cron.

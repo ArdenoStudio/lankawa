@@ -51,13 +51,13 @@ export function getCandidateColor(
 ): string {
   switch (candidateId) {
     case "akd":
-      return "#14b8a6";
+      return "#e5e5e5";
     case "premadasa":
-      return "#60a5fa";
+      return "#d4d4d4";
     case "wickremesinghe":
-      return "#a78bfa";
+      return "#a3a3a3";
     case "others":
-      return "#94a3b8";
+      return "#737373";
     default: {
       const _exhaustive: never = candidateId;
       return _exhaustive;
@@ -100,17 +100,17 @@ export function countElectoralDistrictsWonBy(
 export function getPartyColor(partyId: ParliamentaryPartyId): string {
   switch (partyId) {
     case "npp":
-      return "#14b8a6";
+      return "#e5e5e5";
     case "sjb":
-      return "#60a5fa";
+      return "#d4d4d4";
     case "itak":
-      return "#f59e0b";
+      return "#c4c4c4";
     case "ndf":
-      return "#a78bfa";
+      return "#a3a3a3";
     case "slpp":
-      return "#6366f1";
+      return "#e5e5e5";
     case "others":
-      return "#94a3b8";
+      return "#737373";
     default: {
       const _exhaustive: never = partyId;
       return _exhaustive;

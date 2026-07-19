@@ -1,30 +1,326 @@
 @import "tailwindcss";
 
+/*
+  Monochrome system: black + white (+ neutral gray for hierarchy).
+  Chromatic Tailwind scales are remapped so existing teal/emerald/etc.
+  utility classes render in grayscale without a mass rewrite.
+*/
+@theme {
+  --color-teal-50: #fafafa;
+  --color-teal-100: #f5f5f5;
+  --color-teal-200: #e5e5e5;
+  --color-teal-300: #d4d4d4;
+  --color-teal-400: #a3a3a3;
+  --color-teal-500: #737373;
+  --color-teal-600: #525252;
+  --color-teal-700: #404040;
+  --color-teal-800: #262626;
+  --color-teal-900: #171717;
+  --color-teal-950: #0a0a0a;
+
+  --color-cyan-50: #fafafa;
+  --color-cyan-100: #f5f5f5;
+  --color-cyan-200: #e5e5e5;
+  --color-cyan-300: #d4d4d4;
+  --color-cyan-400: #a3a3a3;
+  --color-cyan-500: #737373;
+  --color-cyan-600: #525252;
+  --color-cyan-700: #404040;
+  --color-cyan-800: #262626;
+  --color-cyan-900: #171717;
+  --color-cyan-950: #0a0a0a;
+
+  --color-emerald-50: #fafafa;
+  --color-emerald-100: #f5f5f5;
+  --color-emerald-200: #e5e5e5;
+  --color-emerald-300: #d4d4d4;
+  --color-emerald-400: #a3a3a3;
+  --color-emerald-500: #737373;
+  --color-emerald-600: #525252;
+  --color-emerald-700: #404040;
+  --color-emerald-800: #262626;
+  --color-emerald-900: #171717;
+  --color-emerald-950: #0a0a0a;
+
+  --color-green-50: #fafafa;
+  --color-green-100: #f5f5f5;
+  --color-green-200: #e5e5e5;
+  --color-green-300: #d4d4d4;
+  --color-green-400: #a3a3a3;
+  --color-green-500: #737373;
+  --color-green-600: #525252;
+  --color-green-700: #404040;
+  --color-green-800: #262626;
+  --color-green-900: #171717;
+  --color-green-950: #0a0a0a;
+
+  --color-lime-50: #fafafa;
+  --color-lime-100: #f5f5f5;
+  --color-lime-200: #e5e5e5;
+  --color-lime-300: #d4d4d4;
+  --color-lime-400: #a3a3a3;
+  --color-lime-500: #737373;
+  --color-lime-600: #525252;
+  --color-lime-700: #404040;
+  --color-lime-800: #262626;
+  --color-lime-900: #171717;
+  --color-lime-950: #0a0a0a;
+
+  --color-amber-50: #fafafa;
+  --color-amber-100: #f5f5f5;
+  --color-amber-200: #e5e5e5;
+  --color-amber-300: #d4d4d4;
+  --color-amber-400: #a3a3a3;
+  --color-amber-500: #737373;
+  --color-amber-600: #525252;
+  --color-amber-700: #404040;
+  --color-amber-800: #262626;
+  --color-amber-900: #171717;
+  --color-amber-950: #0a0a0a;
+
+  --color-yellow-50: #fafafa;
+  --color-yellow-100: #f5f5f5;
+  --color-yellow-200: #e5e5e5;
+  --color-yellow-300: #d4d4d4;
+  --color-yellow-400: #a3a3a3;
+  --color-yellow-500: #737373;
+  --color-yellow-600: #525252;
+  --color-yellow-700: #404040;
+  --color-yellow-800: #262626;
+  --color-yellow-900: #171717;
+  --color-yellow-950: #0a0a0a;
+
+  --color-orange-50: #fafafa;
+  --color-orange-100: #f5f5f5;
+  --color-orange-200: #e5e5e5;
+  --color-orange-300: #d4d4d4;
+  --color-orange-400: #a3a3a3;
+  --color-orange-500: #737373;
+  --color-orange-600: #525252;
+  --color-orange-700: #404040;
+  --color-orange-800: #262626;
+  --color-orange-900: #171717;
+  --color-orange-950: #0a0a0a;
+
+  --color-rose-50: #fafafa;
+  --color-rose-100: #f5f5f5;
+  --color-rose-200: #e5e5e5;
+  --color-rose-300: #d4d4d4;
+  --color-rose-400: #a3a3a3;
+  --color-rose-500: #737373;
+  --color-rose-600: #525252;
+  --color-rose-700: #404040;
+  --color-rose-800: #262626;
+  --color-rose-900: #171717;
+  --color-rose-950: #0a0a0a;
+
+  --color-red-50: #fafafa;
+  --color-red-100: #f5f5f5;
+  --color-red-200: #e5e5e5;
+  --color-red-300: #d4d4d4;
+  --color-red-400: #a3a3a3;
+  --color-red-500: #737373;
+  --color-red-600: #525252;
+  --color-red-700: #404040;
+  --color-red-800: #262626;
+  --color-red-900: #171717;
+  --color-red-950: #0a0a0a;
+
+  --color-sky-50: #fafafa;
+  --color-sky-100: #f5f5f5;
+  --color-sky-200: #e5e5e5;
+  --color-sky-300: #d4d4d4;
+  --color-sky-400: #a3a3a3;
+  --color-sky-500: #737373;
+  --color-sky-600: #525252;
+  --color-sky-700: #404040;
+  --color-sky-800: #262626;
+  --color-sky-900: #171717;
+  --color-sky-950: #0a0a0a;
+
+  --color-blue-50: #fafafa;
+  --color-blue-100: #f5f5f5;
+  --color-blue-200: #e5e5e5;
+  --color-blue-300: #d4d4d4;
+  --color-blue-400: #a3a3a3;
+  --color-blue-500: #737373;
+  --color-blue-600: #525252;
+  --color-blue-700: #404040;
+  --color-blue-800: #262626;
+  --color-blue-900: #171717;
+  --color-blue-950: #0a0a0a;
+
+  --color-indigo-50: #fafafa;
+  --color-indigo-100: #f5f5f5;
+  --color-indigo-200: #e5e5e5;
+  --color-indigo-300: #d4d4d4;
+  --color-indigo-400: #a3a3a3;
+  --color-indigo-500: #737373;
+  --color-indigo-600: #525252;
+  --color-indigo-700: #404040;
+  --color-indigo-800: #262626;
+  --color-indigo-900: #171717;
+  --color-indigo-950: #0a0a0a;
+
+  --color-violet-50: #fafafa;
+  --color-violet-100: #f5f5f5;
+  --color-violet-200: #e5e5e5;
+  --color-violet-300: #d4d4d4;
+  --color-violet-400: #a3a3a3;
+  --color-violet-500: #737373;
+  --color-violet-600: #525252;
+  --color-violet-700: #404040;
+  --color-violet-800: #262626;
+  --color-violet-900: #171717;
+  --color-violet-950: #0a0a0a;
+
+  --color-purple-50: #fafafa;
+  --color-purple-100: #f5f5f5;
+  --color-purple-200: #e5e5e5;
+  --color-purple-300: #d4d4d4;
+  --color-purple-400: #a3a3a3;
+  --color-purple-500: #737373;
+  --color-purple-600: #525252;
+  --color-purple-700: #404040;
+  --color-purple-800: #262626;
+  --color-purple-900: #171717;
+  --color-purple-950: #0a0a0a;
+
+  --color-fuchsia-50: #fafafa;
+  --color-fuchsia-100: #f5f5f5;
+  --color-fuchsia-200: #e5e5e5;
+  --color-fuchsia-300: #d4d4d4;
+  --color-fuchsia-400: #a3a3a3;
+  --color-fuchsia-500: #737373;
+  --color-fuchsia-600: #525252;
+  --color-fuchsia-700: #404040;
+  --color-fuchsia-800: #262626;
+  --color-fuchsia-900: #171717;
+  --color-fuchsia-950: #0a0a0a;
+
+  --color-pink-50: #fafafa;
+  --color-pink-100: #f5f5f5;
+  --color-pink-200: #e5e5e5;
+  --color-pink-300: #d4d4d4;
+  --color-pink-400: #a3a3a3;
+  --color-pink-500: #737373;
+  --color-pink-600: #525252;
+  --color-pink-700: #404040;
+  --color-pink-800: #262626;
+  --color-pink-900: #171717;
+  --color-pink-950: #0a0a0a;
+
+  /* Kill blue undertone in default slate utilities */
+  --color-slate-50: #fafafa;
+  --color-slate-100: #f5f5f5;
+  --color-slate-200: #e5e5e5;
+  --color-slate-300: #d4d4d4;
+  --color-slate-400: #a3a3a3;
+  --color-slate-500: #737373;
+  --color-slate-600: #525252;
+  --color-slate-700: #404040;
+  --color-slate-800: #262626;
+  --color-slate-900: #171717;
+  --color-slate-950: #0a0a0a;
+}
+
 :root {
   color-scheme: dark;
 
-  /* Brand colors */
-  --lk-teal: #0d9488;
-  --lk-teal-bright: #2dd4bf;
-  --lk-maroon: #8b2635;
-  --lk-gold: #d4a24c;
-  --lk-saffron: #e8a838;
+  /* Brand tokens — monochrome */
+  --lk-teal: #ffffff;
+  --lk-teal-bright: #f5f5f5;
+  --lk-maroon: #a3a3a3;
+  --lk-gold: #d4d4d4;
+  --lk-saffron: #e5e5e5;
 
-  /* Surfaces */
-  --lk-surface: #020617;
-  --lk-surface-elevated: #0f172a;
-  --lk-border: rgba(255, 255, 255, 0.1);
+  --lk-surface: #000000;
+  --lk-surface-elevated: #0a0a0a;
+  --lk-border: rgba(255, 255, 255, 0.14);
+  --lk-ink: #ffffff;
+  --lk-muted: #a3a3a3;
 }
 
 body {
   background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(13, 148, 136, 0.15), transparent),
-    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(139, 38, 53, 0.06), transparent),
-    radial-gradient(ellipse 50% 30% at 0% 100%, rgba(212, 162, 76, 0.04), transparent),
+    radial-gradient(ellipse 70% 40% at 50% -10%, rgba(255, 255, 255, 0.06), transparent),
     var(--lk-surface);
-  font-family: var(--font-noto-sans), var(--font-noto-sinhala), var(--font-noto-tamil),
+  color: var(--lk-ink);
+  font-family: var(--font-inter), var(--font-noto-sinhala), var(--font-noto-tamil),
     ui-sans-serif, system-ui, sans-serif;
   font-feature-settings: "kern" 1, "liga" 1;
+}
+
+.font-display {
+  font-family: var(--font-cal-sans), var(--font-inter), var(--font-noto-sinhala),
+    var(--font-noto-tamil), ui-sans-serif, system-ui, sans-serif;
+}
+
+html:lang(si) body {
+  font-family: var(--font-noto-sinhala), var(--font-inter), sans-serif;
+  line-height: 1.7;
+}
+
+html:lang(ta) body {
+  font-family: var(--font-noto-tamil), var(--font-inter), sans-serif;
+  line-height: 1.7;
+}
+
+@keyframes lk-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.lk-skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.625rem 1rem;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  color: #000000;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transform: translateY(-200%);
+  transition: transform 0.15s ease;
+}
+
+.lk-skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+#main-content:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lk-skip-link {
+    transition: none;
+  }
+
+  .animate-\[lk-fade-up_0\.45s_ease-out\],
+  .animate-\[lk-fade-up_0\.4s_ease-out_both\] {
+    animation: none !important;
+  }
 }
 
 /* ── Brand utility classes ── */
@@ -45,9 +341,9 @@ body {
 }
 
 .lk-card-hover:hover {
-  border-color: rgba(45, 212, 191, 0.25);
+  border-color: rgba(255, 255, 255, 0.35);
   background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 0 24px rgba(13, 148, 136, 0.08);
+  box-shadow: none;
 }
 
 .lk-btn-primary {
@@ -55,17 +351,17 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  background: var(--lk-teal);
+  background: #ffffff;
   padding: 0.625rem 1.25rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--lk-surface);
-  transition: background-color 0.2s, box-shadow 0.2s;
+  color: #000000;
+  transition: background-color 0.2s, color 0.2s, opacity 0.2s;
 }
 
 .lk-btn-primary:hover {
-  background: var(--lk-teal-bright);
-  box-shadow: 0 0 20px rgba(13, 148, 136, 0.3);
+  background: #e5e5e5;
+  box-shadow: none;
 }
 
 .lk-btn-secondary {
@@ -73,42 +369,39 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  border: 1px solid var(--lk-border);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   padding: 0.375rem 0.875rem;
   font-size: 0.875rem;
-  color: rgb(203 213 225);
+  color: #e5e5e5;
   transition: border-color 0.2s, background-color 0.2s, color 0.2s;
 }
 
 .lk-btn-secondary:hover {
-  border-color: rgba(45, 212, 191, 0.3);
-  background: rgba(255, 255, 255, 0.05);
-  color: white;
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
 }
 
 .lk-gradient-text {
-  background: linear-gradient(135deg, var(--lk-teal-bright), var(--lk-teal));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  background: none;
+  color: #ffffff;
+  -webkit-background-clip: unset;
+  background-clip: unset;
 }
 
 .lk-brand-pattern {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230d9488' fill-opacity='0.04'%3E%3Cpath d='M30 0l15 15-15 15L15 15zM0 30l15 15-15 15v-30zm60 0v30L45 45l15-15zM30 60L15 45l15-15 15 15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M30 0l15 15-15 15L15 15zM0 30l15 15-15 15v-30zm60 0v30L45 45l15-15zM30 60L15 45l15-15 15 15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 .lk-brand-stripe {
-  height: 3px;
+  height: 1px;
   background: linear-gradient(
     90deg,
-    var(--lk-maroon) 0%,
-    var(--lk-maroon) 33%,
-    var(--lk-teal) 33%,
-    var(--lk-teal) 66%,
-    var(--lk-gold) 66%,
-    var(--lk-gold) 100%
+    transparent 0%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 100%
   );
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .lk-icon-ring {
@@ -116,29 +409,27 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 0.75rem;
-  background: linear-gradient(135deg, rgba(13, 148, 136, 0.15), rgba(45, 212, 191, 0.08));
-  color: var(--lk-teal-bright);
-  box-shadow: inset 0 0 0 1px rgba(13, 148, 136, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
   transition: background 0.2s, box-shadow 0.2s;
 }
 
 .lk-icon-ring:hover,
 .group:hover .lk-icon-ring {
-  background: linear-gradient(135deg, rgba(13, 148, 136, 0.25), rgba(45, 212, 191, 0.12));
-  box-shadow: inset 0 0 0 1px rgba(45, 212, 191, 0.3), 0 0 12px rgba(13, 148, 136, 0.15);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
 }
 
 /* ── Hero surface ── */
 
 .hero-surface {
   background:
-    linear-gradient(135deg, rgba(13, 148, 136, 0.1) 0%, transparent 50%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 100%),
-    rgba(2, 6, 23, 0.6);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 55%),
+    #000000;
   background-image:
-    linear-gradient(135deg, rgba(13, 148, 136, 0.1) 0%, transparent 50%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 100%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230d9488' fill-opacity='0.04'%3E%3Cpath d='M30 0l15 15-15 15L15 15zM0 30l15 15-15 15v-30zm60 0v30L45 45l15-15zM30 60L15 45l15-15 15 15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M30 0l15 15-15 15L15 15zM0 30l15 15-15 15v-30zm60 0v30L45 45l15-15zM30 60L15 45l15-15 15 15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 a {
@@ -146,14 +437,14 @@ a {
 }
 
 .district-map-popup .maplibregl-popup-content {
-  background: rgb(15 23 42 / 0.95);
-  border: 1px solid rgb(255 255 255 / 0.1);
+  background: rgb(0 0 0 / 0.95);
+  border: 1px solid rgb(255 255 255 / 0.2);
   border-radius: 0.5rem;
-  color: rgb(226 232 240);
+  color: rgb(245 245 245);
   padding: 0.375rem 0.625rem;
-  box-shadow: 0 10px 25px rgb(0 0 0 / 0.35);
+  box-shadow: 0 10px 25px rgb(0 0 0 / 0.55);
 }
 
 .district-map-popup .maplibregl-popup-tip {
-  border-top-color: rgb(15 23 42 / 0.95);
+  border-top-color: rgb(0 0 0 / 0.95);
 }

@@ -3,8 +3,22 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { getDistrictName, getDistrict } from "@/lib/districts";
-import { getDengueRiskColor, getMaxDengueCases } from "@/lib/health";
-import type { DengueDistrictStat } from "@/lib/types";
+import type { DengueDistrictStat, DengueRiskLevel } from "@/lib/types";
+
+function getDengueRiskColor(level: DengueRiskLevel): string {
+  switch (level) {
+    case "high":
+      return "#f87171";
+    case "moderate":
+      return "#fbbf24";
+    case "low":
+      return "#34d399";
+    default: {
+      const _exhaustive: never = level;
+      return _exhaustive;
+    }
+  }
+}
 
 export function DengueDistrictTable({
   districts,
@@ -14,7 +28,7 @@ export function DengueDistrictTable({
   locale: string;
 }) {
   const t = useTranslations("health");
-  const maxCases = getMaxDengueCases();
+  const maxCases = Math.max(...districts.map((district) => district.cases), 1);
   const sorted = [...districts].sort((a, b) => b.cases - a.cases);
 
   return (

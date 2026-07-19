@@ -1,10 +1,15 @@
 import dengueData from "@/data/dengue-seed.json";
+import { fetchLiveDengueSnapshot } from "./integrations/dengue";
 import type { DengueSnapshot, DengueRiskLevel } from "./types";
 
 const snapshot = dengueData as DengueSnapshot;
 
 export function getDengueSnapshot(): DengueSnapshot {
   return snapshot;
+}
+
+export async function getDengueData(): Promise<DengueSnapshot> {
+  return (await fetchLiveDengueSnapshot()) ?? snapshot;
 }
 
 export function getDengueDistrictStats(slug: string) {
@@ -14,11 +19,11 @@ export function getDengueDistrictStats(slug: string) {
 export function getDengueRiskColor(level: DengueRiskLevel): string {
   switch (level) {
     case "high":
-      return "#f87171";
+      return "#ffffff";
     case "moderate":
-      return "#fbbf24";
+      return "#a3a3a3";
     case "low":
-      return "#34d399";
+      return "#d4d4d4";
     default: {
       const _exhaustive: never = level;
       return _exhaustive;

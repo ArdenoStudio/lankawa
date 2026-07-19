@@ -13,12 +13,22 @@ const LIFE_API_BASE =
 
 const FETCH_TIMEOUT_MS = 8000;
 
+export type FoodProvenance = "live" | "life_federation" | "seed";
+
+export interface FoodFetchResult extends FoodSnapshot {
+  provenance: FoodProvenance;
+  upstreamStatus?: "healthy" | "degraded" | "offline";
+  mixedSeedDistricts?: boolean;
+}
+
 interface LifeFoodDomain {
   key: string;
+  status?: "healthy" | "degraded" | "down" | "seed";
   observed_at?: string;
   last_updated_at?: string;
   metrics?: Array<{ label: string; value: number; unit: string }>;
   top_items?: Array<{ label: string; price_lkr: number; source: string }>;
+  errors?: string[];
 }
 
 interface LifeOverviewResponse {
@@ -53,11 +63,7 @@ async function fetchJson<T>(url: string): Promise<T | null> {
   }
 }
 
-function mapLifeFoodDomain(domain: LifeFoodDomain): FoodSnapshot | null {
-  if (domain.key !== "food") {
-    return null;
-  }
-
+function mapLifeFoodDomain(domain: LifeFoodDomain): FoodFetchResult {
   const seed = getFoodSnapshot();
   const essentials = domain.metrics?.find((metric) =>
     metric.label.toLowerCase().includes("essentials"),
@@ -78,10 +84,18 @@ function mapLifeFoodDomain(domain: LifeFoodDomain): FoodSnapshot | null {
       source: item.source,
     })) ?? seed.stapleItems;
 
+  const upstreamStatus =
+    domain.status === "healthy"
+      ? "healthy"
+      : domain.status === "degraded"
+        ? "degraded"
+        : "offline";
+
   return {
     ...seed,
-    sourceId: "food_platform_api",
-    sourceName: "FoodLK Price Intelligence",
+    provenance: "life_federation",
+    sourceId: "life_platform_food",
+    sourceName: "Ariva Life Platform (Food)",
     asOf: domain.observed_at ?? domain.last_updated_at ?? seed.asOf,
     essentialsBasketLkr: Math.round(
       essentials?.value ?? seed.essentialsBasketLkr,
@@ -90,10 +104,12 @@ function mapLifeFoodDomain(domain: LifeFoodDomain): FoodSnapshot | null {
     marketQuotes: Math.round(marketQuotes?.value ?? seed.marketQuotes),
     stapleItems,
     districts: seed.districts,
+    upstreamStatus,
+    mixedSeedDistricts: true,
   };
 }
 
-export async function fetchFoodSnapshot(): Promise<FoodSnapshot | null> {
+export async function fetchFoodSnapshot(): Promise<FoodFetchResult | null> {
   const directEndpoints = [
     `${FOOD_API_BASE}/stats/summary`,
     `${FOOD_API_BASE}/categories/summary`,
@@ -106,9 +122,11 @@ export async function fetchFoodSnapshot(): Promise<FoodSnapshot | null> {
       const seed = getFoodSnapshot();
       return {
         ...seed,
+        provenance: "live",
         sourceId: "food_platform_api",
         sourceName: "FoodLK Price Intelligence",
         asOf: new Date().toISOString(),
+        mixedSeedDistricts: false,
       };
     }
   }
@@ -126,9 +144,17 @@ export async function fetchFoodSnapshot(): Promise<FoodSnapshot | null> {
   return null;
 }
 
-export async function getFoodData(): Promise<FoodSnapshot> {
+export async function getFoodData(): Promise<FoodFetchResult> {
   const live = await fetchFoodSnapshot();
-  return live ?? getFoodSnapshot();
+  if (live) {
+    return live;
+  }
+
+  return {
+    ...getFoodSnapshot(),
+    provenance: "seed",
+    mixedSeedDistricts: true,
+  };
 }
 
 export function getFoodDistrictMealCosts(): FoodDistrictMealCost[] {

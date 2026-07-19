@@ -5,6 +5,7 @@ import { BrandTagline } from "@/components/brand/BrandTagline";
 
 const platformLinks = [
   { href: "/about", key: "about" },
+  { href: "/learn", key: "learn" },
   { href: "/sources", key: "sources" },
   { href: "/developers", key: "developers" },
   { href: "/status", key: "status" },
@@ -28,7 +29,7 @@ export async function SiteFooter() {
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-3 lg:col-span-1">
-            <Logo variant="full" markSize={24} />
+            <Logo variant="wordmark" />
             <BrandTagline short />
             <p className="text-xs text-slate-600">
               {t("version", { version: "0.1.0" })}

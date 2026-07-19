@@ -1,6 +1,7 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
-import { Noto_Sans, Noto_Sans_Sinhala, Noto_Sans_Tamil } from "next/font/google";
+import localFont from "next/font/local";
+import { Inter, Noto_Sans_Sinhala, Noto_Sans_Tamil } from "next/font/google";
 import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -10,9 +11,26 @@ import { routing } from "@/i18n/routing";
 import { metadata as brandMetadata } from "@/lib/brand";
 import "../globals.css";
 
-const notoSans = Noto_Sans({
+const calSans = localFont({
+  src: [
+    {
+      path: "../../../public/fonts/cal-sans-latin-400-normal.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../../public/fonts/cal-sans-latin-ext-400-normal.woff2",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-cal-sans",
+  display: "swap",
+});
+
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-noto-sans",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -82,17 +100,25 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
   const messages = await getMessages();
+  const tA11y = await getTranslations({ locale, namespace: "a11y" });
 
   return (
     <html lang={locale} className="h-full">
       <body
-        className={`${notoSans.variable} ${notoSinhala.variable} ${notoTamil.variable} min-h-full bg-slate-950 font-sans text-slate-100 antialiased`}
+        className={`${calSans.variable} ${inter.variable} ${notoSinhala.variable} ${notoTamil.variable} min-h-full bg-slate-950 font-sans text-slate-100 antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
+          <a href="#main-content" className="lk-skip-link">
+            {tA11y("skipToContent")}
+          </a>
           <PwaRegister />
           <InstallPrompt />
           <SiteHeader />
-          <main className="mx-auto flex min-h-[calc(100vh-8rem)] w-full max-w-6xl flex-1 flex-col px-4 py-8 md:py-10">
+          <main
+            id="main-content"
+            tabIndex={-1}
+            className="mx-auto flex min-h-[calc(100vh-8rem)] w-full max-w-6xl flex-1 flex-col px-4 py-8 md:py-10"
+          >
             {children}
           </main>
           <SiteFooter />

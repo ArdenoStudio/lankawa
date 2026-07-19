@@ -1,26 +1,34 @@
 import tendersData from "@/data/tenders-seed.json";
-import type { TenderNotice, TenderStatus } from "./types";
+import { fetchLiveTenders } from "./integrations/tenders";
+import type { TenderNotice, TenderSnapshot, TenderStatus } from "./types";
 
-const snapshot = tendersData as { notices: TenderNotice[]; sourceId: string; sourceName: string; asOf: string };
+const snapshot = tendersData as TenderSnapshot;
 
-export function getTendersSnapshot() {
+export function getTendersSnapshot(): TenderSnapshot {
   return snapshot;
+}
+
+export async function getTendersData(): Promise<TenderSnapshot> {
+  return (await fetchLiveTenders()) ?? snapshot;
 }
 
 export function getAllTenders(): TenderNotice[] {
   return snapshot.notices;
 }
 
-export function filterTenders(options: {
-  q?: string;
-  district?: string;
-  province?: string;
-  category?: string;
-  status?: TenderStatus;
-}): TenderNotice[] {
+export function filterTenderNotices(
+  notices: TenderNotice[],
+  options: {
+    q?: string;
+    district?: string;
+    province?: string;
+    category?: string;
+    status?: TenderStatus;
+  },
+): TenderNotice[] {
   const normalizedQuery = options.q?.trim().toLowerCase() ?? "";
 
-  return snapshot.notices.filter((notice) => {
+  return notices.filter((notice) => {
     if (options.district && notice.district !== options.district) {
       return false;
     }
@@ -49,4 +57,14 @@ export function filterTenders(options: {
     }
     return true;
   });
+}
+
+export function filterTenders(options: {
+  q?: string;
+  district?: string;
+  province?: string;
+  category?: string;
+  status?: TenderStatus;
+}): TenderNotice[] {
+  return filterTenderNotices(snapshot.notices, options);
 }

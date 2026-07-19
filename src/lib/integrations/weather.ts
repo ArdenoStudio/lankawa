@@ -1,3 +1,4 @@
+import { getLatestObservation, isDatabaseConfigured } from "../db";
 import { computeFreshnessTier } from "../freshness";
 import { getSource, getSourceProvenancePath } from "../sources";
 import type { FreshnessTier, PulseMetric, SourceHealth } from "../types";
@@ -64,6 +65,38 @@ export async function fetchColomboWeather(): Promise<ColomboWeather> {
   };
 }
 
+function weatherContribution(
+  source: NonNullable<ReturnType<typeof getSource>>,
+  checkedAt: string,
+  weather: ColomboWeather,
+): { metric: PulseMetric; health: SourceHealth } {
+  const tier = computeFreshnessTier(weather.observedAt, source.cadenceMinutes);
+
+  return {
+    metric: {
+      id: "weather_colombo",
+      label: "Colombo weather",
+      value: weather.temp.toFixed(1),
+      unit: "°C",
+      observedAt: weather.observedAt,
+      tier,
+      sourceId: source.id,
+      provenancePath: getSourceProvenancePath(source.id),
+      note: `${weather.label}${weather.precipitation > 0 ? ` · ${weather.precipitation.toFixed(1)} mm` : ""}`,
+    },
+    health: {
+      id: source.id,
+      name: source.name,
+      category: source.category,
+      tier,
+      lastSuccessAt: weather.observedAt,
+      lastCheckedAt: checkedAt,
+      error: null,
+      provenancePath: getSourceProvenancePath(source.id),
+    },
+  };
+}
+
 export async function buildWeatherPulseMetric(checkedAt: string): Promise<{
   metric: PulseMetric;
   health: SourceHealth;
@@ -71,32 +104,23 @@ export async function buildWeatherPulseMetric(checkedAt: string): Promise<{
   const source = getSource("open_meteo")!;
 
   try {
-    const weather = await fetchColomboWeather();
-    const tier = computeFreshnessTier(weather.observedAt, source.cadenceMinutes);
+    if (isDatabaseConfigured()) {
+      const dbObservation = await getLatestObservation(
+        source.id,
+        "weather_colombo_temp",
+      );
+      if (dbObservation) {
+        return weatherContribution(source, checkedAt, {
+          temp: dbObservation.value,
+          label: "Colombo",
+          precipitation: 0,
+          observedAt: dbObservation.observedAt,
+        });
+      }
+    }
 
-    return {
-      metric: {
-        id: "weather_colombo",
-        label: "Colombo weather",
-        value: weather.temp.toFixed(1),
-        unit: "°C",
-        observedAt: weather.observedAt,
-        tier,
-        sourceId: source.id,
-        provenancePath: getSourceProvenancePath(source.id),
-        note: `${weather.label}${weather.precipitation > 0 ? ` · ${weather.precipitation.toFixed(1)} mm` : ""}`,
-      },
-      health: {
-        id: source.id,
-        name: source.name,
-        category: source.category,
-        tier,
-        lastSuccessAt: weather.observedAt,
-        lastCheckedAt: checkedAt,
-        error: null,
-        provenancePath: getSourceProvenancePath(source.id),
-      },
-    };
+    const weather = await fetchColomboWeather();
+    return weatherContribution(source, checkedAt, weather);
   } catch (error) {
     const tier: FreshnessTier = "down";
 

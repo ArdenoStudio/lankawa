@@ -6,7 +6,6 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { useTranslations, useLocale } from "next-intl";
 import { DISTRICTS, getDistrictName } from "@/lib/districts";
 import { districtSlugFromName, districtSlugFromPcode } from "@/lib/district-geo";
-import { getDengueSnapshot, getMaxDengueCases } from "@/lib/health";
 import { DengueDistrictTable } from "./DengueDistrictTable";
 import type { DengueDistrictStat } from "@/lib/types";
 
@@ -54,15 +53,20 @@ function dengueCaseColor(cases: number, maxCases: number): string {
   return "#134e4a";
 }
 
-export function DengueChoroplethMap({ height = 420 }: { height?: number }) {
+export function DengueChoroplethMap({
+  height = 420,
+  districts,
+}: {
+  height?: number;
+  districts: DengueDistrictStat[];
+}) {
   const t = useTranslations("health");
   const locale = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const popupRef = useRef<maplibregl.Popup | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const snapshot = getDengueSnapshot();
-  const maxCases = getMaxDengueCases();
+  const maxCases = Math.max(...districts.map((district) => district.cases), 1);
 
   useEffect(() => {
     if (!containerRef.current) {
@@ -82,7 +86,7 @@ export function DengueChoroplethMap({ height = 420 }: { height?: number }) {
         for (const feature of geojson.features) {
           const slug = resolveSlug(feature.properties);
           const stat = slug
-            ? snapshot.districts.find((item) => item.slug === slug)
+            ? districts.find((item) => item.slug === slug)
             : undefined;
           const district = slug
             ? DISTRICTS.find((item) => item.slug === slug)
@@ -226,7 +230,7 @@ export function DengueChoroplethMap({ height = 420 }: { height?: number }) {
         mapRef.current = null;
       }
     };
-  }, [locale, maxCases, snapshot.districts, t]);
+  }, [districts, locale, maxCases, t]);
 
   if (error) {
     return (
@@ -292,7 +296,7 @@ export function HealthViewToggle({
         <DengueDistrictTable districts={districts} locale={locale} />
       ) : (
         <>
-          <DengueChoroplethMap />
+          <DengueChoroplethMap districts={districts} />
           <div className="flex flex-wrap gap-4 text-xs text-slate-400">
             <span className="inline-flex items-center gap-2">
               <span className="inline-block h-3 w-3 rounded-full bg-red-600" />

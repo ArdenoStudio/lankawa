@@ -47,16 +47,16 @@ export { getPropertyData } from "./integrations/propertylk";
 export function getPropertyPriceColor(median: number, maxMedian: number): string {
   const ratio = median / maxMedian;
   if (ratio >= 0.75) {
-    return "#0f766e";
+    return "#f5f5f5";
   }
   if (ratio >= 0.5) {
-    return "#14b8a6";
+    return "#e5e5e5";
   }
   if (ratio >= 0.3) {
-    return "#2dd4bf";
+    return "#d4d4d4";
   }
   if (ratio >= 0.15) {
-    return "#5eead4";
+    return "#a3a3a3";
   }
-  return "#99f6e4";
+  return "#737373";
 }

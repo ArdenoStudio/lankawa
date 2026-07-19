@@ -119,6 +119,19 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["dengue_weekly"],
   },
   {
+    id: "epidemiology_unit",
+    name: "Epidemiology Unit — Weekly Dengue Report (live)",
+    category: "health",
+    url: "https://www.epid.gov.lk/weekly-epidemiological-report/weekly-epidemiological-report",
+    cadenceMinutes: 10080,
+    adapter: "scrape",
+    description:
+      "Public weekly dengue surveillance reports from the Epidemiology Unit.",
+    methodology:
+      "Lankawa probes public Epidemiology Unit weekly report and legacy trends pages with short timeouts. Live dengue provenance is used only when a district-level public table can be parsed; otherwise the health page falls back to the seed snapshot.",
+    metrics: ["dengue_weekly"],
+  },
+  {
     id: "manthri_inspired_seed",
     name: "Parliamentary records (seed)",
     category: "civic",
@@ -142,6 +155,19 @@ export const SOURCES: SourceDefinition[] = [
       "Sample government procurement tender notices with district filters.",
     methodology:
       "Static seed notices modeled on e-GP publication formats. Not live from e-GP portal — for demonstration and API testing only.",
+    metrics: ["tenders"],
+  },
+  {
+    id: "egp_procurement",
+    name: "PROMISe e-GP Sri Lanka procurement notices",
+    category: "civic",
+    url: "https://promise.lk/?p=vendor_cont&a=all_procurements&type=e",
+    cadenceMinutes: 1440,
+    adapter: "scrape",
+    description:
+      "Public procurement notices from the national PROMISe e-GP portal.",
+    methodology:
+      "Lankawa fetches the public PROMISe procurement notice table server-side, normalizes closing dates, districts, categories, and procuring entities, and falls back to seed notices if the portal is unreachable or the table shape changes.",
     metrics: ["tenders"],
   },
   {
@@ -206,7 +232,20 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Staple food prices, essentials basket, and district meal-cost bands.",
     methodology:
-      "Attempts direct FoodLK API endpoints (`/stats/summary`, `/categories/summary`, `/home/summary`). When those fail, tries the Life Platform food domain from `/life/overview`. Falls back to seed district meal costs derived from the cost-of-living model.",
+      "Direct FoodLK API endpoints only (`/stats/summary`, `/categories/summary`, `/home/summary`). Never labeled live unless FoodLK itself returns 200.",
+    metrics: ["food_basket_estimate", "staple_prices"],
+  },
+  {
+    id: "life_platform_food",
+    name: "Ariva Life Platform — Food federation",
+    category: "economy",
+    url: "internal://food",
+    cadenceMinutes: 3600,
+    adapter: "partner",
+    description:
+      "Food domain metrics when FoodLK direct endpoints fail.",
+    methodology:
+      "Server-side fetch from Life `/life/overview` food domain. Life may return degraded fixture structure if FoodLK is unreachable. District meal bands remain Lankawa seed until FoodLK recovers.",
     metrics: ["food_basket_estimate", "staple_prices"],
   },
   {
@@ -312,6 +351,19 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["col_index", "food_basket_estimate"],
   },
   {
+    id: "cost_of_living_composite",
+    name: "Lankawa Cost of Living Composite",
+    category: "economy",
+    url: "internal://cost-of-living",
+    cadenceMinutes: 1440,
+    adapter: "partner",
+    description:
+      "Live-refreshed district COL index when Octane, PropertyLK, or Life/Food inputs are available.",
+    methodology:
+      "Combines live Octane petrol 92, PropertyLK district medians (Colombo-normalized property component), and Food/Life essentials basket scaling on top of the published seed relative structure. Not an official NCPI or HIES publication. See /cost-of-living/methodology.",
+    metrics: ["col_index", "food_basket_estimate", "fuel_petrol_92"],
+  },
+  {
     id: "environment_aqi_seed",
     name: "Lankawa Air Quality Index",
     category: "health",
@@ -322,6 +374,19 @@ export const SOURCES: SourceDefinition[] = [
       "Representative AQI and PM2.5 bands by administrative district.",
     methodology:
       "IQAir-style representative seed data patterned on urban/rural density proxies. Not live sensor readings.",
+    metrics: ["aqi", "pm25"],
+  },
+  {
+    id: "openaq_lk",
+    name: "OpenAQ Sri Lanka PM2.5",
+    category: "environment",
+    url: "https://api.openaq.org/v3",
+    cadenceMinutes: 60,
+    adapter: "api",
+    description:
+      "OpenAQ PM2.5 observations for Colombo and other Sri Lanka locations where public sensors are available.",
+    methodology:
+      "Lankawa queries OpenAQ v3 locations and latest PM2.5 readings for Sri Lanka when an OpenAQ API key is configured. Districts with live matches are overlaid on the seed AQI map; unmatched districts retain seed values with mixed-coverage provenance.",
     metrics: ["aqi", "pm25"],
   },
   {
@@ -348,6 +413,19 @@ export const SOURCES: SourceDefinition[] = [
     methodology:
       "Lankawa polls the Open-Meteo forecast endpoint for Colombo coordinates (6.9271°N, 79.8612°E) with WMO weather codes mapped to short labels. Observations refresh hourly on the home pulse.",
     metrics: ["weather_colombo"],
+  },
+  {
+    id: "usgs_earthquake",
+    name: "USGS Earthquake Event API",
+    category: "disaster",
+    url: "https://earthquake.usgs.gov/fdsnws/event/1/",
+    cadenceMinutes: 60,
+    adapter: "api",
+    description:
+      "Recent earthquake catalog entries within Sri Lanka's land bounding box.",
+    methodology:
+      "Lankawa queries the USGS FDSN Event Web Service with the same Sri Lanka land bounds used on district maps (79.5°E–82.1°E, 5.9°N–9.9°N), a rolling 30-day window, and magnitude ≥ 2.5. Results are shown as-is with no severity scoring — an empty list means USGS has no qualifying events in that box, not that seismic risk is zero. Offshore Indian Ocean events outside the land bbox are excluded by design.",
+    metrics: ["earthquake_events"],
   },
   {
     id: "ceb_power",
@@ -387,6 +465,19 @@ export const SOURCES: SourceDefinition[] = [
     methodology:
       "Server-side RSS/Atom parse of approved public feeds (e.g. Daily Mirror, Ada Derana, NewsFirst). Headlines are normalized in-platform with source attribution — no external click-through links in pulse UI. Pending `src/lib/integrations/news.ts` from parallel agent; source registry reserved for provenance.",
     metrics: ["news_headlines"],
+  },
+  {
+    id: "cricket_sl",
+    name: "Sri Lanka cricket fixtures",
+    category: "sports",
+    url: "internal://cricket",
+    cadenceMinutes: 10,
+    adapter: "api",
+    description:
+      "Live or upcoming Sri Lanka cricket match card from a configured public cricket data API.",
+    methodology:
+      "Lankawa checks cricketdata/CricAPI current and upcoming match endpoints when `CRICKETDATA_API_KEY` or `CRICAPI_API_KEY` is configured. Only matches involving Sri Lanka that are live or scheduled for today in Sri Lanka time are surfaced; if no real match is found, the home card does not render.",
+    metrics: ["cricket_match"],
   },
 ];
 

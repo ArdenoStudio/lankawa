@@ -1,7 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { HealthViewToggle } from "@/components/DengueChoroplethMap";
 import { Link } from "@/i18n/navigation";
-import { getDengueSnapshot } from "@/lib/health";
+import { getDengueData } from "@/lib/health";
 import { getSourceProvenancePath } from "@/lib/sources";
 
 export default async function HealthPage({
@@ -12,7 +12,7 @@ export default async function HealthPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("health");
-  const snapshot = getDengueSnapshot();
+  const snapshot = await getDengueData();
 
   return (
     <div className="space-y-8">

@@ -149,15 +149,15 @@ export function getCandidateColorForCycle(
   candidateId: string,
 ): string {
   const palette: Record<string, string> = {
-    mahinda: "#6366f1",
-    fonseka: "#f59e0b",
-    sirisena: "#14b8a6",
-    gotabaya: "#6366f1",
-    sajith: "#60a5fa",
-    akd: "#14b8a6",
-    premadasa: "#60a5fa",
-    wickremesinghe: "#a78bfa",
-    others: "#94a3b8",
+    mahinda: "#e5e5e5",
+    fonseka: "#c4c4c4",
+    sirisena: "#e5e5e5",
+    gotabaya: "#e5e5e5",
+    sajith: "#d4d4d4",
+    akd: "#e5e5e5",
+    premadasa: "#d4d4d4",
+    wickremesinghe: "#a3a3a3",
+    others: "#737373",
   };
-  return palette[candidateId] ?? "#94a3b8";
+  return palette[candidateId] ?? "#737373";
 }

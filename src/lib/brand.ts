@@ -1,5 +1,5 @@
 /**
- * Lankawa brand constants — colors, metadata, and i18n key references.
+ * Lankawa brand constants — monochrome system.
  * See docs/BRAND.md for usage guidelines.
  */
 
@@ -12,18 +12,18 @@ export const brand = {
 } as const;
 
 export const colors = {
-  teal: "#0d9488",
-  tealBright: "#2dd4bf",
-  maroon: "#8b2635",
-  gold: "#d4a24c",
-  saffron: "#e8a838",
-  surface: "#020617",
-  surfaceElevated: "#0f172a",
-  border: "rgba(255, 255, 255, 0.1)",
+  teal: "#ffffff",
+  tealBright: "#f5f5f5",
+  maroon: "#a3a3a3",
+  gold: "#d4d4d4",
+  saffron: "#e5e5e5",
+  surface: "#000000",
+  surfaceElevated: "#0a0a0a",
+  border: "rgba(255, 255, 255, 0.14)",
 } as const;
 
 export const metadata = {
-  themeColor: colors.teal,
+  themeColor: "#000000",
   backgroundColor: colors.surface,
   ogImage: "/brand/og-default.svg",
   favicon: "/favicon.svg",

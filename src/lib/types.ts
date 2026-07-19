@@ -7,7 +7,8 @@ export type SourceCategory =
   | "environment"
   | "health"
   | "civic"
-  | "transport";
+  | "transport"
+  | "sports";
 
 export interface SourceDefinition {
   id: string;
@@ -376,6 +377,13 @@ export interface TenderNotice {
   estimatedValueLkr: number;
   closingDate: string;
   status: TenderStatus;
+}
+
+export interface TenderSnapshot {
+  sourceId: string;
+  sourceName: string;
+  asOf: string;
+  notices: TenderNotice[];
 }
 
 export interface PropertyDistrictPrice {

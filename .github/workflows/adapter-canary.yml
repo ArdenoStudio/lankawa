@@ -1,0 +1,139 @@
+name: Adapter Canary
+
+on:
+  schedule:
+    # Probe live pulse adapters every 30 minutes (UTC).
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      deploy_url:
+        description: Production base URL
+        required: false
+        default: https://lankawa.vercel.app
+      fail_on_stale:
+        description: Treat stale tiers as failure (default is down-only)
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: adapter-canary
+  cancel-in-progress: false
+
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DEPLOY_URL: ${{ inputs.deploy_url || 'https://lankawa.vercel.app' }}
+      FAIL_ON_STALE: ${{ inputs.fail_on_stale || 'false' }}
+      # Today strip + economy pulse adapters that must not be "down".
+      CRITICAL_SOURCES: '["cbsl_fx","octane_fuel","lk_flood_api","open_meteo","ceb_power","cse_lk"]'
+
+    steps:
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Trigger production canary cron
+        id: cron
+        continue-on-error: true
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          set -euo pipefail
+          curl_args=(
+            -sfS
+            --retry 2
+            --retry-delay 5
+            --max-time 120
+            -o /tmp/canary.json
+            -w "%{http_code}"
+          )
+          if [ -n "${CRON_SECRET:-}" ]; then
+            curl_args+=(-H "Authorization: Bearer $CRON_SECRET")
+          fi
+          code=$(curl "${curl_args[@]}" "$DEPLOY_URL/api/cron/canary" || echo "000")
+          echo "http_code=$code" >> "$GITHUB_OUTPUT"
+          if [ "$code" = "200" ]; then
+            echo "path=cron" >> "$GITHUB_OUTPUT"
+          else
+            echo "Canary cron unavailable (HTTP $code) — falling back to /api/v1/health"
+          fi
+
+      - name: Fetch health snapshot
+        if: steps.cron.outputs.path != 'cron'
+        run: |
+          set -euo pipefail
+          curl -sfS --retry 2 --retry-delay 5 --max-time 120 \
+            "$DEPLOY_URL/api/v1/health" -o /tmp/canary.json
+
+      - name: Check platform status
+        run: |
+          set -euo pipefail
+          status=$(curl -sfS --retry 2 --retry-delay 5 --max-time 60 \
+            "$DEPLOY_URL/api/v1/status")
+          echo "$status" | jq -e '.status == "ok"' > /dev/null
+          if [ "$(echo "$status" | jq -r '.database.configured')" = "true" ]; then
+            echo "$status" | jq -e '.database.connected == true' > /dev/null
+          fi
+          echo "$status" | jq '{version, status, database, sources}'
+
+      - name: Assert critical adapter health
+        run: |
+          set -euo pipefail
+          jq -e '(.sources // []) | type == "array"' /tmp/canary.json > /dev/null
+
+          if jq -e 'has("ok") and .ok == false' /tmp/canary.json > /dev/null 2>&1; then
+            jq -r '.error // "canary returned ok=false"' /tmp/canary.json
+            exit 1
+          fi
+
+          down=$(jq -r --argjson critical "$CRITICAL_SOURCES" '
+            [
+              .sources[]?
+              | select(.id as $id | $critical | index($id))
+              | select(.tier == "down")
+              | .id
+            ] | unique
+          ' /tmp/canary.json)
+
+          if [ "$(echo "$down" | jq 'length')" -gt 0 ]; then
+            echo "::error::Critical adapters down: $(echo "$down" | jq -c .)"
+            jq -r --argjson critical "$CRITICAL_SOURCES" '
+              .sources[]?
+              | select(.id as $id | $critical | index($id))
+              | select(.tier == "down")
+              | "- \(.id): \(.error // "no error message")"
+            ' /tmp/canary.json
+            exit 1
+          fi
+
+          if [ "$FAIL_ON_STALE" = "true" ]; then
+            stale=$(jq -r --argjson critical "$CRITICAL_SOURCES" '
+              [
+                .sources[]?
+                | select(.id as $id | $critical | index($id))
+                | select(.tier == "stale")
+                | .id
+              ] | unique
+            ' /tmp/canary.json)
+            if [ "$(echo "$stale" | jq 'length')" -gt 0 ]; then
+              echo "::error::Critical adapters stale: $(echo "$stale" | jq -c .)"
+              exit 1
+            fi
+          fi
+
+          echo "Critical adapter tiers:"
+          jq -r --argjson critical "$CRITICAL_SOURCES" '
+            .sources[]?
+            | select(.id as $id | $critical | index($id))
+            | "  \(.id): \(.tier)\(if .error then " — \(.error)" else "" end)"
+          ' /tmp/canary.json
+
+      - name: Upload canary report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: adapter-canary-${{ github.run_id }}
+          path: /tmp/canary.json
+          retention-days: 14

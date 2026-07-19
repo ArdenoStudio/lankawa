@@ -6,14 +6,18 @@ import { getDistrict, getDistrictName } from "@/lib/districts";
 import {
   formatColIndex,
   getColIndexColor,
-  getCostOfLivingSnapshot,
-  getRankedCostOfLivingDistricts,
 } from "@/lib/cost-of-living";
+import type { CostOfLivingSnapshot } from "@/lib/types";
 
-export function CostOfLivingTable({ locale }: { locale: string }) {
+export function CostOfLivingTable({
+  locale,
+  snapshot,
+}: {
+  locale: string;
+  snapshot: CostOfLivingSnapshot;
+}) {
   const t = useTranslations("costOfLiving");
-  const snapshot = getCostOfLivingSnapshot();
-  const districts = getRankedCostOfLivingDistricts();
+  const districts = [...snapshot.districts].sort((a, b) => a.rank - b.rank);
 
   return (
     <div className="overflow-x-auto rounded-2xl border border-white/10">
@@ -40,20 +44,21 @@ export function CostOfLivingTable({ locale }: { locale: string }) {
                 <td className="px-4 py-3">
                   <Link
                     href={`/districts/${row.slug}`}
-                    className="font-medium text-white hover:text-teal-200"
+                    className="text-teal-300 hover:text-teal-200"
                   >
                     {getDistrictName(district, locale)}
                   </Link>
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-4 py-3 font-medium text-white">
                   <span
-                    className="inline-flex items-center gap-2 font-semibold text-white"
-                    style={{ color: getColIndexColor(row.index, snapshot.nationalIndex) }}
+                    style={{
+                      color: getColIndexColor(row.index, snapshot.nationalIndex),
+                    }}
                   >
                     {formatColIndex(row.index)}
-                    <span className="text-xs font-normal text-slate-500">
-                      ({t("vsNational", { base: snapshot.nationalIndex })})
-                    </span>
+                  </span>
+                  <span className="ml-2 text-xs text-slate-500">
+                    {t("vsNational", { base: snapshot.nationalIndex })}
                   </span>
                 </td>
                 <td className="px-4 py-3 text-slate-300">
@@ -62,10 +67,10 @@ export function CostOfLivingTable({ locale }: { locale: string }) {
                 <td className="px-4 py-3 text-slate-300">{row.propertyComponent}</td>
                 <td className="px-4 py-3">
                   <Link
-                    href={`/compare?districts=${row.slug},colombo`}
+                    href={`/compare?districts=colombo,${row.slug}`}
                     className="text-teal-300 hover:text-teal-200"
                   >
-                    {t("compareLink")}
+                    {t("compare")}
                   </Link>
                 </td>
               </tr>

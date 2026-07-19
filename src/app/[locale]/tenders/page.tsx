@@ -1,7 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { TenderFeed } from "@/components/TenderFeed";
 import { Link } from "@/i18n/navigation";
-import { getTendersSnapshot } from "@/lib/tenders";
+import { getTendersData } from "@/lib/tenders";
 import { getSourceProvenancePath } from "@/lib/sources";
 
 export default async function TendersPage({
@@ -16,7 +16,7 @@ export default async function TendersPage({
   setRequestLocale(locale);
   const t = await getTranslations("tenders");
   const tBudget = await getTranslations("budget");
-  const snapshot = getTendersSnapshot();
+  const snapshot = await getTendersData();
 
   const ministryLabels = {
     finance: tBudget("ministries.finance"),
@@ -48,6 +48,7 @@ export default async function TendersPage({
         initialDistrict={district}
         initialQuery={q}
         ministryLabels={ministryLabels}
+        notices={snapshot.notices}
       />
 
       <p className="text-sm text-slate-500">{t("disclaimer")}</p>

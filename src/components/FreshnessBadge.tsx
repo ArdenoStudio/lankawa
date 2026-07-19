@@ -4,11 +4,12 @@ import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import type { FreshnessTier } from "@/lib/types";
 
+/** Monochrome status chips — hierarchy via weight/opacity, not hue. */
 const tierStyles: Record<FreshnessTier, string> = {
-  fresh: "bg-emerald-500/15 text-emerald-300 ring-emerald-500/30",
-  stale: "bg-amber-500/15 text-amber-300 ring-amber-500/30",
-  down: "bg-rose-500/15 text-rose-300 ring-rose-500/30",
-  unknown: "bg-slate-500/15 text-slate-300 ring-slate-500/30",
+  fresh: "bg-white text-black ring-white",
+  stale: "bg-white/10 text-neutral-200 ring-white/35",
+  down: "bg-transparent text-neutral-400 ring-white/25",
+  unknown: "bg-transparent text-neutral-500 ring-white/15",
 };
 
 export function FreshnessBadge({ tier }: { tier: FreshnessTier }) {

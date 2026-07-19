@@ -1,7 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { EnvironmentDistrictTable } from "@/components/EnvironmentDistrictTable";
 import { Link } from "@/i18n/navigation";
-import { getEnvironmentSnapshot } from "@/lib/environment";
+import { getEnvironmentData } from "@/lib/environment";
 import { getSourceProvenancePath } from "@/lib/sources";
 
 export default async function EnvironmentPage({
@@ -12,7 +12,7 @@ export default async function EnvironmentPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("environment");
-  const snapshot = getEnvironmentSnapshot();
+  const snapshot = await getEnvironmentData();
 
   return (
     <div className="space-y-8">
@@ -30,7 +30,7 @@ export default async function EnvironmentPage({
         </p>
       </div>
 
-      <EnvironmentDistrictTable locale={locale} />
+      <EnvironmentDistrictTable locale={locale} districts={snapshot.districts} />
 
       <p className="text-sm text-slate-500">
         {t("healthLink")}{" "}
