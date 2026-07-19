@@ -10,6 +10,12 @@ import {
   getPropertySnapshot,
 } from "@/lib/property";
 
+function formatTrendPct(value: number): string {
+  const direction = value > 0 ? "↑" : value < 0 ? "↓" : "→";
+  const sign = value > 0 ? "+" : "";
+  return `${direction} ${sign}${value.toFixed(1)}%`;
+}
+
 export function PropertyDistrictTable({
   locale,
   snapshot: snapshotProp,
@@ -61,13 +67,8 @@ export function PropertyDistrictTable({
                   {formatPropertyPrice(row.lowBand)} –{" "}
                   {formatPropertyPrice(row.highBand)}
                 </td>
-                <td
-                  className={`px-4 py-3 text-right font-medium ${
-                    row.trendPct >= 0 ? "text-rose-300" : "text-teal-300"
-                  }`}
-                >
-                  {row.trendPct >= 0 ? "+" : ""}
-                  {row.trendPct.toFixed(1)}%
+                <td className="px-4 py-3 text-right font-medium text-slate-300">
+                  {formatTrendPct(row.trendPct)}
                 </td>
                 <td className="px-4 py-3">
                   <div className="h-2 w-32 overflow-hidden rounded-full bg-slate-800">

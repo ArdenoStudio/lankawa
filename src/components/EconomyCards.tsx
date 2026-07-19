@@ -1,6 +1,12 @@
 import { FreshnessBadge } from "@/components/FreshnessBadge";
 import type { FreshnessTier } from "@/lib/types";
 
+function formatDirectionalDelta(value: number, fractionDigits: number): string {
+  const direction = value > 0 ? "↑" : value < 0 ? "↓" : "→";
+  const sign = value > 0 ? "+" : "";
+  return `${direction} ${sign}${value.toFixed(fractionDigits)}`;
+}
+
 export function MacroIndicatorCard({
   label,
   value,
@@ -38,10 +44,18 @@ export function FxSparkline({
   title,
   series,
   asOf,
+  latestBand,
+  labels,
 }: {
   title: string;
   series: Array<{ date: string; sellRate: number }>;
   asOf: string;
+  latestBand?: { date: string; buyRate: number; sellRate: number };
+  labels: {
+    bandTitle: string;
+    buy: string;
+    sell: string;
+  };
 }) {
   if (series.length === 0) {
     return null;
@@ -54,6 +68,11 @@ export function FxSparkline({
   const latest = series[series.length - 1];
   const first = series[0];
   const change = latest.sellRate - first.sellRate;
+  const band = latestBand ?? {
+    date: latest.date,
+    buyRate: latest.sellRate,
+    sellRate: latest.sellRate,
+  };
 
   const points = series
     .map((point, index) => {
@@ -69,18 +88,32 @@ export function FxSparkline({
         <div>
           <p className="text-sm text-slate-500">{title}</p>
           <p className="mt-1 text-2xl font-semibold text-white">
-            {latest.sellRate.toFixed(2)}{" "}
+            {band.sellRate.toFixed(2)}{" "}
             <span className="text-base font-normal text-slate-400">LKR</span>
           </p>
         </div>
-        <p
-          className={`text-sm font-medium ${
-            change >= 0 ? "text-rose-300" : "text-teal-300"
-          }`}
-        >
-          {change >= 0 ? "+" : ""}
-          {change.toFixed(2)} over {series.length} days
+        <p className="text-sm font-medium text-slate-300">
+          {formatDirectionalDelta(change, 2)} over {series.length} days
         </p>
+      </div>
+      <div className="mt-4 grid gap-2 rounded-xl border border-white/10 bg-black/15 p-3 sm:grid-cols-2">
+        <p className="text-xs font-medium uppercase tracking-wide text-slate-500 sm:col-span-2">
+          {labels.bandTitle}
+        </p>
+        <div>
+          <p className="text-xs text-slate-500">{labels.buy}</p>
+          <p className="text-lg font-semibold text-white">
+            {band.buyRate.toFixed(2)}{" "}
+            <span className="text-xs font-normal text-slate-400">LKR</span>
+          </p>
+        </div>
+        <div>
+          <p className="text-xs text-slate-500">{labels.sell}</p>
+          <p className="text-lg font-semibold text-white">
+            {band.sellRate.toFixed(2)}{" "}
+            <span className="text-xs font-normal text-slate-400">LKR</span>
+          </p>
+        </div>
       </div>
       <svg
         viewBox="0 0 100 100"
@@ -93,12 +126,12 @@ export function FxSparkline({
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          className="text-teal-400"
+          className="text-slate-200"
           points={points}
         />
       </svg>
       <p className="mt-2 text-xs text-slate-500">
-        {first.date} → {latest.date} · {asOf}
+        {first.date} → {latest.date} · {asOf} · {band.date}
       </p>
     </article>
   );
@@ -123,13 +156,16 @@ export function FuelHistoryChart({
   const max = Math.max(...allPrices);
   const range = max - min || 1;
 
-  const colors = ["text-teal-400", "text-amber-400"];
+  const lineStyles = [
+    { className: "text-white", dash: undefined, label: "solid" },
+    { className: "text-slate-400", dash: "4 4", label: "dashed" },
+  ] as const;
 
   return (
     <article className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:col-span-2 lg:col-span-3">
       <p className="text-sm text-slate-500">{title}</p>
       <div className="mt-3 flex flex-wrap gap-4">
-        {validSeries.map((item, index) => {
+        {validSeries.map((item) => {
           const latest = item.points[item.points.length - 1];
           const first = item.points[0];
           const change = latest.price_lkr - first.price_lkr;
@@ -141,14 +177,26 @@ export function FuelHistoryChart({
                 <span className="text-sm font-normal text-slate-400">LKR/L</span>
               </p>
               <p
-                className={`text-xs font-medium ${
-                  change >= 0 ? "text-rose-300" : "text-teal-300"
-                }`}
+                className="text-xs font-medium text-slate-300"
               >
-                {change >= 0 ? "+" : ""}
-                {change.toFixed(0)} since {first.recorded_at}
+                {formatDirectionalDelta(change, 0)} since {first.recorded_at}
               </p>
             </div>
+          );
+        })}
+      </div>
+      <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-400">
+        {validSeries.map((item, index) => {
+          const style = lineStyles[index % lineStyles.length];
+          return (
+            <span key={item.fuelType} className="inline-flex items-center gap-2">
+              <span
+                className={`inline-block w-7 border-t-2 ${style.className}`}
+                style={{ borderStyle: style.dash ? "dashed" : "solid" }}
+                aria-hidden="true"
+              />
+              {item.label} ({style.label})
+            </span>
           );
         })}
       </div>
@@ -168,13 +216,15 @@ export function FuelHistoryChart({
               return `${x},${y}`;
             })
             .join(" ");
+          const style = lineStyles[seriesIndex % lineStyles.length];
           return (
             <polyline
               key={item.fuelType}
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
-              className={colors[seriesIndex % colors.length]}
+              strokeDasharray={style.dash}
+              className={style.className}
               points={points}
             />
           );

@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { DistrictMapLazy } from "@/components/DistrictMapLazy";
+import { DistrictPinButton } from "@/components/DistrictPinButton";
 import { ElectionSwingChart } from "@/components/ElectionSwingChart";
 import { FloodSparklinePanel } from "@/components/FloodSparklinePanel";
 import { FloodStationList } from "@/components/FloodStationList";
@@ -95,12 +96,15 @@ export default async function DistrictDetailPage({
 
   return (
     <div className="space-y-8">
-      <Link href="/districts" className="text-sm text-teal-300 hover:text-teal-200">
-        ← {t("back")}
-      </Link>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <Link href="/districts" className="text-sm text-teal-300 hover:text-teal-200">
+          ← {t("back")}
+        </Link>
+        <DistrictPinButton slug={district.slug} />
+      </div>
 
       <div>
-        <h1 className="text-3xl font-semibold text-white">
+        <h1 className="font-display text-3xl font-semibold text-white">
           {getDistrictName(district, locale)}
         </h1>
         {province ? (

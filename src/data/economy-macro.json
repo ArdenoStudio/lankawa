@@ -48,5 +48,12 @@
     { "date": "2025-07-16", "sellRate": 303.6 },
     { "date": "2025-07-17", "sellRate": 303.75 },
     { "date": "2025-07-18", "sellRate": 303.8 }
-  ]
+  ],
+  "fxBand": {
+    "date": "2025-07-18",
+    "buyRate": 300.8,
+    "sellRate": 303.8,
+    "observedAt": "2025-07-18T06:30:00.000Z",
+    "isFallback": true
+  }
 }

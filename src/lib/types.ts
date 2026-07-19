@@ -199,12 +199,21 @@ export interface FxSeriesPoint {
   sellRate: number;
 }
 
+export interface FxRateBand {
+  date: string;
+  buyRate: number;
+  sellRate: number;
+  observedAt?: string;
+  isFallback?: boolean;
+}
+
 export interface EconomyMacroSnapshot {
   sourceId: string;
   sourceName: string;
   asOf: string;
   indicators: EconomyMacroIndicator[];
   fxSeries: FxSeriesPoint[];
+  fxBand?: FxRateBand;
 }
 
 export interface BudgetSector {

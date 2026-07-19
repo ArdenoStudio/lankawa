@@ -1,7 +1,9 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { EarthquakePanel } from "@/components/EarthquakePanel";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
+import { MetDeptWarningsPanel } from "@/components/MetDeptWarningsPanel";
 import { fetchEarthquakeSnapshot } from "@/lib/integrations/earthquake";
+import { fetchMetDeptWarnings } from "@/lib/integrations/metdept";
 import { fetchPowerStatus } from "@/lib/integrations/power";
 import { buildPulseSnapshot } from "@/lib/pulse";
 
@@ -13,10 +15,11 @@ export default async function DisasterPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("disaster");
-  const [snapshot, power, earthquakes] = await Promise.all([
+  const [snapshot, power, earthquakes, metWarnings] = await Promise.all([
     buildPulseSnapshot(),
     fetchPowerStatus(),
     fetchEarthquakeSnapshot(),
+    fetchMetDeptWarnings(),
   ]);
 
   return (
@@ -70,6 +73,29 @@ export default async function DisasterPage({
       </section>
 
       <InlineExplainerBanner slug="flood-levels" />
+
+      <MetDeptWarningsPanel
+        snapshot={metWarnings}
+        locale={locale}
+        labels={{
+          title: t("metTitle"),
+          subtitle: t("metSubtitle"),
+          unavailableTitle: t("metUnavailableTitle"),
+          unavailableBody: t("metUnavailableBody"),
+          emptyTitle: t("metEmptyTitle"),
+          emptyBody: t("metEmptyBody"),
+          issuedAt: t("metIssuedAt"),
+          checkedAt: t("metCheckedAt"),
+          activeCount: t("metActiveCount", {
+            count: metWarnings?.warnings.length ?? 0,
+          }),
+          validWindow: t("metValidWindow", { from: "{from}", to: "{to}" }),
+          areas: t("metAreas"),
+          noSummary: t("metNoSummary"),
+          sourceNote: t("metSourceNote"),
+          provenance: t("metProvenance"),
+        }}
+      />
 
       <EarthquakePanel
         snapshot={earthquakes}

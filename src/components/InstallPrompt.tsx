@@ -2,10 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { daysBetween } from "@/lib/analytics";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
+
+function habitAllowsInstall(): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+  const firstSeen = window.localStorage.getItem("lankawa_first_seen");
+  if (!firstSeen) {
+    return false;
+  }
+  return daysBetween(firstSeen) >= 1;
 }
 
 export function InstallPrompt() {
@@ -13,13 +25,14 @@ export function InstallPrompt() {
   const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
   const [dismissed, setDismissed] = useState(() => {
     if (typeof window === "undefined") {
-      return false;
+      return true;
     }
     return localStorage.getItem("lankawa-pwa-dismissed") === "1";
   });
+  const [allowed] = useState(() => habitAllowsInstall());
 
   useEffect(() => {
-    if (typeof window === "undefined" || dismissed) {
+    if (typeof window === "undefined" || dismissed || !allowed) {
       return;
     }
 
@@ -32,9 +45,9 @@ export function InstallPrompt() {
     return () => {
       window.removeEventListener("beforeinstallprompt", handleBeforeInstall);
     };
-  }, [dismissed]);
+  }, [dismissed, allowed]);
 
-  if (dismissed || !deferred) {
+  if (dismissed || !deferred || !allowed) {
     return null;
   }
 
@@ -54,7 +67,7 @@ export function InstallPrompt() {
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-white">{t("installTitle")}</p>
-          <p className="mt-1 text-xs text-slate-400">{t("installBody")}</p>
+          <p className="mt-1 text-xs text-neutral-400">{t("installBody")}</p>
           <div className="mt-3 flex gap-2">
             <button
               type="button"
@@ -66,7 +79,7 @@ export function InstallPrompt() {
             <button
               type="button"
               onClick={handleDismiss}
-              className="rounded-full px-4 py-1.5 text-sm text-slate-400 hover:bg-white/5"
+              className="rounded-full px-4 py-1.5 text-sm text-neutral-400 hover:bg-white/5"
             >
               {t("installDismiss")}
             </button>

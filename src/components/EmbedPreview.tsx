@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 
 const WIDGETS = [
+  { id: "today", path: "/embed/today", height: 260 },
   { id: "pulse", path: "/embed/pulse", height: 220 },
   { id: "fuel", path: "/embed/fuel", height: 120 },
   { id: "fx", path: "/embed/fx", height: 120 },

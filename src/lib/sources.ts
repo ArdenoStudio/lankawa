@@ -41,6 +41,19 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["usd_lkr"],
   },
   {
+    id: "cbsl_gold",
+    name: "Central Bank of Sri Lanka — Daily Gold Rates",
+    category: "economy",
+    url: "https://www.cbsl.gov.lk/en/rates-and-indicators/exchange-rates/daily-gold-rates",
+    cadenceMinutes: 1440,
+    adapter: "scrape",
+    description:
+      "Official CBSL daily gold price in Sri Lankan rupees per troy ounce.",
+    methodology:
+      "Lankawa queries the public CBSL daily gold-rate form for XAU/LKR rows over a short recent window and shows only parsed official rows. If CBSL does not publish a current gold row or the endpoint is unavailable, the economy page omits the gold card.",
+    metrics: ["gold_lkr_troy_ounce"],
+  },
+  {
     id: "election_commission_2024",
     name: "Election Commission of Sri Lanka",
     category: "civic",
@@ -426,6 +439,19 @@ export const SOURCES: SourceDefinition[] = [
     methodology:
       "Lankawa queries the USGS FDSN Event Web Service with the same Sri Lanka land bounds used on district maps (79.5°E–82.1°E, 5.9°N–9.9°N), a rolling 30-day window, and magnitude ≥ 2.5. Results are shown as-is with no severity scoring — an empty list means USGS has no qualifying events in that box, not that seismic risk is zero. Offshore Indian Ocean events outside the land bbox are excluded by design.",
     metrics: ["earthquake_events"],
+  },
+  {
+    id: "met_dept_warnings",
+    name: "Department of Meteorology Weather Advisory System",
+    category: "disaster",
+    url: "https://was.meteo.gov.lk",
+    cadenceMinutes: 30,
+    adapter: "api",
+    description:
+      "Public weather warnings and advisories from Sri Lanka's Department of Meteorology.",
+    methodology:
+      "Lankawa reads the public Weather Advisory System dashboard JSON and CAP RSS feed with short server-side timeouts. Active hazards are displayed as published by the Met Department; if the feed is unavailable, the disaster page shows a neutral unavailable state instead of inferring conditions.",
+    metrics: ["weather_warnings"],
   },
   {
     id: "ceb_power",
