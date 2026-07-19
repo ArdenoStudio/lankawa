@@ -1,3 +1,4 @@
+import { ChartExportButton } from "@/components/ChartExportButton";
 import { Link } from "@/i18n/navigation";
 import type { WorldPumpSnapshot } from "@/lib/world-pump";
 
@@ -29,6 +30,13 @@ export function WorldPumpCompare({
     ...snapshot.peers.map((peer) => peer.petrolUsdPerLitre),
     0.01,
   );
+  const chartId = "world-pump-compare-chart";
+  const labelWidth = 88;
+  const barMax = 220;
+  const rowH = 28;
+  const padTop = 8;
+  const width = labelWidth + barMax + 72;
+  const height = padTop + snapshot.peers.length * rowH + 8;
 
   return (
     <article className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:col-span-2 lg:col-span-3">
@@ -37,43 +45,80 @@ export function WorldPumpCompare({
           <p className="text-sm text-slate-500">{labels.title}</p>
           <p className="mt-1 text-xs text-slate-500">{labels.subtitle}</p>
         </div>
-        <p className="text-xs text-slate-500">
-          {labels.asOf.replace("{date}", snapshot.asOf)}
-        </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <p className="text-xs text-slate-500">
+            {labels.asOf.replace("{date}", snapshot.asOf)}
+          </p>
+          <ChartExportButton targetId={chartId} />
+        </div>
       </div>
 
-      <ul className="mt-5 space-y-3" role="list">
+      <div className="mt-5 overflow-x-auto">
+        <svg
+          id={chartId}
+          viewBox={`0 0 ${width} ${height}`}
+          preserveAspectRatio="xMidYMid meet"
+          className="h-auto w-full max-w-2xl text-white"
+          role="img"
+          aria-label={labels.title}
+        >
+          {snapshot.peers.map((peer, index) => {
+            const y = padTop + index * rowH;
+            const barWidth = Math.max(
+              (peer.petrolUsdPerLitre / max) * barMax,
+              6,
+            );
+            return (
+              <g key={peer.id}>
+                <text
+                  x={0}
+                  y={y + 14}
+                  className="fill-current text-[11px]"
+                  fill="currentColor"
+                  opacity={peer.isSriLanka ? 1 : 0.75}
+                >
+                  {peer.name}
+                </text>
+                <rect
+                  x={labelWidth}
+                  y={y + 4}
+                  width={barMax}
+                  height={12}
+                  fill="currentColor"
+                  opacity={0.08}
+                  rx={2}
+                />
+                <rect
+                  x={labelWidth}
+                  y={y + 4}
+                  width={barWidth}
+                  height={12}
+                  fill="currentColor"
+                  opacity={peer.isSriLanka ? 0.95 : 0.45}
+                  rx={2}
+                />
+                <text
+                  x={labelWidth + barMax + 8}
+                  y={y + 14}
+                  className="fill-current text-[11px]"
+                  fill="currentColor"
+                  opacity={0.85}
+                >
+                  {peer.petrolUsdPerLitre.toFixed(2)}
+                </text>
+              </g>
+            );
+          })}
+        </svg>
+      </div>
+
+      <ul className="mt-3 flex flex-wrap gap-3 text-xs text-slate-500">
         {snapshot.peers.map((peer) => (
-          <li key={peer.id}>
-            <div className="mb-1 flex flex-wrap items-baseline justify-between gap-2">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-sm font-medium text-white">{peer.name}</span>
-                <span className="text-[11px] uppercase tracking-[0.12em] text-slate-500">
-                  {peer.live ? labels.liveBadge : labels.seedBadge}
-                </span>
-              </div>
-              <span className="text-sm text-slate-200">
-                {peer.petrolUsdPerLitre.toFixed(2)} {snapshot.unit}
-              </span>
-            </div>
-            <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
-              <div
-                className={
-                  peer.isSriLanka
-                    ? "h-full rounded-full bg-white"
-                    : "h-full rounded-full bg-slate-500"
-                }
-                style={{
-                  width: `${Math.max(
-                    (peer.petrolUsdPerLitre / max) * 100,
-                    4,
-                  )}%`,
-                }}
-              />
-            </div>
-            {peer.note ? (
-              <p className="mt-1 text-xs text-slate-500">{peer.note}</p>
-            ) : null}
+          <li key={`${peer.id}-meta`}>
+            <span className="text-slate-400">{peer.name}</span>
+            {" · "}
+            {peer.live ? labels.liveBadge : labels.seedBadge}
+            {peer.note ? ` · ${peer.note}` : null}
           </li>
         ))}
       </ul>
