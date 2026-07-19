@@ -1,10 +1,13 @@
-const CACHE_NAME = "lankawa-offline-v3";
+const CACHE_NAME = "lankawa-offline-v4";
 const OFFLINE_ASSETS = [
   "/geo/districts.geojson",
   "/favicon.svg",
   "/manifest.json",
   "/api/v1/pulse",
   "/api/v1/districts",
+  "/api/v1/brief?locale=en",
+  "/api/v1/brief?locale=si",
+  "/api/v1/brief?locale=ta",
   "/en",
   "/si",
   "/ta",
@@ -78,6 +81,7 @@ self.addEventListener("fetch", (event) => {
     url.pathname.startsWith("/districts/") ||
     url.pathname.startsWith("/api/v1/districts") ||
     url.pathname === "/api/v1/pulse" ||
+    url.pathname === "/api/v1/brief" ||
     url.pathname === "/en" ||
     url.pathname === "/si" ||
     url.pathname === "/ta" ||
@@ -102,6 +106,13 @@ self.addEventListener("fetch", (event) => {
         if (cached) {
           return cached;
         }
+        if (url.pathname === "/api/v1/brief") {
+          const locale = url.searchParams.get("locale") ?? "en";
+          const briefCached = await cache.match(`/api/v1/brief?locale=${locale}`);
+          if (briefCached) {
+            return briefCached;
+          }
+        }
         if (isDocument) {
           const localeShell =
             (await cache.match("/en")) ||
@@ -111,9 +122,9 @@ self.addEventListener("fetch", (event) => {
             return localeShell;
           }
         }
-        const fallback = await cache.match("/geo/districts.geojson");
-        if (fallback) {
-          return fallback;
+        const pulse = await cache.match("/api/v1/pulse");
+        if (pulse) {
+          return pulse;
         }
         throw new Error("Offline and no cached response");
       }

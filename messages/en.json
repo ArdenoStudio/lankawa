@@ -204,7 +204,9 @@
     "headlineCount": "{count} headlines tracked",
     "sourceMirror": "Daily Mirror",
     "sourceAda": "Ada Derana",
-    "feed": "Atom feed"
+    "feed": "Atom feed",
+    "clusterLabel": "Story cluster",
+    "clusterMeta": "{count} headlines · {outlets} outlets"
   },
   "shareMorning": {
     "title": "Lankawa morning check",
@@ -228,19 +230,34 @@
     "subtitle": "A compact brief generated from the latest Sri Lanka headlines.",
     "freshness": "{count} source headlines · generated {date}",
     "viewSource": "View news provenance",
-    "translationNote": "Sinhala and Tamil views use translated interface strings. Heuristic briefs may keep source headlines in English unless an AI provider is configured."
+    "translationNote": "Sinhala and Tamil views use translated interface strings. Heuristic briefs may keep source headlines in English unless an AI provider is configured.",
+    "factLedgerTitle": "Morning facts",
+    "factLedgerNote": "Pulse ledger from live civic sources — separate from news bullets.",
+    "modeLabel": "Brief mode: {mode}",
+    "modes": {
+      "ai": "AI",
+      "template": "Template",
+      "cache": "Cached",
+      "minimal": "Minimal",
+      "fact_ledger": "Fact ledger"
+    }
   },
   "cricket": {
     "eyebrow": "Sri Lanka cricket",
     "title": "Match today",
-    "subtitle": "Shown only when a Sri Lanka match is live or upcoming today.",
+    "subtitle": "Shown when a Sri Lanka match is live, upcoming today, or finished within 24 hours.",
     "live": "Live",
     "upcoming": "Today",
     "startsAt": "Starts {date}",
     "venue": "Venue: {venue}",
     "timeUnavailable": "time unavailable",
     "provenance": "Cricket data source",
-    "viewSource": "View source"
+    "viewSource": "View source",
+    "ended": "Result",
+    "playedAt": "Played {date}",
+    "resultWindow": "Shown for 24 hours after the match window.",
+    "economyTitle": "Cricket on the day",
+    "economySubtitle": "Live, upcoming today, or a result within the last 24 hours."
   },
   "explore": {
     "eyebrow": "Module directory",
@@ -991,9 +1008,11 @@
   },
   "pwa": {
     "installTitle": "Install Lankawa",
-    "installBody": "Add to your home screen for faster district profiles and offline maps.",
+    "installBody": "Add to your home screen for the morning check and cached district profiles.",
     "installAction": "Install",
-    "installDismiss": "Not now"
+    "installDismiss": "Not now",
+    "offlineTitle": "Offline morning shell",
+    "offlineBody": "You are offline. Showing the last cached home pulse, brief, and district pages when available."
   },
   "civic": {
     "title": "MP Scorecards",

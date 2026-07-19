@@ -1,16 +1,23 @@
 import { getTranslations } from "next-intl/server";
+import { BriefFactLedger } from "@/components/BriefFactLedger";
 import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { Link } from "@/i18n/navigation";
 import { computeFreshnessTier } from "@/lib/freshness";
 import { buildMorningBrief } from "@/lib/integrations/brief";
+import { buildPulseSnapshot } from "@/lib/pulse";
 
 export async function MorningBrief({ locale }: { locale: string }) {
   const t = await getTranslations("brief");
-  const brief = await buildMorningBrief(locale);
+  const [brief, pulse] = await Promise.all([
+    buildMorningBrief(locale),
+    buildPulseSnapshot(),
+  ]);
   const tier =
     brief.quality === "pass"
       ? computeFreshnessTier(brief.generatedAt, 60)
       : "down";
+  const showTranslationNote =
+    locale !== "en" && brief.mode !== "fact_ledger" && brief.mode !== "template";
 
   return (
     <section className="space-y-4">
@@ -26,6 +33,8 @@ export async function MorningBrief({ locale }: { locale: string }) {
       </div>
 
       <article className="lk-card p-5">
+        <BriefFactLedger metrics={pulse.metrics} />
+
         <ul className="space-y-3" role="list">
           {brief.bullets.map((bullet, index) => (
             <li key={`${brief.generatedAt}-${index}`} className="flex gap-3">
@@ -35,9 +44,15 @@ export async function MorningBrief({ locale }: { locale: string }) {
           ))}
         </ul>
 
-        {locale !== "en" ? (
+        {showTranslationNote ? (
           <p className="mt-4 rounded-xl border border-teal-400/20 bg-teal-400/10 px-3 py-2 text-xs text-teal-100">
             {t("translationNote")}
+          </p>
+        ) : null}
+
+        {brief.mode ? (
+          <p className="mt-3 text-xs text-slate-500">
+            {t("modeLabel", { mode: t(`modes.${brief.mode}`) })}
           </p>
         ) : null}
 

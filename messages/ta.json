@@ -195,7 +195,9 @@
     "headlineCount": "{count} தலைப்புகள் கண்காணிக்கப்படுகின்றன",
     "sourceMirror": "Daily Mirror",
     "sourceAda": "Ada Derana",
-    "feed": "Atom feed"
+    "feed": "Atom feed",
+    "clusterLabel": "Story cluster",
+    "clusterMeta": "{count} headlines · {outlets} outlets"
   },
   "shareMorning": {
     "title": "Lankawa morning check",
@@ -219,19 +221,34 @@
     "subtitle": "சமீபத்திய இலங்கை தலைப்புகளிலிருந்து உருவாக்கப்பட்ட குறுக்கமான சுருக்கம்.",
     "freshness": "{count} மூல தலைப்புகள் · உருவாக்கியது {date}",
     "viewSource": "செய்தி மூலத்தைப் பார்க்க",
-    "translationNote": "தமிழ் காட்சியில் இடைமுக சொற்கள் மொழிபெயர்க்கப்பட்டுள்ளன. AI provider அமைக்கப்படவில்லை என்றால் heuristic சுருக்கங்கள் source headlines-ஐ ஆங்கிலத்தில் வைத்திருக்கலாம்."
+    "translationNote": "தமிழ் காட்சியில் இடைமுக சொற்கள் மொழிபெயர்க்கப்பட்டுள்ளன. AI provider அமைக்கப்படவில்லை என்றால் heuristic சுருக்கங்கள் source headlines-ஐ ஆங்கிலத்தில் வைத்திருக்கலாம்.",
+    "factLedgerTitle": "Morning facts",
+    "factLedgerNote": "Pulse ledger from live civic sources — separate from news bullets.",
+    "modeLabel": "Brief mode: {mode}",
+    "modes": {
+      "ai": "AI",
+      "template": "Template",
+      "cache": "Cached",
+      "minimal": "Minimal",
+      "fact_ledger": "Fact ledger"
+    }
   },
   "cricket": {
     "eyebrow": "இலங்கை கிரிக்கெட்",
     "title": "இன்றைய போட்டி",
-    "subtitle": "இன்று இலங்கை போட்டி live அல்லது upcoming ஆக இருந்தால் மட்டுமே காட்டப்படும்.",
+    "subtitle": "Shown when a Sri Lanka match is live, upcoming today, or finished within 24 hours.",
     "live": "நேரடி",
     "upcoming": "இன்று",
     "startsAt": "தொடக்கம் {date}",
     "venue": "இடம்: {venue}",
     "timeUnavailable": "நேரம் கிடைக்கவில்லை",
     "provenance": "கிரிக்கெட் தரவு மூலம்",
-    "viewSource": "மூலத்தைப் பார்க்க"
+    "viewSource": "மூலத்தைப் பார்க்க",
+    "ended": "Result",
+    "playedAt": "Played {date}",
+    "resultWindow": "Shown for 24 hours after the match window.",
+    "economyTitle": "Cricket on the day",
+    "economySubtitle": "Live, upcoming today, or a result within the last 24 hours."
   },
   "explore": {
     "eyebrow": "தொகுதி அடைவு",
@@ -980,9 +997,11 @@
   },
   "pwa": {
     "installTitle": "Install Lankawa",
-    "installBody": "Add to your home screen for faster district profiles and offline maps.",
+    "installBody": "Add to your home screen for the morning check and cached district profiles.",
     "installAction": "Install",
-    "installDismiss": "Not now"
+    "installDismiss": "Not now",
+    "offlineTitle": "Offline morning shell",
+    "offlineBody": "You are offline. Showing the last cached home pulse, brief, and district pages when available."
   },
   "civic": {
     "title": "MP Scorecards",

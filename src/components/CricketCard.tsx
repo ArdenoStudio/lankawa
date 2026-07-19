@@ -3,7 +3,11 @@ import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { Link } from "@/i18n/navigation";
 import { fetchSriLankaCricketMatch } from "@/lib/integrations/cricket";
 
-export async function CricketCard() {
+export async function CricketCard({
+  variant = "home",
+}: {
+  variant?: "home" | "economy";
+}) {
   const match = await fetchSriLankaCricketMatch();
   if (!match) {
     return null;
@@ -13,6 +17,15 @@ export async function CricketCard() {
   const startsAt = match.startsAt
     ? new Date(match.startsAt).toLocaleString()
     : t("timeUnavailable");
+  const statusLabel =
+    match.status === "live"
+      ? t("live")
+      : match.status === "ended"
+        ? t("ended")
+        : t("upcoming");
+  const title = variant === "economy" ? t("economyTitle") : t("title");
+  const subtitle =
+    variant === "economy" ? t("economySubtitle") : t("subtitle");
 
   return (
     <section className="lk-card p-5">
@@ -21,8 +34,8 @@ export async function CricketCard() {
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-300">
             {t("eyebrow")}
           </p>
-          <h2 className="mt-2 text-xl font-semibold text-white">{t("title")}</h2>
-          <p className="mt-2 text-sm text-slate-400">{t("subtitle")}</p>
+          <h2 className="mt-2 text-xl font-semibold text-white">{title}</h2>
+          <p className="mt-2 text-sm text-slate-400">{subtitle}</p>
         </div>
         <FreshnessBadge tier="fresh" />
       </div>
@@ -30,7 +43,7 @@ export async function CricketCard() {
       <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full bg-teal-400/15 px-2.5 py-1 text-xs font-medium text-teal-200 ring-1 ring-teal-400/30">
-            {match.status === "live" ? t("live") : t("upcoming")}
+            {statusLabel}
           </span>
           {match.competition ? (
             <span className="text-xs text-slate-500">{match.competition}</span>
@@ -39,7 +52,9 @@ export async function CricketCard() {
 
         <h3 className="mt-3 text-lg font-semibold text-white">{match.name}</h3>
         <p className="mt-2 text-sm text-slate-400">
-          {t("startsAt", { date: startsAt })}
+          {match.status === "ended"
+            ? t("playedAt", { date: startsAt })
+            : t("startsAt", { date: startsAt })}
         </p>
         {match.venue ? (
           <p className="mt-1 text-sm text-slate-400">
@@ -53,6 +68,9 @@ export async function CricketCard() {
         ) : (
           <p className="mt-3 text-sm text-slate-500">{match.statusText}</p>
         )}
+        {match.status === "ended" ? (
+          <p className="mt-2 text-xs text-slate-500">{t("resultWindow")}</p>
+        ) : null}
       </div>
 
       <footer className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--lk-border)] pt-4 text-xs text-slate-500">

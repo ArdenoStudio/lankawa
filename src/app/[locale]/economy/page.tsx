@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CseMarketCard } from "@/components/CseMarketCard";
 import { DebtCompositionCard } from "@/components/DebtCompositionCard";
+import { CricketCard } from "@/components/CricketCard";
 import {
   FuelHistoryChart,
   FuelRevisionSteps,
@@ -8,6 +9,7 @@ import {
   LpgPriceCard,
   MacroIndicatorCard,
 } from "@/components/EconomyCards";
+import { DataSaverGate } from "@/components/DataSaverGate";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
 import { NcpiInflationCard } from "@/components/NcpiInflationCard";
 import { PucslTariffCard } from "@/components/PucslTariffCard";
@@ -61,6 +63,10 @@ export default async function EconomyPage({
       </div>
 
       <InlineExplainerBanner slug="fx-rates" />
+
+      <DataSaverGate hideUntilHydrated>
+        <CricketCard variant="economy" />
+      </DataSaverGate>
 
       <section className="space-y-4">
         <div className="flex flex-wrap items-end justify-between gap-3">

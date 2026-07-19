@@ -13,6 +13,7 @@ const SUPPORTED_LOCALES = ["en", "si", "ta"] as const;
 
 export type MorningBriefLocale = (typeof SUPPORTED_LOCALES)[number];
 export type MorningBriefQuality = "pass" | "fail";
+export type MorningBriefMode = "ai" | "template" | "cache" | "minimal" | "fact_ledger";
 
 export interface MorningBrief {
   generatedAt: string;
@@ -22,6 +23,7 @@ export interface MorningBrief {
   sourceHeadlineCount: number;
   quality: MorningBriefQuality;
   provenancePath: string;
+  mode?: MorningBriefMode;
 }
 
 interface BriefCachePayload {
@@ -143,6 +145,36 @@ function truncate(value: string, maxLength = 150): string {
   return `${value.slice(0, maxLength - 1).trim()}...`;
 }
 
+const TOPIC_LABELS: Record<
+  MorningBriefLocale,
+  Record<TopicId | "also", string>
+> = {
+  en: {
+    politics: "Politics",
+    economy: "Economy",
+    weather_disaster: "Weather / disaster",
+    sports: "Sports",
+    other: "Other",
+    also: "Also watch",
+  },
+  si: {
+    politics: "දේශපාලනය",
+    economy: "ආර්ථිකය",
+    weather_disaster: "කාලගුණ / විපත්",
+    sports: "ක්‍රීඩා",
+    other: "වෙනත්",
+    also: "තවත් බලන්න",
+  },
+  ta: {
+    politics: "அரசியல்",
+    economy: "பொருளாதாரம்",
+    weather_disaster: "வானிலை / பேரிடர்",
+    sports: "விளையாட்டு",
+    other: "மற்றவை",
+    also: "மேலும் பாருங்கள்",
+  },
+};
+
 function buildHeuristicBrief(
   headlines: NewsHeadline[],
   locale: MorningBriefLocale,
@@ -168,10 +200,10 @@ function buildHeuristicBrief(
       .map((cluster) => ["other" as TopicId, cluster.headlines]);
   }
 
+  const labels = TOPIC_LABELS[locale];
   const bullets = rankedTopics.slice(0, 4).map(([topic, items]) => {
     const leadTitles = items.slice(0, 2).map((item) => truncate(titleText(item), 95));
-    const label = topic === "weather_disaster" ? "weather/disaster" : topic;
-    return `${label}: ${leadTitles.join("; ")}.`;
+    return `${labels[topic]}: ${leadTitles.join("; ")}.`;
   });
 
   for (const headline of headlines) {
@@ -180,7 +212,7 @@ function buildHeuristicBrief(
     }
     const title = titleText(headline);
     if (title && !bullets.some((bullet) => bullet.includes(truncate(title, 95)))) {
-      bullets.push(`Also watch: ${truncate(title, 120)}.`);
+      bullets.push(`${labels.also}: ${truncate(title, 120)}.`);
     }
   }
 
@@ -192,6 +224,7 @@ function buildHeuristicBrief(
     sourceHeadlineCount: headlines.length,
     quality: "pass",
     provenancePath: getSourceProvenancePath(NEWS_SOURCE_ID),
+    mode: "template",
   };
 }
 
@@ -224,11 +257,14 @@ function minimalBrief(locale: MorningBriefLocale): MorningBrief {
   return {
     generatedAt: new Date().toISOString(),
     locale,
-    bullets: ["Headlines unavailable. Check the Sri Lanka news source page for the latest feed status."],
+    bullets: [
+      "Headlines unavailable. Check the Sri Lanka news source page for the latest feed status.",
+    ],
     topics: ["other"],
     sourceHeadlineCount: 0,
     quality: "fail",
     provenancePath: getSourceProvenancePath(NEWS_SOURCE_ID),
+    mode: "minimal",
   };
 }
 
@@ -339,6 +375,7 @@ function parseProviderBrief(
       sourceHeadlineCount,
       quality: "pass",
       provenancePath: getSourceProvenancePath(NEWS_SOURCE_ID),
+      mode: "ai",
     };
   } catch {
     return null;
@@ -455,7 +492,7 @@ export async function buildMorningBrief(
   const locale = normalizeLocale(localeInput);
   const cached = await readCachedBrief(locale);
   if (cached && cached.quality === "pass" && isFresh(cached.generatedAt)) {
-    return cached;
+    return { ...cached, mode: cached.mode ?? "cache" };
   }
 
   let headlines: NewsHeadline[] = [];
@@ -463,12 +500,17 @@ export async function buildMorningBrief(
     const pulse = await fetchNewsPulse();
     headlines = pulse.headlines;
   } catch {
-    return cached ?? minimalBrief(locale);
+    // Downgrade ladder: AI/template unavailable → prior cache → minimal fail brief.
+    return cached
+      ? { ...cached, mode: "cache" }
+      : minimalBrief(locale);
   }
 
   const candidate = await buildCandidateBrief(headlines, locale);
   if (!passesQualityGate(candidate, headlines)) {
-    return cached ?? minimalBrief(locale);
+    return cached
+      ? { ...cached, mode: "cache" }
+      : minimalBrief(locale);
   }
 
   await writeCachedBrief(candidate);

@@ -7,6 +7,7 @@ import { HomeDistrictPin } from "@/components/HomeDistrictPin";
 import { MorningBrief } from "@/components/MorningBrief";
 import { MorningDeltaStrip } from "@/components/MorningDeltaStrip";
 import { NewsPulse } from "@/components/NewsPulse";
+import { OfflineMorningShell } from "@/components/OfflineMorningShell";
 import { PulseCard } from "@/components/PulseCard";
 import { HeroSection } from "@/components/HeroSection";
 import { RetentionBeacon } from "@/components/RetentionBeacon";
@@ -46,6 +47,7 @@ export default async function HomePage({
     <div className="space-y-10 md:space-y-14">
       <RetentionBeacon locale={locale} />
       <HeroSection />
+      <OfflineMorningShell />
       <HomeDistrictPin locale={locale} />
       <WeekLedger />
       <AlertPins context={alertContext} />
