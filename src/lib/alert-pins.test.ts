@@ -19,20 +19,25 @@ assert.ok(flood.detail?.includes("ALERT"));
 const quiet = floodIsElevated([{ alertLevel: "NORMAL", count: 4 }]);
 assert.equal(quiet.elevated, false);
 
-const fired = evaluateAlertPins(["fx_move", "flood", "power", "met"], {
-  fxAbsDeltaLkr: 1.2,
-  fxThresholdLkr: 1,
-  floodElevated: true,
-  floodDetail: "ALERT: 2",
-  powerAttention: false,
-  powerDetail: null,
-  metWarning: true,
-  metDetail: "Amber advisory",
-});
+const fired = evaluateAlertPins(
+  ["fx_move", "flood", "power", "met", "landslide"],
+  {
+    fxAbsDeltaLkr: 1.2,
+    fxThresholdLkr: 1,
+    floodElevated: true,
+    floodDetail: "ALERT: 2",
+    powerAttention: false,
+    powerDetail: null,
+    metWarning: true,
+    metDetail: "Amber advisory",
+    landslideAttention: true,
+    landslideDetail: "3 watch",
+  },
+);
 
 assert.deepEqual(
   fired.map((item) => item.id),
-  ["fx_move", "flood", "met"],
+  ["fx_move", "flood", "met", "landslide"],
 );
 
 const quietPins = evaluateAlertPins(["fx_move"], {
@@ -44,6 +49,8 @@ const quietPins = evaluateAlertPins(["fx_move"], {
   powerDetail: null,
   metWarning: false,
   metDetail: null,
+  landslideAttention: false,
+  landslideDetail: null,
 });
 assert.equal(quietPins.length, 0);
 

@@ -16,6 +16,7 @@ const PIN_HREF: Record<AlertPinId, string> = {
   flood: "/disaster",
   power: "/disaster",
   met: "/disaster",
+  landslide: "/disaster",
 };
 
 export function AlertPins({ context }: { context: AlertSignalContext }) {

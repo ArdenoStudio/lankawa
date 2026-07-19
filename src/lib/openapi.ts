@@ -218,6 +218,37 @@ export const openApiSpec = {
         },
       },
     },
+    "/disaster/landslide": {
+      get: {
+        summary: "Landslide early-warning snapshot",
+        responses: {
+          "200": {
+            description:
+              "District watch/warning overlay with NBRO/DMC provenance and seed honesty",
+          },
+        },
+      },
+    },
+    "/changes": {
+      get: {
+        summary: "Product changelog",
+        responses: {
+          "200": {
+            description: "Curated Lankawa surface changelog entries",
+          },
+        },
+      },
+    },
+    "/subscribe": {
+      post: {
+        summary: "Morning brief email opt-in",
+        responses: {
+          "200": { description: "Subscription accepted (confirm via email when mailer configured)" },
+          "400": { description: "Invalid email" },
+          "503": { description: "Database not configured" },
+        },
+      },
+    },
     "/tenders": {
       get: {
         summary: "Government procurement tender notices",
@@ -601,6 +632,27 @@ export const apiEndpoints = [
     summaryKey: "exportForeignDebtSummary" as const,
     descriptionKey: "exportForeignDebtDescription" as const,
     example: "year,commercialPct,concessionaryPct,...",
+  },
+  {
+    method: "GET",
+    path: "/api/v1/disaster/landslide",
+    summaryKey: "landslideSummary" as const,
+    descriptionKey: "landslideDescription" as const,
+    example: `{ "watchCount": 5, "warningCount": 0, "districts": [...], "isSeed": true }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/changes",
+    summaryKey: "changesSummary" as const,
+    descriptionKey: "changesDescription" as const,
+    example: `{ "count": 4, "entries": [{ "date": "2026-07-19", "title": "..." }] }`,
+  },
+  {
+    method: "POST",
+    path: "/api/v1/subscribe",
+    summaryKey: "subscribeSummary" as const,
+    descriptionKey: "subscribeDescription" as const,
+    example: `{ "ok": true, "message": "Check your email to confirm the morning brief." }`,
   },
   {
     method: "GET",

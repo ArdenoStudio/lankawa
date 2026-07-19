@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AlertPins } from "@/components/AlertPins";
+import { BriefSubscribeForm } from "@/components/BriefSubscribeForm";
 import { CricketCard } from "@/components/CricketCard";
 import { DataSaverGate } from "@/components/DataSaverGate";
 import { HomeDistrictPin } from "@/components/HomeDistrictPin";
@@ -11,6 +12,7 @@ import { HeroSection } from "@/components/HeroSection";
 import { RetentionBeacon } from "@/components/RetentionBeacon";
 import { ShareMorningCheck } from "@/components/ShareMorningCheck";
 import { SourceHealthBar } from "@/components/SourceHealthBar";
+import { WeekLedger } from "@/components/WeekLedger";
 import { Link } from "@/i18n/navigation";
 import { buildAlertSignalContext } from "@/lib/alert-context";
 import { buildPulseSnapshot, getTodayPulseMetrics } from "@/lib/pulse";
@@ -45,6 +47,7 @@ export default async function HomePage({
       <RetentionBeacon locale={locale} />
       <HeroSection />
       <HomeDistrictPin locale={locale} />
+      <WeekLedger />
       <AlertPins context={alertContext} />
 
       <section className="space-y-5" id="today">
@@ -76,6 +79,7 @@ export default async function HomePage({
       </DataSaverGate>
 
       <MorningBrief locale={locale} />
+      <BriefSubscribeForm />
 
       <NewsPulse headlineLimit={5} />
 

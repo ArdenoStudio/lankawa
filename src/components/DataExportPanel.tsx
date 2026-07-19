@@ -63,6 +63,36 @@ const EXPORT_DATASETS = [
       },
     ],
   },
+  {
+    id: "landChange",
+    formats: [
+      {
+        label: "JSON",
+        path: "/api/v1/export/land-change",
+        filename: "lankawa-land-change.json",
+      },
+      {
+        label: "CSV",
+        path: "/api/v1/export/land-change?format=csv",
+        filename: "lankawa-land-change.csv",
+      },
+    ],
+  },
+  {
+    id: "foreignDebt",
+    formats: [
+      {
+        label: "JSON",
+        path: "/api/v1/export/foreign-debt",
+        filename: "lankawa-foreign-debt.json",
+      },
+      {
+        label: "CSV",
+        path: "/api/v1/export/foreign-debt?format=csv",
+        filename: "lankawa-foreign-debt.csv",
+      },
+    ],
+  },
 ] as const;
 
 export function DataExportPanel() {
