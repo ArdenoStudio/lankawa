@@ -12,11 +12,12 @@
 2 Journalist citation + PNG export ✅ shipped
 W  Watchdog → Lankawa-native       ✅ Land Pulse deepen + Debt Pulse
 3 NCPI + PUCSL blocks             ✅ household inflation + tariff slabs
+5 Alert pins (localStorage)       ✅ home firing strip
 4 NBRO/DMC landslide layers       ← disaster map depth (harder GIS)
-5 Alert pins + brief email        ← retention, needs delivery ops
+5b Morning-brief email            ← retention, needs delivery ops
 ```
 
-Ship **5** (alert pins first) next, then **4** GIS. Year-2 satellite ETL stays parked.
+Ship **4** GIS next (gate on Met health). Email stays ops-gated. Year-2 satellite ETL stays parked.
 
 ---
 
