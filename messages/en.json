@@ -214,6 +214,14 @@
     "error": "Could not share. Try copying from the page.",
     "footer": "Source: Lankawa"
   },
+  "shareDistrict": {
+    "title": "Lankawa · {name} district",
+    "button": "Share district card",
+    "hint": "Share sheet or copy for WhatsApp / village groups.",
+    "copied": "District card copied.",
+    "error": "Could not share. Try copying from the page.",
+    "footer": "Source: Lankawa — not an official government publication."
+  },
   "brief": {
     "eyebrow": "Morning brief",
     "title": "What to know this morning",
@@ -278,6 +286,9 @@
     "liveFloodTitle": "Live flood stations",
     "liveFloodNone": "No river monitoring stations mapped to this district.",
     "liveFloodUnavailable": "Stations mapped but live readings are temporarily unavailable.",
+    "shareFloodSummary": "{elevated} elevated of {total} stations",
+    "shareLandLabel": "Land pulse 2018→2024",
+    "shareLandValue": "Greenery {greenery} · Built-up {built}",
     "relatedProvince": "Province profile",
     "relatedProvinceDesc": "Aggregated stats and districts in this province",
     "relatedParliamentary": "Parliamentary results",
@@ -441,7 +452,26 @@
     "earthquakeBboxLabel": "Box: {minLat}°N–{maxLat}°N, {minLon}°E–{maxLon}°E",
     "earthquakeSourceNote": "Source: USGS FDSN Event Web Service (earthquake.usgs.gov).",
     "earthquakeProvenance": "Data provenance",
-    "earthquakeCountLabel": "{count, plural, one {# event in window} other {# events in window}}"
+    "earthquakeCountLabel": "{count, plural, one {# event in window} other {# events in window}}",
+    "landslideTitle": "Landslide / slope risk",
+    "landslideSubtitle": "NBRO/DMC early-warning context for highland districts — morning-sized, not an evacuation map.",
+    "landslideWatch": "Watch districts",
+    "landslideWarning": "Warning districts",
+    "landslideAsOf": "As of",
+    "landslideSeed": "Seed overlay",
+    "landslideHonesty": "Not an official evacuation order. Verify the latest NBRO/DMC bulletin before acting. District tiers are a Lankawa civic overlay with seed honesty until structured DS parse lands.",
+    "landslideSource": "Source provenance",
+    "landslideNbro": "NBRO",
+    "landslideTopDistricts": "Districts needing attention",
+    "landslideNoneActive": "No watch/warning districts in the current overlay.",
+    "mapTitle": "Disaster risk map",
+    "mapSubtitle": "Toggle flood context vs landslide watch overlay. Monochrome fill intensity shows attention, not official colour codes.",
+    "mapToggleLabel": "Map layer",
+    "mapMode_flood": "Flood",
+    "mapMode_landslide": "Landslide",
+    "mapError": "Unable to load district map",
+    "mapLegendLandslide": "Brighter fills = watch/warning attention in the seed overlay.",
+    "mapLegendFlood": "National flood alert context — open district pages for station detail."
   },
   "economy": {
     "title": "Economic Pulse",
@@ -454,6 +484,12 @@
     "fxBuy": "Buy",
     "fxSell": "Sell",
     "fuelHistoryTitle": "Fuel prices (90-day trend)",
+    "fuelRevisionsTitle": "CPC revision steps",
+    "fuelRevisionsSubtitle": "Official petrol 92 and auto diesel price changes from the Octane partner API.",
+    "fuelRevisionsDate": "Effective",
+    "fuelRevisionsFrom": "from",
+    "fuelRevisionsTo": "to",
+    "fuelRevisionsEmpty": "No recent CPC revisions available.",
     "gold": {
       "eyebrow": "CBSL gold",
       "title": "Daily gold price",
@@ -726,6 +762,8 @@
     "floodHistoryDescription": "Historical water levels for a river monitoring station with freshness tier.",
     "fuelHistorySummary": "Fuel price history",
     "fuelHistoryDescription": "CPC petrol 92 and auto diesel price series from the Octane partner API.",
+    "fuelRevisionsSummary": "Fuel revision steps",
+    "fuelRevisionsDescription": "CPC petrol 92 and auto diesel official revision events with price deltas from Octane.",
     "budgetSummary": "National budget",
     "budgetDescription": "FY 2024/25 and 2025/26 revenue, expenditure, and sector allocations (seed).",
     "dengueSummary": "Dengue weekly statistics",
@@ -781,7 +819,15 @@
     "exportDownload": "Download",
     "embedTitle": "Embeddable widgets",
     "embedBody": "Same-origin iframe widgets for today, pulse, fuel, and FX — preview and copy embed code on the embed page.",
-    "embedLink": "Open embed preview"
+    "embedLink": "Open embed preview",
+    "export_landChange": "Land change indices",
+    "export_foreignDebt": "Foreign debt composition",
+    "landslideSummary": "Landslide early warning",
+    "landslideDescription": "District watch/warning overlay with NBRO/DMC provenance.",
+    "changesSummary": "Product changelog",
+    "changesDescription": "Curated Lankawa surface changelog entries.",
+    "subscribeSummary": "Morning brief subscribe",
+    "subscribeDescription": "Double opt-in email subscription for the cached morning brief."
   },
   "budget": {
     "title": "National Budget Tracker",
@@ -1430,6 +1476,34 @@
     "help_fx_move": "Fire when USD/LKR day-over-day move is ≥ {threshold} LKR",
     "help_flood": "Fire when river stations report elevated alert levels",
     "help_power": "Fire on CEB outage or scheduled interruption",
-    "help_met": "Fire when Met Dept yellow/amber/red advisories are active"
+    "help_met": "Fire when Met Dept yellow/amber/red advisories are active",
+    "pin_landslide": "Landslide watch",
+    "help_landslide": "Fire when highland districts show landslide watch/warning"
+  },
+  "weekLedger": {
+    "title": "Week ledger",
+    "subtitle": "Mark the mornings you opened Lankawa — habit tracker on this device only.",
+    "done": "✓",
+    "mark": "·",
+    "count": "{count}/7 mornings",
+    "privacy": "Saved in this browser only.",
+    "day_mon": "M",
+    "day_tue": "T",
+    "day_wed": "W",
+    "day_thu": "T",
+    "day_fri": "F",
+    "day_sat": "S",
+    "day_sun": "S"
+  },
+  "briefSubscribe": {
+    "title": "Email morning brief",
+    "subtitle": "Optional daily brief by email. Double opt-in. Requires operators to configure Resend + Supabase.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "submit": "Subscribe",
+    "submitting": "Sending…",
+    "ok": "Check your email to confirm.",
+    "error": "Could not subscribe right now.",
+    "privacy": "We only use your email for the morning brief. Confirm link required. No selling lists."
   }
 }

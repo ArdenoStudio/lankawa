@@ -1,6 +1,7 @@
 import { floodIsElevated, powerNeedsAttention } from "@/lib/alert-pins";
 import type { AlertSignalContext } from "@/lib/alert-pins";
 import { getFxSeries } from "@/lib/economy";
+import { fetchLandslideSnapshot } from "@/lib/integrations/landslide";
 import { fetchMetDeptWarnings } from "@/lib/integrations/metdept";
 import type { PulseSnapshot } from "@/lib/types";
 
@@ -53,6 +54,20 @@ export async function buildAlertSignalContext(
     metDetail = null;
   }
 
+  let landslideAttention = false;
+  let landslideDetail: string | null = null;
+
+  try {
+    const landslides = await fetchLandslideSnapshot();
+    if (landslides.watchCount + landslides.warningCount > 0) {
+      landslideAttention = true;
+      landslideDetail = `${landslides.watchCount} watch · ${landslides.warningCount} warning`;
+    }
+  } catch {
+    landslideAttention = false;
+    landslideDetail = null;
+  }
+
   return {
     fxAbsDeltaLkr,
     fxThresholdLkr: DEFAULT_FX_THRESHOLD_LKR,
@@ -62,5 +77,7 @@ export async function buildAlertSignalContext(
     powerDetail,
     metWarning,
     metDetail,
+    landslideAttention,
+    landslideDetail,
   };
 }

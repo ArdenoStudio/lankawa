@@ -1,5 +1,13 @@
 const WINDOW_MS = 60_000;
-const MAX_REQUESTS = 60;
+
+export type RateBucket = "default" | "export" | "subscribe" | "assistant";
+
+const BUCKET_LIMITS: Record<RateBucket, number> = {
+  default: 60,
+  export: 20,
+  subscribe: 10,
+  assistant: 20,
+};
 
 interface RateLimitEntry {
   count: number;
@@ -21,39 +29,64 @@ export interface RateLimitResult {
   limit: number;
   remaining: number;
   resetAt: number;
+  bucket: RateBucket;
 }
 
-export function checkRateLimit(key: string): RateLimitResult {
+export function resolveRateBucket(pathname: string): RateBucket {
+  if (pathname.startsWith("/api/v1/export")) {
+    return "export";
+  }
+  if (
+    pathname.startsWith("/api/v1/subscribe") ||
+    pathname.startsWith("/api/v1/assistant")
+  ) {
+    return pathname.startsWith("/api/v1/subscribe") ? "subscribe" : "assistant";
+  }
+  if (pathname.includes("/assistant")) {
+    return "assistant";
+  }
+  return "default";
+}
+
+export function checkRateLimit(
+  key: string,
+  bucket: RateBucket = "default",
+): RateLimitResult {
   const now = Date.now();
+  const maxRequests = BUCKET_LIMITS[bucket];
   pruneExpired(now);
 
-  const existing = store.get(key);
+  const storeKey = `${bucket}:${key}`;
+  const existing = store.get(storeKey);
   if (!existing || existing.resetAt <= now) {
     const resetAt = now + WINDOW_MS;
-    store.set(key, { count: 1, resetAt });
+    store.set(storeKey, { count: 1, resetAt });
     return {
       allowed: true,
-      limit: MAX_REQUESTS,
-      remaining: MAX_REQUESTS - 1,
+      limit: maxRequests,
+      remaining: maxRequests - 1,
       resetAt,
+      bucket,
     };
   }
 
-  if (existing.count >= MAX_REQUESTS) {
+  if (existing.count >= maxRequests) {
     return {
       allowed: false,
-      limit: MAX_REQUESTS,
+      limit: maxRequests,
       remaining: 0,
       resetAt: existing.resetAt,
+      bucket,
     };
   }
 
   existing.count += 1;
   return {
     allowed: true,
-    limit: MAX_REQUESTS,
-    remaining: MAX_REQUESTS - existing.count,
+    limit: maxRequests,
+    remaining: maxRequests - existing.count,
     resetAt: existing.resetAt,
+    bucket,
   };
 }
 
@@ -62,5 +95,6 @@ export function rateLimitHeaders(result: RateLimitResult): Record<string, string
     "X-RateLimit-Limit": String(result.limit),
     "X-RateLimit-Remaining": String(result.remaining),
     "X-RateLimit-Reset": String(Math.ceil(result.resetAt / 1000)),
+    "X-RateLimit-Bucket": result.bucket,
   };
 }

@@ -3,6 +3,7 @@ export const ALERT_PIN_IDS = [
   "flood",
   "power",
   "met",
+  "landslide",
 ] as const;
 
 export type AlertPinId = (typeof ALERT_PIN_IDS)[number];
@@ -16,6 +17,8 @@ export interface AlertSignalContext {
   powerDetail: string | null;
   metWarning: boolean;
   metDetail: string | null;
+  landslideAttention: boolean;
+  landslideDetail: string | null;
 }
 
 export interface FiredAlert {
@@ -70,6 +73,16 @@ export function evaluateAlertPins(
           fired.push({
             id: pin,
             detail: context.metDetail ?? "Met Dept weather warning active",
+          });
+        }
+        break;
+      }
+      case "landslide": {
+        if (context.landslideAttention) {
+          fired.push({
+            id: pin,
+            detail:
+              context.landslideDetail ?? "Landslide watch/warning districts active",
           });
         }
         break;

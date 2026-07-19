@@ -1,0 +1,41 @@
+{
+  "generatedNote": "Hand-curated Lankawa product changelog of civic signal surfaces. Not a government gazette.",
+  "entries": [
+    {
+      "date": "2026-07-19",
+      "id": "polish-wave",
+      "title": "District share, CPC revisions, rate buckets",
+      "summary": "WhatsApp-ready district share cards, Octane CPC revision steps on Economy, split API rate buckets, and brief-email ops docs."
+    },
+    {
+      "date": "2026-07-19",
+      "id": "finish-backlog-wave",
+      "title": "Landslides, brief email, week ledger, /changes",
+      "summary": "NBRO/DMC landslide panel + disaster map toggle, morning-brief opt-in scaffolding, week ledger, and product changelog API."
+    },
+    {
+      "date": "2026-07-19",
+      "id": "alert-pins",
+      "title": "Alert pins on Home",
+      "summary": "Device-only pins for FX move, flood, power, and Met warnings with a firing strip."
+    },
+    {
+      "date": "2026-07-19",
+      "id": "ncpi-pucsl",
+      "title": "NCPI + PUCSL household blocks",
+      "summary": "Official inflation series and domestic electricity tariff slabs on Economy."
+    },
+    {
+      "date": "2026-07-19",
+      "id": "watchdog-native",
+      "title": "Land Change + Debt pulses",
+      "summary": "Watchdog research reworked into Lankawa APIs, district cards, and economy chart."
+    },
+    {
+      "date": "2026-07-18",
+      "id": "wave-a",
+      "title": "COL honesty + citations",
+      "summary": "Coconut Index honesty, citation cards, and chart PNG export."
+    }
+  ]
+}

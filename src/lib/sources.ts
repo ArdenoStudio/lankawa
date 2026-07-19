@@ -132,6 +132,19 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["electricity_energy_lkr_kwh", "electricity_fixed_lkr"],
   },
   {
+    id: "nbro_landslide",
+    name: "NBRO / DMC Landslide Early Warning",
+    category: "disaster",
+    url: "https://www.dmc.gov.lk",
+    cadenceMinutes: 360,
+    adapter: "scrape",
+    description:
+      "District-scale landslide watch/warning context for Sri Lanka’s highland wet season.",
+    methodology:
+      "Lankawa combines a curated district seed overlay with best-effort confirmation of the latest DMC landslide document via the public lk_dmc index. Not an official evacuation map. Always verify NBRO/DMC bulletins before acting.",
+    metrics: ["landslide_watch_count", "landslide_warning_count"],
+  },
+  {
     id: "public_services_stub",
     name: "Lankawa Public Services Directory",
     category: "civic",

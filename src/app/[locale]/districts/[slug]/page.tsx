@@ -7,6 +7,7 @@ import { DistrictPinButton } from "@/components/DistrictPinButton";
 import { ElectionSwingChart } from "@/components/ElectionSwingChart";
 import { FloodSparklinePanel } from "@/components/FloodSparklinePanel";
 import { FloodStationList } from "@/components/FloodStationList";
+import { ShareDistrictCard } from "@/components/ShareDistrictCard";
 import { VanniCrosswalkNotice } from "@/components/VanniCrosswalkNotice";
 import { Link } from "@/i18n/navigation";
 import { DISTRICTS, getDistrict, getDistrictName } from "@/lib/districts";
@@ -26,6 +27,7 @@ import {
 } from "@/lib/elections";
 import { getFloodStationsForDistrict } from "@/lib/flood-districts";
 import { fetchFloodLevelsForDistrict } from "@/lib/integrations/flood";
+import { getLandChangeForDistrict } from "@/lib/land-change";
 import { buildDistrictMetadata } from "@/lib/metadata";
 import {
   getProvinceForDistrict,
@@ -94,6 +96,52 @@ export default async function DistrictDetailPage({
   const parliamentaryWinner = parliamentaryResult
     ? getParliamentaryParty(parliamentaryResult.winner)
     : undefined;
+  const landChange = getLandChangeForDistrict(slug);
+  const districtName = getDistrictName(district, locale);
+  const elevatedFloodCount = liveFloodStations.filter((station) => {
+    const status = (station.alertStatus ?? "").toUpperCase();
+    return status !== "" && status !== "NORMAL" && status !== "UNKNOWN";
+  }).length;
+  const shareUrl = `https://lankawa.vercel.app/${locale}/districts/${slug}`;
+  const shareMetrics = [
+    {
+      id: "population",
+      label: t("population"),
+      value: district.population.toLocaleString(locale),
+    },
+    {
+      id: "flood",
+      label: t("liveFloodTitle"),
+      value:
+        liveFloodStations.length === 0
+          ? t("liveFloodNone")
+          : t("shareFloodSummary", {
+              elevated: elevatedFloodCount,
+              total: liveFloodStations.length,
+            }),
+    },
+    ...(landChange
+      ? [
+          {
+            id: "land",
+            label: t("shareLandLabel"),
+            value: t("shareLandValue", {
+              greenery: `${landChange.greeneryDelta > 0 ? "+" : ""}${landChange.greeneryDelta}`,
+              built: `${landChange.builtUpDelta > 0 ? "+" : ""}${landChange.builtUpDelta}`,
+            }),
+          },
+        ]
+      : []),
+    ...(electionResult && electionWinner
+      ? [
+          {
+            id: "election",
+            label: t("election2024"),
+            value: `${electionWinner.party} · ${winnerPct.toFixed(1)}%`,
+          },
+        ]
+      : []),
+  ];
 
   return (
     <div className="space-y-8">
@@ -106,7 +154,7 @@ export default async function DistrictDetailPage({
 
       <div>
         <h1 className="font-display text-3xl font-semibold text-white">
-          {getDistrictName(district, locale)}
+          {districtName}
         </h1>
         {province ? (
           <p className="mt-2 text-slate-400">
@@ -124,6 +172,12 @@ export default async function DistrictDetailPage({
           </p>
         )}
       </div>
+
+      <ShareDistrictCard
+        districtName={districtName}
+        url={shareUrl}
+        metrics={shareMetrics}
+      />
 
       <DistrictMapLazy
         locale={locale}

@@ -1,8 +1,12 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { DataSaverGate } from "@/components/DataSaverGate";
+import { DisasterRiskMap } from "@/components/DisasterRiskMap";
 import { EarthquakePanel } from "@/components/EarthquakePanel";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
+import { LandslidePanel } from "@/components/LandslidePanel";
 import { MetDeptWarningsPanel } from "@/components/MetDeptWarningsPanel";
 import { fetchEarthquakeSnapshot } from "@/lib/integrations/earthquake";
+import { fetchLandslideSnapshot } from "@/lib/integrations/landslide";
 import { fetchMetDeptWarnings } from "@/lib/integrations/metdept";
 import { fetchPowerStatus } from "@/lib/integrations/power";
 import { buildPulseSnapshot } from "@/lib/pulse";
@@ -15,12 +19,14 @@ export default async function DisasterPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("disaster");
-  const [snapshot, power, earthquakes, metWarnings] = await Promise.all([
-    buildPulseSnapshot(),
-    fetchPowerStatus(),
-    fetchEarthquakeSnapshot(),
-    fetchMetDeptWarnings(),
-  ]);
+  const [snapshot, power, earthquakes, metWarnings, landslides] =
+    await Promise.all([
+      buildPulseSnapshot(),
+      fetchPowerStatus(),
+      fetchEarthquakeSnapshot(),
+      fetchMetDeptWarnings(),
+      fetchLandslideSnapshot(),
+    ]);
 
   return (
     <div className="space-y-6">
@@ -73,6 +79,31 @@ export default async function DisasterPage({
       </section>
 
       <InlineExplainerBanner slug="flood-levels" />
+
+      <LandslidePanel
+        snapshot={landslides}
+        locale={locale}
+        labels={{
+          title: t("landslideTitle"),
+          subtitle: t("landslideSubtitle"),
+          watch: t("landslideWatch"),
+          warning: t("landslideWarning"),
+          asOf: t("landslideAsOf"),
+          seed: t("landslideSeed"),
+          honesty: t("landslideHonesty"),
+          source: t("landslideSource"),
+          nbro: t("landslideNbro"),
+          topDistricts: t("landslideTopDistricts"),
+          noneActive: t("landslideNoneActive"),
+        }}
+      />
+
+      <DataSaverGate>
+        <DisasterRiskMap
+          flood={snapshot.flood}
+          landslideDistricts={landslides.districts}
+        />
+      </DataSaverGate>
 
       <MetDeptWarningsPanel
         snapshot={metWarnings}

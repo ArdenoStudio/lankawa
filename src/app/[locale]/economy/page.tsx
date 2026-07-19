@@ -3,6 +3,7 @@ import { CseMarketCard } from "@/components/CseMarketCard";
 import { DebtCompositionCard } from "@/components/DebtCompositionCard";
 import {
   FuelHistoryChart,
+  FuelRevisionSteps,
   FxSparkline,
   LpgPriceCard,
   MacroIndicatorCard,
@@ -17,7 +18,7 @@ import { getEconomyMacroSnapshot, getFxSeries, getLatestFxRate } from "@/lib/eco
 import { getForeignDebtSnapshot } from "@/lib/foreign-debt";
 import { fetchLatestCbslGoldRate } from "@/lib/integrations/cbsl";
 import { fetchLpgPriceSnapshot } from "@/lib/integrations/lpg";
-import { getFuelHistorySeries } from "@/lib/fuel";
+import { getFuelHistorySeries, getFuelRevisionSteps } from "@/lib/fuel";
 import { buildCseSnapshot } from "@/lib/integrations/cse";
 import { getNcpiSnapshot } from "@/lib/ncpi";
 import { getPucslTariffSnapshot } from "@/lib/pucsl";
@@ -36,7 +37,10 @@ export default async function EconomyPage({
   const macro = getEconomyMacroSnapshot();
   const fxSeries = await getFxSeries();
   const latestFxRate = await getLatestFxRate();
-  const fuelHistory = await getFuelHistorySeries(90);
+  const [fuelHistory, fuelRevisions] = await Promise.all([
+    getFuelHistorySeries(90),
+    getFuelRevisionSteps(8),
+  ]);
   const cseSnapshot = await buildCseSnapshot();
   const goldRate = await fetchLatestCbslGoldRate();
   const lpgSnapshot = await fetchLpgPriceSnapshot();
@@ -165,6 +169,17 @@ export default async function EconomyPage({
               sourceName: fuelSource?.name ?? "Octane Fuel API",
               sourcePath: getSourceProvenancePath("octane_fuel"),
               permalink: `/${locale}/economy`,
+            }}
+          />
+          <FuelRevisionSteps
+            title={t("fuelRevisionsTitle")}
+            subtitle={t("fuelRevisionsSubtitle")}
+            steps={fuelRevisions}
+            labels={{
+              date: t("fuelRevisionsDate"),
+              from: t("fuelRevisionsFrom"),
+              to: t("fuelRevisionsTo"),
+              empty: t("fuelRevisionsEmpty"),
             }}
           />
           <DebtCompositionCard

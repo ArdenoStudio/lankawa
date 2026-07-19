@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
-import { checkRateLimit, rateLimitHeaders } from "@/lib/rate-limit";
+import {
+  checkRateLimit,
+  rateLimitHeaders,
+  resolveRateBucket,
+} from "@/lib/rate-limit";
 import { routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
@@ -18,7 +22,8 @@ export default function middleware(request: NextRequest) {
 
   if (pathname.startsWith("/api/v1/")) {
     const ip = getClientIp(request);
-    const result = checkRateLimit(`api:${ip}`);
+    const bucket = resolveRateBucket(pathname);
+    const result = checkRateLimit(`api:${ip}`, bucket);
     const headers = rateLimitHeaders(result);
 
     if (!result.allowed) {

@@ -69,3 +69,39 @@ export async function fetchOctanePriceHistory(
 
   return response.json() as Promise<OctaneHistoryResponse>;
 }
+
+export interface OctanePriceChange {
+  fuel_type: string;
+  recorded_at: string;
+  price_lkr: number;
+  previous_lkr: number;
+  delta_lkr: number;
+  delta_pct: number;
+}
+
+export interface OctaneChangesResponse {
+  source: string;
+  changes: OctanePriceChange[];
+}
+
+export async function fetchOctanePriceChanges(
+  limit = 40,
+): Promise<OctaneChangesResponse> {
+  const params = new URLSearchParams({
+    source: "cpc",
+    limit: String(limit),
+  });
+  const response = await fetch(
+    `${OCTANE_BASE}/v1/prices/changes?${params.toString()}`,
+    {
+      next: { revalidate: 3600 },
+      headers: { Accept: "application/json" },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Octane changes API returned ${response.status}`);
+  }
+
+  return response.json() as Promise<OctaneChangesResponse>;
+}

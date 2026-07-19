@@ -2,7 +2,7 @@ import { ChartExportButton } from "@/components/ChartExportButton";
 import { CitationCard } from "@/components/CitationCard";
 import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { Link } from "@/i18n/navigation";
-import type { FuelHistorySeries } from "@/lib/fuel";
+import type { FuelHistorySeries, FuelRevisionStep } from "@/lib/fuel";
 import type { LpgPriceSnapshot } from "@/lib/integrations/lpg";
 import type { FreshnessTier } from "@/lib/types";
 
@@ -171,6 +171,60 @@ export function FxSparkline({
           permalink={citation.permalink}
         />
       ) : null}
+    </article>
+  );
+}
+
+export function FuelRevisionSteps({
+  title,
+  subtitle,
+  steps,
+  labels,
+}: {
+  title: string;
+  subtitle: string;
+  steps: FuelRevisionStep[];
+  labels: {
+    date: string;
+    from: string;
+    to: string;
+    empty: string;
+  };
+}) {
+  if (steps.length === 0) {
+    return (
+      <article className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:col-span-2 lg:col-span-3">
+        <p className="text-sm text-slate-500">{title}</p>
+        <p className="mt-2 text-sm text-slate-400">{labels.empty}</p>
+      </article>
+    );
+  }
+
+  return (
+    <article className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:col-span-2 lg:col-span-3">
+      <p className="text-sm text-slate-500">{title}</p>
+      <p className="mt-1 text-xs text-slate-500">{subtitle}</p>
+      <ol className="mt-4 space-y-3">
+        {steps.map((step) => (
+          <li
+            key={`${step.fuelType}-${step.recordedAt}-${step.priceLkr}`}
+            className="flex flex-wrap items-baseline justify-between gap-2 border-b border-white/5 pb-3 last:border-0 last:pb-0"
+          >
+            <div>
+              <p className="text-sm font-medium text-white">{step.label}</p>
+              <p className="text-xs text-slate-500">
+                {labels.date}: {step.recordedAt} · {labels.from}{" "}
+                {step.previousLkr.toFixed(0)} → {labels.to}{" "}
+                {step.priceLkr.toFixed(0)} LKR/L
+              </p>
+            </div>
+            <p className="text-sm font-medium text-slate-300">
+              {formatDirectionalDelta(step.deltaLkr, 0)} (
+              {formatDirectionalDelta(step.deltaPct, 1)}%)
+            </p>
+          </li>
+        ))}
+      </ol>
     </article>
   );
 }
