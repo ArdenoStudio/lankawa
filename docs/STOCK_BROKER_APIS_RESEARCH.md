@@ -124,7 +124,7 @@ Related: `ut_fundsRates.php?odate=YYYY-MM-DD` (date-required; empty/`[]` when no
 
 ## 5. Recommendations for Lankawa
 
-1. **Equity / ASPI pulse:** Stay on `cse.lk/api` (`src/lib/integrations/cse.ts`). Highest ROI is still unused CSE endpoints already listed in [`DATA_EXPANSION_RESEARCH.md`](./DATA_EXPANSION_RESEARCH.md) (`allSectors`, `mostActiveTrades`, `dailyMarketSummery`, notices).
+1. **Equity / ASPI pulse:** Stay on `cse.lk/api` (`src/lib/integrations/cse.ts`). Sectors / most-active / foreign already shipped; next deepen is notices + GICS valuation — [`CSE_API_DOCS.md`](./CSE_API_DOCS.md).
 2. **Do not** integrate ATrad `/atsweb` or AnalytiCAL session APIs (ToS, auth, fragility, compliance).
 3. **Optional P2:** Thin adapter for CAL `MobileappDataService.php` → overnight repo, T-bill curve, secondary bond bids, FX strip, UT NAVs — label freshness honestly; HTTP-only host.
 4. **Skip** Softlogic / Asia Securities for machine market data; optional human-curated research links only.

@@ -33,15 +33,18 @@ Bookmark libs (Tremor, HyperUI, DaisyUI, shadcn blocks) informed layout density 
 
 **Verdict:** Not a separate hosted API. The repo documents unofficial `https://www.cse.lk/api/*` endpoints that Lankawa already calls server-side (`src/lib/integrations/cse.ts`). Browser CORS blocks client use; keep server proxy.
 
-**Highest-ROI endpoints not yet surfaced (or underused):**
+**Deepen catalog (announcements / GICS / market status):** [`CSE_API_DOCS.md`](./CSE_API_DOCS.md) — live-probed 2026-07-20.
+
+**Shipped in adapter:** `aspiData`, `snpData`, `marketStatus`, `marketSummery`, `tradeSummary`, `allSectors`, `mostActiveTrades`, `dailyMarketSummery`.
+
+**Highest-ROI still unused / broken in notices path:**
 
 | Endpoint | Daily-user value |
 |----------|------------------|
-| `allSectors` | Sector heat / breadth of market day |
-| `mostActiveTrades` | What retail actually traded |
-| `dailyMarketSummery` | Foreign vs domestic participation |
-| `notifications` | Exchange notices strip |
-| ASPI high/low from existing summary | Intraday range without new scrape |
+| `GET /notifications` | Halt/auction banners — Lankawa currently **POST**s (405) |
+| `POST /approvedAnnouncement` | Corporate disclosures strip (homepage feed) |
+| `POST /GICSSectorSummery` | Sector PER/PBV/DY + companies traded (join on `indexCodeSp`) |
+| `POST /sectorHighLow?sectorId=1` | ASPI intraday open/high/low companion |
 
 Cite Cookie-Cat docs as a **catalog**, not as an upstream SLA. CSE HTML/API can change without notice.
 
