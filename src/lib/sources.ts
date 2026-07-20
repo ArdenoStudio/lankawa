@@ -620,12 +620,12 @@ export const SOURCES: SourceDefinition[] = [
     name: "Sri Lanka News RSS",
     category: "civic",
     url: "internal://news",
-    cadenceMinutes: 60,
+    cadenceMinutes: 30,
     adapter: "api",
     description:
       "Headline count and top story summaries from curated Sri Lanka news RSS feeds.",
     methodology:
-      "Server-side RSS/Atom parse of approved public feeds (e.g. Daily Mirror, Ada Derana, NewsFirst). Headlines are normalized in-platform with source attribution — no external click-through links in pulse UI. Pending `src/lib/integrations/news.ts` from parallel agent; source registry reserved for provenance.",
+      "Server-side RSS/Atom parse of approved public feeds via `src/lib/integrations/news.ts` (Daily Mirror, Ada Derana, Lankadeepa, Tamil Guardian, EconomyNext, Newswire, Island, LBO, Ada Derana Biz, Roar, DMC). Headlines are normalized with source attribution. Home pulse links to provenance rather than external click-through. Expansion backlog: docs/NEWS_RSS_BACKLOG.md. No HTML scrape; no paid third-party news APIs as core deps.",
     metrics: ["news_headlines"],
   },
   {

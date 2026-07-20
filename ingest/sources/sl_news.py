@@ -22,6 +22,18 @@ OUTPUT_PATH = Path(__file__).resolve().parents[1] / "output" / "sl_news.json"
 RSS_FEEDS: tuple[tuple[str, str], ...] = (
     ("daily_mirror", "https://www.dailymirror.lk/rss/breaking_news/108"),
     ("ada_derana", "https://adaderana.lk/rss.php"),
+    ("lankadeepa", "https://www.lankadeepa.lk/rss/latest_news/1"),
+    ("tamil_guardian", "https://www.tamilguardian.com/rss.xml"),
+    ("economynext", "https://economynext.com/feed/"),
+    ("newswire", "https://www.newswire.lk/feed/"),
+    ("island", "https://island.lk/feed/"),
+    ("lbo", "https://www.lankabusinessonline.com/feed/"),
+    ("ada_derana_biz", "https://bizenglish.adaderana.lk/feed/"),
+    ("roar", "https://roar.media/english/feed/"),
+    (
+        "dmc_rss",
+        "https://www.dmc.gov.lk/index.php?option=com_content&view=category&id=9&Itemid=274&lang=en&format=feed&type=rss",
+    ),
 )
 
 RSS_BLOCK_RE = re.compile(r"<rss[\s\S]*?</rss>", re.IGNORECASE)

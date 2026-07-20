@@ -46,6 +46,31 @@ export const SL_NEWS_FEEDS = [
     name: "Newswire",
     url: "https://www.newswire.lk/feed/",
   },
+  {
+    id: "island",
+    name: "Island",
+    url: "https://island.lk/feed/",
+  },
+  {
+    id: "lbo",
+    name: "Lanka Business Online",
+    url: "https://www.lankabusinessonline.com/feed/",
+  },
+  {
+    id: "ada_derana_biz",
+    name: "Ada Derana Biz",
+    url: "https://bizenglish.adaderana.lk/feed/",
+  },
+  {
+    id: "roar",
+    name: "Roar Media",
+    url: "https://roar.media/english/feed/",
+  },
+  {
+    id: "dmc_rss",
+    name: "Disaster Management Centre",
+    url: "https://www.dmc.gov.lk/index.php?option=com_content&view=category&id=9&Itemid=274&lang=en&format=feed&type=rss",
+  },
 ] satisfies NewsFeedDefinition[];
 
 export interface NewsHeadline {
