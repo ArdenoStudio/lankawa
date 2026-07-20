@@ -35,9 +35,11 @@ Env: `FOOD_API_BASE` (default `https://food-platform-backend.fly.dev/api/v1`).
 | Source | URL / endpoint | API? | FoodLK status | Lankawa call path |
 |--------|----------------|------|---------------|-------------------|
 | **SPAR2U** | `https://spar2u.lk/products.json` (paginated `limit`/`page`) | Public JSON catalog | Active in FoodLK | **Direct optional bypass** `food-spar.ts` → `sourceId: spar2u_retail` after WFP fails (1 page, `limit=250`; 429 skips) |
-| **Keells** | Guest JSON via `https://zebraliveback.keellssuper.com/1.0` (+ `keellssuper.com` HTML fallback) | Guest session JSON | Active in FoodLK | Via FoodLK / Life federation |
-| **Cargills** | `https://cargillsonline.com/Web/GetDynamicSection/` | Dynamic section JSON | Active in FoodLK | Via FoodLK / Life federation |
-| **Glomark** | Category HTML on `glomark.lk` | HTML parse | Active in FoodLK | Via FoodLK only |
+| **Keells** | Guest JSON via `https://zebraliveback.keellssuper.com/1.0` (`Login/GuestLogin` → `WebV2/GetInitialDataCollection`) (+ HTML fallback) | Guest session JSON (CF-gated) | Active in FoodLK | Via FoodLK / Life federation — see [`RETAIL_LOYALTY_APIS_RESEARCH.md`](./RETAIL_LOYALTY_APIS_RESEARCH.md) |
+| **Cargills** | `POST /Web/GetDynamicSection/` (+ browser `GetMenuCategoryItemsPagingV3/`) | Dynamic section JSON | Active in FoodLK | Via FoodLK / Life federation; optional future direct `GetDynamicSection` bypass |
+| **Glomark** | Category HTML on `glomark.lk`; per-SKU `GET /product-page/variation-detail/{id}` | HTML + per-SKU JSON | Active in FoodLK (HTML) | Via FoodLK only; variation-detail noted for SKU watchlist |
+
+Loyalty apps (Keells Nexus, Cargills Rewards, SPAR Rewards, Softlogic ONE) have **no public offer/points APIs**. Card supermarket-day promos: [`COMBANK_OFFERS_RESEARCH.md`](./COMBANK_OFFERS_RESEARCH.md).
 
 ---
 
