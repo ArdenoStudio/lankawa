@@ -255,6 +255,50 @@ export function parseNsbUsdTt(html: string): UsdBand | null {
 }
 
 /**
+ * BOC `rates-tariff` exchange table: Currency notes | Drafts |
+ * Telegraphic/PFCA/BFCA Transfers (buy/sell each). TT is the last pair.
+ * Anchors on the US DOLLAR flag alt — a bare `\bUSD\b` row match is too greedy
+ * across earlier currency rows. POST `/api/exchange-rates` still 500s; HTML only.
+ */
+export function parseBocUsdTt(html: string): UsdBand | null {
+  const row = html.match(
+    /alt="US\s+DOLLAR[^"]*"[\s\S]{0,120}?\bUSD\b[\s\S]{0,500}?<\/tr>/i,
+  );
+  if (!row) {
+    return null;
+  }
+  const nums = numbersFromRowHtml(row[0]);
+  if (nums.length >= 6) {
+    return bandFromPair(nums[4], nums[5]);
+  }
+  if (nums.length >= 2) {
+    return bandFromPair(nums[nums.length - 2], nums[nums.length - 1]);
+  }
+  return null;
+}
+
+/**
+ * DFCC `rates-and-tariff/exchange-rates`: DD Buying | Note Encashment |
+ * TT Buying | DD/TT Selling | Note Selling. Prefer TT Buying + DD/TT Selling.
+ */
+export function parseDfccUsdTt(html: string): UsdBand | null {
+  const row = html.match(
+    /alt="USD"[^>]*>\s*USD\s*<\/td>[\s\S]{0,700}?<\/tr>/i,
+  );
+  if (!row) {
+    return null;
+  }
+  const nums = numbersFromRowHtml(row[0]);
+  if (nums.length >= 5) {
+    return bandFromPair(nums[2], nums[3]);
+  }
+  if (nums.length >= 2) {
+    return bandFromPair(nums[0], nums[1]);
+  }
+  return null;
+}
+
+/**
  * Generic HTML scrape helper — prefers TT when a 6-column People's/NDB-style
  * row is present; otherwise first buy/sell pair in the USD row.
  */
@@ -270,6 +314,14 @@ export function parseUsdLkrBand(html: string): UsdBand | null {
   const nsb = parseNsbUsdTt(html);
   if (nsb) {
     return nsb;
+  }
+  const boc = parseBocUsdTt(html);
+  if (boc) {
+    return boc;
+  }
+  const dfcc = parseDfccUsdTt(html);
+  if (dfcc) {
+    return dfcc;
   }
 
   const row = findUsdRateRow(html);
@@ -353,6 +405,22 @@ const BANK_SOURCES: readonly BankSource[] = [
     url: "https://www.nsb.lk/rates-tarriffs/nsb-exchange-rates/",
     note: "TT columns from nsb.lk exchange-rates page",
     parse: parseNsbUsdTt,
+  },
+  {
+    id: "boc",
+    name: "Bank of Ceylon",
+    kind: "html",
+    url: "https://www.boc.lk/rates-tariff",
+    note: "TT columns from boc.lk rates-tariff table",
+    parse: parseBocUsdTt,
+  },
+  {
+    id: "dfcc",
+    name: "DFCC Bank",
+    kind: "html",
+    url: "https://www.dfcc.lk/rates-and-tariff/exchange-rates",
+    note: "TT Buying / DD·TT Selling from dfcc.lk exchange-rates table",
+    parse: parseDfccUsdTt,
   },
 ] as const;
 
@@ -491,11 +559,11 @@ async function fetchBankQuote(
 
 /**
  * Attempts live bank TT USD/LKR bands (JSON APIs where available, HTML scrape
- * for People's / NDB / NSB) with a short timeout. Per-bank seed fill on failure;
- * board isSeed only when every bank fails.
+ * for People's / NDB / NSB / BOC / DFCC) with a short timeout. Per-bank seed
+ * fill on failure; board isSeed only when every bank fails.
  *
- * BOC's `POST /api/exchange-rates` returns 500 without a stable public body, so
- * it is not wired. Prefer banks with parseable TT numbers only.
+ * BOC's `POST /api/exchange-rates` still returns 500 — use `rates-tariff` HTML
+ * instead. Prefer banks with parseable TT numbers only; never invent rates.
  */
 export async function fetchRemittanceTtSnapshot(): Promise<RemittanceTtSnapshot> {
   const results = await Promise.all(BANK_SOURCES.map(fetchBankQuote));
@@ -531,7 +599,7 @@ export async function fetchRemittanceTtSnapshot(): Promise<RemittanceTtSnapshot>
       : "Bank TT remittance board (partial live)",
     asOf: new Date().toISOString().slice(0, 10),
     methodologyNote: allLive
-      ? "Public indicative USD/LKR TT bands from bank JSON FX APIs (Commercial, HNB, Seylan, Sampath) plus People's/NDB/NSB public rate-page scrapes. Lankawa is not affiliated with these banks. Not CBSL official rates; fees and corridor products differ."
+      ? "Public indicative USD/LKR TT bands from bank JSON FX APIs (Commercial, HNB, Seylan, Sampath) plus People's/NDB/NSB/BOC/DFCC public rate-page scrapes. Lankawa is not affiliated with these banks. Not CBSL official rates; fees and corridor products differ."
       : "Mixed live/seed board: JSON FX APIs and HTML scrapes where available; failed banks use curated seed rows (per-bank isSeed). Lankawa is not affiliated with these banks. Public indicative only — not CBSL official rates.",
     corridor: remittanceData.corridor,
     banks,

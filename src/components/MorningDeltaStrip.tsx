@@ -120,7 +120,9 @@ export async function MorningDeltaStrip() {
     items.push({
       id: "card-days",
       label: t("morningDeltaCardDays"),
-      deltaLabel: cardOffers.isSeed ? `${baseLabel} · seed` : baseLabel,
+      deltaLabel: cardOffers.isSeed
+        ? t("morningDeltaCardDaysSeed", { value: baseLabel })
+        : baseLabel,
       asOf: cardOffers.asOf,
       href: "/food",
     });
@@ -132,20 +134,21 @@ export async function MorningDeltaStrip() {
 
   return (
     <div
-      className="flex flex-wrap gap-2"
+      className="lk-motion-fade-up flex flex-wrap gap-2"
       role="list"
       aria-label={t("morningDeltaLabel")}
     >
-      {items.map((item) => (
+      {items.map((item, index) => (
         <Link
           key={item.id}
           href={item.href}
           role="listitem"
           className={
             item.emphasize
-              ? "inline-flex min-w-0 flex-1 basis-full items-center justify-between gap-3 rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm transition hover:border-white/45 hover:bg-white/15 sm:basis-[calc(33.333%-0.5rem)]"
-              : "inline-flex min-w-0 flex-1 basis-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm transition hover:border-white/25 hover:bg-white/10 sm:basis-[calc(33.333%-0.5rem)]"
+              ? "lk-motion-slide-in inline-flex min-w-0 flex-1 basis-full items-center justify-between gap-3 rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm transition hover:border-white/45 hover:bg-white/15 sm:basis-[calc(33.333%-0.5rem)]"
+              : "lk-motion-slide-in inline-flex min-w-0 flex-1 basis-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm transition hover:border-white/25 hover:bg-white/10 sm:basis-[calc(33.333%-0.5rem)]"
           }
+          style={{ animationDelay: `${60 + index * 45}ms` }}
         >
           <span className="min-w-0">
             <span className="block truncate text-xs uppercase tracking-wide text-slate-500">

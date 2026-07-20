@@ -147,7 +147,7 @@ export default async function CostOfLivingPage({
         </section>
       ) : null}
 
-      <SupermarketCardDays />
+      <SupermarketCardDays compact />
 
       <CoconutIndexSpark
         labels={{

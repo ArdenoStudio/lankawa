@@ -96,7 +96,8 @@
     "morningDeltaCardDays": "Supermarket cards",
     "morningDeltaCardDaysNone": "None today",
     "morningDeltaCardDaysCount": "{count} today",
-    "morningDeltaCardDaysValue": "{count} · {merchant} {discount}"
+    "morningDeltaCardDaysValue": "{count} · {merchant} {discount}",
+    "morningDeltaCardDaysSeed": "{value} · seed"
   },
   "a11y": {
     "skipToContent": "Skip to main content"
@@ -850,7 +851,9 @@
       "coverage": "{live} live · {seed} seed",
       "asOf": "As of {date}",
       "source": "Source provenance",
-      "honesty": "Public indicative only. Lankawa is not affiliated with these banks. Fees, corridors, and same-day TT products differ. Not CBSL official rates."
+      "honesty": "Public indicative only. Lankawa is not affiliated with these banks. Fees, corridors, and same-day TT products differ. Not CBSL official rates.",
+      "metricsLabel": "Best TT buy and sell highlights",
+      "tableLabel": "Bank TT remittance rates"
     },
     "fxAnomaly": "Unusual day-over-day move",
     "fxAnomalyQuiet": "Within recent MAD band",
@@ -863,6 +866,24 @@
       "tbill364": "364-day T-bill",
       "asOf": "As of {date}",
       "seed": "Seed snapshot — not a live CBSL scrape"
+    },
+    "paymentsBulletin": {
+      "title": "Digital payments pulse",
+      "subtitle": "CEFTS / JustPay / LANKAQR from CBSL Payments Bulletin — {period}.",
+      "ceftsVolume": "CEFTS volume (quarter)",
+      "ceftsValue": "Rs. {value} bn value",
+      "justpayVolume": "JustPay volume (quarter)",
+      "justpayValue": "Rs. {value} bn value",
+      "lankaqrVolume": "LANKAQR domestic volume",
+      "lankaqrValue": "Rs. {value} bn value",
+      "lankaqrMerchants": "LANKAQR merchants (end period)",
+      "merchantsNote": "Registered stickers — not active monthly usage",
+      "unitMillion": "M txns",
+      "unitThousand": "k txns",
+      "pdfLink": "Bulletin PDF",
+      "asOf": "Bulletin published {date} · period {period}",
+      "seed": "Quarterly seed — not a live scrape",
+      "honesty": "PDF extract only. Prefer CBSL tables over LankaPay marketing counters. Not a payment-rails dashboard."
     },
     "marketsPress": {
       "title": "Markets in the press",
@@ -2059,6 +2080,9 @@
   "cardOffers": {
     "title": "Today's supermarket card days",
     "subtitle": "Public bank card discounts at major supermarket chains — filtered for today.",
+    "compactTitle": "Supermarket card days",
+    "compactSubtitle": "Top public bank discounts for today.",
+    "seeAll": "See all",
     "seed": "Seed",
     "live": "Live",
     "bankSeed": "seed",
@@ -2082,5 +2106,21 @@
     "asOf": "As of {date}",
     "source": "Source provenance",
     "honesty": "Indicative CEB Care public map counts — confirm on cebcare.ceb.lk. Not a live outage alert."
+  },
+  "householdEmi": {
+    "title": "Household EMI (Singer)",
+    "subtitle": "Multi-bank installments on a featured Singer appliance sample — not supermarket card days.",
+    "seed": "Seed",
+    "live": "Live",
+    "sample": "Sample: {label} · Rs. {price}",
+    "tenors": "{months} months",
+    "callConvert": "call-and-convert",
+    "monthlyFrom": "from Rs. {amount}/mo",
+    "summary": "{banks} banks · {callConvert} call-and-convert · default {defaults} mo",
+    "empty": "No Singer EMI banks available right now.",
+    "asOf": "As of {date}",
+    "source": "Source provenance",
+    "singerLink": "Singer bank offers",
+    "honesty": "Indicative public Singer EMI for one sample SKU price — confirm on singersl.com before purchase. Softlogic per-SKU EMI crawl skipped (too heavy). Abans/Arpico merchant EMI parked. Lankawa is not affiliated with Singer or the banks."
   }
 }

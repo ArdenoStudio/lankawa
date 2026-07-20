@@ -93,10 +93,11 @@
     "morningDeltaUv": "Colombo UV max",
     "morningDeltaRain7d": "Colombo 7d rain",
     "morningDeltaWeatherAsOf": "forecast as of {date}",
-    "morningDeltaCardDays": "Supermarket cards",
-    "morningDeltaCardDaysNone": "None today",
-    "morningDeltaCardDaysCount": "{count} today",
-    "morningDeltaCardDaysValue": "{count} · {merchant} {discount}"
+    "morningDeltaCardDays": "සුපර්මාකට් කාඩ්",
+    "morningDeltaCardDaysNone": "අද නැත",
+    "morningDeltaCardDaysCount": "අද {count}",
+    "morningDeltaCardDaysValue": "{count} · {merchant} {discount}",
+    "morningDeltaCardDaysSeed": "{value} · seed"
   },
   "modules": {
     "districts": {
@@ -830,7 +831,9 @@
       "coverage": "{live} live · {seed} seed",
       "asOf": "As of {date}",
       "source": "Source provenance",
-      "honesty": "Public indicative only. Lankawa is not affiliated with these banks. Fees, corridors, and same-day TT products differ. Not CBSL official rates."
+      "honesty": "Public indicative only. Lankawa is not affiliated with these banks. Fees, corridors, and same-day TT products differ. Not CBSL official rates.",
+      "metricsLabel": "හොඳම TT මිලදී ගැනීම සහ විකිණීම",
+      "tableLabel": "බැංකු TT remittance අනුපාත"
     },
     "fxAnomaly": "Unusual day-over-day move",
     "fxAnomalyQuiet": "Within recent MAD band",
@@ -854,6 +857,24 @@
       "tbill364": "දින 364 T-bill",
       "asOf": "{date} වන විට",
       "seed": "Seed — සජීවී CBSL scrape නොවේ"
+    },
+    "paymentsBulletin": {
+      "title": "ඩිජිටල් ගෙවීම් pulse",
+      "subtitle": "CBSL Payments Bulletin වෙතින් CEFTS / JustPay / LANKAQR — {period}.",
+      "ceftsVolume": "CEFTS පරිමාව (කාර්තුව)",
+      "ceftsValue": "Rs. {value} bn වටිනාකම",
+      "justpayVolume": "JustPay පරිමාව (කාර්තුව)",
+      "justpayValue": "Rs. {value} bn වටිනාකම",
+      "lankaqrVolume": "LANKAQR දේශීය පරිමාව",
+      "lankaqrValue": "Rs. {value} bn වටිනාකම",
+      "lankaqrMerchants": "LANKAQR වෙළෙන්දන් (කාලය අවසානය)",
+      "merchantsNote": "ලියාපදිංචි sticker — මාසික ක්‍රියාකාරී භාවිතය නොවේ",
+      "unitMillion": "M txns",
+      "unitThousand": "k txns",
+      "pdfLink": "Bulletin PDF",
+      "asOf": "Bulletin ප්‍රකාශිත {date} · කාලය {period}",
+      "seed": "කාර්තු seed — සජීවී scrape නොවේ",
+      "honesty": "PDF extract පමණි. LankaPay marketing counters වෙනුවට CBSL වගු වලට මුල් තැන. Payment-rails dashboard නොවේ."
     },
     "marketsPress": {
       "title": "මාධ්‍යයේ වෙළෙඳපොළ",
@@ -2059,6 +2080,9 @@
   "cardOffers": {
     "title": "අද සුපර්මාකට් කාඩ් දින",
     "subtitle": "ප්‍රධාන සුපර්මාකට් ජාලවල ප්‍රසිද්ධ බැංකු කාඩ් වට්ටම් — අදට පෙරණිය.",
+    "compactTitle": "සුපර්මාකට් කාඩ් දින",
+    "compactSubtitle": "අදට ප්‍රධාන ප්‍රසිද්ධ බැංකු වට්ටම්.",
+    "seeAll": "සියල්ල බලන්න",
     "seed": "Seed",
     "live": "Live",
     "bankSeed": "seed",
@@ -2082,5 +2106,21 @@
     "asOf": "{date} වන විට",
     "source": "මූලාශ්‍ර සාක්ෂි",
     "honesty": "Indicative CEB Care ප්‍රසිද්ධ සිතියම් ගණන් — cebcare.ceb.lk හි තහවුරු කරන්න. සජීවී කප්පාදු ඇඟවීමක් නොවේ."
+  },
+  "householdEmi": {
+    "title": "ගෘහ EMI (Singer)",
+    "subtitle": "නියැදි Singer උපකරණයක බහු-බැංකු වාරික — සුපර්මාකට් කාඩ් දින නොවේ.",
+    "seed": "Seed",
+    "live": "Live",
+    "sample": "නියැදිය: {label} · රු. {price}",
+    "tenors": "මාස {months}",
+    "callConvert": "call-and-convert",
+    "monthlyFrom": "රු. {amount}/මාසයේ සිට",
+    "summary": "බැංකු {banks} · call-and-convert {callConvert} · පෙරනිමි මාස {defaults}",
+    "empty": "දැන් Singer EMI බැංකු නැත.",
+    "asOf": "{date} වන විට",
+    "source": "මූලාශ්‍ර සාක්ෂි",
+    "singerLink": "Singer බැංකු දීමනා",
+    "honesty": "එක් නියැදි SKU මිලකට ප්‍රසිද්ධ Singer EMI — මිලදී ගැනීමට පෙර singersl.com හි තහවුරු කරන්න. Softlogic per-SKU EMI crawl මග හැර ඇත (බර වැඩි). Abans/Arpico merchant EMI parked. Singer හෝ බැංකු සමඟ අනුබද්ධ නොවේ."
   }
 }

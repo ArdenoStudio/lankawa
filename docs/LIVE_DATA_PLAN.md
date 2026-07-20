@@ -33,7 +33,7 @@ Catalog: [`FOOD_API_SOURCES.md`](./FOOD_API_SOURCES.md).
 ## Shipped on this branch (cursor/live-data-wave-3c69)
 
 - **Supermarket card days** — multi-bank (`card-offers.ts`): Sampath/HNB/Visa JSON + ComBank/DFCC/Pan Asia/People's/NTB HTML; weekday filter; `/food` + COL + economy; `card_day` alert pins
-- **Remittance TT** — **7 banks** (`remittance-banks.ts`): ComBank/HNB/Seylan/Sampath JSON + People's/NDB/NSB HTML; per-bank seed
+- **Remittance TT** — **9 banks** (`remittance-banks.ts`): ComBank/HNB/Seylan/Sampath JSON + People's/NDB/NSB/BOC/DFCC HTML; per-bank seed (BOC via `rates-tariff` HTML; POST FX API still 500)
 - **WFP hardenings** — drop fuel; prefer quotes near corpus tip; stale sugar/flour; loud corpus as-of on `/food`
 - **Irrigation gauges** — ArcGIS FeatureServer on `/disaster`
 - **CEB demand clusters** — `GetDemandMgmtClusters` strip on `/economy`

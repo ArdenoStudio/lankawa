@@ -126,16 +126,19 @@ Payment-gateway / JustPay certification APIs remain **unrelated to promotional c
 | Policy note: zero MDR ≤ 5k / P2P QR / tourist QR | **Yes — footnote** | Beside FoodLK or economy morning brief when circulars are confirmed. |
 | App list “which apps support JustPay/LANKAQR” | **Low** | Marketing page logos; count drifts vs CBSL; low daily-user value vs bank offers. |
 
-### Suggested ship shape (if pursued)
+### Shipped (Jul 2026)
 
 ```
-seed: src/data/lankapay-payments-seed.json
-  { period, justpay: {volume, value, apps}, lankaqr: {domesticVolume, domesticValue, merchants, globalVolume, globalValue}, sourceUrl }
-UI: EconomyCards / MorningBrief footnote — “Digital rails (CBSL Qn)”
-Cron: optional PDF scrape later; manual refresh each bulletin release is enough year-1
+seed: src/data/cbsl-payments-bulletin-seed.json
+loader: src/lib/payments-bulletin.ts
+UI: PaymentsBulletinStrip on /economy
+provenance: /sources/cbsl_payments_bulletin (quarterly cadence)
+docs: docs/CBSL_PAYMENTS_BULLETIN.md
 ```
 
-Do **not** block FoodLK, FIRMS, or bank-offer P0 work on this.
+Cron: optional PDF scrape later; manual refresh each bulletin release is enough year-1.
+
+Do **not** block FoodLK, FIRMS, or bank-offer P0 work on deeper rails features.
 
 ---
 
