@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PropertyChoroplethMap } from "@/components/PropertyChoroplethLazy";
 import { PropertyDistrictTable } from "@/components/PropertyDistrictTable";
+import { PropertyListingSpark } from "@/components/PropertyListingSpark";
 import { Link } from "@/i18n/navigation";
 import {
   formatPropertyPrice,
@@ -67,6 +68,17 @@ export default async function PropertyPage({
           </dd>
         </div>
       </dl>
+
+      <PropertyListingSpark
+        snapshot={snapshot}
+        labels={{
+          title: t("listings.title"),
+          subtitle: t("listings.subtitle"),
+          seed: t("listings.seed"),
+          delta: t("listings.delta"),
+          honesty: t("listings.honesty"),
+        }}
+      />
 
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-white">{t("mapTitle")}</h2>

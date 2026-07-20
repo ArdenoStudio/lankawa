@@ -1,16 +1,23 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { CensusFootnote } from "@/components/CensusFootnote";
 import { DistrictLandPulse } from "@/components/DistrictLandPulse";
 import { DistrictMapLazy } from "@/components/DistrictMapLazy";
 import { DistrictPinButton } from "@/components/DistrictPinButton";
+import { DistrictPressStrip } from "@/components/DistrictPressStrip";
 import { ElectionSwingChart } from "@/components/ElectionSwingChart";
 import { FloodSparklinePanel } from "@/components/FloodSparklinePanel";
 import { FloodStationList } from "@/components/FloodStationList";
+import { MarineSwellCard } from "@/components/MarineSwellCard";
 import { ShareDistrictCard } from "@/components/ShareDistrictCard";
 import { VanniCrosswalkNotice } from "@/components/VanniCrosswalkNotice";
 import { Link } from "@/i18n/navigation";
 import { DISTRICTS, getDistrict, getDistrictName } from "@/lib/districts";
+import {
+  fetchMarineSwell,
+  isCoastalDistrict,
+} from "@/lib/integrations/marine";
 import {
   getPopulationDensity,
   getProvinceDistrictCount,
@@ -86,6 +93,10 @@ export default async function DistrictDetailPage({
   } catch {
     liveFloodStations = [];
   }
+
+  const marineSwell = isCoastalDistrict(slug)
+    ? await fetchMarineSwell(slug)
+    : null;
 
   const electionWinner = electionResult
     ? getElectionCandidate(electionResult.winner)
@@ -173,11 +184,43 @@ export default async function DistrictDetailPage({
         )}
       </div>
 
+      <CensusFootnote
+        slug={slug}
+        locale={locale}
+        labels={{
+          title: t("census.title"),
+          population: t("census.population"),
+          seed: t("census.seed"),
+          honesty: t("census.honesty"),
+          source: t("census.source"),
+        }}
+      />
+
       <ShareDistrictCard
         districtName={districtName}
         url={shareUrl}
         metrics={shareMetrics}
       />
+
+      <DistrictPressStrip district={district} locale={locale} />
+
+      {marineSwell ? (
+        <MarineSwellCard
+          snapshot={marineSwell}
+          labels={{
+            title: t("marine.title"),
+            subtitle: t("marine.subtitle"),
+            seed: t("marine.seed"),
+            waveHeight: t("marine.waveHeight"),
+            wavePeriod: t("marine.wavePeriod"),
+            waveDirection: t("marine.waveDirection"),
+            honesty: t("marine.honesty"),
+            asOf: t("marine.asOf", {
+              time: new Date(marineSwell.asOf).toLocaleString(locale),
+            }),
+          }}
+        />
+      ) : null}
 
       <DistrictMapLazy
         locale={locale}

@@ -1,6 +1,8 @@
 import { getTranslations } from "next-intl/server";
+import { DataSaverGate } from "@/components/DataSaverGate";
 import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { LandChangeChart } from "@/components/LandChangeChart";
+import { LandChangeYearCompare } from "@/components/LandChangeYearCompare";
 import { Link } from "@/i18n/navigation";
 import { getDistrict, getDistrictName } from "@/lib/districts";
 import { getLandChangeSnapshot } from "@/lib/land-change";
@@ -97,22 +99,32 @@ export async function LandChangePulse({ locale }: { locale: string }) {
         </div>
       </dl>
 
-      <LandChangeChart
-        rows={snapshot.topGreeneryLoss}
-        labels={{
-          title: t("chartTitle"),
-          greeneryDelta: t("greeneryDeltaAxis"),
-          exportHint: t("chartExportHint"),
-        }}
-        citation={{
-          title: t("greeneryNational"),
-          value: `${snapshot.national.greeneryDelta > 0 ? "+" : ""}${snapshot.national.greeneryDelta} pts (2018→2024)`,
-          observedAt: snapshot.asOf,
-          sourceName: snapshot.sourceName,
-          sourcePath,
-          permalink: `/${locale}/environment`,
-        }}
-      />
+      <DataSaverGate
+        fallback={
+          <p className="rounded-2xl border border-white/15 px-4 py-3 text-sm text-neutral-500">
+            {t("chartSkipped")}
+          </p>
+        }
+      >
+        <LandChangeChart
+          rows={snapshot.topGreeneryLoss}
+          labels={{
+            title: t("chartTitle"),
+            greeneryDelta: t("greeneryDeltaAxis"),
+            exportHint: t("chartExportHint"),
+          }}
+          citation={{
+            title: t("greeneryNational"),
+            value: `${snapshot.national.greeneryDelta > 0 ? "+" : ""}${snapshot.national.greeneryDelta} pts (2018→2024)`,
+            observedAt: snapshot.asOf,
+            sourceName: snapshot.sourceName,
+            sourcePath,
+            permalink: `/${locale}/environment`,
+          }}
+        />
+      </DataSaverGate>
+
+      <LandChangeYearCompare districts={snapshot.districts} />
 
       <div className="grid gap-4 md:grid-cols-3">
         <div className="rounded-2xl border border-white/15 p-4">

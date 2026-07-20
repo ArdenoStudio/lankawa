@@ -5,10 +5,14 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useTranslations } from "next-intl";
 import { districtSlugFromName, districtSlugFromPcode } from "@/lib/district-geo";
+import {
+  floodExtentPinsAsGeoJson,
+  getFloodExtentPinsSnapshot,
+} from "@/lib/flood-extent-pins";
 import type { LandslideDistrictStatus } from "@/lib/integrations/landslide";
 import type { FloodAlertSummary } from "@/lib/types";
 
-type MapMode = "flood" | "landslide";
+type MapMode = "flood" | "landslide" | "gfm";
 
 interface DistrictFeatureProperties {
   slug?: string;
@@ -62,6 +66,8 @@ export function DisasterRiskMap({
     () => flood.some((row) => row.count > 0 && row.alertLevel.toUpperCase() !== "NORMAL"),
     [flood],
   );
+
+  const gfmPins = useMemo(() => getFloodExtentPinsSnapshot(), []);
 
   useEffect(() => {
     if (!containerRef.current) {
@@ -118,6 +124,9 @@ export function DisasterRiskMap({
             } else if (mode === "flood") {
               fillOpacity = floodActive ? 0.2 : 0.08;
               tooltipValue = floodActive ? "elevated national flood context" : "quiet";
+            } else if (mode === "gfm") {
+              fillOpacity = 0.06;
+              tooltipValue = "GFM pin overlay";
             }
 
             return {
@@ -156,6 +165,31 @@ export function DisasterRiskMap({
               "line-width": 0.8,
             },
           });
+
+          if (mode === "gfm" && gfmPins.pins.length > 0) {
+            map.addSource("gfm-pins", {
+              type: "geojson",
+              data: floodExtentPinsAsGeoJson(gfmPins.pins),
+            });
+            map.addLayer({
+              id: "gfm-pins-circle",
+              type: "circle",
+              source: "gfm-pins",
+              paint: {
+                "circle-radius": [
+                  "match",
+                  ["get", "severity"],
+                  "elevated",
+                  7,
+                  5,
+                ],
+                "circle-color": "#ffffff",
+                "circle-opacity": 0.9,
+                "circle-stroke-width": 1,
+                "circle-stroke-color": "#0a0a0a",
+              },
+            });
+          }
         });
       } catch (err) {
         if (!cancelled) {
@@ -171,7 +205,7 @@ export function DisasterRiskMap({
       mapRef.current?.remove();
       mapRef.current = null;
     };
-  }, [floodActive, landslideBySlug, mode, t]);
+  }, [floodActive, gfmPins.pins, landslideBySlug, mode, t]);
 
   return (
     <section className="space-y-3">
@@ -185,7 +219,7 @@ export function DisasterRiskMap({
           role="group"
           aria-label={t("mapToggleLabel")}
         >
-          {(["flood", "landslide"] as const).map((item) => (
+          {(["flood", "landslide", "gfm"] as const).map((item) => (
             <button
               key={item}
               type="button"
@@ -213,8 +247,17 @@ export function DisasterRiskMap({
       )}
 
       <p className="text-xs text-neutral-500">
-        {mode === "landslide" ? t("mapLegendLandslide") : t("mapLegendFlood")}
+        {mode === "landslide"
+          ? t("mapLegendLandslide")
+          : mode === "gfm"
+            ? t("mapLegendGfm")
+            : t("mapLegendFlood")}
       </p>
+      {mode === "gfm" ? (
+        <p className="text-xs text-neutral-500">
+          {t("mapGfmHonesty", { count: gfmPins.pins.length, date: gfmPins.asOf })}
+        </p>
+      ) : null}
     </section>
   );
 }

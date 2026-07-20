@@ -50,6 +50,7 @@ function mapDistrictRow(
     highBand: seed?.highBand ?? Math.round(median * 1.85),
     medianPerSqFt: seed?.medianPerSqFt ?? Math.round(median / 272.25),
     trendPct: seed?.trendPct ?? 0,
+    listingCount: row.count > 0 ? row.count : seed?.listingCount,
   };
 }
 
@@ -83,9 +84,15 @@ export async function fetchPropertySnapshot(): Promise<PropertySnapshot | null> 
       return null;
     }
 
+    const listingCount = districts.reduce(
+      (sum, district) => sum + (district.listingCount ?? 0),
+      0,
+    );
+
     return {
       ...seed,
       districts,
+      listingCount: listingCount > 0 ? listingCount : seed.listingCount,
       sourceId: "propertylk_api",
       sourceName: "PropertyLK Price Intelligence",
       asOf: new Date().toISOString().slice(0, 10),

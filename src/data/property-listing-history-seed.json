@@ -1,0 +1,15 @@
+{
+  "sourceId": "propertylk_listing_history_seed",
+  "sourceName": "PropertyLK listing counts (seed)",
+  "asOf": "2026-07-18",
+  "isSeed": true,
+  "methodologyNote": "National listing-count trend seed for the property page spark. Live PropertyLK district counts replace the latest point when the API responds.",
+  "series": [
+    { "date": "2026-06-18", "listingCount": 18240 },
+    { "date": "2026-06-25", "listingCount": 18510 },
+    { "date": "2026-07-02", "listingCount": 18780 },
+    { "date": "2026-07-09", "listingCount": 19020 },
+    { "date": "2026-07-16", "listingCount": 19240 },
+    { "date": "2026-07-18", "listingCount": 19310 }
+  ]
+}

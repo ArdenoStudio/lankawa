@@ -1,3 +1,4 @@
+import { DataSaverGate } from "@/components/DataSaverGate";
 import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { Link } from "@/i18n/navigation";
 import type { CseMover, CseSnapshot } from "@/lib/integrations/cse";
@@ -102,7 +103,11 @@ export function CseMarketCard({
     foreignBuy: string;
     foreignSell: string;
     noSectors: string;
+    sectorsSkipped: string;
     noActive: string;
+    highLow: string;
+    notices: string;
+    noNotices: string;
   };
 }) {
   const indices = [
@@ -137,6 +142,29 @@ export function CseMarketCard({
         <p className="text-sm text-amber-200/90">{labels.fallbackNote}</p>
       ) : null}
 
+      {snapshot.notices.length > 0 ? (
+        <div className="overflow-x-auto rounded-xl border border-white/10 bg-black/20 px-3 py-2">
+          <p className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+            {labels.notices}
+          </p>
+          <ul className="flex min-w-max gap-4">
+            {snapshot.notices.slice(0, 6).map((notice) => (
+              <li
+                key={`${notice.publishedAt}-${notice.title}`}
+                className="max-w-xs shrink-0 border-r border-white/10 pr-4 last:border-0 last:pr-0"
+              >
+                <p className="text-sm text-slate-200">{notice.title}</p>
+                <p className="mt-1 text-xs text-slate-500">
+                  {new Date(notice.publishedAt).toLocaleDateString()}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <p className="text-sm text-slate-500">{labels.noNotices}</p>
+      )}
+
       <div className="grid gap-4 lg:grid-cols-3">
         {indices.map(({ key, label, index }) => {
           return (
@@ -155,6 +183,18 @@ export function CseMarketCard({
               >
                 {formatChange(index.change, index.changePct)}
               </p>
+              {index.high != null || index.low != null ? (
+                <p className="mt-2 text-xs text-slate-500">
+                  {labels.highLow}:{" "}
+                  {index.high?.toLocaleString(undefined, {
+                    maximumFractionDigits: 2,
+                  }) ?? "—"}{" "}
+                  /{" "}
+                  {index.low?.toLocaleString(undefined, {
+                    maximumFractionDigits: 2,
+                  }) ?? "—"}
+                </p>
+              ) : null}
             </article>
           );
         })}
@@ -196,52 +236,67 @@ export function CseMarketCard({
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <div className="space-y-3">
-          <h3 className="text-sm font-medium text-slate-300">{labels.sectors}</h3>
-          {snapshot.sectors.length === 0 ? (
-            <p className="text-sm text-slate-500">{labels.noSectors}</p>
-          ) : (
-            <ul className="space-y-2">
-              {snapshot.sectors.slice(0, 6).map((sector) => (
-                <li
-                  key={sector.symbol}
-                  className="flex items-start justify-between gap-3 rounded-xl border border-white/5 bg-black/10 px-3 py-2"
-                >
-                  <div>
-                    <p className="text-sm font-medium text-white">{sector.name}</p>
-                    <p className="text-xs text-slate-500">{sector.symbol}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-medium text-white">
-                      {sector.indexValue.toLocaleString(undefined, {
-                        maximumFractionDigits: 2,
-                      })}
-                    </p>
-                    <p className="text-xs text-slate-300">
-                      {formatChange(sector.change, sector.changePct)}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <DataSaverGate
+          fallback={
+            <div className="space-y-3">
+              <h3 className="text-sm font-medium text-neutral-300">
+                {labels.sectors}
+              </h3>
+              <p className="text-sm text-neutral-500">{labels.sectorsSkipped}</p>
+            </div>
+          }
+        >
+          <div className="space-y-3">
+            <h3 className="text-sm font-medium text-neutral-300">
+              {labels.sectors}
+            </h3>
+            {snapshot.sectors.length === 0 ? (
+              <p className="text-sm text-neutral-500">{labels.noSectors}</p>
+            ) : (
+              <ul className="space-y-2">
+                {snapshot.sectors.slice(0, 6).map((sector) => (
+                  <li
+                    key={sector.symbol}
+                    className="flex items-start justify-between gap-3 border border-white/10 px-3 py-2"
+                  >
+                    <div>
+                      <p className="text-sm font-medium text-white">
+                        {sector.name}
+                      </p>
+                      <p className="text-xs text-neutral-500">{sector.symbol}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-medium text-white">
+                        {sector.indexValue.toLocaleString(undefined, {
+                          maximumFractionDigits: 2,
+                        })}
+                      </p>
+                      <p className="text-xs text-neutral-300">
+                        {formatChange(sector.change, sector.changePct)}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </DataSaverGate>
 
         <div className="space-y-3">
-          <h3 className="text-sm font-medium text-slate-300">
+          <h3 className="text-sm font-medium text-neutral-300">
             {labels.mostActive}
           </h3>
           {snapshot.mostActive.length === 0 ? (
-            <p className="text-sm text-slate-500">{labels.noActive}</p>
+            <p className="text-sm text-neutral-500">{labels.noActive}</p>
           ) : (
             <ul className="space-y-2">
               {snapshot.mostActive.slice(0, 6).map((row) => (
                 <li
                   key={row.symbol}
-                  className="flex items-start justify-between gap-3 rounded-xl border border-white/5 bg-black/10 px-3 py-2"
+                  className="flex items-start justify-between gap-3 border border-white/10 px-3 py-2"
                 >
                   <p className="text-sm font-medium text-white">{row.symbol}</p>
-                  <div className="text-right text-xs text-slate-400">
+                  <div className="text-right text-xs text-neutral-400">
                     <p>{formatCompact(row.shareVolume)} sh</p>
                     <p>{formatCompact(row.turnover)} LKR</p>
                   </div>

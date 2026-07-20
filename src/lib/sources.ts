@@ -145,6 +145,57 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["electricity_energy_lkr_kwh", "electricity_fixed_lkr"],
   },
   {
+    id: "pucsl_generation",
+    name: "PUCSL / CEB generation mix (seed)",
+    category: "economy",
+    url: "https://www.pucsl.gov.lk/",
+    cadenceMinutes: 43200,
+    adapter: "partner",
+    description:
+      "Indicative electricity generation-mix shares (hydro/thermal/renewables).",
+    methodology:
+      "Seed shares curated from public PUCSL/CEB summaries for the tariff-card spark. Not a live SCADA feed.",
+    metrics: ["generation_hydro_pct", "generation_thermal_pct"],
+  },
+  {
+    id: "census_2024_seed",
+    name: "Census 2024 district footnotes (seed)",
+    category: "civic",
+    url: "http://www.statistics.gov.lk/",
+    cadenceMinutes: 525600,
+    adapter: "partner",
+    description:
+      "District population footnotes for atlas context — stale-OK seed from public DCS/HDX tables.",
+    methodology:
+      "Curated population footnotes for district pages. Not a live census API; prefer official DCS publications for formal citation.",
+    metrics: ["census_population_2024"],
+  },
+  {
+    id: "moh_notices_seed",
+    name: "Ministry of Health notices (seed)",
+    category: "health",
+    url: "https://www.health.gov.lk/",
+    cadenceMinutes: 1440,
+    adapter: "scrape",
+    description: "Public health notices strip on /health — seed until MoH RSS is live.",
+    methodology:
+      "Seed notice list for the health page. When moh_rss appears in the news pulse, live headlines replace the seed strip.",
+    metrics: ["moh_notices"],
+  },
+  {
+    id: "open_meteo_flood",
+    name: "Open-Meteo Flood (GloFAS)",
+    category: "disaster",
+    url: "https://flood-api.open-meteo.com/",
+    cadenceMinutes: 360,
+    adapter: "api",
+    description:
+      "Simulated river discharge near Sri Lanka basin centroids from GloFAS via Open-Meteo Flood.",
+    methodology:
+      "Lankawa samples flood-api.open-meteo.com river_discharge for Kelani/Mahaweli/Kalu basin centroids. Complements local gauges — not a DMC warning.",
+    metrics: ["glofas_discharge"],
+  },
+  {
     id: "nbro_landslide",
     name: "NBRO / DMC Landslide Early Warning",
     category: "disaster",
@@ -182,6 +233,19 @@ export const SOURCES: SourceDefinition[] = [
     methodology:
       "Curated static seed aligned with published budget speech totals and Verité Research sector summaries. Figures are rounded approximations — not digitized official appropriation ledgers.",
     metrics: ["budget_expenditure", "budget_revenue"],
+  },
+  {
+    id: "civic_research_seed",
+    name: "CPA / Verité Research drops",
+    category: "civic",
+    url: "internal://civic-research",
+    cadenceMinutes: 10080,
+    adapter: "seed",
+    description:
+      "Centre for Policy Alternatives and Verité Research publication drops shown on /civic.",
+    methodology:
+      "Curated seed strip until CPA/Verité RSS endpoints are wired. Each item links to the org homepage with honest seed labelling — not a live scrape.",
+    metrics: ["civic_research_drops"],
   },
   {
     id: "epidemiology_unit_seed",
@@ -451,8 +515,47 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "District greenery/built-up change (2018→2024) plus weekly NDVI anomaly for civic morning checks.",
     methodology:
-      "Curated district-scale greenery/built-up indices plus ETL-curated weekly NDVI anomaly (vs seasonal baseline) for product use. Inspired by public Sentinel-2 LULC/NDVI practice and prior art from Team Watchdog satellite2024 (MIT). Lankawa does not host full-resolution mosaics. Not official Survey Department land use. See /environment/land-change and docs/WATCHDOG_VS_LANKAWA.md.",
+      "Curated district-scale greenery/built-up indices plus ETL-curated weekly NDVI anomaly (vs seasonal baseline) for product use. Inspired by public Sentinel-2 LULC/NDVI practice and prior art from Team Watchdog satellite2024 (MIT). Lankawa does not host full-resolution mosaics. Not official Survey Department land use. Weekly cron path writes seed NDVI rows to observations until live ETL. See /environment/land-change and docs/WATCHDOG_VS_LANKAWA.md.",
     metrics: ["greenery_index", "builtup_index", "ndvi_anomaly"],
+  },
+  {
+    id: "gfm_flood_extent_seed",
+    name: "GFM / flood-extent pins",
+    category: "disaster",
+    url: "internal://disaster/flood-extent-pins",
+    cadenceMinutes: 10080,
+    adapter: "seed",
+    description:
+      "Point pins for flood-extent attention on the disaster map — pins only, not mosaics.",
+    methodology:
+      "Seed GeoJSON point pins approximating flood-extent attention corridors. Scaffold until live GFM GeoJSON ingest. Not a DMC inundation product.",
+    metrics: ["flood_extent_pin"],
+  },
+  {
+    id: "urban_heat_lst_seed",
+    name: "Colombo urban heat (LST seed)",
+    category: "health",
+    url: "internal://health/urban-heat",
+    cadenceMinutes: 43200,
+    adapter: "seed",
+    description:
+      "Monthly Colombo land-surface temperature anomaly note for health context.",
+    methodology:
+      "Seed LST anomaly and night minimum for Colombo metro. Not a heat-health warning. Verify Met Dept / MoH advisories before acting.",
+    metrics: ["lst_anomaly_c", "night_min_c"],
+  },
+  {
+    id: "open_meteo_marine",
+    name: "Open-Meteo Marine",
+    category: "disaster",
+    url: "https://marine-api.open-meteo.com/v1/marine",
+    cadenceMinutes: 180,
+    adapter: "api",
+    description:
+      "Nearshore wave height, period, and direction for coastal districts.",
+    methodology:
+      "Open-Meteo marine model near district capital coordinates. Seed scaffold when the API is unavailable. Not a Met Dept or Navy warning.",
+    metrics: ["wave_height_m", "wave_period_s", "wave_direction_deg"],
   },
   {
     id: "lankawa_debt_pulse",
@@ -584,6 +687,19 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["power_status"],
   },
   {
+    id: "leco_power",
+    name: "LECO — Power Interruption Notices",
+    category: "disaster",
+    url: "https://www.leco.lk/powerIntrup_e.php",
+    cadenceMinutes: 30,
+    adapter: "scrape",
+    description:
+      "Scheduled power interruption notices for LECO Western / coastal service branches.",
+    methodology:
+      "Lankawa scrapes public LECO branch interruption pages (Galle, Kalutara, Moratuwa, Nugegoda, Kotte, Kelaniya, Negombo) and reads the Current Month LECO cell. Status is normal, scheduled, or unknown with isSeed honesty when the scrape fails — never a fabricated clear board. Shown beside CEB on the disaster hub.",
+    metrics: ["leco_power_status"],
+  },
+  {
     id: "cse_lk",
     name: "Colombo Stock Exchange (public HTTP)",
     category: "economy",
@@ -608,11 +724,11 @@ export const SOURCES: SourceDefinition[] = [
     category: "economy",
     url: "internal://economy/remittance-tt",
     cadenceMinutes: 1440,
-    adapter: "seed",
+    adapter: "scrape",
     description:
       "Indicative USD→LKR telegraphic-transfer style buy/sell bands from major Sri Lankan banks.",
     methodology:
-      "Seeded morning comparison board for People's Bank, NDB, and Sampath indicative TT-style rates. Not live scrapes until adapters stabilize. Not CBSL official rates; fees and corridors differ by product. Pair with the CBSL remittance calculator on /economy.",
+      "Attempts timed fetches of public bank exchange-rate pages (People's, NDB, Sampath) via `remittance-banks.ts`, then falls back to a curated seed board. isSeed is true unless a full live board parses. Not CBSL official rates; fees and corridors differ by product. Pair with the CBSL remittance calculator on /economy.",
     metrics: ["remittance_tt_buy", "remittance_tt_sell"],
   },
   {

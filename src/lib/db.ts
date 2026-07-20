@@ -174,6 +174,25 @@ export async function getLatestSourceHealth(
   };
 }
 
+/** Best-effort previous consecutive_failures for ops alert streak (P65). */
+export async function getSourceConsecutiveFailures(
+  sourceId: string,
+): Promise<number> {
+  const rows = await dbFetch<
+    Array<{ consecutive_failures?: number | null; ok?: boolean }>
+  >(
+    `source_health?source_id=eq.${encodeURIComponent(sourceId)}&select=consecutive_failures,ok&order=checked_at.desc&limit=1`,
+  );
+  const row = rows?.[0];
+  if (!row) {
+    return 0;
+  }
+  if (typeof row.consecutive_failures === "number") {
+    return row.consecutive_failures;
+  }
+  return row.ok === false ? 1 : 0;
+}
+
 export async function getAllSourceStatusFromDb(): Promise<
   DbSourceStatusRow[]
 > {

@@ -191,16 +191,28 @@
   "news": {
     "title": "இலங்கை செய்தி துடிப்பு",
     "subtitle": "சிங்களம், தமிழ் மற்றும் ஆங்கில பொது RSS ஊட்டங்களிலிருந்து சமீபத்திய தலைப்புகள்.",
+    "pageTitle": "இலங்கை செய்திகள்",
+    "pageSubtitle": "சிங்களம், தமிழ் மற்றும் ஆங்கில பொது RSS ஊட்டங்களிலிருந்து கதைக் குழுக்கள் மற்றும் தலைப்புகள்.",
     "viewAll": "அனைத்து தலைப்புகள்",
     "viewSource": "மூலத்தைக் காண்க",
     "provenance": "பொது RSS ஊட்டங்களிலிருந்து தொகுக்கப்பட்டது",
     "noHeadlines": "செய்தி தலைப்புகள் தற்காலிகமாக கிடைக்கவில்லை.",
     "headlineCount": "{count} தலைப்புகள் கண்காணிக்கப்படுகின்றன",
+    "headlinesTitle": "சமீபத்திய தலைப்புகள்",
+    "clustersTitle": "கதைக் குழுக்கள்",
+    "clustersSubtitle": "பல ஊடகங்களில் ஒரே கதை — உடன்பாட்டின்படி.",
+    "clusterMembersTitle": "இந்தக் குழுவின் தலைப்புகள்",
+    "clusterWindow": "முதல் {first} · கடைசி {last}",
+    "backToNews": "செய்திகளுக்குத் திரும்பு",
+    "feedHealthTitle": "ஊட்ட நிலை",
+    "feedHealthSubtitle": "சமீபத்திய வாசிப்பில் ஒவ்வொரு மூலத்தின் நிலை.",
+    "feedHealthOk": "{count} உருப்படிகள்",
+    "feedHealthError": "கிடைக்கவில்லை",
     "sourceMirror": "Daily Mirror",
     "sourceAda": "Ada Derana",
     "feed": "Atom feed",
-    "clusterLabel": "Story cluster",
-    "clusterMeta": "{count} headlines · {outlets} outlets",
+    "clusterLabel": "கதைக் குழு",
+    "clusterMeta": "{count} தலைப்புகள் · {outlets} ஊடகங்கள்",
     "sourceLankadeepa": "Lankadeepa",
     "sourceTamilGuardian": "Tamil Guardian",
     "sourceEconomyNext": "EconomyNext",
@@ -209,7 +221,12 @@
     "sourceLbo": "Lanka Business Online",
     "sourceAdaBiz": "Ada Derana Biz",
     "sourceRoar": "Roar Media",
-    "sourceDmc": "Disaster Management Centre"
+    "sourceDmc": "Disaster Management Centre",
+    "topicRailsTitle": "தலைப்பு ரெயில்கள்",
+    "topicRailsSubtitle": "திறக்க அல்லது cite செய்ய cluster தலைப்புகள்.",
+    "citeCluster": "Cluster-ஐ cite செய்",
+    "citeCopied": "Citation நகலெடுக்கப்பட்டது",
+    "feedDelta": "Delta feed"
   },
   "shareMorning": {
     "title": "Lankawa morning check",
@@ -330,7 +347,29 @@
     "relatedCostOfLiving": "Cost of living",
     "relatedCostOfLivingDesc": "District index with fuel, property, and food basket",
     "relatedCivic": "MP scorecard",
-    "relatedCivicDesc": "Sample parliamentary attendance and activity"
+    "relatedCivicDesc": "Sample parliamentary attendance and activity",
+    "pressTitle": "ஊடகத்தில்",
+    "pressSubtitle": "இந்த மாவட்டத்தைக் குறிப்பிடும் சமீப தலைப்புகள்.",
+    "pressViewAll": "அனைத்து செய்திகள்",
+    "pressEmpty": "இந்த மாவட்டத்தைக் குறிப்பிடும் தலைப்புகள் இல்லை.",
+    "pressHonesty": "RSS தலைப்பு keyword பொருத்தம் — முழு ஊடக கண்காணிப்பு அல்ல.",
+    "census": {
+      "title": "Census 2024 footnote",
+      "population": "Indicative population",
+      "seed": "Seed",
+      "honesty": "Stale-OK population context from curated DCS/HDX tables — not a live census API.",
+      "source": "Census footnote provenance"
+    },
+    "marine": {
+      "title": "Marine swell",
+      "subtitle": "Nearshore wave height for this coastal district (Open-Meteo marine or seed).",
+      "seed": "Seed",
+      "waveHeight": "Wave height",
+      "wavePeriod": "Wave period",
+      "waveDirection": "Wave direction",
+      "honesty": "Not a Met Dept or Navy warning.",
+      "asOf": "As of {time}"
+    }
   },
   "provinces": {
     "title": "மாகாணங்கள்",
@@ -355,7 +394,14 @@
     "relatedProperty": "Property pulse",
     "relatedPropertyDesc": "District land price bands in this province",
     "relatedLocalGov": "Local government",
-    "relatedLocalGovDesc": "Search MC, UC, and PS bodies by district"
+    "relatedLocalGovDesc": "Search MC, UC, and PS bodies by district",
+    "pulseTitle": "மாகாண pulse",
+    "pulseSubtitle": "இந்த மாகாண மாவட்டங்களின் best-effort aggregate.",
+    "pulseDengue": "டெங்கு (வாரம்)",
+    "pulseAqi": "சராசரி AQI",
+    "pulseAqiValue": "{value} · {count} மாவட்டங்கள்",
+    "pulseFlood": "Elevated flood stations",
+    "pulseFloodUnavailable": "கிடைக்கவில்லை"
   },
   "elections": {
     "eyebrow": "தேர்தல் நுண்ணறிவு",
@@ -389,7 +435,16 @@
     "adminDistricts": "உள்ளடக்கிய administrative மாவட்டங்கள்",
     "historyTitle": "Historical elections",
     "historySubtitle": "Explore presidential cycles from 2010 to 2024 with swing charts.",
-    "historyLink": "Open election history"
+    "historyLink": "Open election history",
+    "nightMode": {
+      "offTitle": "Election night refresh mode",
+      "offBody": "Enable for a louder banner and reminder to refresh during live counting.",
+      "onTitle": "Election night mode on",
+      "onBody": "Refresh this page periodically. Cadence honesty: results here are still the published seed ledger until a live EC feed lands.",
+      "enable": "Enable",
+      "disable": "Disable",
+      "honesty": "Not a live Election Commission feed. Manual refresh only — no auto-polling."
+    }
   },
   "swing": {
     "title": "தேர்தல் swing (2019 → 2024)",
@@ -423,13 +478,20 @@
   },
   "disaster": {
     "title": "பேரிடர் & வெள்ளம்",
-    "subtitle": "வெள்ளக் கண்காணிப்பு மற்றும் CEB மின்தடை நிலை லங்காவாவில் தொகுக்கப்பட்டுள்ளது.",
+    "subtitle": "வெள்ளக் கண்காணிப்பு, CEB மற்றும் LECO மின் அறிவிப்புகள், மற்றும் DMC புல்லட்டின்கள் லங்காவாவில் தொகுக்கப்பட்டுள்ளன.",
     "normal": "சாதாரண",
     "stations": "நிலையங்கள்",
     "floodTitle": "வெள்ளக் கண்காணிப்பு",
     "floodSubtitle": "பொது வெள்ள API-யிலிருந்து நதி நிலைய எச்சரிக்கை நிலைகள்.",
     "powerTitle": "மின்தடைகள்",
-    "powerSubtitle": "CEB Care-லிருந்து திட்டமிடப்பட்ட தேவை மேலாண்மை தடைகள் மற்றும் மாதிரி முறிவுத் தடைகள்.",
+    "powerSubtitle": "CEB Care தேசிய அட்டவணை/தடைகள் அருகில் LECO Western/coastal அறிவிப்புகள்.",
+    "cebCardTitle": "CEB (national)",
+    "lecoCardTitle": "LECO (Western)",
+    "lecoStatusLabel": "Western / coastal LECO நிலை",
+    "lecoNoAffectedAreas": "மாதிரி கிளைகளுக்கு நடப்பு மாத LECO தடைகள் parse செய்யப்படவில்லை.",
+    "lecoSeed": "Seed / unknown — LECO scrape தோல்வி; clear supply எனக் கூறவில்லை.",
+    "lecoHonesty": "LECO Western coastal கிளைகளை மட்டும் உள்ளடக்கியது. leco.lk-இலிருந்து scrape — செயல்படும் முன் LECO 1910 உடன் உறுதிப்படுத்தவும்.",
+    "lecoSourceNote": "LECO interruption notices provenance",
     "powerStatusLabel": "தேசிய வழங்கல் நிலை",
     "powerStatus": {
       "normal": "சாதாரண",
@@ -441,6 +503,17 @@
     "powerNoAffectedAreas": "சமீபத்திய CEB Care சோதனையில் பாதிக்கப்பட்ட பகுதிகள் எதுவும் அறிவிக்கப்படவில்லை.",
     "powerObservedAt": "சோதனை {time}",
     "powerSourceNote": "மூலம்: CEB Care தேவை மேலாண்மை அட்டவணை மற்றும் தற்போதைய தடை வரைபடம் (cebcare.ceb.lk).",
+    "concentrationTitle": "மாவட்ட வாரியாக தடை செறிவு",
+    "concentrationSubtitle": "CEB மற்றும் LECO affected-area labels-இன் heuristic mention counts — அதிகாரப்பூர்வ feeder map அல்ல.",
+    "concentrationDistrict": "மாவட்டம்",
+    "concentrationMentions": "Mentions",
+    "concentrationEmpty": "சமீபத்திய affected-area labels-இல் மாவட்டப் பெயர்கள் பொருந்தவில்லை.",
+    "concentrationHonesty": "District scores என்பது area labels மீதான string-match heuristics. மாவட்டம் இல்லாதது clear supply அல்ல.",
+    "dmcTitle": "DMC புல்லட்டின்கள்",
+    "dmcSubtitle": "பொது RSS feed-இலிருந்து சமீபத்திய Disaster Management Centre தலைப்புகள்.",
+    "dmcEmpty": "இப்போது DMC RSS தலைப்புகள் இல்லை.",
+    "dmcViewAll": "அனைத்து செய்திகள்",
+    "dmcHonesty": "தலைப்புகள் மட்டும் — செயல்படும் முன் இணைக்கப்பட்ட DMC bulletin-ஐ உறுதிப்படுத்தவும்.",
     "metTitle": "வானிலை துறை எச்சரிக்கைகள்",
     "metSubtitle": "வானிலை ஆய்வு துறையின் public dashboard-இலிருந்து weather warnings மற்றும் advisories.",
     "metUnavailableTitle": "எச்சரிக்கைகள் கிடைக்கவில்லை",
@@ -507,7 +580,29 @@
     "gdacsCountry": "Country",
     "gdacsReport": "GDACS report",
     "firmsSource": "NASA FIRMS provenance",
-    "gdacsSource": "GDACS provenance"
+    "gdacsSource": "GDACS provenance",
+    "cyclone": {
+      "title": "Cyclone watch (JTWC / GDACS)",
+      "subtitle": "Tropical cyclone events in the Indian Ocean / South Asia window.",
+      "empty": "Basin quiet — no active tropical cyclone events in the GDACS window.",
+      "active": "Active cyclone / tropical storm signals in the regional window.",
+      "alertLevel": "Alert",
+      "report": "GDACS report",
+      "honesty": "Seasonal watch from GDACS TC events. Not a Met Dept cyclone warning — verify official bulletins.",
+      "source": "GDACS provenance"
+    },
+    "glofas": {
+      "title": "GloFAS basin discharge",
+      "subtitle": "Open-Meteo Flood simulated river discharge near major basin centroids.",
+      "seed": "Seed scaffold",
+      "discharge": "Latest discharge",
+      "empty": "No basin discharge series available right now.",
+      "honesty": "Complements local river gauges — not an official DMC flood warning.",
+      "asOf": "Checked {date}"
+    },
+    "mapMode_gfm": "Flood extent pins",
+    "mapLegendGfm": "White pins mark seed GFM / flood-extent attention points — pins only, not mosaics.",
+    "mapGfmHonesty": "{count} seed pins as of {date}. Not a DMC inundation map."
   },
   "economy": {
     "title": "பொருளாதார நிலை",
@@ -536,11 +631,26 @@
     "lpg": {
       "eyebrow": "வீட்டு LPG",
       "title": "சிலிண்டர் விலைகள்",
-      "subtitle": "கொழும்பு 12.5 kg refill குறிப்பு",
+      "subtitle": "கொழும்பு 12.5 kg refill குறிப்பு — பிற மாவட்டங்களை கீழே filter செய்யுங்கள்",
       "cylinder12_5": "12.5 kg refill",
       "asOf": "{date} நிலவரப்படி",
       "source": "மூலம்",
-      "seed": "Seed snapshot"
+      "seed": "Seed snapshot",
+      "otherDistricts": "12.5 kg விலையுள்ள பிற மாவட்டங்கள் {count}",
+      "filterLabel": "மாவட்டம்",
+      "allDistricts": "அனைத்து மாவட்டங்கள்",
+      "emptyDistrict": "இந்த மாவட்டத்திற்கு 12.5 kg விலை இல்லை"
+    },
+    "householdEnergy": {
+      "title": "வீட்டு ஆற்றல் ஒரே பார்வையில்",
+      "subtitle": "எரிபொருள், கொழும்பு LPG 12.5 kg, மற்றும் குறிப்பான மின் பில் teaser.",
+      "fuelTitle": "எரிபொருள் (சமீபத்தியது)",
+      "lpgTitle": "LPG கொழும்பு 12.5 kg",
+      "tariffTitle": "மின் மதிப்பீடு",
+      "tariffTeaser": "PUCSL slabs அடிப்படையில் மாதத்திற்கு 90 kWh வீட்டு பில் குறிப்பு.",
+      "tariffCta": "முழு கட்டண கணிப்பானைத் திறக்கவும்",
+      "emptyFuel": "எரிபொருள் விலைகள் இல்லை",
+      "emptyLpg": "LPG விலைகள் இல்லை"
     },
     "remittance": {
       "title": "Remittance calculator",
@@ -579,7 +689,11 @@
       "foreignBuy": "Foreign purchase",
       "foreignSell": "Foreign sales",
       "noSectors": "No sector rows",
-      "noActive": "No active trades"
+      "noActive": "No active trades",
+      "highLow": "அமர்வு உயர் / தாழ்",
+      "notices": "பரிவர்த்தனை அறிவிப்புகள்",
+      "noNotices": "பரிவர்த்தனை அறிவிப்புகள் இல்லை",
+      "sectorsSkipped": "Data Saver-இல் துறைகள் தவிர்க்கப்பட்டன"
     },
     "debt": {
       "title": "வெளிநாட்டு கடன் அமைப்பு",
@@ -642,13 +756,48 @@
       "spread": "Spread",
       "bestBuy": "Best buy for senders",
       "bestSell": "Best sell for receivers",
-      "seed": "Seed snapshot — not a live bank scrape yet.",
+      "seed": "Seed அல்லது partial board — live bank page scrape இல்லை அல்லது முழுமையற்றது.",
       "asOf": "As of {date}",
       "source": "Source provenance",
       "honesty": "Indicative only. Bank fees, corridors, and same-day TT products differ. Not CBSL official rates."
     },
     "fxAnomaly": "Unusual day-over-day move",
-    "fxAnomalyQuiet": "Within recent MAD band"
+    "fxAnomalyQuiet": "Within recent MAD band",
+    "treasury": {
+      "title": "CBSL T-bill / WAYR",
+      "subtitle": "சமீப ஏல விளைவுகள் — seed (stale-OK).",
+      "wayr": "WAYR",
+      "tbill91": "91-நாள் T-bill",
+      "tbill182": "182-நாள் T-bill",
+      "tbill364": "364-நாள் T-bill",
+      "asOf": "{date} அன்று",
+      "seed": "Seed — நேரடி CBSL scrape அல்ல"
+    },
+    "marketsPress": {
+      "title": "ஊடகத்தில் சந்தைகள்",
+      "subtitle": "LBO மற்றும் Ada Derana Biz RSS தலைப்புகள்.",
+      "viewAll": "அனைத்து செய்திகள்",
+      "empty": "சந்தை தலைப்புகள் தற்போது இல்லை.",
+      "sourceLbo": "Lanka Business Online",
+      "sourceAdaBiz": "Ada Derana Biz",
+      "honesty": "பொது RSS-இலிருந்து — Lankawa பகுப்பாய்வு அல்ல."
+    },
+    "generationMix": {
+      "title": "Generation mix",
+      "subtitle": "Indicative hydro / thermal / renewable shares under the tariff card.",
+      "seed": "Seed",
+      "hydro": "Hydro share (recent months)",
+      "asOf": "As of {date}",
+      "honesty": "Not a live SCADA feed — verify against the latest PUCSL/CEB digest.",
+      "source": "PUCSL tariff provenance"
+    },
+    "macroObs": {
+      "title": "Macro observations",
+      "subtitle": "Inflation and reserves strip — seed until live CBSL observations land.",
+      "asOf": "As of {date}",
+      "seed": "Seed",
+      "honesty": "Cron persists these into observations when the database is configured."
+    }
   },
   "search": {
     "label": "லங்காவா தேடு",
@@ -678,7 +827,11 @@
     "typeSchool": "பள்ளி",
     "typeGnOffice": "GN office",
     "resultsCount": "{count} facilities",
-    "noResults": "filters-க்கு facilities பொருந்தவில்லை."
+    "noResults": "filters-க்கு facilities பொருந்தவில்லை.",
+    "dsSearchPlaceholder": "DS division (stub)…",
+    "dsSearchLabel": "DS division search",
+    "dsSearchNone": "No DS divisions matched — try Homagama, Negombo, or Jaffna.",
+    "dsSearchHint": "Matched {names} → filtering {districts, plural, one {# district} other {# districts}}."
   },
   "brand": {
     "tagline": "இலங்கையர்களுக்காக, இலங்கையர்களால்.",
@@ -897,7 +1050,13 @@
     "subscribeSummary": "Morning brief subscribe",
     "subscribeDescription": "Double opt-in email subscription for the cached morning brief.",
     "fuelRevisionsSummary": "Fuel revision steps",
-    "fuelRevisionsDescription": "CPC petrol 92 and auto diesel official revision events with price deltas from Octane."
+    "fuelRevisionsDescription": "CPC petrol 92 and auto diesel official revision events with price deltas from Octane.",
+    "webhookTitle": "Signed change webhooks",
+    "webhookBody": "Partners can verify changelog deliveries with HMAC-SHA256. Sign the raw JSON body; send header X-Lankawa-Signature: sha256=<hex>. Helper: signWebhookBody / verifyWebhookSignature in src/lib/webhook-hmac.ts. Set LANKAWA_WEBHOOK_SECRET when a delivery endpoint is enabled.",
+    "webhookExample": "X-Lankawa-Signature: sha256=<hmac-sha256-hex-of-body>",
+    "widgetSdkTitle": "Widget SDK snippet",
+    "widgetSdkBody": "Beyond iframes — drop-in script scaffold that mounts a same-origin embed. Prefer iframe for production until the npm package ships.",
+    "widgetSdkSnippet": "<div id=\"lankawa-widget\" data-widget=\"brief\"></div>\n<script src=\"https://lankawa.vercel.app/embed/widget.js\" defer></script>"
   },
   "budget": {
     "title": "தேசிய பட்ஜெட் Tracker",
@@ -932,6 +1091,18 @@
       "highways": "நhighways அministry",
       "plantation": "Plantation Industries",
       "power": "Power & Energy"
+    },
+    "yoy": {
+      "title": "Year-over-year budget",
+      "subtitle": "Totals, sector, and ministry deltas beyond the single-year seed breakdown.",
+      "seed": "Seed",
+      "methodology": "YoY compares the two most recent fiscal years in the seed ledger. Not an official appropriation series.",
+      "prior": "Prior year",
+      "current": "Current year",
+      "delta": "{pct}% YoY",
+      "totalsTitle": "Totals YoY",
+      "sectorsTitle": "Sector YoY",
+      "ministriesTitle": "Ministry allocations"
     }
   },
   "health": {
@@ -959,11 +1130,26 @@
     "mapLegendModerate": "Moderate",
     "mapLegendLow": "Lower cases",
     "environmentLink": "See also",
-    "environmentLinkAction": "air quality by district"
+    "environmentLinkAction": "air quality by district",
+    "spikeTitle": "Week-over-week spike attention",
+    "spikeNational": "தேசிய மாற்றம் {pct}% முந்தைய வாரத்துடன் (≥20% threshold).",
+    "spikeDistrict": "{district} at {pct}% WoW — {count, plural, one {# district} other {# districts}} at or above the 20% spike threshold.",
+    "spikeHonesty": "Home dengue_spike alert pin அதே threshold. Clinical forecast அல்ல.",
+    "moh": {
+      "title": "MoH notices",
+      "subtitle": "Public health notices with provenance — seed until MoH RSS is wired.",
+      "seed": "Seed",
+      "empty": "No MoH notices available right now.",
+      "honesty": "Not clinical advice. Verify linked Ministry of Health publications before acting."
+    },
+    "urbanHeatTitle": "Colombo urban heat (monthly)",
+    "urbanHeatSeed": "Seed",
+    "urbanHeatBody": "{city} · {month}: LST anomaly +{anomaly}°C · night min ~{night}°C.",
+    "urbanHeatHonesty": "Seed LST note for health context. Not a heat-health warning — verify Met Dept / MoH advisories."
   },
   "compare": {
     "title": "மாவட்ட Compare",
-    "subtitle": "Population, elections, flood monitoring, services மற்றும் health metrics side-by-side.",
+    "subtitle": "Population, elections, flood, services, health, property, land மற்றும் AQI side-by-side.",
     "districtA": "முதல் district",
     "districtB": "இரண்டாவது district",
     "compareAction": "Compare",
@@ -977,7 +1163,34 @@
     "services": "பொது services",
     "dengueCases": "டengue cases (week)",
     "costOfLiving": "Cost of living index",
-    "empty": "Picker பயன்படுத்தி compare செய்ய districts select செய்யவும்."
+    "propertyAvgPrice": "Property avg (median/perch)",
+    "greeneryDelta": "பசுமை Δ (2018→2024)",
+    "aqi": "AQI",
+    "empty": "Picker பயன்படுத்தி compare செய்ய districts select செய்யவும்.",
+    "pickerHint": "Atlas metrics: property, greenery change மற்றும் AQI (கிடைக்கும்போது)."
+  },
+  "shareCompare": {
+    "title": "Lankawa compare · {names}",
+    "button": "Compare பகிர்",
+    "hint": "WhatsApp-ready plain text — share sheet அல்லது copy.",
+    "copied": "Compare சுருக்கம் copy செய்யப்பட்டது.",
+    "error": "Share செய்ய முடியவில்லை. Page-இல் இருந்து copy செய்யுங்கள்.",
+    "footer": "மூலம்: Lankawa — அதிகாரப்பூர்வ அரசு வெளியீடு அல்ல."
+  },
+  "districtMorning": {
+    "title": "மாவட்ட காலை pack",
+    "demoNote": "{district} demo pack — உங்கள் மாவட்டத்தை மேலே pin செய்யுங்கள்.",
+    "pinnedSubtitle": "{district} காலை சமிக்ஞைகள்.",
+    "pinHint": "மாவட்டத்தை pin செய்யுங்கள்",
+    "dengue": "டெங்கு (வாரம்)",
+    "aqi": "AQI",
+    "colNote": "வாழ்க்கைச் செலவு",
+    "colNoteValue": "Index {index} · rank {rank} · {vs}",
+    "colAtNational": "தேசிய அளவில்",
+    "colAboveNational": "தேசியத்தை விட +{value}",
+    "colBelowNational": "தேசியத்தை விட −{value}",
+    "landDelta": "பசுமை Δ",
+    "openDistrict": "மாவட்டப் பக்கத்தைத் திற"
   },
   "transport": {
     "title": "Transport Directory",
@@ -1026,7 +1239,27 @@
     "vsNational": "base {base}",
     "disclaimer": "Seed composite index — for illustration only.",
     "methodologyLink": "முறைமையைப் படியுங்கள்",
-    "disclaimerLive": "கிடைக்கும் நேரடி உள்ளீடுகளிலிருந்து புதுப்பிக்கப்பட்ட கூட்டு. அதிகாரப்பூர்வ NCPI அல்ல."
+    "disclaimerLive": "கிடைக்கும் நேரடி உள்ளீடுகளிலிருந்து புதுப்பிக்கப்பட்ட கூட்டு. அதிகாரப்பூர்வ NCPI அல்ல.",
+    "movers": {
+      "title": "உங்கள் கூடை என்ன நகர்ந்தது",
+      "subtitle": "வாழ்க்கைச் செலவு கூட்டை பாதிக்கும் சமீபத்திய எரிபொருள் மற்றும் உணவு விலை மாற்றங்கள்.",
+      "empty": "இப்போது கூடை நகர்வுகள் இல்லை.",
+      "fuel": "எரிபொருள்",
+      "food": "உணவு",
+      "honestyLive": "live",
+      "honestySeed": "seed"
+    },
+    "coconutSpark": {
+      "title": "Coconut Index history",
+      "subtitle": "7–30 day unit-price spark when observations exist.",
+      "seed": "Seed",
+      "delta": "{pct}% over window",
+      "honesty": "Seed history until Food/Life coconut observations persist.",
+      "empty": "No coconut observations available for a spark yet."
+    },
+    "choroplethTitle": "District index map",
+    "choroplethSubtitle": "Monochrome table-map of the COL composite by district (brighter = higher index).",
+    "choroplethHonesty": "Simple SVG choropleth from the composite index — not an official NCPI map."
   },
   "environment": {
     "title": "Environment & Air Quality",
@@ -1047,7 +1280,7 @@
   },
   "embed": {
     "title": "Embeddable Widgets",
-    "subtitle": "Preview same-origin Lankawa widgets for today, pulse, fuel, and FX.",
+    "subtitle": "Preview same-origin Lankawa widgets for today, pulse, fuel, FX, CSE, and brief.",
     "developersLink": "Developer documentation",
     "widget_today": "Today widget",
     "widget_todayDesc": "FX, fuel, weather, power, மற்றும் flood stations-க்கு compact daily metrics.",
@@ -1057,6 +1290,10 @@
     "widget_fuelDesc": "Current CPC petrol and diesel prices.",
     "widget_fx": "FX widget",
     "widget_fxDesc": "USD/LKR sell rate from CBSL.",
+    "widget_cse": "CSE widget",
+    "widget_cseDesc": "Colombo Stock Exchange ASPI மற்றும் S&P SL20 compact snapshot.",
+    "widget_brief": "Brief widget",
+    "widget_briefDesc": "Partner iframe-களுக்கான morning brief bullets.",
     "disclaimer": "Widgets served from Lankawa — no external UI links."
   },
   "pwa": {
@@ -1065,7 +1302,10 @@
     "installAction": "Install",
     "installDismiss": "Not now",
     "offlineTitle": "Offline morning shell",
-    "offlineBody": "You are offline. Showing the last cached home pulse, brief, and district pages when available."
+    "offlineBody": "You are offline. Showing the last cached home pulse, brief, and district pages when available.",
+    "offlineServicesHint": "Home district services for {district} are preferred in the offline pack when previously cached.",
+    "offlineServicesLink": "Open services",
+    "offlineServicesPinHint": "Pin a home district to cache its services pack for offline mornings."
   },
   "civic": {
     "title": "MP Scorecards",
@@ -1079,7 +1319,14 @@
     "viewScorecard": "View scorecard",
     "viewAdminDistrict": "View admin district",
     "back": "Back to civic",
-    "disclaimer": "Illustrative seed data only. Manthri.lk அல்லது official Hansard records scrape செய்யப்படவில்லை."
+    "disclaimer": "Illustrative seed data only. Manthri.lk அல்லது official Hansard records scrape செய்யப்படவில்லை.",
+    "researchTitle": "CPA / Verité ஆய்வுகள்",
+    "researchSubtitle": "கொள்கை ஆய்வு குறிப்புகள் — seed வரை.",
+    "researchSeed": "Seed strip — CPA/Verité scrape அல்ல.",
+    "researchLive": "பொது ஆய்வு ஊட்டங்களிலிருந்து.",
+    "hansardTitle": "Hansard / MP ingest honesty",
+    "hansardBody": "Scorecards remain seed illustrations. Live Hansard or Manthri.lk ingest is not wired — we do not fake attendance from unofficial scrapes.",
+    "hansardHonesty": "Seed-honest until a licensed Hansard / Parliament data path exists."
   },
   "tenders": {
     "title": "Government Tenders",
@@ -1100,7 +1347,9 @@
     "district": "மாவட்டம்",
     "estimatedValue": "Estimated value",
     "closingDate": "Closing date",
-    "disclaimer": "e-GP formats model செய்யப்பட்ட static seed notices. Live procurement data அல்ல."
+    "disclaimer": "e-GP formats model செய்யப்பட்ட static seed notices. Live procurement data அல்ல.",
+    "closingSoonPin": "{days} நாளில் மூடலாம்",
+    "closesInDays": "{days} நாளில்"
   },
   "property": {
     "title": "சொத்து & வீட்டுவசதி",
@@ -1123,7 +1372,14 @@
     "trend": "YoY trend",
     "intensity": "Relative price",
     "disclaimer": "Representative seed data aligned with PropertyLK patterns. Not a property valuation service — verify with licensed professionals.",
-    "disclaimerSeed": "Showing seed fallback data — the live PropertyLK API was unavailable at fetch time. Figures are representative, not valuations."
+    "disclaimerSeed": "Showing seed fallback data — the live PropertyLK API was unavailable at fetch time. Figures are representative, not valuations.",
+    "listings": {
+      "title": "Listing count",
+      "subtitle": "National sample size + recent trend spark.",
+      "seed": "Seed",
+      "delta": "{pct}% vs series start",
+      "honesty": "Uses PropertyLK district counts when live; otherwise seed history. Not a valuation."
+    }
   },
   "vehicles": {
     "title": "Vehicle Market Pulse",
@@ -1142,7 +1398,17 @@
     "medianPrice": "Median price",
     "popularModel": "Top model",
     "intensity": "Relative price",
-    "disclaimer": "Market intelligence from classified listings — not official valuations. Seed fallback used when the Vehicle Platform API is unavailable."
+    "disclaimer": "Market intelligence from classified listings — not official valuations. Seed fallback used when the Vehicle Platform API is unavailable.",
+    "modelDiveTitle": "Make / model median deep-dive",
+    "modelDiveSubtitle": "District → model medians from seed listings. Drill in by make or district.",
+    "modelDiveSeed": "Seed scaffold",
+    "modelDiveDistrict": "District",
+    "modelDiveAllDistricts": "All districts",
+    "modelDiveMake": "Make",
+    "modelDiveAllMakes": "All makes",
+    "modelDiveModel": "Model",
+    "modelDiveEmpty": "No model rows match these filters.",
+    "modelDiveHonesty": "Seed make/model medians — not live Vehicle API drill-in. Not a valuation."
   },
   "food": {
     "title": "Food Price Pulse",
@@ -1165,7 +1431,11 @@
     "disclaimer": "Representative food price intelligence — not official NCPI. Seed fallback used when FoodLK endpoints are unavailable.",
     "disclaimerLife": "FoodLK API கிடைக்கவில்லை. தலைப்பு எண்கள் Ariva Life Platform food அடுக்கிலிருந்து; மாவட்ட meal bands seed மதிப்பீடுகள்.",
     "disclaimerSeed": "Seed தரவு காட்டப்படுகிறது — FoodLK மற்றும் Life Platform food முனைகள் கிடைக்கவில்லை. பிரதிநிதி எண்கள் மட்டும்.",
-    "bannerLife": "FoodLK தற்காலிகமாக கிடைக்கவில்லை. முக்கிய மற்றும் basket எண்கள் Ariva Life Platform food adapter-லிருந்து — live FoodLK scrape அல்ல."
+    "bannerLife": "FoodLK தற்காலிகமாக கிடைக்கவில்லை. முக்கிய மற்றும் basket எண்கள் Ariva Life Platform food adapter-லிருந்து — live FoodLK scrape அல்ல.",
+    "hartiTitle": "HARTI / essentials fallback",
+    "hartiBodyLife": "FoodLK is down. Essentials basket figures come from the Life federation layer until FoodLK recovers — not HARTI live ingest yet.",
+    "hartiBodySeed": "FoodLK and Life food endpoints are unavailable. Showing seed essentials. HARTI wholesale ingest is planned when FoodLK stays down.",
+    "hartiHonesty": "Not official HARTI or NCPI. Labels stay seed-honest until a HARTI adapter lands."
   },
   "ardeno": {
     "eyebrow": "Sister platforms",
@@ -1214,7 +1484,8 @@
     "allTypes": "All types",
     "resultsCount": "{count} bodies",
     "noResults": "No local bodies match your filters.",
-    "disclaimer": "Representative seed directory — not an exhaustive official gazette list."
+    "disclaimer": "Representative seed directory — not an exhaustive official gazette list.",
+    "contactPhone": "Phone"
   },
   "status": {
     "title": "Platform status",
@@ -1252,7 +1523,9 @@
       "colombo": "Tell me about Colombo district",
       "flood": "How many flood stations are active?",
       "elections": "Who won the 2024 presidential election?"
-    }
+    },
+    "scopedDistrict": "Scoping answers to your home district: {district}.",
+    "scopedDistrictHint": "Pin a home district to scope assistant answers to that atlas profile."
   },
   "learn": {
     "eyebrow": "நம்பிக்கை & வெளிப்படைத்தன்மை",
@@ -1528,7 +1801,15 @@
     "ndviNational": "Weekly NDVI anomaly",
     "ndviHint": "Negative = greenery stress vs seasonal baseline (ETL-curated)",
     "topNdviStress": "Top NDVI stress districts",
-    "ndviDistrict": "NDVI anomaly"
+    "ndviDistrict": "NDVI anomaly",
+    "chartSkipped": "Data Saver-இல் நில விளக்கப்படம் தவிர்க்கப்பட்டது.",
+    "yearCompareTitle": "Year compare",
+    "yearCompareSubtitle": "Toggle 2018 ↔ 2024 for greenery or built-up index rankings.",
+    "yearCompareYearLabel": "Year",
+    "yearCompareMetricLabel": "Metric",
+    "yearCompareGreenery": "Greenery",
+    "yearCompareBuiltUp": "Built-up",
+    "yearCompareHonesty": "Interactive seed indices — not Survey Department land use."
   },
   "landChangeMethodology": {
     "back": "சுற்றுச்சூழலுக்குத் திரும்பு",
@@ -1569,7 +1850,21 @@
     "pin_fire": "Fires (FIRMS)",
     "help_fire": "Fire when NASA FIRMS detects active fires in Sri Lanka",
     "pin_gdacs": "GDACS hazard",
-    "help_gdacs": "Fire on Orange/Red GDACS events in the regional window"
+    "help_gdacs": "Fire on Orange/Red GDACS events in the regional window",
+    "pin_fuel_revision": "எரிபொருள் திருத்த சாளரம்",
+    "help_fuel_revision": "சமீபத்திய CPC எரிபொருள் திருத்தம் கடந்த 10 நாட்களுக்குள் இருந்தால் எச்சரிக்கை",
+    "pin_met_flood": "வானிலை ∩ வெள்ளம்",
+    "help_met_flood": "வானிலை எச்சரிக்கையுடன் உயர்ந்த அல்லது உயரும் வெள்ள அளவீடுகள் இருக்கும்போது எச்சரிக்கை",
+    "pin_dengue_spike": "டெங்கு உயர்வு",
+    "help_dengue_spike": "மாவட்ட அல்லது தேசிய டெங்கு WoW மாற்றம் ≥ 20% ஆக இருந்தால் எச்சரிக்கை",
+    "pin_cse_move": "CSE ASPI நகர்வு",
+    "help_cse_move": "ASPI முழுமையான அமர்வு மாற்றம் ≥ 1% ஆக இருந்தால் எச்சரிக்கை",
+    "pin_col_basket": "COL கூடை நகர்வு",
+    "help_col_basket": "கண்காணிக்கப்படும் எரிபொருள் விலை நாள் மாற்றம் ≥ 5 LKR/L ஆக இருந்தால் எச்சரிக்கை",
+    "pin_news_cluster": "செய்தி தொகுப்பு",
+    "help_news_cluster": "தலைப்புத் தொகுப்பு 3 அல்லது அதிக ஊடகங்களில் பரவியிருக்கும்போது எச்சரிக்கை",
+    "pin_tender_closing": "விரைவில் மூடும் tenders",
+    "help_tender_closing": "7 நாட்களில் e-GP tenders மூடும்போது"
   },
   "weekLedger": {
     "title": "வார பதிவேடு",
@@ -1595,6 +1890,65 @@
     "submitting": "Sending…",
     "ok": "Check your email to confirm.",
     "error": "Could not subscribe right now.",
-    "privacy": "We only use your email for the morning brief. Confirm link required. No selling lists."
+    "privacy": "We only use your email for the morning brief. Confirm link required. No selling lists.",
+    "unsubscribe": {
+      "title": "காலை brief-இலிருந்து விலகு",
+      "subtitle": "தினசரி brief மின்னஞ்சல்களை நிறுத்துங்கள். மின்னஞ்சல் இணைப்பை அல்லது token-ஐ பயன்படுத்துங்கள்.",
+      "emailLabel": "Email (விருப்பம்)",
+      "emailPlaceholder": "you@example.com",
+      "tokenLabel": "Unsubscribe token",
+      "tokenPlaceholder": "மின்னஞ்சல் இணைப்பின் token",
+      "submit": "விலகு",
+      "submitting": "Updating…",
+      "success": "நீங்கள் காலை brief-இலிருந்து விலகியுள்ளீர்கள்.",
+      "error": "விலக முடியவில்லை. Token-ஐ சரிபாருங்கள்.",
+      "homeLink": "Lankawa-க்கு திரும்பு"
+    },
+    "archive": {
+      "eyebrow": "Brief archive",
+      "title": "காலை brief · {date}",
+      "subtitle": "இந்த கொழும்பு நாளின் archived bullets.",
+      "generated": "Generated {date}",
+      "emptyTitle": "இந்த தேதிக்கு archived brief இல்லை.",
+      "emptyBody": "Brief generate செய்து disk-இல் எழுதிய பிறகு archive தெரியும். Seed / empty சூழலில் இந்த placeholder காட்டப்படும்.",
+      "todayLink": "இன்றைய live brief-ஐ முகப்பில் பாருங்கள்",
+      "homeLink": "முகப்பிற்கு"
+    }
+  },
+  "homeHazard": {
+    "eyebrow": "Home district attention",
+    "title": "{district} அருகே hazard signal",
+    "landslide": "Landslide overlay: {tier}",
+    "fires": "{count, plural, one {# nearby FIRMS fire pin} other {# nearby FIRMS fire pins}}",
+    "honesty": "அதிகாரப்பூர்வ evacuation order அல்ல. FIRMS pins satellite detections; landslide tiers civic overlay.",
+    "openDisaster": "பேரிடர் மையத்தைத் திற",
+    "dismiss": "நிராகரி"
+  },
+  "cseWatchlist": {
+    "title": "CSE கண்காணிப்பு பட்டியல்",
+    "subtitle": "இந்த சாதனத்தில் {max} சின்னங்கள் வரை பின்கொள்ளுங்கள்.",
+    "viewMarket": "CSE பலகையைத் திற",
+    "savedLabel": "சேமித்த சின்னங்கள்",
+    "empty": "இன்னும் சின்னங்கள் இல்லை — கீழே தேர்வு செய்யுங்கள்.",
+    "remove": "பட்டியலிலிருந்து நீக்கு",
+    "privacy": "இந்த உலாவியில் மட்டும். Data Saver இயங்கினால் மறைக்கப்படும்."
+  },
+  "webPush": {
+    "title": "Alert push (opt-in)",
+    "subtitle": "Browser permission scaffold for fired alert pins. Quiet hours are local-only until a push server lands.",
+    "permissionLabel": "Permission",
+    "permission_default": "Not asked",
+    "permission_granted": "Granted",
+    "permission_denied": "Denied",
+    "unsupportedShort": "Unsupported",
+    "unsupported": "This browser does not support Notification permission.",
+    "enable": "Enable notifications",
+    "granted": "Permission granted — push delivery server not configured yet.",
+    "denied": "Permission denied. You can re-enable in browser settings.",
+    "dismissed": "Permission dismissed.",
+    "error": "Could not request permission.",
+    "quietHours": "Quiet hours {start}:00–{end}:00 (local)",
+    "quietActive": "Quiet hours active — pin toasts should stay silent.",
+    "honesty": "Scaffold only: no Web Push subscription is stored on Lankawa servers yet."
   }
 }

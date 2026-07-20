@@ -20,7 +20,7 @@ export async function MorningBrief({ locale }: { locale: string }) {
     locale !== "en" && brief.mode !== "fact_ledger" && brief.mode !== "template";
 
   return (
-    <section className="space-y-4">
+    <section className="space-y-4" id="brief">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-300">

@@ -9,6 +9,7 @@ export async function GET() {
       .filter((cluster) => cluster.headlines.length >= 2)
       .slice(0, 8)
       .map((cluster) => ({
+        id: cluster.id,
         topic: cluster.topic,
         score: cluster.score,
         outletCount: new Set(cluster.headlines.map((item) => item.source)).size,

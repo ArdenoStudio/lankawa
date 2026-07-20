@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CompareDistrictPicker } from "@/components/CompareDistrictPicker";
 import { DistrictCompareTable } from "@/components/DistrictCompareTable";
+import { ShareCompareCard } from "@/components/ShareCompareCard";
 import {
   buildDistrictCompareRows,
   parseCompareDistricts,
@@ -32,6 +33,8 @@ export default async function ComparePage({
       </div>
 
       <CompareDistrictPicker selected={slugs} locale={locale} />
+
+      <ShareCompareCard rows={rows} />
 
       <DistrictCompareTable rows={rows} />
     </div>

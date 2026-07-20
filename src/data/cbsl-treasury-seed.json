@@ -1,0 +1,12 @@
+{
+  "sourceId": "cbsl_macro",
+  "sourceName": "Central Bank of Sri Lanka",
+  "asOf": "2026-07-10",
+  "isSeed": true,
+  "wayr": 8.72,
+  "tbill91": 8.45,
+  "tbill182": 8.61,
+  "tbill364": 8.88,
+  "unit": "%",
+  "note": "Seed WAYR / T-bill yields — curated from public CBSL auction summaries. Stale-OK until live PDF ingest."
+}

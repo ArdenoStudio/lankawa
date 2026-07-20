@@ -23,6 +23,7 @@ import {
   getProvinceName,
   getProvincePopulation,
 } from "@/lib/provinces";
+import { getProvincePulse } from "@/lib/province-pulse";
 
 export async function generateStaticParams() {
   const { PROVINCES } = await import("@/lib/provinces");
@@ -56,6 +57,7 @@ export default async function ProvinceDetailPage({
   const population = getProvincePopulation(districts);
   const area = getProvinceArea(districts);
   const density = getProvinceDensity(districts);
+  const pulse = await getProvincePulse(districts.map((district) => district.slug));
 
   const presidentialWins = districts.reduce(
     (acc, district) => {
@@ -122,6 +124,45 @@ export default async function ProvinceDetailPage({
           </dd>
         </div>
       </dl>
+
+      <section
+        aria-label={t("pulseTitle")}
+        className="rounded-2xl border border-teal-400/20 bg-teal-500/[0.06] px-4 py-4 sm:px-5"
+      >
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <h2 className="text-sm font-medium text-teal-100">{t("pulseTitle")}</h2>
+            <p className="mt-1 text-xs text-slate-400">{t("pulseSubtitle")}</p>
+          </div>
+        </div>
+        <dl className="mt-4 grid gap-4 sm:grid-cols-3">
+          <div>
+            <dt className="text-xs text-slate-500">{t("pulseDengue")}</dt>
+            <dd className="mt-1 text-xl font-semibold text-white">
+              {pulse.dengueCases.toLocaleString(locale)}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs text-slate-500">{t("pulseAqi")}</dt>
+            <dd className="mt-1 text-xl font-semibold text-white">
+              {pulse.averageAqi != null
+                ? t("pulseAqiValue", {
+                    value: pulse.averageAqi,
+                    count: pulse.aqiDistrictCount,
+                  })
+                : "—"}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs text-slate-500">{t("pulseFlood")}</dt>
+            <dd className="mt-1 text-xl font-semibold text-white">
+              {pulse.floodElevatedCount != null
+                ? pulse.floodElevatedCount.toLocaleString(locale)
+                : t("pulseFloodUnavailable")}
+            </dd>
+          </div>
+        </dl>
+      </section>
 
       <ProvinceMapSection
         provinceDistrictSlugs={districts.map((district) => district.slug)}

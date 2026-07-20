@@ -1,0 +1,89 @@
+{
+  "type": "FeatureCollection",
+  "sourceId": "gfm_flood_extent_seed",
+  "sourceName": "GFM / flood-extent pins (seed scaffold)",
+  "asOf": "2026-07-18",
+  "methodologyNote": "Point pins only — not flood mosaics or rasters. Seed locations approximate recent flood-extent attention for map scaffold until live GFM GeoJSON ingest.",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "kelani-colombo",
+        "label": "Kelani corridor",
+        "districtSlug": "colombo",
+        "severity": "watch"
+      },
+      "geometry": { "type": "Point", "coordinates": [79.92, 6.96] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "attana-gampaha",
+        "label": "Attanagalu Oya",
+        "districtSlug": "gampaha",
+        "severity": "watch"
+      },
+      "geometry": { "type": "Point", "coordinates": [80.02, 7.08] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "kalu-kalutara",
+        "label": "Kalu basin",
+        "districtSlug": "kalutara",
+        "severity": "elevated"
+      },
+      "geometry": { "type": "Point", "coordinates": [80.0, 6.58] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "gin-galle",
+        "label": "Gin Ganga",
+        "districtSlug": "galle",
+        "severity": "watch"
+      },
+      "geometry": { "type": "Point", "coordinates": [80.22, 6.12] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "nilwala-matara",
+        "label": "Nilwala",
+        "districtSlug": "matara",
+        "severity": "watch"
+      },
+      "geometry": { "type": "Point", "coordinates": [80.54, 6.05] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "maha-batticaloa",
+        "label": "Batticaloa lagoon fringe",
+        "districtSlug": "batticaloa",
+        "severity": "elevated"
+      },
+      "geometry": { "type": "Point", "coordinates": [81.7, 7.72] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "trincomalee-coast",
+        "label": "Trincomalee lowland",
+        "districtSlug": "trincomalee",
+        "severity": "watch"
+      },
+      "geometry": { "type": "Point", "coordinates": [81.2, 8.57] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "ratnapura-kuru",
+        "label": "Kalu upper catchment",
+        "districtSlug": "ratnapura",
+        "severity": "elevated"
+      },
+      "geometry": { "type": "Point", "coordinates": [80.4, 6.68] }
+    }
+  ]
+}

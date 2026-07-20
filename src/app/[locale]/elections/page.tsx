@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ElectionDistrictRow } from "@/components/ElectionCards";
+import { ElectionNightBanner } from "@/components/ElectionNightBanner";
 import { ElectionTypeTabs } from "@/components/ElectionTypeTabs";
 import { ParliamentaryDistrictRow } from "@/components/ParliamentaryCards";
 import { DistrictMapLazy } from "@/components/DistrictMapLazy";
@@ -56,6 +57,8 @@ export default async function ElectionsPage({
           presidentialLabel={t("tabPresidential")}
           parliamentaryLabel={t("tabParliamentary")}
         />
+
+        <ElectionNightBanner />
 
         <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
@@ -161,6 +164,8 @@ export default async function ElectionsPage({
         presidentialLabel={t("tabPresidential")}
         parliamentaryLabel={t("tabParliamentary")}
       />
+
+      <ElectionNightBanner />
 
       <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">

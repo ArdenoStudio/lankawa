@@ -1,0 +1,32 @@
+{
+  "sourceId": "civic_research_seed",
+  "sourceName": "CPA / Verité Research (seed)",
+  "asOf": "2026-07-01",
+  "isSeed": true,
+  "items": [
+    {
+      "id": "cpa-2026-governance",
+      "org": "CPA",
+      "title": "Governance brief — parliamentary oversight note",
+      "url": "https://www.cpalanka.org/",
+      "publishedAt": "2026-06-18",
+      "summary": "Seed placeholder for Centre for Policy Alternatives research drops."
+    },
+    {
+      "id": "verite-2026-budget",
+      "org": "Verité",
+      "title": "Budget speech sector summary (illustrative)",
+      "url": "https://www.veriteresearch.org/",
+      "publishedAt": "2026-05-22",
+      "summary": "Seed aligned with Verité Research budget commentary — not a live scrape."
+    },
+    {
+      "id": "cpa-2026-rights",
+      "org": "CPA",
+      "title": "Rights and accountability digest",
+      "url": "https://www.cpalanka.org/",
+      "publishedAt": "2026-04-30",
+      "summary": "Seed strip item until CPA RSS/API is wired."
+    }
+  ]
+}

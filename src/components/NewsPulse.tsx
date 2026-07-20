@@ -72,7 +72,7 @@ export async function NewsPulse({ headlineLimit = 5 }: { headlineLimit?: number 
           >
             {t("feed")}
           </a>
-          <Link href="/sources/news_rss" className="lk-btn-primary">
+          <Link href="/news" className="lk-btn-primary">
             {t("viewAll")}
           </Link>
         </div>
@@ -84,9 +84,10 @@ export async function NewsPulse({ headlineLimit = 5 }: { headlineLimit?: number 
             const outlets = new Set(cluster.headlines.map((item) => item.source));
             const lead = cluster.headlines[0];
             return (
-              <article
-                key={`${cluster.topic}-${lead?.url ?? cluster.score}`}
-                className="rounded-2xl border border-white/10 bg-white/[0.03] p-4"
+              <Link
+                key={cluster.id}
+                href={`/news/clusters/${cluster.id}`}
+                className="block rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition hover:border-white/25 hover:bg-white/[0.05]"
               >
                 <p className="text-xs uppercase tracking-[0.14em] text-slate-500">
                   {t("clusterLabel")}
@@ -100,7 +101,7 @@ export async function NewsPulse({ headlineLimit = 5 }: { headlineLimit?: number 
                     outlets: outlets.size,
                   })}
                 </p>
-              </article>
+              </Link>
             );
           })}
         </div>
@@ -121,7 +122,7 @@ export async function NewsPulse({ headlineLimit = 5 }: { headlineLimit?: number 
           ).map((headline, index) => (
             <li key={`${headline.url}-${index}`}>
               <Link
-                href="/sources/news_rss"
+                href="/news"
                 className="group block rounded-lg border border-transparent px-3 py-2 transition hover:border-[var(--lk-border)] hover:bg-[var(--lk-surface)]/60"
               >
                 <p className="text-sm font-medium text-white group-hover:text-teal-100">

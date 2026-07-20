@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { computeFreshnessTier } from "@/lib/freshness";
 import { getSourceProvenancePath } from "@/lib/sources";
@@ -7,6 +7,13 @@ import type { FreshnessTier, PulseMetric, SourceHealth } from "@/lib/types";
 const NEWS_SOURCE_ID = "news_rss";
 const NEWS_CADENCE_MINUTES = 30;
 const CACHE_PATH = path.join(process.cwd(), "ingest", "output", "sl_news.json");
+const ARCHIVE_PATH = path.join(
+  process.cwd(),
+  "ingest",
+  "output",
+  "headlines-7d.json",
+);
+const ARCHIVE_RETENTION_MS = 7 * 24 * 60 * 60 * 1000;
 const FETCH_TIMEOUT_MS = 12_000;
 
 interface NewsFeedDefinition {
@@ -80,16 +87,38 @@ export interface NewsHeadline {
   source: string;
 }
 
+export interface NewsFeedHealth {
+  feedId: string;
+  name: string;
+  status: "success" | "error";
+  itemCount: number;
+  fetchedAt: string;
+  error: string | null;
+}
+
 export interface NewsPulse {
   sourceId: string;
   fetchedAt: string;
   headlines: NewsHeadline[];
+  feedHealth: NewsFeedHealth[];
   provenancePath: string;
 }
 
 interface CachePayload {
   sourceId?: string;
   fetchedAt?: string;
+  headlines?: Array<{
+    title: string;
+    url: string;
+    published_at?: string;
+    publishedAt?: string;
+    source: string;
+  }>;
+  feedHealth?: NewsFeedHealth[];
+}
+
+interface HeadlineArchivePayload {
+  updatedAt?: string;
   headlines?: Array<{
     title: string;
     url: string;
@@ -172,6 +201,24 @@ function parseRssDate(value: string | undefined): string {
   return new Date().toISOString();
 }
 
+function normalizeHeadline(item: {
+  title: string;
+  url: string;
+  publishedAt?: string;
+  published_at?: string;
+  source: string;
+}): NewsHeadline | null {
+  if (!item.title || !item.url) {
+    return null;
+  }
+  return {
+    title: item.title,
+    url: item.url,
+    publishedAt: item.publishedAt ?? item.published_at ?? new Date().toISOString(),
+    source: item.source,
+  };
+}
+
 function parseRssItems(xml: string, sourceId: string): NewsHeadline[] {
   const block = xml.match(RSS_BLOCK_RE)?.[0] ?? xml;
   const items = block.match(ITEM_RE) ?? [];
@@ -232,18 +279,90 @@ async function fetchFeed(
   }
 }
 
+function pruneHeadlinesToWindow(
+  headlines: NewsHeadline[],
+  nowMs = Date.now(),
+): NewsHeadline[] {
+  const cutoff = nowMs - ARCHIVE_RETENTION_MS;
+  const seen = new Set<string>();
+  const pruned: NewsHeadline[] = [];
+
+  const sorted = [...headlines].sort(
+    (a, b) =>
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+  );
+
+  for (const headline of sorted) {
+    const publishedMs = new Date(headline.publishedAt).getTime();
+    if (Number.isNaN(publishedMs) || publishedMs < cutoff) {
+      continue;
+    }
+    const key = headline.url || normalizeHeadlineTitle(headline.title);
+    if (!key || seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    pruned.push(headline);
+  }
+
+  return pruned;
+}
+
+async function persistHeadlineArchive(headlines: NewsHeadline[]): Promise<void> {
+  try {
+    const existing = await loadHeadlineArchive();
+    const merged = pruneHeadlinesToWindow([...headlines, ...existing]);
+    await mkdir(path.dirname(ARCHIVE_PATH), { recursive: true });
+    await writeFile(
+      ARCHIVE_PATH,
+      `${JSON.stringify(
+        {
+          updatedAt: new Date().toISOString(),
+          headlines: merged,
+        },
+        null,
+        2,
+      )}\n`,
+      "utf8",
+    );
+  } catch {
+    // File-system archive is best effort for serverless environments.
+  }
+}
+
+/** Load the rolling 7-day headline archive (empty if missing). */
+export async function loadHeadlineArchive(): Promise<NewsHeadline[]> {
+  try {
+    const raw = await readFile(ARCHIVE_PATH, "utf8");
+    const data = JSON.parse(raw) as HeadlineArchivePayload;
+    const headlines = (data.headlines ?? [])
+      .map((item) => normalizeHeadline(item))
+      .filter((item): item is NewsHeadline => item !== null);
+    return pruneHeadlinesToWindow(headlines);
+  } catch {
+    return [];
+  }
+}
+
+/** Headlines from the 7-day archive published at or after `iso`. */
+export async function getHeadlinesSince(iso: string): Promise<NewsHeadline[]> {
+  const sinceMs = Date.parse(iso);
+  if (Number.isNaN(sinceMs)) {
+    return [];
+  }
+  const archive = await loadHeadlineArchive();
+  return archive.filter(
+    (headline) => new Date(headline.publishedAt).getTime() >= sinceMs,
+  );
+}
+
 async function readIngestCache(): Promise<NewsPulse | null> {
   try {
     const raw = await readFile(CACHE_PATH, "utf8");
     const data = JSON.parse(raw) as CachePayload;
     const headlines = (data.headlines ?? [])
-      .map((item) => ({
-        title: item.title,
-        url: item.url,
-        publishedAt: item.publishedAt ?? item.published_at ?? new Date().toISOString(),
-        source: item.source,
-      }))
-      .filter((item) => item.title && item.url);
+      .map((item) => normalizeHeadline(item))
+      .filter((item): item is NewsHeadline => item !== null);
 
     if (!data.fetchedAt || headlines.length === 0) {
       return null;
@@ -253,6 +372,7 @@ async function readIngestCache(): Promise<NewsPulse | null> {
       sourceId: data.sourceId ?? NEWS_SOURCE_ID,
       fetchedAt: data.fetchedAt,
       headlines,
+      feedHealth: data.feedHealth ?? [],
       provenancePath: getSourceProvenancePath(NEWS_SOURCE_ID),
     };
   } catch {
@@ -269,20 +389,42 @@ async function fetchLiveNewsPulse(): Promise<NewsPulse> {
 
   const seen = new Set<string>();
   const headlines: NewsHeadline[] = [];
+  const feedHealth: NewsFeedHealth[] = [];
 
-  for (const result of results) {
-    if (result.status !== "fulfilled") {
+  for (let index = 0; index < results.length; index++) {
+    const feed = feeds[index];
+    const result = results[index];
+
+    if (result.status === "fulfilled") {
+      feedHealth.push({
+        feedId: feed.id,
+        name: feed.name,
+        status: "success",
+        itemCount: result.value.length,
+        fetchedAt,
+        error: null,
+      });
+      for (const headline of result.value) {
+        const normalizedTitle = normalizeHeadlineTitle(headline.title);
+        const dedupeKey = normalizedTitle || headline.url;
+        if (seen.has(dedupeKey)) {
+          continue;
+        }
+        seen.add(dedupeKey);
+        headlines.push(headline);
+      }
       continue;
     }
-    for (const headline of result.value) {
-      const normalizedTitle = normalizeHeadlineTitle(headline.title);
-      const dedupeKey = normalizedTitle || headline.url;
-      if (seen.has(dedupeKey)) {
-        continue;
-      }
-      seen.add(dedupeKey);
-      headlines.push(headline);
-    }
+
+    const reason = result.reason;
+    feedHealth.push({
+      feedId: feed.id,
+      name: feed.name,
+      status: "error",
+      itemCount: 0,
+      fetchedAt,
+      error: reason instanceof Error ? reason.message : "Feed fetch failed",
+    });
   }
 
   headlines.sort(
@@ -294,10 +436,14 @@ async function fetchLiveNewsPulse(): Promise<NewsPulse> {
     throw new Error("All Sri Lanka news RSS feeds failed");
   }
 
+  const pulseHeadlines = headlines.slice(0, 30);
+  await persistHeadlineArchive(pulseHeadlines);
+
   return {
     sourceId: NEWS_SOURCE_ID,
     fetchedAt,
-    headlines: headlines.slice(0, 30),
+    headlines: pulseHeadlines,
+    feedHealth,
     provenancePath: getSourceProvenancePath(NEWS_SOURCE_ID),
   };
 }

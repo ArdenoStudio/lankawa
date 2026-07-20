@@ -7,6 +7,8 @@ const WIDGETS = [
   { id: "pulse", path: "/embed/pulse", height: 220 },
   { id: "fuel", path: "/embed/fuel", height: 120 },
   { id: "fx", path: "/embed/fx", height: 120 },
+  { id: "cse", path: "/embed/cse", height: 200 },
+  { id: "brief", path: "/embed/brief", height: 280 },
 ] as const;
 
 export function EmbedPreview() {

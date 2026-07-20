@@ -1,6 +1,10 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { CoconutIndexSpark } from "@/components/CoconutIndexSpark";
+import { ColBasketMovers } from "@/components/ColBasketMovers";
+import { ColDistrictChoropleth } from "@/components/ColDistrictChoropleth";
 import { CostOfLivingTable } from "@/components/CostOfLivingTable";
 import { Link } from "@/i18n/navigation";
+import { getColBasketMovers } from "@/lib/col-movers";
 import { getCostOfLivingData } from "@/lib/cost-of-living";
 import { getSourceProvenancePath } from "@/lib/sources";
 
@@ -13,6 +17,7 @@ export default async function CostOfLivingPage({
   setRequestLocale(locale);
   const t = await getTranslations("costOfLiving");
   const snapshot = await getCostOfLivingData();
+  const basketMovers = await getColBasketMovers();
   const isComposite = snapshot.sourceId === "cost_of_living_composite";
   const honestyValueLabels = {
     live: t("honestyValueLive"),
@@ -138,6 +143,32 @@ export default async function CostOfLivingPage({
           </div>
         </section>
       ) : null}
+
+      <CoconutIndexSpark
+        labels={{
+          title: t("coconutSpark.title"),
+          subtitle: t("coconutSpark.subtitle"),
+          seed: t("coconutSpark.seed"),
+          delta: t("coconutSpark.delta"),
+          honesty: t("coconutSpark.honesty"),
+          empty: t("coconutSpark.empty"),
+        }}
+      />
+
+      <ColBasketMovers
+        movers={basketMovers}
+        labels={{
+          title: t("movers.title"),
+          subtitle: t("movers.subtitle"),
+          empty: t("movers.empty"),
+          fuel: t("movers.fuel"),
+          food: t("movers.food"),
+          honestyLive: t("movers.honestyLive"),
+          honestySeed: t("movers.honestySeed"),
+        }}
+      />
+
+      <ColDistrictChoropleth snapshot={snapshot} />
 
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-white">{t("tableTitle")}</h2>

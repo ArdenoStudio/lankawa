@@ -1,0 +1,12 @@
+{
+  "sourceId": "urban_heat_lst_seed",
+  "sourceName": "Colombo urban heat (LST seed)",
+  "asOf": "2026-07-01",
+  "monthLabel": "2026-07",
+  "city": "Colombo",
+  "districtSlug": "colombo",
+  "lstAnomalyC": 1.8,
+  "nightMinC": 26.4,
+  "note": "Monthly land-surface temperature anomaly vs seasonal baseline for Colombo metro — seed until LST ETL.",
+  "methodologyNote": "Seed urban heat note for health context. Not a heat-health warning. Verify Met Dept / MoH advisories before acting."
+}

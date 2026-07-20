@@ -1,0 +1,22 @@
+{
+  "sourceId": "pucsl_generation",
+  "sourceName": "Public Utilities Commission of Sri Lanka",
+  "asOf": "2025-06-01",
+  "isSeed": true,
+  "unit": "%",
+  "methodologyNote": "Indicative generation-mix shares curated from PUCSL / CEB public summaries. Not a live SCADA feed — verify against the latest PUCSL decision or CEB statistical digest.",
+  "mix": [
+    { "id": "hydro", "label": "Hydro", "sharePct": 38 },
+    { "id": "thermal", "label": "Thermal", "sharePct": 42 },
+    { "id": "renewable", "label": "Other renewables", "sharePct": 15 },
+    { "id": "other", "label": "Other / imports", "sharePct": 5 }
+  ],
+  "history": [
+    { "date": "2025-01-01", "hydro": 41, "thermal": 40, "renewable": 14, "other": 5 },
+    { "date": "2025-02-01", "hydro": 40, "thermal": 41, "renewable": 14, "other": 5 },
+    { "date": "2025-03-01", "hydro": 39, "thermal": 41, "renewable": 15, "other": 5 },
+    { "date": "2025-04-01", "hydro": 38, "thermal": 42, "renewable": 15, "other": 5 },
+    { "date": "2025-05-01", "hydro": 37, "thermal": 43, "renewable": 15, "other": 5 },
+    { "date": "2025-06-01", "hydro": 38, "thermal": 42, "renewable": 15, "other": 5 }
+  ]
+}

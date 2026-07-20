@@ -20,6 +20,13 @@ const PIN_HREF: Record<AlertPinId, string> = {
   landslide: "/disaster",
   fire: "/disaster",
   gdacs: "/disaster",
+  fuel_revision: "/economy",
+  met_flood: "/disaster",
+  dengue_spike: "/health",
+  cse_move: "/economy",
+  col_basket: "/cost-of-living",
+  news_cluster: "/news",
+  tender_closing: "/tenders?status=closing_soon",
 };
 
 export function AlertPins({ context }: { context: AlertSignalContext }) {

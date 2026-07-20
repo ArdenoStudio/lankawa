@@ -418,6 +418,8 @@ export interface PropertyDistrictPrice {
   highBand: number;
   medianPerSqFt: number;
   trendPct: number;
+  /** Listing sample size when PropertyLK returns `count`. */
+  listingCount?: number;
 }
 
 export interface PropertySnapshot {
@@ -427,6 +429,8 @@ export interface PropertySnapshot {
   unit: "perch" | "sqft";
   currency: string;
   districts: PropertyDistrictPrice[];
+  /** National listing total when available. */
+  listingCount?: number;
 }
 
 export interface VehicleMakeStat {

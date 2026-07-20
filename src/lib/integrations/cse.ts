@@ -22,7 +22,14 @@ export interface CseIndex {
   value: number;
   change: number | null;
   changePct: number | null;
+  high: number | null;
+  low: number | null;
   observedAt: string;
+}
+
+export interface CseNotice {
+  title: string;
+  publishedAt: string;
 }
 
 export interface CseMover {
@@ -77,6 +84,7 @@ export interface CseSnapshot {
   sectors: CseSector[];
   mostActive: CseActiveTrade[];
   foreignDomestic: CseForeignDomestic | null;
+  notices: CseNotice[];
   asOf: string;
   tier: FreshnessTier;
   isFallback: boolean;
@@ -89,8 +97,29 @@ interface CseIndexResponse {
   percentage?: number;
   percentageChange?: number;
   changePct?: number;
+  high?: number;
+  low?: number;
+  highValue?: number;
+  lowValue?: number;
+  highIndex?: number;
+  lowIndex?: number;
+  todaysHigh?: number;
+  todaysLow?: number;
   timestamp?: number;
   transactionTime?: number;
+}
+
+interface CseNoticeRow {
+  title?: string;
+  subject?: string;
+  headline?: string;
+  name?: string;
+  publishedAt?: string | number;
+  publishedDate?: string | number;
+  date?: string | number;
+  createdDate?: string | number;
+  announcementDate?: string | number;
+  time?: string | number;
 }
 
 interface CseMarketStatusResponse {
@@ -154,6 +183,8 @@ const SEED_SNAPSHOT: Omit<CseSnapshot, "tier" | "isFallback"> = {
     value: 21_405.41,
     change: -42.16,
     changePct: -0.2,
+    high: 21_480.12,
+    low: 21_360.05,
     observedAt: SEED_AS_OF,
   },
   snp: {
@@ -162,6 +193,8 @@ const SEED_SNAPSHOT: Omit<CseSnapshot, "tier" | "isFallback"> = {
     value: 5_999.68,
     change: -5.31,
     changePct: -0.09,
+    high: 6_020.4,
+    low: 5_980.1,
     observedAt: SEED_AS_OF,
   },
   topGainers: [
@@ -270,6 +303,20 @@ const SEED_SNAPSHOT: Omit<CseSnapshot, "tier" | "isFallback"> = {
     foreignSales: 123_908_672,
     observedAt: SEED_AS_OF,
   },
+  notices: [
+    {
+      title: "Market holiday notice — Vesak Poya (seed)",
+      publishedAt: "2026-07-15T04:00:00.000Z",
+    },
+    {
+      title: "Circular: revised trading lot size for selected securities (seed)",
+      publishedAt: "2026-07-10T09:00:00.000Z",
+    },
+    {
+      title: "Listing announcement — additional ordinary shares (seed)",
+      publishedAt: "2026-07-08T06:30:00.000Z",
+    },
+  ],
   asOf: SEED_AS_OF,
 };
 
@@ -316,6 +363,19 @@ async function postCseJson<T>(path: string): Promise<T | null> {
   }
 }
 
+function parseHighLow(raw: CseIndexResponse): {
+  high: number | null;
+  low: number | null;
+} {
+  const high = finiteNumber(
+    raw.high ?? raw.highValue ?? raw.highIndex ?? raw.todaysHigh,
+  );
+  const low = finiteNumber(
+    raw.low ?? raw.lowValue ?? raw.lowIndex ?? raw.todaysLow,
+  );
+  return { high, low };
+}
+
 function parseIndex(
   raw: CseIndexResponse | null,
   defaults: { code: string; name: string },
@@ -334,6 +394,7 @@ function parseIndex(
   const changePct = finiteNumber(
     raw.percentage ?? raw.percentageChange ?? raw.changePct,
   );
+  const { high, low } = parseHighLow(raw);
 
   return {
     code: defaults.code,
@@ -341,8 +402,71 @@ function parseIndex(
     value,
     change: finiteNumber(raw.change),
     changePct,
+    high,
+    low,
     observedAt,
   };
+}
+
+function noticePublishedAt(row: CseNoticeRow, fallback: string): string {
+  const raw =
+    row.publishedAt ??
+    row.publishedDate ??
+    row.announcementDate ??
+    row.createdDate ??
+    row.date ??
+    row.time;
+
+  if (typeof raw === "number") {
+    return msToIso(raw, fallback);
+  }
+  if (typeof raw === "string" && raw.trim()) {
+    const parsed = Date.parse(raw);
+    if (!Number.isNaN(parsed)) {
+      return new Date(parsed).toISOString();
+    }
+    return raw.trim();
+  }
+  return fallback;
+}
+
+function parseNotices(raw: unknown, fallbackAsOf: string): CseNotice[] {
+  const rows: CseNoticeRow[] = (() => {
+    if (Array.isArray(raw)) {
+      return raw as CseNoticeRow[];
+    }
+    if (raw && typeof raw === "object") {
+      const record = raw as Record<string, unknown>;
+      for (const key of [
+        "notifications",
+        "notices",
+        "announcements",
+        "data",
+        "reqNotifications",
+        "reqAnnouncement",
+      ]) {
+        if (Array.isArray(record[key])) {
+          return record[key] as CseNoticeRow[];
+        }
+      }
+    }
+    return [];
+  })();
+
+  return rows
+    .map((row): CseNotice | null => {
+      const titleCandidate =
+        row.title ?? row.subject ?? row.headline ?? row.name;
+      if (typeof titleCandidate !== "string" || !titleCandidate.trim()) {
+        return null;
+      }
+      return {
+        title: titleCandidate.trim(),
+        publishedAt: noticePublishedAt(row, fallbackAsOf),
+      };
+    })
+    .filter((notice): notice is CseNotice => notice != null)
+    .slice(0, 8);
 }
 
 function parseMover(row: CseTradeSummaryRow): CseMover | null {
@@ -457,6 +581,7 @@ function buildSnapshotFromLive(parts: {
   sectors: CseSectorRow[] | null;
   mostActive: CseActiveRow[] | null;
   dailyMarket: CseDailyMarketRow[] | null;
+  notices: unknown;
 }): CseSnapshot | null {
   const aspi = parseIndex(parts.aspi, {
     code: "ASPI",
@@ -485,6 +610,7 @@ function buildSnapshotFromLive(parts: {
   const foreignDomestic =
     parseForeignDomestic(parts.dailyMarket, aspi.observedAt) ??
     SEED_SNAPSHOT.foreignDomestic;
+  const notices = parseNotices(parts.notices, aspi.observedAt);
 
   const asOf = [aspi.observedAt, snp.observedAt, summaryObservedAt]
     .sort()
@@ -514,6 +640,7 @@ function buildSnapshotFromLive(parts: {
     sectors: sectors.length > 0 ? sectors : SEED_SNAPSHOT.sectors,
     mostActive: mostActive.length > 0 ? mostActive : SEED_SNAPSHOT.mostActive,
     foreignDomestic,
+    notices: notices.length > 0 ? notices : SEED_SNAPSHOT.notices,
     asOf,
     tier: computeFreshnessTier(asOf, CSE_CADENCE_MINUTES),
     isFallback: false,
@@ -528,6 +655,30 @@ function buildFallbackSnapshot(): CseSnapshot {
   };
 }
 
+async function fetchCseNotices(): Promise<unknown> {
+  const paths = [
+    "/notifications",
+    "/announcements",
+    "/marketAnnouncements",
+    "/news",
+  ];
+  for (const path of paths) {
+    const raw = await postCseJson<unknown>(path);
+    if (raw == null) {
+      continue;
+    }
+    const parsed = parseNotices(raw, SEED_AS_OF);
+    if (parsed.length > 0) {
+      return raw;
+    }
+    // Keep a non-empty payload even if shape is unexpected — parse later.
+    if (typeof raw === "object") {
+      return raw;
+    }
+  }
+  return null;
+}
+
 export async function buildCseSnapshot(): Promise<CseSnapshot> {
   const [
     aspi,
@@ -538,6 +689,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     sectors,
     mostActive,
     dailyMarket,
+    notices,
   ] = await Promise.all([
     postCseJson<CseIndexResponse>("/aspiData"),
     postCseJson<CseIndexResponse>("/snpData"),
@@ -556,6 +708,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
       }
       return raw as CseDailyMarketRow[];
     }),
+    fetchCseNotices(),
   ]);
 
   const live = buildSnapshotFromLive({
@@ -567,6 +720,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     sectors,
     mostActive,
     dailyMarket,
+    notices,
   });
 
   return live ?? buildFallbackSnapshot();

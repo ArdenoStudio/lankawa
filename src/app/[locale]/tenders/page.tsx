@@ -9,14 +9,18 @@ export default async function TendersPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ district?: string; q?: string }>;
+  searchParams: Promise<{ district?: string; q?: string; status?: string }>;
 }) {
   const { locale } = await params;
-  const { district, q } = await searchParams;
+  const { district, q, status } = await searchParams;
   setRequestLocale(locale);
   const t = await getTranslations("tenders");
   const tBudget = await getTranslations("budget");
   const snapshot = await getTendersData();
+  const initialStatus =
+    status === "open" || status === "closing_soon" || status === "closed"
+      ? status
+      : "";
 
   const ministryLabels = {
     finance: tBudget("ministries.finance"),
@@ -47,6 +51,7 @@ export default async function TendersPage({
       <TenderFeed
         initialDistrict={district}
         initialQuery={q}
+        initialStatus={initialStatus}
         ministryLabels={ministryLabels}
         notices={snapshot.notices}
       />
