@@ -14,3 +14,4 @@ endpoints:
   path: (multi-host pack)
   summary: 'Aggregator: ComBank/Sampath/Seylan/HNB FD JSON → unified ladder.'
   pagination: null
+  access: json_api

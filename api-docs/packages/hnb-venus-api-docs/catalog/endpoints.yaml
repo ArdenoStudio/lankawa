@@ -12,6 +12,7 @@ endpoints:
   url: https://venus.hnb.lk/api/get_exchange_rates_contents_web
   path: /get_exchange_rates_contents_web
   summary: FX contents for web.
+  access: json_api
 - id: get_all_web_card_promos
   method: GET
   url: https://venus.hnb.lk/api/get_all_web_card_promos?page=1&limit=50&cardType=credit
@@ -24,26 +25,31 @@ endpoints:
       limit: default 50
       cardType: credit|debit
     lab: true
+  access: json_api
 - id: get_interest_rates_contents
   method: GET
   url: https://venus.hnb.lk/api/get_interest_rates_contents
   path: /get_interest_rates_contents
   summary: Nested FD/savings/loans tables in table_data_approved.
+  access: json_api
 - id: get_web_card_promo
   method: GET
   url: https://venus.hnb.lk/api/get_web_card_promo?id=1
   path: /get_web_card_promo
   summary: Single promo detail by id.
+  access: json_api
 - id: get_rates_contents_web
   method: GET
   url: https://venus.hnb.lk/api/get_rates_contents_web
   path: /get_rates_contents_web
   summary: FX + deposit teaser with updated_on stamp.
+  access: json_api
 - id: get_exchange_rate_last_update_date_contents
   method: GET
   url: https://venus.hnb.lk/api/get_exchange_rate_last_update_date_contents
   path: /get_exchange_rate_last_update_date_contents
   summary: As-of stamp for FX board.
+  access: json_api
 - id: get_all_web_card_promos_debit
   method: GET
   url: https://venus.hnb.lk/api/get_all_web_card_promos?page=1&limit=50&cardType=debit
@@ -56,3 +62,4 @@ endpoints:
       limit: page size
       cardType: debit
     lab: true
+  access: json_api

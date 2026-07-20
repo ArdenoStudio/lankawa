@@ -23,3 +23,4 @@ endpoints:
     pageRequest:
       index: 0
       limit: 20
+  access: json_api

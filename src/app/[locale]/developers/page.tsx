@@ -142,6 +142,18 @@ export default async function DevelopersPage({
           >
             {t("clientExtrasNavLink")}
           </Link>
+          <Link
+            href="/developers/api-catalog/html-vs-api"
+            className="text-sm text-teal-300 hover:text-teal-200"
+          >
+            {t("htmlVsApiNavLink")}
+          </Link>
+          <Link
+            href="/developers/api-catalog/changelog"
+            className="text-sm text-teal-300 hover:text-teal-200"
+          >
+            {t("catalogChangelogNavLink")}
+          </Link>
         </div>
       </section>
     </div>

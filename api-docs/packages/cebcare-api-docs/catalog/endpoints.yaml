@@ -12,6 +12,7 @@ endpoints:
   url: https://cebcare.ceb.lk/Incognito/DemandMgmtSchedule
   path: /Incognito/DemandMgmtSchedule
   summary: HTML bootstrap for antiforgery token.
+  access: hybrid
 - id: get_demand_mgmt_clusters
   method: GET
   url: https://cebcare.ceb.lk/Incognito/GetDemandMgmtClusters?LoadShedGroupId=A
@@ -22,3 +23,4 @@ endpoints:
     params:
       LoadShedGroupId: A-Y
     lab: true
+  access: json_api

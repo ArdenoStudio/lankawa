@@ -1,0 +1,17 @@
+{
+  "sha256": "65c49ed59e1018920b26441d8cbd36224689b58718be9ada7ff2aec457d1cac3",
+  "endpoint_count": 1,
+  "endpoints": {
+    "cbsl_gold_page": {
+      "id": "cbsl_gold_page",
+      "method": "GET",
+      "path": "(see GOLD_RETAIL_RATES_RESEARCH.md)",
+      "url": "https://www.cbsl.gov.lk/en/rates-and-indicators/exchange-rates",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "CBSL + jeweller retail gold scrape notes.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

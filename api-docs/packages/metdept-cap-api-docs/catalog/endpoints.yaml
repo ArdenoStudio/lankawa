@@ -12,13 +12,16 @@ endpoints:
   url: https://www.meteo.gov.lk/images/XML/cap_en.xml
   path: /images/XML/cap_en.xml
   summary: CAP English warnings RSS/XML.
+  access: xml_cap
 - id: cap_si_rss
   method: GET
   url: https://www.meteo.gov.lk/images/XML/cap_si.xml
   path: /images/XML/cap_si.xml
   summary: CAP Sinhala warnings.
+  access: xml_cap
 - id: cap_ta_rss
   method: GET
   url: https://www.meteo.gov.lk/images/XML/cap_ta.xml
   path: /images/XML/cap_ta.xml
   summary: CAP Tamil warnings.
+  access: xml_cap

@@ -13,3 +13,4 @@ endpoints:
   url: https://raw.githubusercontent.com/nuuuwan/lk_flood/data/lk_flood.json
   path: /lk_flood.json
   summary: Flood station levels JSON used by Lankawa flood adapter.
+  access: json_api

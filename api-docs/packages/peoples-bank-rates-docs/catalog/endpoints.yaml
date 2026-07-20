@@ -12,13 +12,16 @@ endpoints:
   url: https://www.peoplesbank.lk/exchange-rates/
   path: /exchange-rates/
   summary: FX TT HTML.
+  access: html_scrape
 - id: interest_rates_html
   method: GET
   url: https://www.peoplesbank.lk/interest-rates/
   path: /interest-rates/
   summary: Deposit/loan interest HTML.
+  access: html_scrape
 - id: offer_cards
   method: GET
   url: https://www.peoplesbank.lk/card-offers/
   path: /card-offers/
   summary: Card offer listing HTML.
+  access: html_scrape

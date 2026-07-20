@@ -13,28 +13,34 @@ endpoints:
   url: https://www.cbsl.gov.lk/en/rates-and-indicators/policy-rates
   path: /en/rates-and-indicators/policy-rates
   summary: Policy rates page (OPR / corridor context).
+  access: html_scrape
 - id: historical_policy_xlsx
   method: GET
   url: https://www.cbsl.gov.lk/sites/default/files/cbslweb_documents/statistics/sheets/historical_policy_interest_rates.xlsx
   path: /historical_policy_interest_rates.xlsx
   summary: Historical SDFR/SLFR/OPR Excel tip.
+  access: html_scrape
 - id: eresearch_tbill_6169
   method: GET
   url: https://www.cbsl.gov.lk/eresearch/en_US/viewReport/6169
   path: /eresearch/.../6169
   summary: Secondary market T-bill yields (91/182/364).
+  access: json_api
 - id: eresearch_awpr_6277
   method: GET
   url: https://www.cbsl.gov.lk/eresearch/en_US/viewReport/6277
   path: /eresearch/.../6277
   summary: Weekly AWPR series.
+  access: json_api
 - id: payments_bulletin_index
   method: GET
   url: https://www.cbsl.gov.lk/en/payments-and-settlements/payments-bulletin
   path: /en/payments-and-settlements/payments-bulletin
   summary: Payments bulletin PDF index.
+  access: pdf_document
 - id: fx_buying_selling_html
   method: GET
   url: https://www.cbsl.gov.lk/en/rates-and-indicators/exchange-rates
   path: /en/rates-and-indicators/exchange-rates
   summary: CBSL indicative FX HTML tables.
+  access: html_scrape

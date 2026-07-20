@@ -17,8 +17,10 @@ endpoints:
     NoOfDays: 30
     Consumption: 20
     NoOfHouses: 1
+  access: json_api
 - id: get_tariff_adjustment
   method: GET
   url: https://ebis.waterboard.lk/api_nwsdb/bill/getTariffAdjustment
   path: /api_nwsdb/bill/getTariffAdjustment
   summary: Tariff adjustment metadata.
+  access: json_api

@@ -12,8 +12,10 @@ endpoints:
   url: https://octane-api.fly.dev/v1/prices/latest
   path: /v1/prices/latest
   summary: Latest fuel prices.
+  access: json_api
 - id: comparison_world
   method: GET
   url: https://octane-api.fly.dev/v1/comparison/world
   path: /v1/comparison/world
   summary: World pump compare.
+  access: json_api

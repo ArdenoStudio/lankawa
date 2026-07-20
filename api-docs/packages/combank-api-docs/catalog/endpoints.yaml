@@ -14,12 +14,14 @@ endpoints:
   path: /api/exchange-rates
   summary: Multi-currency TT/DD rates JSON (USD TT buy/sell).
   pagination: null
+  access: json_api
 - id: interest_rates_fd
   method: GET
   url: https://www.combank.lk/api/interest-rates-fd
   path: /api/interest-rates-fd
   summary: 'FD ladder array: paidIn, period (months), rate.'
   pagination: null
+  access: json_api
 - id: rewards_promotions_html
   method: GET
   url: https://www.combank.lk/rewards-promotions
@@ -28,3 +30,4 @@ endpoints:
   pagination:
     style: html-list
     notes: Full page list, not cursor pages
+  access: html_scrape

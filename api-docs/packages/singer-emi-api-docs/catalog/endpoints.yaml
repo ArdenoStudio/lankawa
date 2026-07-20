@@ -12,3 +12,4 @@ endpoints:
   url: https://www.singersl.com/json-get-emi?product_id=7884&product_price=53699
   path: /json-get-emi
   summary: Multi-bank EMI rows for a SKU.
+  access: json_api

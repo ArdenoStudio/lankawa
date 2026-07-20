@@ -1,0 +1,1053 @@
+version: 1
+access_labels:
+  json_api: JSON / machine API
+  arcgis_api: ArcGIS FeatureServer / query API
+  xml_cap: XML / CAP feed
+  csv_download: CSV download
+  pdf_document: PDF / document index
+  html_scrape: HTML scrape
+  hybrid: Hybrid (API bootstrap + HTML)
+  parked: Parked (do not scrape / stale)
+  unknown: Unknown / classify manually
+totals:
+  json_api: 41
+  arcgis_api: 2
+  xml_cap: 4
+  csv_download: 2
+  pdf_document: 4
+  html_scrape: 27
+  hybrid: 4
+  parked: 5
+packages:
+- slug: amana-union-cargills-bank-docs
+  title: Amana / Union / Cargills Bank rates & offers
+  tier: B
+  category: banks
+  counts:
+    html_scrape: 3
+  endpoints:
+  - id: amana_rates
+    access: html_scrape
+    method: GET
+    path: amanabank.lk/rates/
+    url: https://www.amanabank.lk/rates/
+    status: live
+    notes: Amana rates pages (Islamic products).
+  - id: union_bank_offers
+    access: html_scrape
+    method: GET
+    path: unionb.com/.../offers
+    url: https://www.unionb.com/personal/cards/offers
+    status: live
+    notes: Union Bank card offers HTML.
+  - id: cargills_bank_rates
+    access: html_scrape
+    method: GET
+    path: cargillsbank.com/rates-and-tariffs/
+    url: https://www.cargillsbank.com/rates-and-tariffs/
+    status: live
+    notes: Cargills Bank rates & tariffs.
+  api_like: 0
+  html_like: 3
+  parked: 0
+- slug: ardeno-sister-backends-docs
+  title: Ardeno Sister Backends
+  tier: B
+  category: platform
+  counts:
+    json_api: 3
+  endpoints:
+  - id: foodlk_openapi
+    access: json_api
+    method: GET
+    path: food-platform-backend.fly.dev/openapi.json
+    url: https://food-platform-backend.fly.dev/openapi.json
+    status: live
+    notes: FoodLK OpenAPI.
+  - id: octane_prices
+    access: json_api
+    method: GET
+    path: octane-api.fly.dev/v1/prices/latest
+    url: https://octane-api.fly.dev/v1/prices/latest
+    status: live
+    notes: Octane latest prices.
+  - id: life_health
+    access: json_api
+    method: GET
+    path: life-platform-api.fly.dev/health
+    url: https://life-platform-api.fly.dev/health
+    status: live
+    notes: Life platform health (host may vary).
+  api_like: 3
+  html_like: 0
+  parked: 0
+- slug: boc-rates-docs
+  title: Bank of Ceylon Rates
+  tier: B
+  category: banks
+  counts:
+    hybrid: 1
+    parked: 1
+  endpoints:
+  - id: rates_tariff_html
+    access: hybrid
+    method: GET
+    path: /rates-tariff
+    url: https://www.boc.lk/rates-tariff
+    status: live
+    notes: Canonical FX + FD HTML — prefer over stale JSON.
+  - id: interest_rates_fd_json_parked
+    access: parked
+    method: GET
+    path: /api/interest-rates-fd
+    url: https://www.boc.lk/api/interest-rates-fd
+    status: parked
+    notes: PARK — live JSON but wrong vs rates-tariff HTML.
+  api_like: 0
+  html_like: 1
+  parked: 1
+- slug: cbsl-public-data-docs
+  title: CBSL Public Data
+  tier: A
+  category: macro
+  counts:
+    json_api: 2
+    pdf_document: 1
+    html_scrape: 3
+  endpoints:
+  - id: plrates_html
+    access: html_scrape
+    method: GET
+    path: /en/rates-and-indicators/policy-rates
+    url: https://www.cbsl.gov.lk/en/rates-and-indicators/policy-rates
+    status: live
+    notes: Policy rates page (OPR / corridor context).
+  - id: historical_policy_xlsx
+    access: html_scrape
+    method: GET
+    path: /historical_policy_interest_rates.xlsx
+    url: https://www.cbsl.gov.lk/sites/default/files/cbslweb_documents/statistics/sheets/historical_policy_interest_rates.xlsx
+    status: live
+    notes: Historical SDFR/SLFR/OPR Excel tip.
+  - id: eresearch_tbill_6169
+    access: json_api
+    method: GET
+    path: /eresearch/.../6169
+    url: https://www.cbsl.gov.lk/eresearch/en_US/viewReport/6169
+    status: live
+    notes: Secondary market T-bill yields (91/182/364).
+  - id: eresearch_awpr_6277
+    access: json_api
+    method: GET
+    path: /eresearch/.../6277
+    url: https://www.cbsl.gov.lk/eresearch/en_US/viewReport/6277
+    status: live
+    notes: Weekly AWPR series.
+  - id: payments_bulletin_index
+    access: pdf_document
+    method: GET
+    path: /en/payments-and-settlements/payments-bulletin
+    url: https://www.cbsl.gov.lk/en/payments-and-settlements/payments-bulletin
+    status: live
+    notes: Payments bulletin PDF index.
+  - id: fx_buying_selling_html
+    access: html_scrape
+    method: GET
+    path: /en/rates-and-indicators/exchange-rates
+    url: https://www.cbsl.gov.lk/en/rates-and-indicators/exchange-rates
+    status: live
+    notes: CBSL indicative FX HTML tables.
+  api_like: 2
+  html_like: 3
+  parked: 0
+- slug: cebcare-api-docs
+  title: CEB Care API
+  tier: A
+  category: utilities
+  counts:
+    json_api: 1
+    hybrid: 1
+  endpoints:
+  - id: demand_mgmt_schedule
+    access: hybrid
+    method: GET
+    path: /Incognito/DemandMgmtSchedule
+    url: https://cebcare.ceb.lk/Incognito/DemandMgmtSchedule
+    status: live
+    notes: HTML bootstrap for antiforgery token.
+  - id: get_demand_mgmt_clusters
+    access: json_api
+    method: GET
+    path: /Incognito/GetDemandMgmtClusters
+    url: https://cebcare.ceb.lk/Incognito/GetDemandMgmtClusters?LoadShedGroupId=A
+    status: live
+    notes: Clusters for group A–Y; requires verification token.
+  api_like: 1
+  html_like: 1
+  parked: 0
+- slug: combank-api-docs
+  title: Commercial Bank API
+  tier: A
+  category: banks
+  counts:
+    json_api: 2
+    html_scrape: 1
+  endpoints:
+  - id: exchange_rates
+    access: json_api
+    method: GET
+    path: /api/exchange-rates
+    url: https://www.combank.lk/api/exchange-rates
+    status: live
+    notes: Multi-currency TT/DD rates JSON (USD TT buy/sell).
+  - id: interest_rates_fd
+    access: json_api
+    method: GET
+    path: /api/interest-rates-fd
+    url: https://www.combank.lk/api/interest-rates-fd
+    status: live
+    notes: 'FD ladder array: paidIn, period (months), rate.'
+  - id: rewards_promotions_html
+    access: html_scrape
+    method: GET
+    path: /rewards-promotions
+    url: https://www.combank.lk/rewards-promotions
+    status: live
+    notes: HTML rewards list (~72); supermarket DOW scrape.
+  api_like: 2
+  html_like: 1
+  parked: 0
+- slug: cse-api-docs-deepen
+  title: CSE (cse.lk) API — deepen pack
+  tier: A
+  category: markets
+  counts:
+    json_api: 5
+  endpoints:
+  - id: top_gainers
+    access: json_api
+    method: POST
+    path: /topGainers
+    url: https://www.cse.lk/api/topGainers
+    status: live
+    notes: Dedicated top gainers board.
+  - id: top_looses
+    access: json_api
+    method: POST
+    path: /topLooses
+    url: https://www.cse.lk/api/topLooses
+    status: live
+    notes: Dedicated top losers (CSE spelling).
+  - id: sector_52_week
+    access: json_api
+    method: POST
+    path: /52WeekSectors
+    url: https://www.cse.lk/api/52WeekSectors
+    status: live
+    notes: 52-week / YTD sector ranges.
+  - id: trade_summary
+    access: json_api
+    method: POST
+    path: /tradeSummary
+    url: https://www.cse.lk/api/tradeSummary
+    status: live
+    notes: Full board — primary poller; client-side page in lab.
+  - id: get_announcement_by_company
+    access: json_api
+    method: POST
+    path: /getAnnouncementByCompany
+    url: https://www.cse.lk/api/getAnnouncementByCompany
+    status: live
+    notes: Company announcements by symbol.
+  api_like: 5
+  html_like: 0
+  parked: 0
+- slug: dfcc-rates-docs
+  title: DFCC Rates & Card Offers
+  tier: B
+  category: banks
+  counts:
+    html_scrape: 3
+  endpoints:
+  - id: interest_rates_page
+    access: html_scrape
+    method: GET
+    path: /interest-rates/
+    url: https://www.dfcc.lk/interest-rates/
+    status: live
+    notes: RSC-embedded deposit/loan rates.
+  - id: exchange_rates_page
+    access: html_scrape
+    method: GET
+    path: /exchange-rates/
+    url: https://www.dfcc.lk/exchange-rates/
+    status: live
+    notes: FX rates page.
+  - id: card_offers_supermarket
+    access: html_scrape
+    method: GET
+    path: /personal/cards/card-offers/
+    url: https://www.dfcc.lk/personal/cards/card-offers/
+    status: live
+    notes: Card offers hub (supermarket DOW scrape).
+  api_like: 0
+  html_like: 3
+  parked: 0
+- slug: foodlk-api-docs
+  title: FoodLK / Food Platform API
+  tier: A
+  category: food
+  counts:
+    json_api: 4
+  endpoints:
+  - id: openapi
+    access: json_api
+    method: GET
+    path: /openapi.json
+    url: https://food-platform-backend.fly.dev/openapi.json
+    status: live
+    notes: Full OpenAPI (41 paths).
+  - id: hub_manifest
+    access: json_api
+    method: GET
+    path: /api/v1/hub/manifest
+    url: https://food-platform-backend.fly.dev/api/v1/hub/manifest
+    status: live
+    notes: Often 200 when hub/summary is 500.
+  - id: hub_summary
+    access: json_api
+    method: GET
+    path: /api/v1/hub/summary
+    url: https://food-platform-backend.fly.dev/api/v1/hub/summary
+    status: live
+    notes: Preferred Lankawa surface — frequently 500.
+  - id: basket_estimate
+    access: json_api
+    method: GET
+    path: /api/v1/basket/estimate
+    url: https://food-platform-backend.fly.dev/api/v1/basket/estimate?preset=essentials
+    status: live
+    notes: Essentials staples preset.
+  api_like: 4
+  html_like: 0
+  parked: 0
+- slug: gdacs-firms-docs
+  title: GDACS + NASA FIRMS
+  tier: B
+  category: disaster
+  counts:
+    xml_cap: 1
+    csv_download: 1
+  endpoints:
+  - id: gdacs_events_rss
+    access: xml_cap
+    method: GET
+    path: /xml/rss.xml
+    url: https://www.gdacs.org/xml/rss.xml
+    status: live
+    notes: GDACS multi-hazard RSS.
+  - id: firms_csv_lk
+    access: csv_download
+    method: GET
+    path: /api/area/csv/.../VIIRS_SNPP_NRT/{bbox}/{days}
+    url: https://firms.modaps.eosdis.nasa.gov/api/area/csv/DEMO_KEY/VIIRS_SNPP_NRT/79,5.5,82,10/1
+    status: live
+    notes: FIRMS hotspot CSV for LK bbox (needs MAP_KEY).
+  api_like: 2
+  html_like: 0
+  parked: 0
+- slug: gold-retail-rates-docs
+  title: Gold retail rates research pack
+  tier: B
+  category: macro
+  counts:
+    html_scrape: 1
+  endpoints:
+  - id: cbsl_gold_page
+    access: html_scrape
+    method: GET
+    path: (see GOLD_RETAIL_RATES_RESEARCH.md)
+    url: https://www.cbsl.gov.lk/en/rates-and-indicators/exchange-rates
+    status: live
+    notes: CBSL + jeweller retail gold scrape notes.
+  api_like: 0
+  html_like: 1
+  parked: 0
+- slug: harti-cbsl-food-pdf-docs
+  title: HARTI + CBSL Food Price PDFs
+  tier: B
+  category: food
+  counts:
+    pdf_document: 2
+  endpoints:
+  - id: harti_daily_prices_index
+    access: pdf_document
+    method: GET
+    path: /market-information/daily-prices
+    url: https://www.harti.gov.lk/index.php/en/market-information/daily-prices
+    status: live
+    notes: HARTI daily price PDF index.
+  - id: cbsl_weekly_food
+    access: pdf_document
+    method: GET
+    path: /en/statistics/economic-indicators
+    url: https://www.cbsl.gov.lk/en/statistics/economic-indicators
+    status: live
+    notes: CBSL food/economic indicator PDF entry points.
+  api_like: 0
+  html_like: 0
+  parked: 0
+- slug: hnb-venus-api-docs
+  title: HNB Venus API
+  tier: A
+  category: banks
+  counts:
+    json_api: 7
+  endpoints:
+  - id: get_exchange_rates_contents_web
+    access: json_api
+    method: GET
+    path: /get_exchange_rates_contents_web
+    url: https://venus.hnb.lk/api/get_exchange_rates_contents_web
+    status: live
+    notes: FX contents for web.
+  - id: get_all_web_card_promos
+    access: json_api
+    method: GET
+    path: /get_all_web_card_promos
+    url: https://venus.hnb.lk/api/get_all_web_card_promos?page=1&limit=50&cardType=credit
+    status: live
+    notes: ~841 card promos paginated.
+  - id: get_interest_rates_contents
+    access: json_api
+    method: GET
+    path: /get_interest_rates_contents
+    url: https://venus.hnb.lk/api/get_interest_rates_contents
+    status: live
+    notes: Nested FD/savings/loans tables in table_data_approved.
+  - id: get_web_card_promo
+    access: json_api
+    method: GET
+    path: /get_web_card_promo
+    url: https://venus.hnb.lk/api/get_web_card_promo?id=1
+    status: live
+    notes: Single promo detail by id.
+  - id: get_rates_contents_web
+    access: json_api
+    method: GET
+    path: /get_rates_contents_web
+    url: https://venus.hnb.lk/api/get_rates_contents_web
+    status: live
+    notes: FX + deposit teaser with updated_on stamp.
+  - id: get_exchange_rate_last_update_date_contents
+    access: json_api
+    method: GET
+    path: /get_exchange_rate_last_update_date_contents
+    url: https://venus.hnb.lk/api/get_exchange_rate_last_update_date_contents
+    status: live
+    notes: As-of stamp for FX board.
+  - id: get_all_web_card_promos_debit
+    access: json_api
+    method: GET
+    path: /get_all_web_card_promos
+    url: https://venus.hnb.lk/api/get_all_web_card_promos?page=1&limit=50&cardType=debit
+    status: live
+    notes: Debit card promos (~93); includes Glomark supermarket.
+  api_like: 7
+  html_like: 0
+  parked: 0
+- slug: irrigation-arcgis-api-docs
+  title: Irrigation ArcGIS Gauges
+  tier: A
+  category: disaster
+  counts:
+    arcgis_api: 2
+  endpoints:
+  - id: gauges_2_view_query
+    access: arcgis_api
+    method: GET
+    path: /gauges_2_view/FeatureServer/0/query
+    url: https://services3.arcgis.com/J7ZFXmR8rSmQ3FGf/arcgis/rest/services/gauges_2_view/FeatureServer/0/query?where=1%3D1&outFields=*&orderByFields=EditDate%20DESC&resultRecordCount=50&f=json
+    status: live
+    notes: Latest river gauge readings.
+  - id: rainfall_24hr
+    access: arcgis_api
+    method: GET
+    path: /24hr_rainfall/FeatureServer/0/query
+    url: https://services3.arcgis.com/J7ZFXmR8rSmQ3FGf/arcgis/rest/services/24hr_rainfall/FeatureServer/0/query?where=1%3D1&outFields=*&resultRecordCount=50&f=json
+    status: live
+    notes: 24-hour rainfall FeatureServer.
+  api_like: 2
+  html_like: 0
+  parked: 0
+- slug: leco-outages-docs
+  title: LECO Outage Notices
+  tier: B
+  category: utilities
+  counts:
+    html_scrape: 1
+  endpoints:
+  - id: interruption_notices
+    access: html_scrape
+    method: GET
+    path: /pages_e.php?id=45
+    url: https://www.leco.lk/pages_e.php?id=45
+    status: live
+    notes: LECO interruption notices HTML.
+  api_like: 0
+  html_like: 1
+  parked: 0
+- slug: litro-laugfs-lpg-docs
+  title: Litro + LAUGFS LPG price pages
+  tier: B
+  category: fuel
+  counts:
+    html_scrape: 2
+  endpoints:
+  - id: litro_prices
+    access: html_scrape
+    method: GET
+    path: litrogas.com/
+    url: https://litrogas.com/
+    status: live
+    notes: Litro cylinder price HTML scrape surface.
+  - id: laugfs_prices
+    access: html_scrape
+    method: GET
+    path: laugfs.lk/
+    url: https://www.laugfs.lk/
+    status: live
+    notes: LAUGFS LPG price HTML.
+  api_like: 0
+  html_like: 2
+  parked: 0
+- slug: lk-flood-api-docs
+  title: lk-flood-api (nuuuwan)
+  tier: A
+  category: disaster
+  counts:
+    json_api: 1
+  endpoints:
+  - id: flood_latest
+    access: json_api
+    method: GET
+    path: /lk_flood.json
+    url: https://raw.githubusercontent.com/nuuuwan/lk_flood/data/lk_flood.json
+    status: live
+    notes: Flood station levels JSON used by Lankawa flood adapter.
+  api_like: 1
+  html_like: 0
+  parked: 0
+- slug: metdept-cap-api-docs
+  title: Met Dept CAP / Advisories
+  tier: B
+  category: disaster
+  counts:
+    xml_cap: 3
+  endpoints:
+  - id: cap_en_rss
+    access: xml_cap
+    method: GET
+    path: /images/XML/cap_en.xml
+    url: https://www.meteo.gov.lk/images/XML/cap_en.xml
+    status: live
+    notes: CAP English warnings RSS/XML.
+  - id: cap_si_rss
+    access: xml_cap
+    method: GET
+    path: /images/XML/cap_si.xml
+    url: https://www.meteo.gov.lk/images/XML/cap_si.xml
+    status: live
+    notes: CAP Sinhala warnings.
+  - id: cap_ta_rss
+    access: xml_cap
+    method: GET
+    path: /images/XML/cap_ta.xml
+    url: https://www.meteo.gov.lk/images/XML/cap_ta.xml
+    status: live
+    notes: CAP Tamil warnings.
+  api_like: 3
+  html_like: 0
+  parked: 0
+- slug: mypromo-park-docs
+  title: MyPromo.lk (park — ToS)
+  tier: B
+  category: cards
+  counts:
+    parked: 1
+  endpoints:
+  - id: mypromo_parked
+    access: parked
+    method: GET
+    path: /
+    url: https://mypromo.lk/
+    status: parked
+    notes: PARK — ToS bans scrape; prefer bank first-party.
+  api_like: 0
+  html_like: 0
+  parked: 1
+- slug: ndb-rates-docs
+  title: NDB Rates
+  tier: B
+  category: banks
+  counts:
+    html_scrape: 3
+  endpoints:
+  - id: exchange_rates
+    access: html_scrape
+    method: GET
+    path: /rates-and-tariffs/exchange-rates
+    url: https://www.ndbbank.com/rates-and-tariffs/exchange-rates
+    status: live
+    notes: FX rates HTML.
+  - id: deposit_interest
+    access: html_scrape
+    method: GET
+    path: /rates-and-tariffs/interest-rates-for-deposits
+    url: https://www.ndbbank.com/rates-and-tariffs/interest-rates-for-deposits
+    status: live
+    notes: Deposit interest HTML.
+  - id: card_offers
+    access: html_scrape
+    method: GET
+    path: /cards/offers
+    url: https://www.ndbbank.com/cards/offers
+    status: live
+    notes: Card offers HTML.
+  api_like: 0
+  html_like: 3
+  parked: 0
+- slug: nsb-rates-docs
+  title: NSB Rates Pages
+  tier: B
+  category: banks
+  counts:
+    html_scrape: 2
+  endpoints:
+  - id: deposit_rates_html
+    access: html_scrape
+    method: GET
+    path: /rates-tarriffs/deposit-rates/
+    url: https://www.nsb.lk/rates-tarriffs/deposit-rates/
+    status: live
+    notes: Deposit rates HTML (note path typo tarriffs).
+  - id: exchange_rates_html
+    access: html_scrape
+    method: GET
+    path: /rates-tarriffs/exchange-rates/
+    url: https://www.nsb.lk/rates-tarriffs/exchange-rates/
+    status: live
+    notes: FX TT HTML board.
+  api_like: 0
+  html_like: 2
+  parked: 0
+- slug: ntb-amex-offers-docs
+  title: NTB Mastercard + Amex Offers
+  tier: B
+  category: cards
+  counts:
+    html_scrape: 2
+  endpoints:
+  - id: ntb_promotions_hub
+    access: html_scrape
+    method: GET
+    path: /personal/cards/promotions
+    url: https://www.ntb.lk/personal/cards/promotions
+    status: live
+    notes: NTB card promotions hub HTML.
+  - id: amex_supermarket_offers
+    access: html_scrape
+    method: GET
+    path: /benefits/consumer/supermarket-offers/
+    url: https://www.americanexpress.lk/en-lk/benefits/consumer/supermarket-offers/
+    status: live
+    notes: Amex LK supermarket offers HTML.
+  api_like: 0
+  html_like: 2
+  parked: 0
+- slug: nwsdb-bill-api-docs
+  title: NWSDB Bill Calculator API
+  tier: A
+  category: utilities
+  counts:
+    json_api: 2
+  endpoints:
+  - id: bill_calculator
+    access: json_api
+    method: POST
+    path: /api_nwsdb/bill/BillCalculator
+    url: https://ebis.waterboard.lk/api_nwsdb/bill/BillCalculator
+    status: live
+    notes: Domestic bill estimate.
+  - id: get_tariff_adjustment
+    access: json_api
+    method: GET
+    path: /api_nwsdb/bill/getTariffAdjustment
+    url: https://ebis.waterboard.lk/api_nwsdb/bill/getTariffAdjustment
+    status: live
+    notes: Tariff adjustment metadata.
+  api_like: 2
+  html_like: 0
+  parked: 0
+- slug: octane-fuel-api-docs
+  title: Octane Fuel API
+  tier: B
+  category: fuel
+  counts:
+    json_api: 2
+  endpoints:
+  - id: prices_latest
+    access: json_api
+    method: GET
+    path: /v1/prices/latest
+    url: https://octane-api.fly.dev/v1/prices/latest
+    status: live
+    notes: Latest fuel prices.
+  - id: comparison_world
+    access: json_api
+    method: GET
+    path: /v1/comparison/world
+    url: https://octane-api.fly.dev/v1/comparison/world
+    status: live
+    notes: World pump compare.
+  api_like: 2
+  html_like: 0
+  parked: 0
+- slug: open-meteo-lk-docs
+  title: Open-Meteo Sri Lanka Recipes
+  tier: B
+  category: weather
+  counts:
+    json_api: 3
+  endpoints:
+  - id: forecast_colombo
+    access: json_api
+    method: GET
+    path: /v1/forecast
+    url: https://api.open-meteo.com/v1/forecast?latitude=6.9271&longitude=79.8612&daily=uv_index_max,precipitation_sum&timezone=Asia%2FColombo
+    status: live
+    notes: Colombo daily forecast.
+  - id: air_quality_colombo
+    access: json_api
+    method: GET
+    path: /v1/air-quality
+    url: https://air-quality-api.open-meteo.com/v1/air-quality?latitude=6.9271&longitude=79.8612&hourly=pm2_5,us_aqi
+    status: live
+    notes: Colombo air quality.
+  - id: marine_colombo
+    access: json_api
+    method: GET
+    path: /v1/marine
+    url: https://marine-api.open-meteo.com/v1/marine?latitude=6.9271&longitude=79.8612&hourly=wave_height
+    status: live
+    notes: Colombo marine wave height.
+  api_like: 3
+  html_like: 0
+  parked: 0
+- slug: openaq-lk-docs
+  title: OpenAQ Sri Lanka
+  tier: A
+  category: weather
+  counts:
+    json_api: 1
+  endpoints:
+  - id: locations_lk
+    access: json_api
+    method: GET
+    path: /v3/locations
+    url: https://api.openaq.org/v3/locations?countries_id=207&limit=100
+    status: live
+    notes: LK monitoring locations (country id may change).
+  api_like: 1
+  html_like: 0
+  parked: 0
+- slug: pabc-card-offers-docs
+  title: Pan Asia Bank Card Offers
+  tier: B
+  category: cards
+  counts:
+    pdf_document: 1
+    html_scrape: 1
+  endpoints:
+  - id: card_offers_js
+    access: html_scrape
+    method: GET
+    path: /personal/cards/offers
+    url: https://www.pabc.com/personal/cards/offers
+    status: live
+    notes: Offers page; arr_offers JS after Sucuri cookie.
+  - id: senior_fd_html
+    access: pdf_document
+    method: GET
+    path: /personal/deposits/senior-citizens-fixed-deposit
+    url: https://www.pabc.com/personal/deposits/senior-citizens-fixed-deposit
+    status: live
+    notes: Senior FD HTML (main ladder may be PDF-only).
+  api_like: 0
+  html_like: 1
+  parked: 0
+- slug: peoples-bank-rates-docs
+  title: People's Bank Rates
+  tier: B
+  category: banks
+  counts:
+    html_scrape: 3
+  endpoints:
+  - id: exchange_rates_html
+    access: html_scrape
+    method: GET
+    path: /exchange-rates/
+    url: https://www.peoplesbank.lk/exchange-rates/
+    status: live
+    notes: FX TT HTML.
+  - id: interest_rates_html
+    access: html_scrape
+    method: GET
+    path: /interest-rates/
+    url: https://www.peoplesbank.lk/interest-rates/
+    status: live
+    notes: Deposit/loan interest HTML.
+  - id: offer_cards
+    access: html_scrape
+    method: GET
+    path: /card-offers/
+    url: https://www.peoplesbank.lk/card-offers/
+    status: live
+    notes: Card offer listing HTML.
+  api_like: 0
+  html_like: 3
+  parked: 0
+- slug: promise-lk-tenders-docs
+  title: Promise.lk tenders
+  tier: B
+  category: platform
+  counts:
+    html_scrape: 1
+  endpoints:
+  - id: procurements_list
+    access: html_scrape
+    method: GET
+    path: /
+    url: https://promise.lk/
+    status: live
+    notes: Public procurement listings (scrape/API as probed).
+  api_like: 0
+  html_like: 1
+  parked: 0
+- slug: sampath-api-docs
+  title: Sampath Bank API
+  tier: A
+  category: banks
+  counts:
+    json_api: 3
+  endpoints:
+  - id: exchange_rates
+    access: json_api
+    method: GET
+    path: /api/exchange-rates
+    url: https://www.sampath.lk/api/exchange-rates
+    status: live
+    notes: TTBUY/TTSEL FX JSON.
+  - id: rates_and_charges_external
+    access: json_api
+    method: GET
+    path: /api/rates-and-charges/external
+    url: https://www.sampath.lk/api/rates-and-charges/external
+    status: live
+    notes: local.term_and_deposite FD slabs + savings.
+  - id: card_promotions_super_markets
+    access: json_api
+    method: GET
+    path: /api/card-promotions
+    url: https://www.sampath.lk/api/card-promotions?category=super_markets&page_number=1&size=20
+    status: live
+    notes: Supermarket card offers JSON.
+  api_like: 3
+  html_like: 0
+  parked: 0
+- slug: sc-hsbc-offers-park-docs
+  title: Standard Chartered + HSBC LK offers (park notes)
+  tier: B
+  category: cards
+  counts:
+    parked: 2
+  endpoints:
+  - id: sc_tgl_offers_json_parked
+    access: parked
+    method: GET
+    path: /lk/offers.json
+    url: https://www.sc.com/lk/offers.json
+    status: parked
+    notes: PARK — TGL offers.json mostly expired on probe.
+  - id: hsbc_retail_parked
+    access: parked
+    method: GET
+    path: /
+    url: https://www.hsbc.lk/
+    status: parked
+    notes: PARK — HSBC LK retail sold to NTB; offer URLs dead.
+  api_like: 0
+  html_like: 0
+  parked: 2
+- slug: sdb-rates-docs
+  title: SANASA Development Bank rates
+  tier: B
+  category: banks
+  counts:
+    html_scrape: 1
+  endpoints:
+  - id: rates_page
+    access: html_scrape
+    method: GET
+    path: /rates/
+    url: https://www.sdb.lk/rates/
+    status: live
+    notes: SDB rates HTML surfaces.
+  api_like: 0
+  html_like: 1
+  parked: 0
+- slug: seylan-api-docs
+  title: Seylan Bank API
+  tier: A
+  category: banks
+  counts:
+    json_api: 1
+    hybrid: 1
+  endpoints:
+  - id: exchange_rates_usd
+    access: json_api
+    method: GET
+    path: /api/exchange-rates-get-value/{CCY}
+    url: https://www.seylan.lk/api/exchange-rates-get-value/USD
+    status: live
+    notes: Per-currency FX JSON.
+  - id: get_fd_data
+    access: hybrid
+    method: GET
+    path: /get-fd-data
+    url: https://www.seylan.lk/get-fd-data
+    status: live
+    notes: FD calculator JSON (Content-Type may lie text/html).
+  api_like: 1
+  html_like: 1
+  parked: 0
+- slug: singer-emi-api-docs
+  title: Singer Sri Lanka EMI API
+  tier: B
+  category: retail
+  counts:
+    json_api: 1
+  endpoints:
+  - id: json_get_emi
+    access: json_api
+    method: GET
+    path: /json-get-emi
+    url: https://www.singersl.com/json-get-emi?product_id=7884&product_price=53699
+    status: live
+    notes: Multi-bank EMI rows for a SKU.
+  api_like: 1
+  html_like: 0
+  parked: 0
+- slug: sl-bank-card-offers-docs
+  title: SL Bank Supermarket Card Offers
+  tier: B
+  category: cards
+  counts:
+    hybrid: 1
+  endpoints:
+  - id: pack_overview
+    access: hybrid
+    method: GET
+    path: (multi-host pack)
+    url: https://www.sampath.lk/api/card-promotions?category=super_markets&page_number=1&size=20
+    status: live
+    notes: 'Aggregator pack: Sampath + HNB Venus + ComBank HTML + peers → supermarket
+      DOW.'
+  api_like: 0
+  html_like: 1
+  parked: 0
+- slug: sl-bank-fd-rates-docs
+  title: SL Bank Fixed Deposit Rates
+  tier: B
+  category: banks
+  counts:
+    json_api: 1
+  endpoints:
+  - id: pack_overview
+    access: json_api
+    method: GET
+    path: (multi-host pack)
+    url: https://www.combank.lk/api/interest-rates-fd
+    status: live
+    notes: 'Aggregator: ComBank/Sampath/Seylan/HNB FD JSON → unified ladder.'
+  api_like: 1
+  html_like: 0
+  parked: 0
+- slug: sl-bank-remittance-tt-docs
+  title: SL Bank Remittance TT Rates
+  tier: B
+  category: banks
+  counts:
+    json_api: 1
+  endpoints:
+  - id: pack_overview
+    access: json_api
+    method: GET
+    path: (multi-host pack)
+    url: https://www.combank.lk/api/exchange-rates
+    status: live
+    notes: 'Aggregator: ComBank/Sampath/HNB/Seylan/NSB/DFCC/BOC/People''s/NDB TT boards.'
+  api_like: 1
+  html_like: 0
+  parked: 0
+- slug: softlogic-emi-park-docs
+  title: Softlogic EMI (park — heavy crawl)
+  tier: B
+  category: retail
+  counts:
+    parked: 1
+  endpoints:
+  - id: variation_detail_parked
+    access: parked
+    method: GET
+    path: /variation-detail/{id}
+    url: https://www.softlogic.lk/
+    status: parked
+    notes: PARK — per-SKU EMI crawl too heavy vs Singer json-get-emi.
+  api_like: 0
+  html_like: 0
+  parked: 1
+- slug: visa-lk-perks-api-docs
+  title: Visa LK Perks API
+  tier: A
+  category: cards
+  counts:
+    json_api: 1
+  endpoints:
+  - id: portal_perks
+    access: json_api
+    method: POST
+    path: /offers/api/portal/portal/perks/
+    url: https://www.visa.com.lk/offers/api/portal/portal/perks/
+    status: live
+    notes: VMORC perks; needs siteId + perkTypeRequests body.
+  api_like: 1
+  html_like: 0
+  parked: 0
+- slug: wfp-hdx-lka-food-docs
+  title: WFP HDX Sri Lanka Food Prices
+  tier: A
+  category: food
+  counts:
+    csv_download: 1
+  endpoints:
+  - id: wfp_food_prices_lka_csv
+    access: csv_download
+    method: GET
+    path: /download/wfp_food_prices_lka.csv
+    url: https://data.humdata.org/dataset/0298c598-d312-4771-b564-f4ac4d831f05/resource/3638f0d6-9969-48cf-a919-1d879d037ec6/download/wfp_food_prices_lka.csv
+    status: live
+    notes: Full LKA CSV (~34k rows).
+  api_like: 1
+  html_like: 0
+  parked: 0

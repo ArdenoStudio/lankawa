@@ -32,12 +32,14 @@ You are extracting **unofficial Sri Lanka API documentation packages** from the 
 8. **Do not publish secrets.** No FIRMS `MAP_KEY` in git — document env var. No Visa session cookies.
 9. **Pagination lab endpoints** (`pagination.lab: true` in YAML) must get a dedicated `docs/PAGINATION.md` section with parameter tables and curl examples for page 1 vs page 2 (or offset 0 vs N).
 10. **Field coverage:** Copy the relevant rows for this slug from `api-docs/FIELD_COVERAGE_MATRIX.md` into `docs/FIELD_COVERAGE.md` (canonical fields + Y/P/N/K). Expand with native upstream field names → canonical map (see Lankawa `docs/BANK_FD_API_SCHEMAS.md` for FD style).
-11. **Link back** in each README: “Research staged in ArdenoStudio/lankawa `api-docs/packages/<slug>`” and cite `source_docs_in_lankawa` paths.
-12. **GitHub Pages** via `.github/workflows/pages.yml` building `site/` from `scripts/build_site.py`.
-13. **Weekly probe** via `.github/workflows/probe.yml` (Monday cron + workflow_dispatch), upload `catalog/last_probe.json` + `samples/` as artifacts.
-14. **Do not copy Lankawa product UI** (Next.js, i18n, teal cards). Extracted repos are static docs + Python harness only.
-15. **Commit quality:** conventional, descriptive commits; meaningful initial README; tag `v0.1.0` after first green probe (optional but preferred).
-16. **If an endpoint 404s/500s on first probe:** keep it in `endpoints.yaml` with `status: degraded|parked` and a note — do not silently delete research.
+11. **HTML vs API:** Keep `docs/HTML_VS_API.md` and the `access:` field on each endpoint (`json_api`, `html_scrape`, `pdf_document`, `csv_download`, `xml_cap`, `arcgis_api`, `hybrid`, `parked`). Prefer machine surfaces when accurate; document why HTML wins when it does (e.g. BOC rates-tariff).
+12. **Catalog changelog:** Keep `CHANGELOG.md`, `catalog/.endpoints.fingerprint.json`, and `.github/workflows/catalog-changelog.yml` so edits to `catalog/endpoints.yaml` auto-append changelog entries after extraction.
+13. **Link back** in each README: “Research staged in ArdenoStudio/lankawa `api-docs/packages/<slug>`” and cite `source_docs_in_lankawa` paths.
+14. **GitHub Pages** via `.github/workflows/pages.yml` building `site/` from `scripts/build_site.py`.
+15. **Weekly probe** via `.github/workflows/probe.yml` (Monday cron + workflow_dispatch), upload `catalog/last_probe.json` + `samples/` as artifacts.
+16. **Do not copy Lankawa product UI** (Next.js, i18n, teal cards). Extracted repos are static docs + Python harness only.
+17. **Commit quality:** conventional, descriptive commits; meaningful initial README; tag `v0.1.0` after first green probe (optional but preferred).
+18. **If an endpoint 404s/500s on first probe:** keep it in `endpoints.yaml` with `status: degraded|parked` and a note — do not silently delete research.
 
 ### Per-package checklist (run for EVERY slug)
 
@@ -59,9 +61,11 @@ You are extracting **unofficial Sri Lanka API documentation packages** from the 
 [ ] typescript/ client (from staging) — `npm install && npm run typecheck`; keep README + smoke
 [ ] javascript/ client (from staging) — zero-build `client.mjs`; `node examples/smoke.mjs`
 [ ] Client extras: `models` + `pagination` iterator + `shard` helper (Python/TS/JS) — see docs/CLIENT_EXTRAS.md
+[ ] docs/HTML_VS_API.md + access: on every endpoint in catalog/endpoints.yaml
+[ ] CHANGELOG.md + catalog/.endpoints.fingerprint.json + .github/workflows/catalog-changelog.yml
 [ ] scripts/probe.py works locally
 [ ] scripts/build_site.py writes site/index.html
-[ ] .github/workflows/probe.yml + pages.yml
+[ ] .github/workflows/probe.yml + pages.yml + catalog-changelog.yml
 [ ] LICENSE (MIT harness)
 [ ] requirements.txt
 [ ] Run probe once; commit redacted samples/ if safe (or gitignore samples and keep artifact-only)

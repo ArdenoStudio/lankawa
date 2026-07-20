@@ -18,9 +18,13 @@ Each folder under `packages/<slug>/` is designed to become its **own public GitH
 | `TYPESCRIPT_CLIENTS.md` | Index of TS + JS clients for every package |
 | `PYTHON_CLIENTS.md` | Index of polished Python packages for every package |
 | `CLIENT_EXTRAS.md` | Typed models + pagination iterator + shard helper (all stacks) |
+| `HTML_VS_API.md` / `.yaml` | HTML scrape vs JSON/API classification for every endpoint |
+| `CHANGELOG.md` | Rollup of per-package catalog changelogs |
 | `packages/<slug>/typescript/` | Typed unofficial client (`npm run typecheck`) |
 | `packages/<slug>/javascript/` | Zero-build ESM twin (`client.mjs`) |
 | `packages/<slug>/python/` | Installable unofficial helper (`pip install -e .`) |
+| `packages/<slug>/CHANGELOG.md` | Auto-updated when `catalog/endpoints.yaml` changes |
+| `packages/<slug>/docs/HTML_VS_API.md` | Per-package access table (`access:` on each endpoint) |
 
 ## Tiers
 
@@ -30,11 +34,14 @@ Each folder under `packages/<slug>/` is designed to become its **own public GitH
 ## Package layout (every slug)
 
 ```
-catalog/endpoints.yaml   # source of truth
+catalog/endpoints.yaml   # source of truth (access: json_api|html_scrape|…)
+catalog/.endpoints.fingerprint.json  # changelog automation state
+CHANGELOG.md             # auto on catalog changes
 samples/                 # probe artefacts (gitignored or redacted)
 scripts/probe.py
 scripts/build_site.py
 docs/ETHICS.md
+docs/HTML_VS_API.md      # scrape vs API table
 examples/
 python/                  # installable unofficial helper (cse-api-docs style)
 typescript/              # typed unofficial client
@@ -42,6 +49,7 @@ javascript/              # zero-build ESM twin
 site/                    # static Pages output
 .github/workflows/probe.yml
 .github/workflows/pages.yml
+.github/workflows/catalog-changelog.yml
 PACKAGE.yaml
 README.md
 LICENSE                  # MIT for harness only
@@ -57,6 +65,8 @@ python3 scripts/build-field-coverage-matrix.py  # FIELD_COVERAGE_MATRIX + app JS
 python3 scripts/scaffold-ts-clients.py          # typescript/ + javascript/ clients for all packages
 python3 scripts/scaffold-py-clients.py          # polish python/ packages for all packages
 python3 scripts/scaffold-client-extras.py       # models + pagination iterator + shard helper
+python3 scripts/build-html-vs-api.py            # HTML vs API matrix + access: stamps
+python3 scripts/update-api-catalog-changelog.py # CHANGELOG.md + fingerprints + workflows
 ```
 
 ## In-app explorer
@@ -67,6 +77,8 @@ python3 scripts/scaffold-client-extras.py       # models + pagination iterator +
 - TS/JS clients index: `/[locale]/developers/api-catalog/ts-clients`
 - Python clients index: `/[locale]/developers/api-catalog/py-clients`
 - Client extras (models/pagination/shard): see `CLIENT_EXTRAS.md`
+- HTML scrape vs API: `/[locale]/developers/api-catalog/html-vs-api`
+- Catalog changelogs: `/[locale]/developers/api-catalog/changelog`
 
 Lab endpoints are those with `pagination.lab: true` in `catalog/endpoints.yaml` (HNB page/limit, Sampath page_number, ArcGIS offset, Visa pageRequest, CEB A–Y groups, CSE client slice, WFP full download, …).
 

@@ -19,6 +19,7 @@ endpoints:
       resultOffset: offset
       resultRecordCount: page size
     lab: true
+  access: arcgis_api
 - id: rainfall_24hr
   method: GET
   url: https://services3.arcgis.com/J7ZFXmR8rSmQ3FGf/arcgis/rest/services/24hr_rainfall/FeatureServer/0/query?where=1%3D1&outFields=*&resultRecordCount=50&f=json
@@ -27,3 +28,4 @@ endpoints:
   pagination:
     style: arcgis
     lab: true
+  access: arcgis_api

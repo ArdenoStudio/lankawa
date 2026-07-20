@@ -13,3 +13,4 @@ endpoints:
   url: https://www.leco.lk/pages_e.php?id=45
   path: /pages_e.php?id=45
   summary: LECO interruption notices HTML.
+  access: html_scrape

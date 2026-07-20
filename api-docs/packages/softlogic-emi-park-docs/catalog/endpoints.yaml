@@ -13,3 +13,4 @@ endpoints:
   path: /variation-detail/{id}
   summary: PARK — per-SKU EMI crawl too heavy vs Singer json-get-emi.
   status: parked
+  access: parked

@@ -14,3 +14,4 @@ endpoints:
   path: /
   summary: PARK — ToS bans scrape; prefer bank first-party.
   status: parked
+  access: parked

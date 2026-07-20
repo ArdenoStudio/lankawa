@@ -19,3 +19,4 @@ endpoints:
       limit: page size
       page: 1-based
     lab: true
+  access: json_api

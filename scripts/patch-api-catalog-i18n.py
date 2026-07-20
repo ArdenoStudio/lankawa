@@ -143,6 +143,57 @@ NEW = {
         "    for page in iter_lab_endpoint(client, 'get_all_web_card_promos', max_pages=2):\n"
         "        print(page.page, len(page.items))"
     ),
+    "htmlVsApiTitle": "HTML scrape vs API",
+    "htmlVsApiSubtitle": (
+        "Every Tier A/B catalog endpoint classified as JSON/API, HTML scrape, "
+        "PDF/CSV/XML, hybrid bootstrap, or parked."
+    ),
+    "htmlVsApiBanner": (
+        "Source: access: stamps on catalog/endpoints.yaml. "
+        "See api-docs/HTML_VS_API.md and each package docs/HTML_VS_API.md. "
+        "Regenerate with scripts/build-html-vs-api.py."
+    ),
+    "htmlVsApiNavLink": "Open HTML vs API comparison",
+    "htmlVsApiStats": (
+        "{packages} packages · {endpoints} endpoints · "
+        "{apiLike} API-like · {htmlLike} HTML/hybrid"
+    ),
+    "htmlVsApiColPackage": "Package",
+    "htmlVsApiColTier": "Tier",
+    "htmlVsApiColApi": "API-like",
+    "htmlVsApiColHtml": "HTML/hybrid",
+    "htmlVsApiColParked": "Parked",
+    "htmlVsApiColDominant": "Dominant",
+    "htmlVsApiDetailTitle": "Per-package endpoints",
+    "catalogChangelogTitle": "Catalog changelogs",
+    "catalogChangelogSubtitle": (
+        "Automated changelog entries when catalog/endpoints.yaml changes — "
+        "every package ships CHANGELOG.md plus a catalog-changelog GitHub Action."
+    ),
+    "catalogChangelogBanner": (
+        "Fingerprints live at catalog/.endpoints.fingerprint.json. "
+        "Regenerate with scripts/update-api-catalog-changelog.py. "
+        "Monorepo workflow: .github/workflows/api-docs-catalog-changelog.yml."
+    ),
+    "catalogChangelogNavLink": "Open catalog changelogs",
+    "catalogChangelogStats": (
+        "{count} packages · generated {generated} · {updates} updates in last run"
+    ),
+    "catalogChangelogRecentTitle": "Latest catalog updates",
+    "catalogChangelogAllTitle": "All packages",
+    "catalogChangelogEmpty": "No recent catalog fingerprint updates.",
+    "catalogChangelogColPackage": "Package",
+    "catalogChangelogColDate": "Date",
+    "catalogChangelogColEndpoints": "Endpoints",
+    "catalogChangelogColDiff": "Diff",
+    "catalogChangelogColFiles": "Automation files",
+    "catalogChangelogBootstrap": "Bootstrap fingerprint",
+    "catalogChangelogDiff": "+{added} / -{removed} / ~{changed}",
+    "catalogChangelogExample": (
+        "python3 scripts/build-html-vs-api.py\n"
+        "python3 scripts/update-api-catalog-changelog.py\n"
+        "# On catalog edits after extraction, catalog-changelog.yml appends CHANGELOG.md"
+    ),
 }
 
 

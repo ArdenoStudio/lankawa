@@ -12,6 +12,7 @@ endpoints:
   url: https://www.gdacs.org/xml/rss.xml
   path: /xml/rss.xml
   summary: GDACS multi-hazard RSS.
+  access: xml_cap
 - id: firms_csv_lk
   method: GET
   url: https://firms.modaps.eosdis.nasa.gov/api/area/csv/DEMO_KEY/VIIRS_SNPP_NRT/79,5.5,82,10/1
@@ -22,3 +23,4 @@ endpoints:
     params:
       days: 1-10
     lab: true
+  access: csv_download

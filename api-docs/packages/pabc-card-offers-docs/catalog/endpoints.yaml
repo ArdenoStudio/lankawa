@@ -16,8 +16,10 @@ endpoints:
     style: client_array
     lab: true
     notes: Parse arr_offers after WAF cookie
+  access: html_scrape
 - id: senior_fd_html
   method: GET
   url: https://www.pabc.com/personal/deposits/senior-citizens-fixed-deposit
   path: /personal/deposits/senior-citizens-fixed-deposit
   summary: Senior FD HTML (main ladder may be PDF-only).
+  access: pdf_document

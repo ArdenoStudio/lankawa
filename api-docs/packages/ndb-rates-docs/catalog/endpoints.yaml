@@ -12,13 +12,16 @@ endpoints:
   url: https://www.ndbbank.com/rates-and-tariffs/exchange-rates
   path: /rates-and-tariffs/exchange-rates
   summary: FX rates HTML.
+  access: html_scrape
 - id: deposit_interest
   method: GET
   url: https://www.ndbbank.com/rates-and-tariffs/interest-rates-for-deposits
   path: /rates-and-tariffs/interest-rates-for-deposits
   summary: Deposit interest HTML.
+  access: html_scrape
 - id: card_offers
   method: GET
   url: https://www.ndbbank.com/cards/offers
   path: /cards/offers
   summary: Card offers HTML.
+  access: html_scrape

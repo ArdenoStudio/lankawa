@@ -12,3 +12,4 @@ endpoints:
   url: https://www.sdb.lk/rates/
   path: /rates/
   summary: SDB rates HTML surfaces.
+  access: html_scrape

@@ -13,8 +13,10 @@ endpoints:
   url: https://litrogas.com/
   path: litrogas.com/
   summary: Litro cylinder price HTML scrape surface.
+  access: html_scrape
 - id: laugfs_prices
   method: GET
   url: https://www.laugfs.lk/
   path: laugfs.lk/
   summary: LAUGFS LPG price HTML.
+  access: html_scrape

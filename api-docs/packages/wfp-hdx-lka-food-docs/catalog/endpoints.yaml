@@ -16,3 +16,4 @@ endpoints:
     style: full_download
     notes: No server pagination — client chunk/filter
     lab: true
+  access: csv_download

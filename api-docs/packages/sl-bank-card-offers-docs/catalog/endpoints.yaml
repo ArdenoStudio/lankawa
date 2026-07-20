@@ -17,3 +17,4 @@ endpoints:
     style: multi_host
     lab: true
     notes: See sibling bank packages for per-host pagination
+  access: hybrid

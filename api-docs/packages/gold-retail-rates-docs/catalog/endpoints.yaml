@@ -13,3 +13,4 @@ endpoints:
   url: https://www.cbsl.gov.lk/en/rates-and-indicators/exchange-rates
   path: (see GOLD_RETAIL_RATES_RESEARCH.md)
   summary: CBSL + jeweller retail gold scrape notes.
+  access: html_scrape

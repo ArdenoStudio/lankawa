@@ -13,11 +13,13 @@ endpoints:
   url: https://www.sampath.lk/api/exchange-rates
   path: /api/exchange-rates
   summary: TTBUY/TTSEL FX JSON.
+  access: json_api
 - id: rates_and_charges_external
   method: GET
   url: https://www.sampath.lk/api/rates-and-charges/external
   path: /api/rates-and-charges/external
   summary: local.term_and_deposite FD slabs + savings.
+  access: json_api
 - id: card_promotions_super_markets
   method: GET
   url: https://www.sampath.lk/api/card-promotions?category=super_markets&page_number=1&size=20
@@ -29,3 +31,4 @@ endpoints:
       page_number: 1-based
       size: page size
     lab: true
+  access: json_api

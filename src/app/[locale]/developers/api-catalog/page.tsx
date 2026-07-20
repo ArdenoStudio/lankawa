@@ -55,6 +55,18 @@ export default async function ApiCatalogPage({
         >
           {t("clientExtrasNavLink")}
         </Link>
+        <Link
+          href="/developers/api-catalog/html-vs-api"
+          className="text-teal-300 hover:text-teal-200"
+        >
+          {t("htmlVsApiNavLink")}
+        </Link>
+        <Link
+          href="/developers/api-catalog/changelog"
+          className="text-teal-300 hover:text-teal-200"
+        >
+          {t("catalogChangelogNavLink")}
+        </Link>
         <a
           href="https://github.com/ArdenoStudio/lankawa/tree/main/api-docs"
           className="text-teal-300 hover:text-teal-200"

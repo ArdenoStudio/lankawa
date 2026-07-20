@@ -12,13 +12,16 @@ endpoints:
   url: https://www.dfcc.lk/interest-rates/
   path: /interest-rates/
   summary: RSC-embedded deposit/loan rates.
+  access: html_scrape
 - id: exchange_rates_page
   method: GET
   url: https://www.dfcc.lk/exchange-rates/
   path: /exchange-rates/
   summary: FX rates page.
+  access: html_scrape
 - id: card_offers_supermarket
   method: GET
   url: https://www.dfcc.lk/personal/cards/card-offers/
   path: /personal/cards/card-offers/
   summary: Card offers hub (supermarket DOW scrape).
+  access: html_scrape

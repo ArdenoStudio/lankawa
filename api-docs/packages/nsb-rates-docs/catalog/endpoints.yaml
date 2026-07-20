@@ -12,8 +12,10 @@ endpoints:
   url: https://www.nsb.lk/rates-tarriffs/deposit-rates/
   path: /rates-tarriffs/deposit-rates/
   summary: Deposit rates HTML (note path typo tarriffs).
+  access: html_scrape
 - id: exchange_rates_html
   method: GET
   url: https://www.nsb.lk/rates-tarriffs/exchange-rates/
   path: /rates-tarriffs/exchange-rates/
   summary: FX TT HTML board.
+  access: html_scrape

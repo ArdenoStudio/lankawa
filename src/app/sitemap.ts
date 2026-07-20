@@ -38,6 +38,8 @@ const MODULE_PATHS = [
   "developers/api-catalog/ts-clients",
   "developers/api-catalog/py-clients",
   "developers/api-catalog/client-extras",
+  "developers/api-catalog/html-vs-api",
+  "developers/api-catalog/changelog",
   "embed",
   "assistant",
   "ardeno",

@@ -13,3 +13,4 @@ endpoints:
   path: (multi-host pack)
   summary: 'Aggregator: ComBank/Sampath/HNB/Seylan/NSB/DFCC/BOC/People''s/NDB TT boards.'
   pagination: null
+  access: json_api
