@@ -78,6 +78,21 @@ export const SL_NEWS_FEEDS = [
     name: "Disaster Management Centre",
     url: "https://www.dmc.gov.lk/index.php?option=com_content&view=category&id=9&Itemid=274&lang=en&format=feed&type=rss",
   },
+  {
+    id: "moh_rss",
+    name: "Ministry of Health",
+    url: "https://www.health.gov.lk/feed/",
+  },
+  {
+    id: "cpa_rss",
+    name: "Centre for Policy Alternatives",
+    url: "https://www.cpalanka.org/feed/",
+  },
+  {
+    id: "verite_rss",
+    name: "Verité Research",
+    url: "https://www.veriteresearch.org/feed/",
+  },
 ] satisfies NewsFeedDefinition[];
 
 export interface NewsHeadline {

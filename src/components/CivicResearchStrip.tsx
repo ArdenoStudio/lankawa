@@ -5,7 +5,7 @@ import { getSourceProvenancePath } from "@/lib/sources";
 
 export async function CivicResearchStrip({ locale }: { locale: string }) {
   const t = await getTranslations("civic");
-  const snapshot = getCivicResearchSnapshot();
+  const snapshot = await getCivicResearchSnapshot();
 
   return (
     <section className="space-y-4">

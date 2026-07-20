@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { getFxSeries } from "@/lib/economy";
 import { computeFxAnomaly } from "@/lib/fx-anomaly";
 import { getFuelHistorySeries } from "@/lib/fuel";
+import { getTodaysCardOffers } from "@/lib/integrations/card-offers";
 import { fetchColomboWeather } from "@/lib/integrations/weather";
 
 type DeltaItem = {
@@ -38,10 +39,11 @@ function getLatestPair<T extends { date?: string; recorded_at?: string }>(
 
 export async function MorningDeltaStrip() {
   const t = await getTranslations("home");
-  const [fxSeries, fuelSeries, weather] = await Promise.all([
+  const [fxSeries, fuelSeries, weather, cardOffers] = await Promise.all([
     getFxSeries(),
     getFuelHistorySeries(10),
     fetchColomboWeather().catch(() => null),
+    getTodaysCardOffers().catch(() => null),
   ]);
 
   const items: DeltaItem[] = [];
@@ -100,6 +102,28 @@ export async function MorningDeltaStrip() {
         href: "/disaster",
       });
     }
+  }
+
+  if (cardOffers) {
+    const count = cardOffers.offers.length;
+    const lead = cardOffers.offers[0];
+    const baseLabel =
+      count === 0
+        ? t("morningDeltaCardDaysNone")
+        : lead
+          ? t("morningDeltaCardDaysValue", {
+              count,
+              merchant: lead.merchant,
+              discount: lead.discountLabel,
+            })
+          : t("morningDeltaCardDaysCount", { count });
+    items.push({
+      id: "card-days",
+      label: t("morningDeltaCardDays"),
+      deltaLabel: cardOffers.isSeed ? `${baseLabel} · seed` : baseLabel,
+      asOf: cardOffers.asOf,
+      href: "/food",
+    });
   }
 
   if (items.length === 0) {

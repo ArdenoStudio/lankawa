@@ -79,6 +79,8 @@ PF-0 ──► PF-1 ──► PF-2
 |----------------------|------|
 | News feeds/clusters/brief | `NEWS_RSS_MASTER_PLAN.md` |
 | Satellite / weather APIs | `DATA_EXPANSION_RESEARCH.md` |
+| Making seed → live | `LIVE_DATA_PLAN.md` |
+| FoodLK / WFP / HARTI / retail JSON | `FOOD_API_SOURCES.md` |
 | UI brand rules | `BRAND.md` |
 | Whole platform gates | `MASTER_PLAN.md` |
 

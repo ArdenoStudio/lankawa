@@ -8,6 +8,7 @@ import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { GlofasBasinPanel } from "@/components/GlofasBasinPanel";
 import { HazardPinsPanel } from "@/components/HazardPinsPanel";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
+import { IrrigationGaugesPanel } from "@/components/IrrigationGaugesPanel";
 import { LandslidePanel } from "@/components/LandslidePanel";
 import { MetDeptWarningsPanel } from "@/components/MetDeptWarningsPanel";
 import { Link } from "@/i18n/navigation";
@@ -16,6 +17,7 @@ import { fetchEarthquakeSnapshot } from "@/lib/integrations/earthquake";
 import { fetchFirmsSnapshot } from "@/lib/integrations/firms";
 import { fetchGdacsSnapshot } from "@/lib/integrations/gdacs";
 import { fetchGlofasBasinSnapshot } from "@/lib/integrations/glofas";
+import { fetchIrrigationGaugesSnapshot } from "@/lib/integrations/irrigation-gauges";
 import { fetchLandslideSnapshot } from "@/lib/integrations/landslide";
 import { fetchLECOOutages } from "@/lib/integrations/leco";
 import { fetchMetDeptWarnings } from "@/lib/integrations/metdept";
@@ -42,6 +44,7 @@ export default async function DisasterPage({
     firms,
     gdacs,
     glofas,
+    irrigationGauges,
   ] = await Promise.all([
     buildPulseSnapshot(),
     fetchPowerStatus(),
@@ -52,6 +55,7 @@ export default async function DisasterPage({
     fetchFirmsSnapshot(),
     fetchGdacsSnapshot(),
     fetchGlofasBasinSnapshot(),
+    fetchIrrigationGaugesSnapshot(),
   ]);
 
   const cycloneWatch = buildCycloneWatch(gdacs);
@@ -251,6 +255,29 @@ export default async function DisasterPage({
 
       <InlineExplainerBanner slug="flood-levels" />
 
+      <IrrigationGaugesPanel
+        snapshot={irrigationGauges}
+        locale={locale}
+        labels={{
+          title: t("irrigation.title"),
+          subtitle: t("irrigation.subtitle"),
+          seed: t("irrigation.seed"),
+          empty: t("irrigation.empty"),
+          honesty: t("irrigation.honesty"),
+          asOf: t("irrigation.asOf"),
+          source: t("irrigation.source"),
+          dashboard: t("irrigation.dashboard"),
+          stations: t("irrigation.stations"),
+          elevated: t("irrigation.elevated"),
+          level: t("irrigation.level"),
+          rain: t("irrigation.rain"),
+          normal: t("irrigation.normal"),
+          alert: t("irrigation.alert"),
+          warning: t("irrigation.warning"),
+          danger: t("irrigation.danger"),
+        }}
+      />
+
       <LandslidePanel
         snapshot={landslides}
         locale={locale}
@@ -259,13 +286,20 @@ export default async function DisasterPage({
           subtitle: t("landslideSubtitle"),
           watch: t("landslideWatch"),
           warning: t("landslideWarning"),
+          watchSeed: t("landslideWatchSeed"),
+          warningSeed: t("landslideWarningSeed"),
           asOf: t("landslideAsOf"),
           seed: t("landslideSeed"),
+          live: t("landslideLive"),
           honesty: t("landslideHonesty"),
+          honestySeed: t("landslideHonestySeed"),
           source: t("landslideSource"),
           nbro: t("landslideNbro"),
+          bulletin: t("landslideBulletin"),
           topDistricts: t("landslideTopDistricts"),
+          topDistrictsSeed: t("landslideTopDistrictsSeed"),
           noneActive: t("landslideNoneActive"),
+          noneActiveSeed: t("landslideNoneActiveSeed"),
         }}
       />
 
@@ -294,6 +328,16 @@ export default async function DisasterPage({
           validWindow: t("metValidWindow", { from: "{from}", to: "{to}" }),
           areas: t("metAreas"),
           noSummary: t("metNoSummary"),
+          actionRequired: t("metActionRequired"),
+          damageExpected: t("metDamageExpected"),
+          urgency: t("metUrgency"),
+          severity: t("metSeverity"),
+          certainty: t("metCertainty"),
+          capXml: t("metCapXml"),
+          officialPage: t("metOfficialPage"),
+          feedCapOnly: t("metFeedCapOnly"),
+          feedEnriched: t("metFeedEnriched"),
+          honesty: t("metHonesty"),
           sourceNote: t("metSourceNote"),
           provenance: t("metProvenance"),
         }}

@@ -76,23 +76,26 @@ NEWS_RSS_FEEDS=https://www.dailymirror.lk/rss/1,https://www.adaderana.lk/rss.php
 
 ## Food Platform (FoodLK)
 
-**Endpoints tried (direct — all returned HTTP 500 during integration testing)**
+**Preferred cleaned endpoints (not raw supermarket JSON)**
 
-- `/api/v1/stats/summary`
-- `/api/v1/categories/summary`
-- `/api/v1/home/summary`
-- `/api/v1/basket/estimate?district=colombo`
-- `/api/v1/items`, `/api/v1/market-quotes`, `/api/v1/trends/summary`
+- `/api/v1/hub/summary` — coverage counts
+- `/api/v1/basket/estimate?preset=essentials` — staples / essentials basket
+
+**Legacy cleaned fallbacks**
+
+- `/api/v1/stats/summary`, `/categories/summary`, `/home/summary`
+
+**Call order:** FoodLK (real metrics) → WFP HDX → SPAR2U (thin) → Life → seed. Keells/Cargills/SPAR retail ingest stays in FoodLK; Lankawa does not chase those APIs. HARTI/CBSL PDFs still needed on FoodLK for fresh civic food.
 
 **Secondary live source**
 
-- `GET {LIFE_API_BASE}/life/overview` — food domain metrics and `top_items` when FoodLK direct API fails
+- `GET {LIFE_API_BASE}/life/overview` — food domain metrics and `top_items` when FoodLK + WFP + SPAR fail
 
 **Fallback**
 
 - `src/data/food-seed.json` — staples from Life Platform patterns; district meal costs aligned with cost-of-living seed
 
-**Provenance:** `food_platform_api` or `food_platform_seed`
+**Provenance:** `food_platform_api` · `wfp_hdx` · `spar2u_retail` · `life_platform_food` · `food_platform_seed`
 
 ## Life Platform (Ariva)
 
@@ -139,6 +142,8 @@ Lankawa needs Colombo Stock Exchange (CSE) market data for the economy pulse. Tw
 
 Reference endpoints (from Chime probe, Jul 2026): `aspiData`, `snpData`, `tradeSummary`, `marketSummery`, `marketStatus`.
 
+**Deepen (wired):** [`CSE_API_DOCS.md`](./CSE_API_DOCS.md) — `GET /notifications`, `POST /approvedAnnouncement`, `POST /GICSSectorSummery` (PER/PBV/DY join on sectors), market-status vocabulary.
+
 ## Weather (Open-Meteo)
 
 **Adapter:** `src/lib/integrations/weather.ts`
@@ -160,6 +165,21 @@ Reference endpoints (from Chime probe, Jul 2026): `aspiData`, `snpData`, `tradeS
 - **UI link:** provenance path `/disaster` (grouped with flood monitoring)
 
 **Provenance:** `ceb_power` → `/sources/ceb_power`
+
+## CEB demand-management clusters
+
+**Adapter:** `src/lib/integrations/demand-mgmt-clusters.ts`
+
+- **Endpoint:** `GET https://cebcare.ceb.lk/Incognito/GetDemandMgmtClusters?LoadShedGroupId={A–Y}`
+- **Auth:** Antiforgery cookie + `RequestVerificationToken` from `DemandMgmtSchedule` (same Incognito pattern as `power.ts`)
+- **Shape:** JSON (sometimes double-encoded string) of cluster rows: `NumberOfCustomers`, `GroupId`, `GeneratedTime`, `Points[]` (lat/lon polygons — discarded server-side)
+- **UI:** Small strip under household energy on `/economy` (`DemandMgmtClustersStrip`)
+- **Fallback:** `src/data/demand-mgmt-clusters-seed.json` with `isSeed` honesty
+- **Honesty:** Indicative public map counts — confirm on cebcare.ceb.lk
+
+**Provenance:** `ceb_demand_mgmt_clusters` → `/sources/ceb_demand_mgmt_clusters`
+
+**Research note:** [`CEB_DEMAND_MGMT_CLUSTERS.md`](./CEB_DEMAND_MGMT_CLUSTERS.md); also [`CONSUMER_OFFERS_AND_DATA_SURVEY.md`](./CONSUMER_OFFERS_AND_DATA_SURVEY.md) §4. Probed Jul 2026 — public Incognito API works for letter groups A–Y (numeric ids return `{}`).
 
 ## News RSS
 

@@ -29,6 +29,29 @@ function formatChange(change: number | null, changePct: number | null): string {
   return `${direction} ${parts.join(" ")}`;
 }
 
+function formatSectorValuation(sector: {
+  per: number | null;
+  pbv: number | null;
+  dy: number | null;
+  companiesTraded: number | null;
+  companiesListed: number | null;
+}): string | null {
+  const parts: string[] = [];
+  if (sector.per != null) {
+    parts.push(`PER ${sector.per.toFixed(1)}`);
+  }
+  if (sector.pbv != null) {
+    parts.push(`PBV ${sector.pbv.toFixed(1)}`);
+  }
+  if (sector.dy != null) {
+    parts.push(`DY ${sector.dy.toFixed(1)}%`);
+  }
+  if (sector.companiesTraded != null && sector.companiesListed != null) {
+    parts.push(`${sector.companiesTraded}/${sector.companiesListed}`);
+  }
+  return parts.length > 0 ? parts.join(" · ") : null;
+}
+
 function MoverList({
   title,
   movers,
@@ -106,8 +129,6 @@ export function CseMarketCard({
     sectorsSkipped: string;
     noActive: string;
     highLow: string;
-    notices: string;
-    noNotices: string;
   };
 }) {
   const indices = [
@@ -124,7 +145,7 @@ export function CseMarketCard({
             {labels.subtitle} ·{" "}
             <Link
               href={getSourceProvenancePath(snapshot.sourceId)}
-              className="text-teal-300 hover:text-teal-200"
+              className="text-white underline decoration-white/30 hover:decoration-white"
             >
               {labels.sourceName}
             </Link>
@@ -139,31 +160,8 @@ export function CseMarketCard({
       </div>
 
       {snapshot.isFallback ? (
-        <p className="text-sm text-amber-200/90">{labels.fallbackNote}</p>
+        <p className="text-sm text-neutral-300">{labels.fallbackNote}</p>
       ) : null}
-
-      {snapshot.notices.length > 0 ? (
-        <div className="overflow-x-auto rounded-xl border border-white/10 bg-black/20 px-3 py-2">
-          <p className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
-            {labels.notices}
-          </p>
-          <ul className="flex min-w-max gap-4">
-            {snapshot.notices.slice(0, 6).map((notice) => (
-              <li
-                key={`${notice.publishedAt}-${notice.title}`}
-                className="max-w-xs shrink-0 border-r border-white/10 pr-4 last:border-0 last:pr-0"
-              >
-                <p className="text-sm text-slate-200">{notice.title}</p>
-                <p className="mt-1 text-xs text-slate-500">
-                  {new Date(notice.publishedAt).toLocaleDateString()}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <p className="text-sm text-slate-500">{labels.noNotices}</p>
-      )}
 
       <div className="grid gap-4 lg:grid-cols-3">
         {indices.map(({ key, label, index }) => {
@@ -254,29 +252,39 @@ export function CseMarketCard({
               <p className="text-sm text-neutral-500">{labels.noSectors}</p>
             ) : (
               <ul className="space-y-2">
-                {snapshot.sectors.slice(0, 6).map((sector) => (
-                  <li
-                    key={sector.symbol}
-                    className="flex items-start justify-between gap-3 border border-white/10 px-3 py-2"
-                  >
-                    <div>
-                      <p className="text-sm font-medium text-white">
-                        {sector.name}
-                      </p>
-                      <p className="text-xs text-neutral-500">{sector.symbol}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-medium text-white">
-                        {sector.indexValue.toLocaleString(undefined, {
-                          maximumFractionDigits: 2,
-                        })}
-                      </p>
-                      <p className="text-xs text-neutral-300">
-                        {formatChange(sector.change, sector.changePct)}
-                      </p>
-                    </div>
-                  </li>
-                ))}
+                {snapshot.sectors.slice(0, 6).map((sector) => {
+                  const valuation = formatSectorValuation(sector);
+                  return (
+                    <li
+                      key={sector.symbol}
+                      className="flex items-start justify-between gap-3 border border-white/10 px-3 py-2"
+                    >
+                      <div>
+                        <p className="text-sm font-medium text-white">
+                          {sector.name}
+                        </p>
+                        <p className="text-xs text-neutral-500">
+                          {sector.symbol}
+                        </p>
+                        {valuation ? (
+                          <p className="mt-0.5 text-[11px] text-neutral-500">
+                            {valuation}
+                          </p>
+                        ) : null}
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-medium text-white">
+                          {sector.indexValue.toLocaleString(undefined, {
+                            maximumFractionDigits: 2,
+                          })}
+                        </p>
+                        <p className="text-xs text-neutral-300">
+                          {formatChange(sector.change, sector.changePct)}
+                        </p>
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>

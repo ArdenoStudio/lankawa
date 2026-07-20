@@ -37,8 +37,25 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "River station flood alert levels aggregated for national monitoring.",
     methodology:
-      "Lankawa polls river station alert levels every few minutes, groups stations by alert level (NORMAL, WATCH, etc.), and displays counts on the pulse, disaster page, and source health dashboard.",
+      "Lankawa polls river station alert levels every few minutes, groups stations by alert level (NORMAL, WATCH, etc.), and displays counts on the pulse, disaster page, and source health dashboard. For station-level readings (`fetchLatestFloodLevels`), when lk-flood-api timestamps lag by more than 6 hours (or the API is down), live Irrigation ArcGIS gauges are preferred via the same FloodStationLevel shape — see irrigation_arcgis_gauges.",
     metrics: ["flood_stations"],
+  },
+  {
+    id: "irrigation_arcgis_gauges",
+    name: "Irrigation Department river gauges (ArcGIS)",
+    category: "disaster",
+    url: "https://services3.arcgis.com/J7ZFXmR8rSmQ3FGf/arcgis/rest/services/gauges_2_view/FeatureServer/0",
+    cadenceMinutes: 15,
+    adapter: "api",
+    description:
+      "Public Irrigation Department ArcGIS FeatureServer for major-river gauge levels, rainfall, and alert thresholds.",
+    methodology:
+      "Lankawa queries gauges_2_view ordered by EditDate DESC, collapses to latest-per-gauge, and maps water_level against alertpull/minorpull/majorpull into NORMAL/ALERT/WARNING/DANGER. Primary panel on `/disaster`; also used as a stale/down fallback for district/province flood station lists when lk-flood-api lags. Seed fallback when ArcGIS is unreachable. Civic republish — not an official DMC flood warning.",
+    metrics: [
+      "irrigation_gauge_count",
+      "irrigation_elevated_count",
+      "irrigation_water_level_m",
+    ],
   },
   {
     id: "cbsl_fx",
@@ -145,6 +162,24 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["electricity_energy_lkr_kwh", "electricity_fixed_lkr"],
   },
   {
+    id: "nwsdb_tariff",
+    name: "NWSDB — Domestic water tariff / BillCalculator",
+    category: "economy",
+    url: "https://ebis.waterboard.lk/directPay/#/BillCalculator",
+    cadenceMinutes: 525600,
+    adapter: "partner",
+    description:
+      "Domestic and Samurdhi/tenement water tariff slabs with indicative monthly bill estimate (usage + service + VAT).",
+    methodology:
+      "Seed slabs curated from Gazette Extraordinary No. 2343/28 (effective 1 Aug 2023) Tariff Tables 01–02. Progressive m³ usage charge; service charge is the band for total monthly consumption; indicative 18% VAT on usage+service. Optional live POST to api_nwsdb/bill/BillCalculator for Calculation totals (CategoryId=1 Domestic, 30-day period). Response Tariff[].UnitRate fields are not used for ingest. Indicative only — not your NWSDB bill.",
+    metrics: [
+      "water_usage_lkr_m3",
+      "water_service_lkr",
+      "water_vat_lkr",
+      "water_bill_total_lkr",
+    ],
+  },
+  {
     id: "pucsl_generation",
     name: "PUCSL / CEB generation mix (seed)",
     category: "economy",
@@ -177,9 +212,21 @@ export const SOURCES: SourceDefinition[] = [
     url: "https://www.health.gov.lk/",
     cadenceMinutes: 1440,
     adapter: "scrape",
-    description: "Public health notices strip on /health — seed until MoH RSS is live.",
+    description: "Public health notices strip on /health — live MoH RSS when available.",
     methodology:
-      "Seed notice list for the health page. When moh_rss appears in the news pulse, live headlines replace the seed strip.",
+      "Seed notice list for the health page. When moh_rss (feed id) or Ministry of Health (feed name) appears in the news pulse, live headlines replace the seed strip.",
+    metrics: ["moh_notices"],
+  },
+  {
+    id: "moh_rss",
+    name: "Ministry of Health RSS",
+    category: "health",
+    url: "https://www.health.gov.lk/feed/",
+    cadenceMinutes: 60,
+    adapter: "api",
+    description: "Live MoH public notices via WordPress RSS on /health.",
+    methodology:
+      "Headlines are pulled through `news.ts` feed id `moh_rss` and filtered in `moh-notices.ts` (matches feed id or display name). Falls back to moh_notices_seed when the feed is empty.",
     metrics: ["moh_notices"],
   },
   {
@@ -205,7 +252,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "District-scale landslide watch/warning context for Sri Lanka’s highland wet season.",
     methodology:
-      "Lankawa combines a curated district seed overlay with best-effort confirmation of the latest DMC landslide document via the public lk_dmc index. Not an official evacuation map. Always verify NBRO/DMC bulletins before acting.",
+      "Lankawa reads the public lk_dmc landslide summary, then parses tip blocks.json (district names + Level 1/2/3 DSD cells by bbox) for watch/warning tiers. If the tip layout is missing or unparseable, a curated seed overlay is shown with explicit seed labels. Civic republish — not an official evacuation map. Always verify NBRO/DMC bulletins before acting.",
     metrics: ["landslide_watch_count", "landslide_warning_count"],
   },
   {
@@ -244,7 +291,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Centre for Policy Alternatives and Verité Research publication drops shown on /civic.",
     methodology:
-      "Curated seed strip until CPA/Verité RSS endpoints are wired. Each item links to the org homepage with honest seed labelling — not a live scrape.",
+      "Prefers live headlines from `cpa_rss` and `verite_rss` in the news pulse (`civic-research.ts`). Falls back to curated seed JSON with honest seed labelling when those feeds are empty.",
     metrics: ["civic_research_drops"],
   },
   {
@@ -374,7 +421,33 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Staple food prices, essentials basket, and district meal-cost bands.",
     methodology:
-      "Direct FoodLK API endpoints only (`/stats/summary`, `/categories/summary`, `/home/summary`). Never labeled live unless FoodLK itself returns 200.",
+      "FoodLK cleaned surfaces only: prefer `/hub/summary` and `/basket/estimate?preset=essentials` (staples). Legacy `/stats|categories|home/summary` are fallbacks. Labeled live only when coverage/staples carry real metrics — empty or HTTP 500 shells fail cleanly to WFP without implying live supermarket. Keells/Cargills/SPAR retail ingest stays in FoodLK. Upstream catalog: docs/FOOD_API_SOURCES.md.",
+    metrics: ["food_basket_estimate", "staple_prices"],
+  },
+  {
+    id: "wfp_hdx",
+    name: "WFP HDX food prices (Sri Lanka)",
+    category: "economy",
+    url: "https://data.humdata.org/dataset/wfp-food-prices-for-sri-lanka",
+    cadenceMinutes: 1440,
+    adapter: "api",
+    description:
+      "Direct WFP/HDX CSV retail and wholesale staple prices for Sri Lanka.",
+    methodology:
+      "While FoodLK public API returns 500s, Lankawa fetches the HDX CSV `wfp_food_prices_lka.csv` via `food-direct.ts`, averages latest retail (else wholesale) quotes for rice, onions, lentils, coconut, sugar, and wheat flour, and estimates an essentials basket from non-stale staples only (lagged quotes stay visible but are excluded). District meal bands remain seed. Not HARTI or NCPI.",
+    metrics: ["food_basket_estimate", "staple_prices"],
+  },
+  {
+    id: "spar2u_retail",
+    name: "SPAR2U retail catalog",
+    category: "economy",
+    url: "https://spar2u.lk/products.json",
+    cadenceMinutes: 360,
+    adapter: "api",
+    description:
+      "Optional single-page SPAR2U grocery catalog bypass for staple shelf prices.",
+    methodology:
+      "When FoodLK and WFP HDX fail, Lankawa fetches one page (`limit=250`) of SPAR2U Shopify `products.json` via `food-spar.ts` (UA LankawaBot/1.0, 12s timeout, revalidate 21600). First reasonable title matches for rice, dhal/lentil, onion, sugar, coconut, and flour become staples; pack sizes normalize to per-kg when labeled. HTTP 429 or fetch failures skip quietly to Life. District meal bands remain seed. Not HARTI or NCPI.",
     metrics: ["food_basket_estimate", "staple_prices"],
   },
   {
@@ -385,9 +458,9 @@ export const SOURCES: SourceDefinition[] = [
     cadenceMinutes: 3600,
     adapter: "partner",
     description:
-      "Food domain metrics when FoodLK direct endpoints fail.",
+      "Food domain metrics when FoodLK, WFP, and SPAR2U fail.",
     methodology:
-      "Server-side fetch from Life `/life/overview` food domain. Life may return degraded fixture structure if FoodLK is unreachable. District meal bands remain Lankawa seed until FoodLK recovers.",
+      "Server-side fetch from Life `/life/overview` food domain after FoodLK, WFP HDX, and SPAR2U retail. Healthy or degraded with metrics is accepted; seed/down fixture-only domains are skipped. District meal bands remain Lankawa seed until FoodLK recovers.",
     metrics: ["food_basket_estimate", "staple_prices"],
   },
   {
@@ -400,7 +473,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Staple food prices and district meal-cost estimates for cost-of-living enrichment.",
     methodology:
-      "Representative seed from FoodLK / Life Platform patterns. District monthly baskets align with the Lankawa cost-of-living seed. Used when live FoodLK endpoints return errors.",
+      "Representative seed from FoodLK / Life Platform patterns. District monthly baskets align with the Lankawa cost-of-living seed. Used when FoodLK, WFP HDX, SPAR2U, and Life food endpoints are unavailable.",
     metrics: ["food_basket_estimate", "staple_prices"],
   },
   {
@@ -670,7 +743,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Public weather warnings and advisories from Sri Lanka's Department of Meteorology.",
     methodology:
-      "Lankawa reads the public Weather Advisory System dashboard JSON and CAP RSS feed with short server-side timeouts. Active hazards are displayed as published by the Met Department; if the feed is unavailable, the disaster page shows a neutral unavailable state instead of inferring conditions.",
+      "Lankawa reads the public Weather Advisory System dashboard JSON (`/dashboard-api/advisories`) and CAP RSS (`/cap/en/rss.xml`) with short server-side timeouts. When RSS items are present, linked CAP 1.1 XML files are fetched (capped) to enrich urgency/severity/certainty, instruction, and area text. Advisories remain the active source of truth; CAP-only rows appear only when the dashboard lists no hazards but CAP publishes items. There is no curated seed fallback — unavailable means the advisory API failed; empty means the dashboard reports no active hazards.",
     metrics: ["weather_warnings"],
   },
   {
@@ -685,6 +758,19 @@ export const SOURCES: SourceDefinition[] = [
     methodology:
       "Lankawa polls CEB Care demand-management schedules and samples present outage locations across provinces. Status is normalized to normal, scheduled, outage, or unknown — never a fabricated normal when data is unavailable. Results appear on the home pulse and disaster hub.",
     metrics: ["power_status"],
+  },
+  {
+    id: "ceb_demand_mgmt_clusters",
+    name: "CEB Care — Demand management clusters",
+    category: "economy",
+    url: "https://cebcare.ceb.lk/Incognito/DemandMgmtSchedule",
+    cadenceMinutes: 15,
+    adapter: "api",
+    description:
+      "Geo demand-management cluster summaries (groups A–Y) with customer counts from CEB Care.",
+    methodology:
+      "Server-side fetch via `demand-mgmt-clusters.ts`: antiforgery bootstrap on DemandMgmtSchedule, then GET `Incognito/GetDemandMgmtClusters?LoadShedGroupId=` for groups A–Y (concurrent, 15 min revalidate). Polygon points are discarded; only cluster and customer counts are kept. Seed fallback with isSeed honesty when CEB Care is unreachable. Indicative — confirm on cebcare.ceb.lk. Surfaced on `/economy` household energy.",
+    metrics: ["demand_mgmt_clusters", "demand_mgmt_customers"],
   },
   {
     id: "leco_power",
@@ -707,29 +793,44 @@ export const SOURCES: SourceDefinition[] = [
     cadenceMinutes: 15,
     adapter: "api",
     description:
-      "ASPI, S&P SL20, sectors, most-active trades, and foreign/domestic summary from public CSE JSON endpoints.",
+      "ASPI, S&P SL20, sectors, most-active trades, foreign/domestic summary, exchange notices, and per-symbol quotes from public CSE JSON endpoints.",
     methodology:
-      "Read-only fetch of undocumented public endpoints on `cse.lk` (e.g. `aspiData`, `marketSummery`, `tradeSummary`, `allSectors`, `mostActiveTrades`, `dailyMarketSummery`) — catalogued by community docs such as Cookie-Cat21/cse-api-docs; adapter logic ported from the Chime/koel boundary, not PulseCSE. Browser CORS blocks client use — server proxy only. Surfaced on `/economy`.",
+      "Read-only fetch of undocumented public endpoints on `cse.lk` (e.g. `aspiData`, `marketSummery`, `tradeSummary`, `allSectors`, `GICSSectorSummery`, `mostActiveTrades`, `dailyMarketSummery`, `GET /notifications`, `approvedAnnouncement`, `companyInfoSummery`) — catalogued in `docs/CSE_API_DOCS.md` and Cookie-Cat21/cse-api-docs; adapter logic ported from the Chime/koel boundary, not PulseCSE. Browser CORS blocks client use — server proxy only. Surfaced on `/economy` and watchlist quotes via `/api/v1/cse/quotes`.",
     metrics: [
       "cse_aspi",
       "cse_market_status",
       "cse_sectors",
       "cse_most_active",
       "cse_foreign",
+      "cse_notices",
+      "cse_quotes",
     ],
   },
   {
     id: "bank_remittance_tt",
     name: "Bank TT remittance board",
     category: "economy",
-    url: "internal://economy/remittance-tt",
+    url: "https://www.combank.lk/api/exchange-rates",
     cadenceMinutes: 1440,
     adapter: "scrape",
     description:
-      "Indicative USD→LKR telegraphic-transfer style buy/sell bands from major Sri Lankan banks.",
+      "Public indicative USD→LKR telegraphic-transfer style buy/sell bands from major Sri Lankan banks.",
     methodology:
-      "Attempts timed fetches of public bank exchange-rate pages (People's, NDB, Sampath) via `remittance-banks.ts`, then falls back to a curated seed board. isSeed is true unless a full live board parses. Not CBSL official rates; fees and corridors differ by product. Pair with the CBSL remittance calculator on /economy.",
+      "Timed fetches via `remittance-banks.ts` of public bank FX surfaces: Commercial (`combank.lk/api/exchange-rates` TT columns), HNB (`venus.hnb.lk/api/get_exchange_rates_contents_web`), Seylan (`seylan.lk/api/exchange-rates-get-value/USD`), Sampath (`sampath.lk/api/exchange-rates` TTBUY/TTSEL), plus HTML scrape for People's (`peoplesbank.lk/exchange-rates/` TT columns), NDB (`ndbbank.com/rates/exchange-rates` TT columns), and NSB (`nsb.lk/rates-tarriffs/nsb-exchange-rates/` TT columns). BOC's POST exchange-rates API is not wired (unstable 500). Per-bank isSeed when that bank fails; board isSeed only when all banks fail (full seed). LankawaBot UA + short timeouts. Lankawa is not affiliated with these banks — quotes are public indicative only, not advice or a remittance product. Not CBSL official rates; fees and corridors differ by product. Pair with the CBSL remittance calculator on /economy.",
     metrics: ["remittance_tt_buy", "remittance_tt_sell"],
+  },
+  {
+    id: "bank_card_offers",
+    name: "Bank supermarket card days",
+    category: "economy",
+    url: "https://www.combank.lk/rewards-promotions",
+    cadenceMinutes: 360,
+    adapter: "api",
+    description:
+      "Public indicative supermarket card promotions from major Sri Lankan banks — Keells, Cargills, SPAR, Glomark, LAUGFS day-of-week discounts.",
+    methodology:
+      "Server-side fetch via `card-offers.ts` of public bank/network offer surfaces: Sampath `card-promotions?category=super_markets`, HNB Venus `get_all_web_card_promos` (supermarket merchant filter), Visa LK `POST /offers/api/portal/portal/perks/` (VMORC; `siteId=www_visa_com_lk` + supermarket `merchantName` filter — Glomark Thu etc.), ComBank `/rewards-promotions` HTML, Pan Asia `arr_offers` (Sucuri), DFCC supermarket hub, People's supermarket category HTML, and NTB promotions/hub HTML. Weekday cadence parsed from offer copy when present; otherwise validTo >= today. Keeps today's live rows and fills missing merchant/weekday slots from seed (per-offer isSeed); full seed only when no live offer matches today. Lankawa is not affiliated with the banks or merchants — offers are public indicative marketing; confirm at checkout and on the issuer/network site. Surfaced on `/cost-of-living`, `/food`, and `/economy`; home morning-delta strip links to `/food`.",
+    metrics: ["supermarket_card_days"],
   },
   {
     id: "news_rss",
@@ -741,7 +842,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Headline count and top story summaries from curated Sri Lanka news RSS feeds.",
     methodology:
-      "Server-side RSS/Atom parse of approved public feeds via `src/lib/integrations/news.ts` (Daily Mirror, Ada Derana, Lankadeepa, Tamil Guardian, EconomyNext, Newswire, Island, LBO, Ada Derana Biz, Roar, DMC). Headlines are normalized with source attribution. Home pulse links to provenance rather than external click-through. Expansion backlog: docs/NEWS_RSS_BACKLOG.md. No HTML scrape; no paid third-party news APIs as core deps.",
+      "Server-side RSS/Atom parse of approved public feeds via `src/lib/integrations/news.ts` (Daily Mirror, Ada Derana, Lankadeepa, Tamil Guardian, EconomyNext, Newswire, Island, LBO, Ada Derana Biz, Roar, DMC, Ministry of Health, CPA, Verité Research). Headlines are normalized with feed-id source attribution. Home pulse links to provenance rather than external click-through. Expansion backlog: docs/NEWS_RSS_BACKLOG.md. No HTML scrape; no paid third-party news APIs as core deps.",
     metrics: ["news_headlines"],
   },
   {
@@ -763,8 +864,15 @@ export function getSource(id: string): SourceDefinition | undefined {
   return SOURCES.find((source) => source.id === id);
 }
 
+/** Runtime/seed ids that should resolve to a registered /sources page. */
+const PROVENANCE_ALIASES: Record<string, string> = {
+  open_meteo_flood_seed: "open_meteo_flood",
+  open_meteo_marine_seed: "open_meteo_marine",
+};
+
 export function getSourceProvenancePath(id: string): string {
-  return `/sources/${id}`;
+  const resolved = PROVENANCE_ALIASES[id] ?? id;
+  return `/sources/${resolved}`;
 }
 
 export function getCategoryLabel(

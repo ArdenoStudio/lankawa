@@ -6,6 +6,7 @@ import { detectFloodRateOfRise } from "@/lib/flood-rise";
 import { getFuelHistorySeries, getFuelRevisionSteps } from "@/lib/fuel";
 import { isInFuelRevisionWindow } from "@/lib/fuel-revision-window";
 import { getDengueData } from "@/lib/health";
+import { getTodaysCardOffers } from "@/lib/integrations/card-offers";
 import { buildCseSnapshot } from "@/lib/integrations/cse";
 import { fetchFirmsSnapshot } from "@/lib/integrations/firms";
 import { fetchGdacsSnapshot } from "@/lib/integrations/gdacs";
@@ -166,6 +167,8 @@ export async function buildAlertSignalContext(
   let newsClusterDetail: string | null = null;
   let tenderClosingAttention = false;
   let tenderClosingDetail: string | null = null;
+  let cardDayAttention = false;
+  let cardDayDetail: string | null = null;
 
   const [
     fuelStepsResult,
@@ -174,6 +177,7 @@ export async function buildAlertSignalContext(
     cseResult,
     newsResult,
     tendersResult,
+    cardOffersResult,
   ] = await Promise.allSettled([
       getFuelRevisionSteps(8),
       getFuelHistorySeries(10),
@@ -181,6 +185,7 @@ export async function buildAlertSignalContext(
       buildCseSnapshot(),
       fetchNewsPulse(),
       getTendersData(),
+      getTodaysCardOffers(),
     ]);
 
   if (fuelStepsResult.status === "fulfilled") {
@@ -256,6 +261,20 @@ export async function buildAlertSignalContext(
     }
   }
 
+  if (cardOffersResult.status === "fulfilled") {
+    const cardOffers = cardOffersResult.value;
+    if (cardOffers.offers.length > 0) {
+      cardDayAttention = true;
+      const sample = cardOffers.offers
+        .slice(0, 2)
+        .map((offer) => offer.merchant)
+        .join(" · ");
+      const count = cardOffers.offers.length;
+      const seedTag = cardOffers.isSeed ? " (seed)" : "";
+      cardDayDetail = `${count} supermarket card day${count === 1 ? "" : "s"}${sample ? ` · ${sample}` : ""}${seedTag}`;
+    }
+  }
+
   const metFloodAttention =
     metWarning && (flood.elevated || floodRise.rising);
   const metFloodDetail = metFloodAttention
@@ -297,5 +316,7 @@ export async function buildAlertSignalContext(
     newsClusterDetail,
     tenderClosingAttention,
     tenderClosingDetail,
+    cardDayAttention,
+    cardDayDetail,
   };
 }

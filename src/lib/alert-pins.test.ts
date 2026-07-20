@@ -27,12 +27,14 @@ assert.equal(isAlertPinId("fx_move"), true);
 assert.equal(isAlertPinId("fuel_revision"), true);
 assert.equal(isAlertPinId("news_cluster"), true);
 assert.equal(isAlertPinId("tender_closing"), true);
+assert.equal(isAlertPinId("card_day"), true);
 assert.equal(isAlertPinId("not_a_pin"), false);
 assert.ok(ALERT_PIN_IDS.includes("met_flood"));
 assert.ok(ALERT_PIN_IDS.includes("dengue_spike"));
 assert.ok(ALERT_PIN_IDS.includes("cse_move"));
 assert.ok(ALERT_PIN_IDS.includes("col_basket"));
 assert.ok(ALERT_PIN_IDS.includes("tender_closing"));
+assert.ok(ALERT_PIN_IDS.includes("card_day"));
 
 const now = new Date("2026-07-10T12:00:00Z");
 assert.equal(
@@ -93,6 +95,8 @@ const baseContext: AlertSignalContext = {
   newsClusterDetail: "fuel price · 3 outlets",
   tenderClosingAttention: true,
   tenderClosingDetail: "2 tenders close within 7d · soonest 2026-07-22",
+  cardDayAttention: true,
+  cardDayDetail: "2 supermarket card days · Keells · Cargills",
 };
 
 const fired = evaluateAlertPins([...ALERT_PIN_IDS], baseContext);
@@ -114,6 +118,7 @@ assert.deepEqual(
     "col_basket",
     "news_cluster",
     "tender_closing",
+    "card_day",
   ],
 );
 
@@ -143,6 +148,7 @@ const newPinsQuiet = evaluateAlertPins(
     "col_basket",
     "news_cluster",
     "tender_closing",
+    "card_day",
   ],
   {
     ...baseContext,
@@ -153,6 +159,7 @@ const newPinsQuiet = evaluateAlertPins(
     colBasketAttention: false,
     newsClusterAttention: false,
     tenderClosingAttention: false,
+    cardDayAttention: false,
   },
 );
 assert.equal(newPinsQuiet.length, 0);
@@ -198,6 +205,18 @@ const tenderOnly = evaluateAlertPins(["tender_closing"], {
 });
 assert.equal(tenderOnly.length, 1);
 assert.match(tenderOnly[0].detail, /tender/i);
+
+const cardDayOnly = evaluateAlertPins(["card_day"], baseContext);
+assert.equal(cardDayOnly.length, 1);
+assert.ok(cardDayOnly[0].detail.includes("Keells"));
+
+const cardDayFallback = evaluateAlertPins(["card_day"], {
+  ...baseContext,
+  cardDayAttention: true,
+  cardDayDetail: null,
+});
+assert.equal(cardDayFallback.length, 1);
+assert.match(cardDayFallback[0].detail, /supermarket card/i);
 
 const subset = evaluateAlertPins(["power", "cse_move", "news_cluster"], {
   ...baseContext,

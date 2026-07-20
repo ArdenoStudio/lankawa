@@ -342,8 +342,8 @@ export interface CostOfLivingDistrict {
 export interface CostOfLivingInputHonesty {
   fuel: "live" | "seed";
   property: "live" | "seed";
-  food: "live" | "life_federation" | "seed";
-  coconut: "live" | "life_federation" | "seed";
+  food: "live" | "wfp_hdx" | "spar2u" | "life_federation" | "seed";
+  coconut: "live" | "wfp_hdx" | "spar2u" | "life_federation" | "seed";
 }
 
 export interface CoconutIndex {
@@ -466,6 +466,10 @@ export interface FoodItemPrice {
   unit: string;
   priceLkr: number;
   source: string;
+  /** Honesty note (e.g. WFP stale sugar quote). */
+  note?: string;
+  stale?: boolean;
+  quoteAsOf?: string;
 }
 
 export interface FoodDistrictMealCost {
@@ -479,11 +483,17 @@ export interface FoodSnapshot {
   sourceId: string;
   sourceName: string;
   asOf: string;
+  /** Corpus tip date (YYYY-MM-DD) when known — e.g. WFP HDX market lag. */
+  corpusAsOf?: string;
   essentialsBasketLkr: number;
   retailOffers: number;
   marketQuotes: number;
   stapleItems: FoodItemPrice[];
   districts: FoodDistrictMealCost[];
+  /** Count of staples marked stale (older than freshness window). */
+  staleStapleCount?: number;
+  /** True when district meal bands are seed while staples/basket may be live. */
+  mixedSeedDistricts?: boolean;
 }
 
 export interface LifeDomainMetric {

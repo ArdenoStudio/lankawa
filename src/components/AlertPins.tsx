@@ -27,6 +27,7 @@ const PIN_HREF: Record<AlertPinId, string> = {
   col_basket: "/cost-of-living",
   news_cluster: "/news",
   tender_closing: "/tenders?status=closing_soon",
+  card_day: "/food",
 };
 
 export function AlertPins({ context }: { context: AlertSignalContext }) {

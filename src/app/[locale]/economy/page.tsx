@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { CseAnnouncementsStrip } from "@/components/CseAnnouncementsStrip";
 import { CseMarketCard } from "@/components/CseMarketCard";
 import { DebtCompositionCard } from "@/components/DebtCompositionCard";
 import { CricketCard } from "@/components/CricketCard";
@@ -10,17 +11,20 @@ import {
   MacroIndicatorCard,
 } from "@/components/EconomyCards";
 import { DataSaverGate } from "@/components/DataSaverGate";
+import { DemandMgmtClustersStrip } from "@/components/DemandMgmtClustersStrip";
 import { HouseholdEnergySection } from "@/components/HouseholdEnergySection";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
 import { LpgDistrictFilter } from "@/components/LpgDistrictFilter";
 import { MacroObservationsStrip } from "@/components/MacroObservationsStrip";
 import { MarketsPressStrip } from "@/components/MarketsPressStrip";
 import { NcpiInflationCard } from "@/components/NcpiInflationCard";
+import { NwsdbWaterBillCard } from "@/components/NwsdbWaterBillCard";
 import { PucslGenerationMixSpark } from "@/components/PucslGenerationMixSpark";
 import { PucslTariffCard } from "@/components/PucslTariffCard";
 import { PulseCard } from "@/components/PulseCard";
 import { RemittanceBoard } from "@/components/RemittanceBoard";
 import { RemittanceCalculator } from "@/components/RemittanceCalculator";
+import { SupermarketCardDays } from "@/components/SupermarketCardDays";
 import { TreasuryYieldStrip } from "@/components/TreasuryYieldStrip";
 import { WorldPumpCompare } from "@/components/WorldPumpCompare";
 import { Link } from "@/i18n/navigation";
@@ -33,6 +37,7 @@ import { getFuelHistorySeries, getFuelRevisionSteps } from "@/lib/fuel";
 import { buildCseSnapshot } from "@/lib/integrations/cse";
 import { getNcpiSnapshot } from "@/lib/ncpi";
 import { getPucslTariffSnapshot } from "@/lib/pucsl";
+import { fetchLiveWaterBillEstimate, getNwsdbTariffSnapshot } from "@/lib/nwsdb";
 import { buildPulseSnapshot } from "@/lib/pulse";
 import { getRemittanceTtSnapshot } from "@/lib/remittance";
 import { getSource, getSourceProvenancePath } from "@/lib/sources";
@@ -66,6 +71,12 @@ export default async function EconomyPage({
   const debtSnapshot = getForeignDebtSnapshot();
   const ncpiSnapshot = getNcpiSnapshot();
   const tariffSnapshot = getPucslTariffSnapshot();
+  const waterSnapshot = getNwsdbTariffSnapshot();
+  const waterLiveEstimate = await fetchLiveWaterBillEstimate({
+    unitsM3: 20,
+    trackId: "domestic",
+    noOfDays: 30,
+  });
   const fxSource = getSource("cbsl_fx");
   const fuelSource = getSource("octane_fuel");
   const petrolMetric = snapshot.metrics.find(
@@ -198,6 +209,7 @@ export default async function EconomyPage({
           emptyFuel: t("householdEnergy.emptyFuel"),
           emptyLpg: t("householdEnergy.emptyLpg"),
         }}
+        clustersStrip={<DemandMgmtClustersStrip />}
       />
 
       <section className="space-y-4">
@@ -346,6 +358,34 @@ export default async function EconomyPage({
               none: t("tariff.none"),
             }}
           />
+          <NwsdbWaterBillCard
+            snapshot={waterSnapshot}
+            locale={locale}
+            liveEstimate={waterLiveEstimate}
+            sourcePath={getSourceProvenancePath(waterSnapshot.sourceId)}
+            permalink={`/${locale}/economy`}
+            labels={{
+              title: t("waterTariff.title"),
+              subtitle: t("waterTariff.subtitle"),
+              effective: t("waterTariff.effective"),
+              slab: t("waterTariff.slab"),
+              usage: t("waterTariff.usage"),
+              service: t("waterTariff.service"),
+              unitsLabel: t("waterTariff.unitsLabel"),
+              estimateTitle: t("waterTariff.estimateTitle"),
+              usageTotal: t("waterTariff.usageTotal"),
+              serviceTotal: t("waterTariff.serviceTotal"),
+              vatTotal: t("waterTariff.vatTotal"),
+              billTotal: t("waterTariff.billTotal"),
+              honesty: t("waterTariff.honesty"),
+              source: t("waterTariff.source"),
+              decision: t("waterTariff.decision"),
+              calculator: t("waterTariff.calculator"),
+              liveMatch: t("waterTariff.liveMatch"),
+              liveMiss: t("waterTariff.liveMiss"),
+              seedMode: t("waterTariff.seedMode"),
+            }}
+          />
           <PucslGenerationMixSpark
             labels={{
               title: t("generationMix.title"),
@@ -360,24 +400,33 @@ export default async function EconomyPage({
         </div>
       </section>
 
-      <RemittanceBoard
-        snapshot={remittanceTt}
-        labels={{
-          title: t("remittanceBoard.title"),
-          subtitle: t("remittanceBoard.subtitle"),
-          buy: t("remittanceBoard.buy"),
-          sell: t("remittanceBoard.sell"),
-          spread: t("remittanceBoard.spread"),
-          bestBuy: t("remittanceBoard.bestBuy"),
-          bestSell: t("remittanceBoard.bestSell"),
-          seed: t("remittanceBoard.seed"),
-          asOf: t("remittanceBoard.asOf"),
-          source: t("remittanceBoard.source"),
-          honesty: t("remittanceBoard.honesty"),
-        }}
-      />
-
-      <RemittanceCalculator rates={latestFxRate} />
+      <div className="space-y-4">
+        <RemittanceBoard
+          snapshot={remittanceTt}
+          labels={{
+            title: t("remittanceBoard.title"),
+            subtitle: t("remittanceBoard.subtitle"),
+            bank: t("remittanceBoard.bank"),
+            buy: t("remittanceBoard.buy"),
+            sell: t("remittanceBoard.sell"),
+            spread: t("remittanceBoard.spread"),
+            bestBuy: t("remittanceBoard.bestBuy"),
+            bestSell: t("remittanceBoard.bestSell"),
+            best: t("remittanceBoard.best"),
+            seed: t("remittanceBoard.seed"),
+            live: t("remittanceBoard.live"),
+            mixed: t("remittanceBoard.mixed"),
+            bankSeed: t("remittanceBoard.bankSeed"),
+            bankLive: t("remittanceBoard.bankLive"),
+            coverage: t("remittanceBoard.coverage"),
+            asOf: t("remittanceBoard.asOf"),
+            source: t("remittanceBoard.source"),
+            honesty: t("remittanceBoard.honesty"),
+          }}
+        />
+        <RemittanceCalculator rates={latestFxRate} />
+        <SupermarketCardDays />
+      </div>
 
       <CseMarketCard
         snapshot={cseSnapshot}
@@ -406,8 +455,21 @@ export default async function EconomyPage({
           sectorsSkipped: t("cse.sectorsSkipped"),
           noActive: t("cse.noActive"),
           highLow: t("cse.highLow"),
-          notices: t("cse.notices"),
-          noNotices: t("cse.noNotices"),
+        }}
+      />
+
+      <CseAnnouncementsStrip
+        notices={cseSnapshot.notices}
+        isFallback={cseSnapshot.noticesIsFallback}
+        sourceId={cseSnapshot.sourceId}
+        locale={locale}
+        labels={{
+          title: t("cse.announcementsTitle"),
+          subtitle: t("cse.announcementsSubtitle"),
+          empty: t("cse.noNotices"),
+          seed: t("cse.announcementsSeed"),
+          honesty: t("cse.announcementsHonesty"),
+          sourceName: t("cse.sourceName"),
         }}
       />
 

@@ -19,21 +19,33 @@ Bookmark libs (Tremor, HyperUI, DaisyUI, shadcn blocks) informed layout density 
 
 ---
 
+## Food upstream APIs (FoodLK sister + direct)
+
+**Catalog:** [`FOOD_API_SOURCES.md`](./FOOD_API_SOURCES.md) — same spirit as cse-api-docs for FoodLK upstreams ([SuvenSeo/Food-Platform](https://github.com/SuvenSeo/Food-Platform)).
+
+**Verdict (Jul 2026):** FoodLK Fly API often returns HTTP 500. Lankawa call order is FoodLK (real metrics only) → **WFP HDX CSV direct** → SPAR2U retail JSON (rate-limited) → Life federation → seed. Prefer fixing FoodLK sync long-term; keep WFP bypass.
+
+**Live-data sequencing:** [`LIVE_DATA_PLAN.md`](./LIVE_DATA_PLAN.md).
+
+---
+
 ## CSE API ([Cookie-Cat21/cse-api-docs](https://github.com/Cookie-Cat21/cse-api-docs))
 
 **Verdict:** Not a separate hosted API. The repo documents unofficial `https://www.cse.lk/api/*` endpoints that Lankawa already calls server-side (`src/lib/integrations/cse.ts`). Browser CORS blocks client use; keep server proxy.
 
-**Highest-ROI endpoints not yet surfaced (or underused):**
+**Deepen catalog (announcements / GICS / market status):** [`CSE_API_DOCS.md`](./CSE_API_DOCS.md) — live-probed 2026-07-20.
+
+**Shipped in adapter:** `aspiData`, `snpData`, `marketStatus`, `marketSummery`, `tradeSummary`, `allSectors`, `GICSSectorSummery` (PER/PBV/DY join), `mostActiveTrades`, `dailyMarketSummery`, `GET /notifications`, `approvedAnnouncement`, `companyInfoSummery`.
+
+**Highest-ROI still unused:**
 
 | Endpoint | Daily-user value |
 |----------|------------------|
-| `allSectors` | Sector heat / breadth of market day |
-| `mostActiveTrades` | What retail actually traded |
-| `dailyMarketSummery` | Foreign vs domestic participation |
-| `notifications` | Exchange notices strip |
-| ASPI high/low from existing summary | Intraday range without new scrape |
+| `POST /sectorHighLow?sectorId=1` | ASPI intraday open/high/low companion |
 
 Cite Cookie-Cat docs as a **catalog**, not as an upstream SLA. CSE HTML/API can change without notice.
+
+**Broker alternatives (Asia Securities / Softlogic / CAL):** No public CSE equity quote APIs. Softlogic & CAL trading sit behind ATrad login; CAL has one unofficial HTTP JSON mobile feed for treasuries/FX/UT (not market-wide equities). Details: [`STOCK_BROKER_APIS_RESEARCH.md`](./STOCK_BROKER_APIS_RESEARCH.md).
 
 ---
 
@@ -58,10 +70,16 @@ Cite Cookie-Cat docs as a **catalog**, not as an upstream SLA. CSE HTML/API can 
 |--------|-----|-------|
 | Open-Meteo (already used) | UV index, 7-day rain outlook, multi-city strip | Free, no key for core |
 | Open-Meteo Flood / GloFAS | Basin flood probability | Pair with LK Flood gauges |
+| Irrigation Dept ArcGIS gauges | Live river levels + rain + alert thresholds | **Shipped** on `/disaster` + `flood.ts` stale fallback — see `WEATHER_DISASTER_APIS_RESEARCH.md` |
+| MetDept WAS CAP RSS | Official weather warnings (already used) | `cap/{en,si,ta}/rss.xml` + `dashboard-api/advisories` |
+| DMC PDF indexes (nuuuwan/lk_dmc) | Landslide / flood bulletin metadata | No DMC CAP feed found |
+| NBRO live EW JSON | — | **None public**; NSDI `LHazard_10K` is static zonation only |
 | WAQI / OpenAQ | Colombo AQI | Health morning check |
 | JTWC / GDACS GeoJSON | Cyclone / multi-hazard alerts | Disaster hub |
 | Marine (Open-Meteo Marine) | West/south coast swell for fishers | Niche but sticky |
 | RainViewer / Blitzortung | Skip for now | License / attribution friction |
+
+Deep dive: [`docs/WEATHER_DISASTER_APIS_RESEARCH.md`](./WEATHER_DISASTER_APIS_RESEARCH.md).
 
 ---
 

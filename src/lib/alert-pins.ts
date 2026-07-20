@@ -14,6 +14,7 @@ export const ALERT_PIN_IDS = [
   "col_basket",
   "news_cluster",
   "tender_closing",
+  "card_day",
 ] as const;
 
 export type AlertPinId = (typeof ALERT_PIN_IDS)[number];
@@ -51,6 +52,8 @@ export interface AlertSignalContext {
   newsClusterDetail: string | null;
   tenderClosingAttention: boolean;
   tenderClosingDetail: string | null;
+  cardDayAttention: boolean;
+  cardDayDetail: string | null;
 }
 
 export interface FiredAlert {
@@ -217,6 +220,17 @@ export function evaluateAlertPins(
             detail:
               context.tenderClosingDetail ??
               "e-GP tenders closing within 7 days",
+          });
+        }
+        break;
+      }
+      case "card_day": {
+        if (context.cardDayAttention) {
+          fired.push({
+            id: pin,
+            detail:
+              context.cardDayDetail ??
+              "Supermarket card offer active today",
           });
         }
         break;

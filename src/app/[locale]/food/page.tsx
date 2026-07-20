@@ -2,9 +2,23 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FoodDistrictTable } from "@/components/FoodDistrictTable";
 import { FoodStapleGrid } from "@/components/FoodStapleGrid";
 import { HartiEssentialsNote } from "@/components/HartiEssentialsNote";
+import { SupermarketCardDays } from "@/components/SupermarketCardDays";
 import { Link } from "@/i18n/navigation";
 import { getSourceProvenancePath } from "@/lib/sources";
 import { getFoodData } from "@/lib/food";
+
+function formatMarketMonthYear(isoOrDate: string, locale: string): string {
+  const raw = isoOrDate.includes("T") ? isoOrDate : `${isoOrDate}T00:00:00.000Z`;
+  const date = new Date(raw);
+  if (Number.isNaN(date.getTime())) {
+    return isoOrDate.slice(0, 7);
+  }
+  return date.toLocaleDateString(locale, {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
 
 export default async function FoodPage({
   params,
@@ -16,6 +30,13 @@ export default async function FoodPage({
   const t = await getTranslations("food");
   const snapshot = await getFoodData();
   const provenance = snapshot.provenance ?? "seed";
+  const wfpAsOfSource = snapshot.corpusAsOf ?? snapshot.asOf;
+  const wfpMonthYear = formatMarketMonthYear(wfpAsOfSource, locale);
+  const staleStapleCount = snapshot.staleStapleCount ?? 0;
+  const offersLabel =
+    provenance === "wfp_hdx" || provenance === "spar2u"
+      ? t("stapleQuotesMatched")
+      : t("retailOffers");
 
   return (
     <div className="space-y-8">
@@ -26,19 +47,55 @@ export default async function FoodPage({
           {t("asOf", { date: snapshot.asOf })} ·{" "}
           <Link
             href={getSourceProvenancePath(snapshot.sourceId)}
-            className="text-teal-300 hover:text-teal-200"
+            className="text-white underline decoration-white/30 hover:decoration-white"
           >
             {snapshot.sourceName}
           </Link>
+          {" · "}
+          {provenance === "live"
+            ? t("provenanceLive")
+            : provenance === "wfp_hdx"
+              ? t("provenanceWfp")
+              : provenance === "spar2u"
+                ? t("provenanceSpar")
+                : provenance === "life_federation"
+                  ? t("provenanceLife")
+                  : t("provenanceSeed")}
         </p>
         {provenance === "life_federation" ? (
           <p className="mt-3 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-sm text-slate-200">
             {t("bannerLife")}
           </p>
         ) : null}
+        {provenance === "wfp_hdx" ? (
+          <div className="mt-4 space-y-3 rounded-2xl border border-amber-300/40 bg-amber-400/[0.08] px-5 py-5">
+            <p className="text-2xl font-semibold tracking-tight text-amber-50 sm:text-3xl">
+              {t("corpusAsOfLoud", { monthYear: wfpMonthYear })}
+            </p>
+            <p className="max-w-2xl text-base leading-relaxed text-amber-50/90">
+              {t("bannerWfp")}
+            </p>
+            {staleStapleCount > 0 ? (
+              <p className="max-w-2xl text-sm font-medium text-amber-100/90">
+                {t("staleStapleCountBanner", { count: staleStapleCount })}
+              </p>
+            ) : null}
+          </div>
+        ) : null}
+        {provenance === "spar2u" ? (
+          <p className="mt-3 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-sm text-slate-200">
+            {t("bannerSpar")}
+          </p>
+        ) : null}
       </div>
 
-      <HartiEssentialsNote provenance={provenance} />
+      <HartiEssentialsNote
+        provenance={provenance}
+        corpusAsOf={snapshot.corpusAsOf}
+        locale={locale}
+      />
+
+      <SupermarketCardDays />
 
       <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
@@ -46,11 +103,17 @@ export default async function FoodPage({
           <dd className="mt-2 text-3xl font-semibold text-white">
             LKR {snapshot.essentialsBasketLkr.toLocaleString()}
           </dd>
+          {provenance === "wfp_hdx" && staleStapleCount > 0 ? (
+            <p className="mt-2 text-xs text-slate-500">{t("basketExcludesStale")}</p>
+          ) : null}
         </div>
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <dt className="text-sm text-slate-500">{t("retailOffers")}</dt>
+          <dt className="text-sm text-slate-500">{offersLabel}</dt>
           <dd className="mt-2 text-3xl font-semibold text-white">
-            {snapshot.retailOffers.toLocaleString()}
+            {(provenance === "wfp_hdx" || provenance === "spar2u"
+              ? snapshot.marketQuotes
+              : snapshot.retailOffers
+            ).toLocaleString()}
           </dd>
         </div>
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
@@ -58,7 +121,7 @@ export default async function FoodPage({
           <dd className="mt-2">
             <Link
               href="/cost-of-living"
-              className="text-teal-300 hover:text-teal-200"
+              className="text-white underline decoration-white/30 hover:decoration-white"
             >
               {t("costOfLivingCta")} →
             </Link>
@@ -74,7 +137,11 @@ export default async function FoodPage({
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-white">{t("tableTitle")}</h2>
         <p className="text-sm text-slate-400">{t("tableSubtitle")}</p>
-        <FoodDistrictTable locale={locale} snapshot={snapshot} />
+        <FoodDistrictTable
+          locale={locale}
+          snapshot={snapshot}
+          mixedSeedDistricts={Boolean(snapshot.mixedSeedDistricts)}
+        />
       </section>
 
       <p className="text-sm text-slate-500">
@@ -82,7 +149,11 @@ export default async function FoodPage({
           ? t("disclaimerSeed")
           : provenance === "life_federation"
             ? t("disclaimerLife")
-            : t("disclaimer")}
+            : provenance === "wfp_hdx"
+              ? t("disclaimerWfp")
+              : provenance === "spar2u"
+                ? t("disclaimerSpar")
+                : t("disclaimer")}
       </p>
     </div>
   );

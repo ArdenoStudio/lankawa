@@ -1,0 +1,179 @@
+{
+  "sourceId": "nwsdb_tariff",
+  "sourceName": "National Water Supply and Drainage Board",
+  "asOf": "2023-08-01",
+  "effectiveFrom": "2023-08-01",
+  "category": "Domestic water supply",
+  "vatRatePct": 18,
+  "unit": "m3",
+  "methodologyNote": "Curated from Gazette Extraordinary No. 2343/28 (02 Aug 2023) Tariff Table 02 (domestic) and Table 01 (Samurdhi/tenement). Progressive usage charge by m³ slab; monthly service charge is the band for total monthly consumption. Indicative VAT at 18% on usage+service. Not your NWSDB bill — verify against the official Bill Calculator and your meter reading. Live POST https://ebis.waterboard.lk/api_nwsdb/bill/BillCalculator returns Calculation totals that match these slabs for CategoryId=1 (Domestic) at 30 days; the response Tariff[].UnitRate fields are unreliable for ingest.",
+  "decisionUrl": "https://www.waterboard.lk/current-water-tariff/",
+  "gazetteUrl": "https://www.waterboard.lk/wp-content/uploads/2023/08/Water-Tariff-2023-Revised-English.pdf",
+  "billCalculatorUrl": "https://ebis.waterboard.lk/directPay/#/BillCalculator",
+  "liveApiUrl": "https://ebis.waterboard.lk/api_nwsdb/bill/BillCalculator",
+  "tracks": [
+    {
+      "id": "domestic",
+      "label": "Domestic (Category 10 — other than Samurdhi / tenement)",
+      "categoryId": 1,
+      "consumerCategoryCode": 10,
+      "slabs": [
+        {
+          "id": "0-5",
+          "fromM3": 0,
+          "toM3": 5,
+          "usageLkrPerM3": 60,
+          "serviceLkrPerMonth": 300
+        },
+        {
+          "id": "6-10",
+          "fromM3": 6,
+          "toM3": 10,
+          "usageLkrPerM3": 80,
+          "serviceLkrPerMonth": 300
+        },
+        {
+          "id": "11-15",
+          "fromM3": 11,
+          "toM3": 15,
+          "usageLkrPerM3": 100,
+          "serviceLkrPerMonth": 300
+        },
+        {
+          "id": "16-20",
+          "fromM3": 16,
+          "toM3": 20,
+          "usageLkrPerM3": 110,
+          "serviceLkrPerMonth": 400
+        },
+        {
+          "id": "21-25",
+          "fromM3": 21,
+          "toM3": 25,
+          "usageLkrPerM3": 130,
+          "serviceLkrPerMonth": 500
+        },
+        {
+          "id": "26-30",
+          "fromM3": 26,
+          "toM3": 30,
+          "usageLkrPerM3": 160,
+          "serviceLkrPerMonth": 600
+        },
+        {
+          "id": "31-40",
+          "fromM3": 31,
+          "toM3": 40,
+          "usageLkrPerM3": 180,
+          "serviceLkrPerMonth": 1500
+        },
+        {
+          "id": "41-50",
+          "fromM3": 41,
+          "toM3": 50,
+          "usageLkrPerM3": 210,
+          "serviceLkrPerMonth": 3000
+        },
+        {
+          "id": "51-75",
+          "fromM3": 51,
+          "toM3": 75,
+          "usageLkrPerM3": 240,
+          "serviceLkrPerMonth": 3500
+        },
+        {
+          "id": "76-100",
+          "fromM3": 76,
+          "toM3": 100,
+          "usageLkrPerM3": 270,
+          "serviceLkrPerMonth": 4000
+        },
+        {
+          "id": "101+",
+          "fromM3": 101,
+          "toM3": null,
+          "usageLkrPerM3": 300,
+          "serviceLkrPerMonth": 4500
+        }
+      ]
+    },
+    {
+      "id": "samurdhi",
+      "label": "Samurdhi / tenement garden (Category 20 / 14)",
+      "categoryId": 9,
+      "consumerCategoryCode": 20,
+      "slabs": [
+        {
+          "id": "0-5",
+          "fromM3": 0,
+          "toM3": 5,
+          "usageLkrPerM3": 5,
+          "serviceLkrPerMonth": 100
+        },
+        {
+          "id": "6-10",
+          "fromM3": 6,
+          "toM3": 10,
+          "usageLkrPerM3": 10,
+          "serviceLkrPerMonth": 100
+        },
+        {
+          "id": "11-15",
+          "fromM3": 11,
+          "toM3": 15,
+          "usageLkrPerM3": 15,
+          "serviceLkrPerMonth": 100
+        },
+        {
+          "id": "16-20",
+          "fromM3": 16,
+          "toM3": 20,
+          "usageLkrPerM3": 40,
+          "serviceLkrPerMonth": 100
+        },
+        {
+          "id": "21-25",
+          "fromM3": 21,
+          "toM3": 25,
+          "usageLkrPerM3": 58,
+          "serviceLkrPerMonth": 100
+        },
+        {
+          "id": "26-30",
+          "fromM3": 26,
+          "toM3": 30,
+          "usageLkrPerM3": 88,
+          "serviceLkrPerMonth": 200
+        },
+        {
+          "id": "31-40",
+          "fromM3": 31,
+          "toM3": 40,
+          "usageLkrPerM3": 105,
+          "serviceLkrPerMonth": 400
+        },
+        {
+          "id": "41-50",
+          "fromM3": 41,
+          "toM3": 50,
+          "usageLkrPerM3": 120,
+          "serviceLkrPerMonth": 650
+        },
+        {
+          "id": "51-75",
+          "fromM3": 51,
+          "toM3": 75,
+          "usageLkrPerM3": 130,
+          "serviceLkrPerMonth": 1000
+        },
+        {
+          "id": "76+",
+          "fromM3": 76,
+          "toM3": null,
+          "usageLkrPerM3": 140,
+          "serviceLkrPerMonth": 1600
+        }
+      ]
+    }
+  ]
+}
