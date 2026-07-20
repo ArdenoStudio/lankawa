@@ -2,7 +2,8 @@
 
 **Strategy (locked):** Stay on **RSS/Atom**, not paid scrape APIs (RapidAPI / World News API). Outlets almost never ship official APIs; RSS is the free, attributable path.  
 **Status:** Research backlog (Jul 2026). Items are *not* shipped unless marked ✅ elsewhere.  
-**Rule:** Sisters stay data backends; Lankawa remains the umbrella UI. No iframe mosaics of news sites.
+**Rule:** Sisters stay data backends; Lankawa remains the umbrella UI. No iframe mosaics of news sites.  
+**Sequencing:** See **`docs/NEWS_RSS_MASTER_PLAN.md`** (phases NR-0…NR-6). This file is the inventory; the master plan wins on order and gates.
 
 ---
 
@@ -133,13 +134,16 @@ Verified working RSS from environment probes (HTTP 200 + `<item>`/`<entry>` coun
 
 ## Recommended ship waves
 
+Superseded for sequencing by `docs/NEWS_RSS_MASTER_PLAN.md`. Rough map:
+
 ```
-Wave N-A (feeds):     N01, N03, N05, N19, N20, N58, N59
-Wave N-B (parser):    N21, N22, N24, N25, N28, N29, N30
-Wave N-C (surfaces):  N31, N32, N33, N36, N40, N42, N44
-Wave N-D (retention): N49, N55, N56, N64, N38, N39
-Wave N-E (civic RSS): N71, N72, N73, N75
-Wave N-F (later):     N16–N18 park, N47 pgvector, N12 BBC filter
+Wave N-A → NR-0   feeds / canary / docs
+Wave N-B → NR-1   parser + durable store + cron
+Wave N-C → NR-2   /news + clusters + topics
+(+ routing) → NR-3 district / pins / deep-links
+Wave N-D → NR-4   delta brief / HTML email / archive
+Wave N-E → NR-5   civic RSS modules
+Wave N-F → NR-6   quality / pgvector later
 ```
 
 ---
