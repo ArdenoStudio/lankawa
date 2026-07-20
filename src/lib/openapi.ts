@@ -254,6 +254,33 @@ export const openApiSpec = {
     "/economy/water-bill": {
       get: {
         summary: "NWSDB water bill estimate",
+        parameters: [
+          {
+            name: "units",
+            in: "query",
+            required: false,
+            schema: { type: "number", default: 20 },
+            description: "Monthly consumption in cubic metres (m³)",
+          },
+          {
+            name: "days",
+            in: "query",
+            required: false,
+            schema: { type: "integer", default: 30 },
+            description: "Billing period days for live BillCalculator request",
+          },
+          {
+            name: "track",
+            in: "query",
+            required: false,
+            schema: {
+              type: "string",
+              enum: ["domestic", "samurdhi"],
+              default: "domestic",
+            },
+            description: "Tariff track id (domestic or Samurdhi/tenement)",
+          },
+        ],
         responses: {
           "200": {
             description:
@@ -268,7 +295,7 @@ export const openApiSpec = {
         responses: {
           "200": {
             description:
-              "District watch/warning overlay with NBRO/DMC provenance and seed honesty",
+              "District watch/warning from lk_dmc tip layout parse, with seed honesty when unavailable",
           },
         },
       },
@@ -676,6 +703,13 @@ export const apiEndpoints = [
     summaryKey: "waterBillSummary" as const,
     descriptionKey: "waterBillDescription" as const,
     example: `{ "seedEstimate": { "totalLkr": 2537 }, "liveAvailable": true, "provenancePath": "/sources/nwsdb_tariff" }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/cse/quotes?symbols=JKH.N0000,COMB.N0000",
+    summaryKey: "cseQuotesSummary" as const,
+    descriptionKey: "cseQuotesDescription" as const,
+    example: `{ "generatedAt": "...", "quotes": [{ "symbol": "JKH.N0000", "price": 22.1 }], "provenancePath": "/sources/cse_lk" }`,
   },
   {
     method: "GET",

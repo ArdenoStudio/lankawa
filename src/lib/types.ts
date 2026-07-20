@@ -492,6 +492,8 @@ export interface FoodSnapshot {
   districts: FoodDistrictMealCost[];
   /** Count of staples marked stale (older than freshness window). */
   staleStapleCount?: number;
+  /** True when district meal bands are seed while staples/basket may be live. */
+  mixedSeedDistricts?: boolean;
 }
 
 export interface LifeDomainMetric {

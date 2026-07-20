@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import {
   parseCseCompanyInfo,
   parseCseNotices,
+  parseGicsSectorValuationMap,
 } from "./cse";
 
 const notificationsPayload = {
@@ -94,5 +95,39 @@ assert.equal(company.isFallback, false);
 
 assert.equal(parseCseCompanyInfo({}), null);
 assert.equal(parseCseCompanyInfo({ reqSymbolInfo: { symbol: "X" } }), null);
+
+const gicsMap = parseGicsSectorValuationMap({
+  reqTradeDate: 1_784_226_600_000,
+  reqGICSSectorSummery: [
+    {
+      sectorId: "SPCSEEIP",
+      per: 12.6,
+      pbv: 1.0,
+      dy: "2.9",
+      companiesTraded: 3,
+      companiesListed: 3,
+    },
+    {
+      sectorId: "SPCSEBP",
+      per: null,
+      pbv: 0.8,
+      dy: "4.2",
+      companiesTraded: 17,
+      companiesListed: 17,
+    },
+  ],
+});
+assert.equal(gicsMap.size, 2);
+assert.deepEqual(gicsMap.get("SPCSEEIP"), {
+  per: 12.6,
+  pbv: 1.0,
+  dy: 2.9,
+  companiesTraded: 3,
+  companiesListed: 3,
+});
+assert.equal(gicsMap.get("SPCSEBP")?.per, null);
+assert.equal(gicsMap.get("SPCSEBP")?.dy, 4.2);
+assert.equal(parseGicsSectorValuationMap(null).size, 0);
+assert.equal(parseGicsSectorValuationMap({}).size, 0);
 
 console.log("cse integration test passed");

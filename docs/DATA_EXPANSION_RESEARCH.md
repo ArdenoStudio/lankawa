@@ -35,15 +35,12 @@ Bookmark libs (Tremor, HyperUI, DaisyUI, shadcn blocks) informed layout density 
 
 **Deepen catalog (announcements / GICS / market status):** [`CSE_API_DOCS.md`](./CSE_API_DOCS.md) — live-probed 2026-07-20.
 
-**Shipped in adapter:** `aspiData`, `snpData`, `marketStatus`, `marketSummery`, `tradeSummary`, `allSectors`, `mostActiveTrades`, `dailyMarketSummery`.
+**Shipped in adapter:** `aspiData`, `snpData`, `marketStatus`, `marketSummery`, `tradeSummary`, `allSectors`, `GICSSectorSummery` (PER/PBV/DY join), `mostActiveTrades`, `dailyMarketSummery`, `GET /notifications`, `approvedAnnouncement`, `companyInfoSummery`.
 
-**Highest-ROI still unused / broken in notices path:**
+**Highest-ROI still unused:**
 
 | Endpoint | Daily-user value |
 |----------|------------------|
-| `GET /notifications` | Halt/auction banners — Lankawa currently **POST**s (405) |
-| `POST /approvedAnnouncement` | Corporate disclosures strip (homepage feed) |
-| `POST /GICSSectorSummery` | Sector PER/PBV/DY + companies traded (join on `indexCodeSp`) |
 | `POST /sectorHighLow?sectorId=1` | ASPI intraday open/high/low companion |
 
 Cite Cookie-Cat docs as a **catalog**, not as an upstream SLA. CSE HTML/API can change without notice.
@@ -73,7 +70,7 @@ Cite Cookie-Cat docs as a **catalog**, not as an upstream SLA. CSE HTML/API can 
 |--------|-----|-------|
 | Open-Meteo (already used) | UV index, 7-day rain outlook, multi-city strip | Free, no key for core |
 | Open-Meteo Flood / GloFAS | Basin flood probability | Pair with LK Flood gauges |
-| Irrigation Dept ArcGIS gauges | Live river levels + rain + alert thresholds | **Prefer over stale lk-flood-api** — see `WEATHER_DISASTER_APIS_RESEARCH.md` |
+| Irrigation Dept ArcGIS gauges | Live river levels + rain + alert thresholds | **Shipped** on `/disaster` + `flood.ts` stale fallback — see `WEATHER_DISASTER_APIS_RESEARCH.md` |
 | MetDept WAS CAP RSS | Official weather warnings (already used) | `cap/{en,si,ta}/rss.xml` + `dashboard-api/advisories` |
 | DMC PDF indexes (nuuuwan/lk_dmc) | Landslide / flood bulletin metadata | No DMC CAP feed found |
 | NBRO live EW JSON | — | **None public**; NSDI `LHazard_10K` is static zonation only |

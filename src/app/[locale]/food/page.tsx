@@ -32,6 +32,11 @@ export default async function FoodPage({
   const provenance = snapshot.provenance ?? "seed";
   const wfpAsOfSource = snapshot.corpusAsOf ?? snapshot.asOf;
   const wfpMonthYear = formatMarketMonthYear(wfpAsOfSource, locale);
+  const staleStapleCount = snapshot.staleStapleCount ?? 0;
+  const offersLabel =
+    provenance === "wfp_hdx" || provenance === "spar2u"
+      ? t("stapleQuotesMatched")
+      : t("retailOffers");
 
   return (
     <div className="space-y-8">
@@ -70,6 +75,11 @@ export default async function FoodPage({
             <p className="max-w-2xl text-base leading-relaxed text-amber-50/90">
               {t("bannerWfp")}
             </p>
+            {staleStapleCount > 0 ? (
+              <p className="max-w-2xl text-sm font-medium text-amber-100/90">
+                {t("staleStapleCountBanner", { count: staleStapleCount })}
+              </p>
+            ) : null}
           </div>
         ) : null}
         {provenance === "spar2u" ? (
@@ -79,7 +89,11 @@ export default async function FoodPage({
         ) : null}
       </div>
 
-      <HartiEssentialsNote provenance={provenance} />
+      <HartiEssentialsNote
+        provenance={provenance}
+        corpusAsOf={snapshot.corpusAsOf}
+        locale={locale}
+      />
 
       <SupermarketCardDays />
 
@@ -89,11 +103,17 @@ export default async function FoodPage({
           <dd className="mt-2 text-3xl font-semibold text-white">
             LKR {snapshot.essentialsBasketLkr.toLocaleString()}
           </dd>
+          {provenance === "wfp_hdx" && staleStapleCount > 0 ? (
+            <p className="mt-2 text-xs text-slate-500">{t("basketExcludesStale")}</p>
+          ) : null}
         </div>
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <dt className="text-sm text-slate-500">{t("retailOffers")}</dt>
+          <dt className="text-sm text-slate-500">{offersLabel}</dt>
           <dd className="mt-2 text-3xl font-semibold text-white">
-            {snapshot.retailOffers.toLocaleString()}
+            {(provenance === "wfp_hdx" || provenance === "spar2u"
+              ? snapshot.marketQuotes
+              : snapshot.retailOffers
+            ).toLocaleString()}
           </dd>
         </div>
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
@@ -117,7 +137,11 @@ export default async function FoodPage({
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-white">{t("tableTitle")}</h2>
         <p className="text-sm text-slate-400">{t("tableSubtitle")}</p>
-        <FoodDistrictTable locale={locale} snapshot={snapshot} />
+        <FoodDistrictTable
+          locale={locale}
+          snapshot={snapshot}
+          mixedSeedDistricts={Boolean(snapshot.mixedSeedDistricts)}
+        />
       </section>
 
       <p className="text-sm text-slate-500">

@@ -18,7 +18,7 @@ Related: [`DATA_EXPANSION_RESEARCH.md`](./DATA_EXPANSION_RESEARCH.md) · [`STOCK
 | Indices | `POST /aspiData`, `POST /snpData` | — |
 | Board / movers | `POST /tradeSummary` (local top g/l) | Optional dedicated `topGainers` / `topLooses` / `mostActiveVolumes` |
 | Session aggregates | `POST /marketSummery`, `POST /dailyMarketSummery` | — |
-| Sectors (GICS UI) | `POST /allSectors` | Unused: `GICSSectorSummery`, `marketIndices`, `listAllSectors`, range helpers |
+| Sectors (GICS UI) | `POST /allSectors` + `POST /GICSSectorSummery` (valuation join) | Unused: `marketIndices`, `listAllSectors`, range helpers |
 | Market status | `POST /marketStatus` → `status` string | Documented status vocabulary; WS `/topic/status` not used |
 | Notices | `GET /notifications` + `POST /approvedAnnouncement` (seed fallback) | Optional per-symbol `getAnnouncementByCompany` for watchlist |
 | Quotes | `POST /companyInfoSummery` (form `symbol`) via `/api/v1/cse/quotes` | — |
@@ -75,7 +75,7 @@ CSE moved to **GICS industry groups** + S&P/CSE co-branded sector indices (Jan 2
 | `POST /allSectors` | JSON `{}` | — | 200 | **22** rows: 20 GICS groups + `ASI` + `S&P SL20`; live index + today turnover | **Used** |
 | `POST /marketIndices` | JSON `{}` or form | — | 200 | Nested `[[20 rows]]` — same GICS rows as `allSectors` **without** ASPI/SL20 | Unused (redundant with `allSectors`) |
 | `POST /listAllSectors` | JSON `{}` or form | — | 200 | Master `{ status, content: [{ id, name, symbol, indexCode, indexCodeSp }] }` (22) | Unused |
-| `POST /GICSSectorSummery` | JSON `{}` or form | — | 200 | **Valuation strip:** PER / PBV / DY + companies traded/listed (20 rows) | **Highest-ROI unused** |
+| `POST /GICSSectorSummery` | JSON `{}` or form | — | 200 | **Valuation strip:** PER / PBV / DY + companies traded/listed (20 rows) | **Used** — joined onto `allSectors` by `indexCodeSp` |
 | `POST /gics`, `/gicsData`, `/allGics`, … | — | — | 400 | `Could not find the POST method for URL /api/…` | Do not call |
 
 **Spelling:** path is `GICSSectorSummery` (capital GICS, CSE typo “Summery”). Lowercase `/gicsSectorSummery` → 400.
@@ -228,7 +228,7 @@ curl -sS "${H[@]}" -X POST -H 'Content-Type: application/json' -d '{}' "$BASE/ma
 # GICS live heat (already used by Lankawa)
 curl -sS "${H[@]}" -X POST -H 'Content-Type: application/json' -d '{}' "$BASE/allSectors"
 
-# GICS valuation / breadth (not wired)
+# GICS valuation / breadth (joined onto allSectors in cse.ts)
 curl -sS "${H[@]}" -X POST -H 'Content-Type: application/json' -d '{}' "$BASE/GICSSectorSummery"
 
 # Notices that actually work
@@ -247,7 +247,7 @@ curl -sS "${H[@]}" -X POST -H 'Content-Type: application/x-www-form-urlencoded' 
 
 1. ~~**Fix notices ingest**~~ — wired: `GET /notifications` (`content`) + `POST /approvedAnnouncement` (`approvedAnnouncements`); economy strip below CSE card; seed fallback.
 2. ~~**Per-symbol quotes**~~ — wired: `POST /companyInfoSummery` via `/api/v1/cse/quotes` for the home watchlist.
-3. **Optional GICS deepen** — join `GICSSectorSummery` onto existing sector rows for PER/PBV/DY + traded/listed counts (one extra POST).
+3. ~~**Optional GICS deepen**~~ — wired: join `GICSSectorSummery` onto existing sector rows for PER/PBV/DY + traded/listed counts (one extra POST; seed fallback).
 4. **Optional ASPI range** — `POST /sectorHighLow?sectorId=1` if `aspiData` high/low sparse.
 5. **Do not** add COVID / buy-in / new-listings dumps to the economy card — keep the strip short (halt notices + recent approved disclosures).
 

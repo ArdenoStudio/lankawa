@@ -44,9 +44,8 @@ interface StapleSpec {
   /** Higher = preferred when multiple commodities match (e.g. Rice white > red nadu). */
   prefer: (commodity: string) => number;
   match: (commodity: string) => boolean;
+  /** Rough monthly household qty; contributes to essentials basket only when quote is non-stale. */
   basketQty: number;
-  /** Include in essentials basket only when not stale. */
-  basketWhenFresh?: boolean;
 }
 
 const STAPLE_SPECS: StapleSpec[] = [
@@ -107,7 +106,6 @@ const STAPLE_SPECS: StapleSpec[] = [
     match: (c) => /\bsugar\b/i.test(c),
     prefer: () => 100,
     basketQty: 2,
-    basketWhenFresh: true,
   },
   {
     slug: "wheat",
@@ -116,7 +114,6 @@ const STAPLE_SPECS: StapleSpec[] = [
     match: (c) => /wheat flour/i.test(c),
     prefer: () => 100,
     basketQty: 3,
-    basketWhenFresh: true,
   },
 ];
 
@@ -309,7 +306,6 @@ export function buildWfpFoodSnapshot(rows: WfpRow[]): WfpFoodDirectSnapshot | nu
   }
 
   const stapleItems: FoodItemPrice[] = [];
-  let basket = 0;
   let quoteCount = 0;
   let staleStapleCount = 0;
 
@@ -337,26 +333,11 @@ export function buildWfpFoodSnapshot(rows: WfpRow[]): WfpFoodDirectSnapshot | nu
       quoteAsOf: hit.quoteDate,
     });
 
-    const includeInBasket =
-      !stale || spec.basketWhenFresh !== true;
-    if (includeInBasket && !stale) {
-      basket += priceLkr * spec.basketQty;
-    } else if (includeInBasket && stale && spec.basketWhenFresh !== true) {
-      // Shouldn't happen when basketWhenFresh is unset and stale — still skip stale from basket.
-    } else if (!stale) {
-      basket += priceLkr * spec.basketQty;
-    }
-
-    // Fresh staples always contribute; stale sugar/flour never contribute.
-    if (!stale) {
-      // already added above when !stale
-    }
-
     quoteCount += 1;
   }
 
-  // Recompute basket cleanly: only non-stale staples.
-  basket = 0;
+  // Essentials basket honesty (WFP): non-stale staples only — lagged quotes stay visible but excluded.
+  let basket = 0;
   for (const spec of STAPLE_SPECS) {
     const item = stapleItems.find((s) => s.slug === spec.slug);
     if (!item || item.stale) continue;

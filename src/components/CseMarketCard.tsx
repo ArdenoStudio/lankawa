@@ -29,6 +29,29 @@ function formatChange(change: number | null, changePct: number | null): string {
   return `${direction} ${parts.join(" ")}`;
 }
 
+function formatSectorValuation(sector: {
+  per: number | null;
+  pbv: number | null;
+  dy: number | null;
+  companiesTraded: number | null;
+  companiesListed: number | null;
+}): string | null {
+  const parts: string[] = [];
+  if (sector.per != null) {
+    parts.push(`PER ${sector.per.toFixed(1)}`);
+  }
+  if (sector.pbv != null) {
+    parts.push(`PBV ${sector.pbv.toFixed(1)}`);
+  }
+  if (sector.dy != null) {
+    parts.push(`DY ${sector.dy.toFixed(1)}%`);
+  }
+  if (sector.companiesTraded != null && sector.companiesListed != null) {
+    parts.push(`${sector.companiesTraded}/${sector.companiesListed}`);
+  }
+  return parts.length > 0 ? parts.join(" · ") : null;
+}
+
 function MoverList({
   title,
   movers,
@@ -229,29 +252,39 @@ export function CseMarketCard({
               <p className="text-sm text-neutral-500">{labels.noSectors}</p>
             ) : (
               <ul className="space-y-2">
-                {snapshot.sectors.slice(0, 6).map((sector) => (
-                  <li
-                    key={sector.symbol}
-                    className="flex items-start justify-between gap-3 border border-white/10 px-3 py-2"
-                  >
-                    <div>
-                      <p className="text-sm font-medium text-white">
-                        {sector.name}
-                      </p>
-                      <p className="text-xs text-neutral-500">{sector.symbol}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-medium text-white">
-                        {sector.indexValue.toLocaleString(undefined, {
-                          maximumFractionDigits: 2,
-                        })}
-                      </p>
-                      <p className="text-xs text-neutral-300">
-                        {formatChange(sector.change, sector.changePct)}
-                      </p>
-                    </div>
-                  </li>
-                ))}
+                {snapshot.sectors.slice(0, 6).map((sector) => {
+                  const valuation = formatSectorValuation(sector);
+                  return (
+                    <li
+                      key={sector.symbol}
+                      className="flex items-start justify-between gap-3 border border-white/10 px-3 py-2"
+                    >
+                      <div>
+                        <p className="text-sm font-medium text-white">
+                          {sector.name}
+                        </p>
+                        <p className="text-xs text-neutral-500">
+                          {sector.symbol}
+                        </p>
+                        {valuation ? (
+                          <p className="mt-0.5 text-[11px] text-neutral-500">
+                            {valuation}
+                          </p>
+                        ) : null}
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-medium text-white">
+                          {sector.indexValue.toLocaleString(undefined, {
+                            maximumFractionDigits: 2,
+                          })}
+                        </p>
+                        <p className="text-xs text-neutral-300">
+                          {formatChange(sector.change, sector.changePct)}
+                        </p>
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>

@@ -17,7 +17,7 @@
 | GDACS | `gdacs.ts` | Regional multi-hazard GeoJSON |
 | NASA FIRMS | `firms.ts` | Active fire CSV (needs `NASA_FIRMS_MAP_KEY`) |
 | lk-flood-api | `flood.ts` | Community REST over river gauges |
-| NBRO/DMC landslide | `landslide.ts` | Seed districts + `lk_dmc` summary confirmation |
+| NBRO/DMC landslide | `landslide.ts` | Tip `blocks.json` district/level parse + seed fallback |
 | DMC news RSS | `news.ts` | Headlines only |
 | USGS earthquakes | `earthquake.ts` | Land bbox query |
 
@@ -49,10 +49,9 @@ Irrigation’s Hydrology division publishes a public ArcGIS Online dashboard and
 | [nuuuwan/lk_irrigation](https://github.com/nuuuwan/lk_irrigation) | ~10 min | Scrapes ArcGIS → GitHub JSON (`data/alert_data.json`, per-station `data/rwlds/...`) |
 | [yrangana/lk_flood_api](https://github.com/yrangana/lk_flood_api) → `https://lk-flood-api.vercel.app` | Depends on upstream | REST: `/levels/latest`, `/alerts`, `/stations`, … |
 
-**Lankawa today:** already consumes `lk-flood-api`.  
-**Probe warning (Jul 2026):** `/levels/latest` returned timestamps stuck at **2026-07-11 09:30:00** while Irrigation ArcGIS and `lk_irrigation` were current on **2026-07-20**. Prefer **direct FeatureServer** or **raw `lk_irrigation` GitHub JSON** as primary; keep `lk-flood-api` as a convenience fallback with a staleness canary.
-
-**Ship suggestion:** Adapter that queries ArcGIS for latest-per-gauge, maps to existing `FloodStationLevel`, computes rate-of-rise from history, attributes “Irrigation Dept via ArcGIS (unofficial civic mirror)”.
+**Lankawa today:** `/disaster` shows **both** — Irrigation ArcGIS panel (`irrigation-gauges.ts`) and lk-flood-api alert summary (pulse).  
+**Stale canary (shipped):** `flood.ts` `fetchLatestFloodLevels` prefers live Irrigation ArcGIS (via `toFloodStationLevel`) when lk-flood-api timestamps lag **>6 h** or the API fails; seed Irrigation is never used to replace flood rows. District/province UIs keep the same `FloodStationLevel` shape.  
+**Probe warning (Jul 2026):** `/levels/latest` returned timestamps stuck at **2026-07-11 09:30:00** while Irrigation ArcGIS and `lk_irrigation` were current on **2026-07-20**.
 
 ---
 
@@ -139,7 +138,8 @@ Good for atlas overlays; not for alert cadence.
 
 ## Recommended ship order
 
-1. **Irrigation ArcGIS gauges** (or `lk_irrigation` raw JSON) as primary flood levels; staleness canary on `lk-flood-api`.  
+1. ~~**Irrigation ArcGIS gauges** as primary flood levels; staleness canary on `lk-flood-api`.~~ **Shipped** — disaster panel + `flood.ts` >6 h fallback.  
+
 2. **Met CAP XML parse** when RSS items appear; keep `advisories` as active source of truth.  
 3. **lk_dmc landslide chunk parse** → replace seed district tiers.  
 4. **NSDI LHazard / Inland_Waters** as optional map baselayers.  

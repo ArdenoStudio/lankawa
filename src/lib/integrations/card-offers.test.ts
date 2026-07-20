@@ -8,12 +8,15 @@ import {
   isOfferActiveToday,
   isSupermarketPromo,
   matchesWeekdayHint,
+  mergeTodaysLiveWithSeed,
+  merchantCoverageToken,
   normalizeCombankReward,
   normalizeDfccOffer,
   normalizeHnbOffer,
   normalizePabcOffer,
   normalizeSampathOffer,
   normalizeVisaPerk,
+  offerCoverageKey,
   parseCombankRewardsHtml,
   parseDfccSupermarketHtml,
   parseNtbPromotionsHtml,
@@ -342,6 +345,7 @@ assert.match(tagLabel, /25%/);
 // Seed fallback: Colombo weekday filter
 const seedFriday = getCardOffersSeedSnapshot(friday);
 assert.ok(seedFriday.isSeed);
+assert.ok(seedFriday.offers.every((o) => o.isSeed));
 assert.ok(
   seedFriday.offers.every(
     (o) => !o.weekdayHint || matchesWeekdayHint(o.weekdayHint, "friday"),
@@ -365,6 +369,7 @@ assert.ok(
     (o) => !o.weekdayHint || matchesWeekdayHint(o.weekdayHint, "saturday"),
   ),
 );
+assert.ok(seedSaturday.offers.every((o) => o.isSeed));
 
 const seedMonday = getCardOffersSeedSnapshot(monday);
 assert.ok(
@@ -381,6 +386,70 @@ assert.ok(
   seedMonday.offers.every(
     (o) => !o.weekdayHint || matchesWeekdayHint(o.weekdayHint, "monday"),
   ),
+);
+
+// Coverage tokens: alias merchants collapse; Cargills Online stays distinct
+assert.equal(merchantCoverageToken("Cargills"), merchantCoverageToken("Cargills Food City"));
+assert.equal(merchantCoverageToken("LAUGFS"), merchantCoverageToken("Laugfs Super"));
+assert.notEqual(
+  merchantCoverageToken("Cargills Online"),
+  merchantCoverageToken("Cargills Food City"),
+);
+
+// Live + seed gap fill: keep today's live banks; fill uncovered merchants from seed
+const liveFridayKeells: CardOffer = {
+  id: "live-hnb-keells-fri",
+  bank: "HNB",
+  merchant: "Keells",
+  title: "Live Keells Friday deal",
+  discountLabel: "25% off",
+  validTo: "2026-07-31",
+  weekdayHint: "friday",
+  sourceUrl: "https://example.com/live-keells",
+  asOf: "2026-07-17",
+};
+const liveFridayCargills: CardOffer = {
+  id: "live-combank-cargills-fri",
+  bank: "Commercial Bank",
+  merchant: "Cargills Food City",
+  title: "Live Cargills Friday deal",
+  discountLabel: "Up to 25% Off",
+  validTo: "2026-07-31",
+  weekdayHint: "friday",
+  sourceUrl: "https://example.com/live-cargills",
+  asOf: "2026-07-17",
+};
+const mixedFriday = mergeTodaysLiveWithSeed(
+  [liveFridayKeells, liveFridayCargills],
+  seedFriday.offers,
+);
+assert.ok(mixedFriday.some((o) => o.id === "live-hnb-keells-fri" && o.isSeed === false));
+assert.ok(
+  mixedFriday.some((o) => o.id === "live-combank-cargills-fri" && o.isSeed === false),
+);
+// Live Cargills covers seed Cargills / Cargills Food City Friday slots
+assert.ok(!mixedFriday.some((o) => o.isSeed && /cargills/i.test(o.merchant)));
+// Uncovered Friday merchants (e.g. Glomark) still come from seed
+assert.ok(
+  mixedFriday.some(
+    (o) => o.isSeed && o.bank === "HNB" && /glomark/i.test(o.merchant),
+  ),
+);
+assert.equal(
+  offerCoverageKey(liveFridayCargills),
+  offerCoverageKey({
+    ...liveFridayCargills,
+    merchant: "Cargills",
+  }),
+);
+
+// Empty live → all seed gaps (does not invent live rows)
+const allSeedFriday = mergeTodaysLiveWithSeed([], seedFriday.offers);
+assert.ok(allSeedFriday.length > 0);
+assert.ok(allSeedFriday.every((o) => o.isSeed));
+assert.deepEqual(
+  allSeedFriday.map((o) => o.id).sort(),
+  seedFriday.offers.map((o) => o.id).sort(),
 );
 
 const seedDays = new Set(

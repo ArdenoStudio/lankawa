@@ -25,7 +25,6 @@ export type FoodProvenance =
 export interface FoodFetchResult extends FoodSnapshot {
   provenance: FoodProvenance;
   upstreamStatus?: "healthy" | "degraded" | "offline";
-  mixedSeedDistricts?: boolean;
 }
 
 interface LifeFoodDomain {

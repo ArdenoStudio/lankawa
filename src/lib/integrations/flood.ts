@@ -1,8 +1,16 @@
 import { getDistrictForFloodStation } from "../flood-districts";
 import type { FloodAlertSummary, FloodStationLevel } from "../types";
+import {
+  fetchIrrigationGaugesSnapshot,
+  toFloodStationLevel,
+  type IrrigationGaugesSnapshot,
+} from "./irrigation-gauges";
 
 const FLOOD_API_BASE =
   process.env.FLOOD_API_BASE ?? "https://lk-flood-api.vercel.app";
+
+/** Match history canary + WEATHER_DISASTER_APIS_RESEARCH.md (>6 h → prefer Irrigation). */
+export const FLOOD_LEVELS_STALE_MS = 6 * 60 * 60 * 1000;
 
 export async function fetchFloodAlertSummary(): Promise<FloodAlertSummary[]> {
   const response = await fetch(`${FLOOD_API_BASE}/alerts/summary`, {
@@ -41,7 +49,57 @@ export async function fetchFloodHealth(): Promise<{ status: string }> {
   return response.json() as Promise<{ status: string }>;
 }
 
-export async function fetchLatestFloodLevels(): Promise<FloodStationLevel[]> {
+export function areFloodLevelsStale(
+  levels: FloodStationLevel[],
+  now = Date.now(),
+): boolean {
+  if (levels.length === 0) {
+    return true;
+  }
+
+  let newestMs = Number.NEGATIVE_INFINITY;
+  let hasValidTimestamp = false;
+
+  for (const level of levels) {
+    if (!level.timestamp) {
+      continue;
+    }
+    const ms = new Date(level.timestamp).getTime();
+    if (Number.isNaN(ms)) {
+      continue;
+    }
+    hasValidTimestamp = true;
+    if (ms > newestMs) {
+      newestMs = ms;
+    }
+  }
+
+  if (!hasValidTimestamp) {
+    return true;
+  }
+
+  return now - newestMs > FLOOD_LEVELS_STALE_MS;
+}
+
+/**
+ * Prefer live Irrigation ArcGIS gauges when lk-flood-api levels are missing/stale.
+ * Keeps lk-flood-api rows when Irrigation is seed/empty so UI never gets worse.
+ */
+export function preferIrrigationWhenFloodStale(
+  floodLevels: FloodStationLevel[],
+  irrigation: Pick<IrrigationGaugesSnapshot, "isSeed" | "gauges">,
+  now = Date.now(),
+): FloodStationLevel[] {
+  if (!areFloodLevelsStale(floodLevels, now)) {
+    return floodLevels;
+  }
+  if (irrigation.isSeed || irrigation.gauges.length === 0) {
+    return floodLevels;
+  }
+  return irrigation.gauges.map(toFloodStationLevel);
+}
+
+async function fetchLatestFloodLevelsFromApi(): Promise<FloodStationLevel[]> {
   const response = await fetch(`${FLOOD_API_BASE}/levels/latest`, {
     next: { revalidate: 600 },
     headers: { Accept: "application/json" },
@@ -72,6 +130,40 @@ export async function fetchLatestFloodLevels(): Promise<FloodStationLevel[]> {
     remarks: item.remarks ?? "",
     timestamp: item.timestamp ?? "",
   }));
+}
+
+export async function fetchLatestFloodLevels(): Promise<FloodStationLevel[]> {
+  let floodLevels: FloodStationLevel[] = [];
+  let apiError: Error | null = null;
+
+  try {
+    floodLevels = await fetchLatestFloodLevelsFromApi();
+  } catch (error) {
+    apiError =
+      error instanceof Error
+        ? error
+        : new Error("Flood API levels fetch failed");
+  }
+
+  if (!apiError && !areFloodLevelsStale(floodLevels)) {
+    return floodLevels;
+  }
+
+  try {
+    const irrigation = await fetchIrrigationGaugesSnapshot();
+    const preferred = preferIrrigationWhenFloodStale(floodLevels, irrigation);
+    if (preferred !== floodLevels) {
+      return preferred;
+    }
+  } catch {
+    // Keep lk-flood-api rows (or surface the original API error below).
+  }
+
+  if (apiError) {
+    throw apiError;
+  }
+
+  return floodLevels;
 }
 
 export async function fetchFloodLevelsForDistrict(
@@ -121,7 +213,7 @@ export async function fetchFloodLevelHistory(
   let tier: "fresh" | "stale" | "down" = "fresh";
   if (latest) {
     const ageMs = Date.now() - new Date(latest).getTime();
-    if (ageMs > 6 * 60 * 60 * 1000) {
+    if (ageMs > FLOOD_LEVELS_STALE_MS) {
       tier = "stale";
     }
   } else {

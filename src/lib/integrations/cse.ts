@@ -68,6 +68,12 @@ export interface CseSector {
   change: number | null;
   changePct: number | null;
   turnover: number | null;
+  /** GICS valuation strip (from `GICSSectorSummery`, joined on indexCodeSp). */
+  per: number | null;
+  pbv: number | null;
+  dy: number | null;
+  companiesTraded: number | null;
+  companiesListed: number | null;
 }
 
 export interface CseActiveTrade {
@@ -185,11 +191,41 @@ interface CseTradeSummaryResponse {
 interface CseSectorRow {
   symbol?: string;
   name?: string;
+  indexCodeSp?: string;
   indexValue?: number;
   change?: number;
   percentage?: number;
   sectorTurnoverToday?: number;
 }
+
+interface CseGicsSectorRow {
+  sectorId?: string;
+  per?: number | null;
+  pbv?: number | null;
+  dy?: string | number | null;
+  companiesTraded?: number | null;
+  companiesListed?: number | null;
+}
+
+interface CseGicsSectorSummeryResponse {
+  reqGICSSectorSummery?: CseGicsSectorRow[];
+}
+
+interface CseSectorValuation {
+  per: number | null;
+  pbv: number | null;
+  dy: number | null;
+  companiesTraded: number | null;
+  companiesListed: number | null;
+}
+
+const EMPTY_SECTOR_VALUATION: CseSectorValuation = {
+  per: null,
+  pbv: null,
+  dy: null,
+  companiesTraded: null,
+  companiesListed: null,
+};
 
 interface CseActiveRow {
   symbol?: string;
@@ -293,6 +329,11 @@ const SEED_SNAPSHOT: Omit<CseSnapshot, "tier" | "isFallback"> = {
       change: 4.2,
       changePct: 0.38,
       turnover: 210_000_000,
+      per: 5.2,
+      pbv: 0.8,
+      dy: 4.2,
+      companiesTraded: 17,
+      companiesListed: 17,
     },
     {
       symbol: "FBT",
@@ -301,6 +342,11 @@ const SEED_SNAPSHOT: Omit<CseSnapshot, "tier" | "isFallback"> = {
       change: -2.1,
       changePct: -0.21,
       turnover: 95_000_000,
+      per: 14.8,
+      pbv: 2.1,
+      dy: 4.5,
+      companiesTraded: 46,
+      companiesListed: 48,
     },
     {
       symbol: "CON",
@@ -309,6 +355,11 @@ const SEED_SNAPSHOT: Omit<CseSnapshot, "tier" | "isFallback"> = {
       change: 1.1,
       changePct: 0.17,
       turnover: 42_000_000,
+      per: 20.3,
+      pbv: 1.1,
+      dy: 2.3,
+      companiesTraded: 30,
+      companiesListed: 30,
     },
   ],
   mostActive: [
@@ -432,6 +483,18 @@ function finiteNumber(value: unknown): number | null {
     return null;
   }
   return value;
+}
+
+/** CSE returns DY as a string (e.g. `"2.9"`) on GICSSectorSummery. */
+function parseDy(value: unknown): number | null {
+  if (typeof value === "number") {
+    return finiteNumber(value);
+  }
+  if (typeof value === "string" && value.trim()) {
+    const parsed = Number(value.trim());
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+  return null;
 }
 
 function msToIso(ms: unknown, fallback: string): string {
@@ -827,7 +890,43 @@ function pickTopMovers(rows: CseTradeSummaryRow[]): {
   return { topGainers, topLosers };
 }
 
-function parseSectors(rows: CseSectorRow[] | null): CseSector[] {
+/**
+ * Parse `POST /GICSSectorSummery` into a map keyed by S&P sector code
+ * (`sectorId` == `allSectors.indexCodeSp`).
+ */
+export function parseGicsSectorValuationMap(
+  raw: unknown,
+): Map<string, CseSectorValuation> {
+  const map = new Map<string, CseSectorValuation>();
+  if (!raw || typeof raw !== "object") {
+    return map;
+  }
+
+  const rows = (raw as CseGicsSectorSummeryResponse).reqGICSSectorSummery;
+  if (!Array.isArray(rows)) {
+    return map;
+  }
+
+  for (const row of rows) {
+    if (typeof row?.sectorId !== "string" || !row.sectorId.trim()) {
+      continue;
+    }
+    map.set(row.sectorId.trim(), {
+      per: finiteNumber(row.per),
+      pbv: finiteNumber(row.pbv),
+      dy: parseDy(row.dy),
+      companiesTraded: finiteNumber(row.companiesTraded),
+      companiesListed: finiteNumber(row.companiesListed),
+    });
+  }
+
+  return map;
+}
+
+function parseSectors(
+  rows: CseSectorRow[] | null,
+  gicsByCode: Map<string, CseSectorValuation> = new Map(),
+): CseSector[] {
   if (!rows?.length) {
     return [];
   }
@@ -838,6 +937,11 @@ function parseSectors(rows: CseSectorRow[] | null): CseSector[] {
       if (indexValue == null || typeof row.name !== "string") {
         return null;
       }
+      const joinKey =
+        typeof row.indexCodeSp === "string" ? row.indexCodeSp.trim() : "";
+      const valuation =
+        (joinKey ? gicsByCode.get(joinKey) : undefined) ??
+        EMPTY_SECTOR_VALUATION;
       return {
         symbol: typeof row.symbol === "string" ? row.symbol : row.name,
         name: row.name,
@@ -845,6 +949,7 @@ function parseSectors(rows: CseSectorRow[] | null): CseSector[] {
         change: finiteNumber(row.change),
         changePct: finiteNumber(row.percentage),
         turnover: finiteNumber(row.sectorTurnoverToday),
+        ...valuation,
       };
     })
     .filter((row): row is CseSector => row != null)
@@ -899,6 +1004,7 @@ function buildSnapshotFromLive(parts: {
   marketSummary: CseMarketSummaryResponse | null;
   tradeSummary: CseTradeSummaryResponse | null;
   sectors: CseSectorRow[] | null;
+  gicsSummery: unknown;
   mostActive: CseActiveRow[] | null;
   dailyMarket: CseDailyMarketRow[] | null;
   notices: CseNotice[];
@@ -925,7 +1031,8 @@ function buildSnapshotFromLive(parts: {
     parts.marketSummary?.tradeDate,
     aspi.observedAt,
   );
-  const sectors = parseSectors(parts.sectors);
+  const gicsByCode = parseGicsSectorValuationMap(parts.gicsSummery);
+  const sectors = parseSectors(parts.sectors, gicsByCode);
   const mostActive = parseMostActive(parts.mostActive);
   const foreignDomestic =
     parseForeignDomestic(parts.dailyMarket, aspi.observedAt) ??
@@ -1003,6 +1110,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     marketSummary,
     tradeSummary,
     sectors,
+    gicsSummery,
     mostActive,
     dailyMarket,
     notices,
@@ -1013,6 +1121,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     postCseJson<CseMarketSummaryResponse>("/marketSummery"),
     postCseJson<CseTradeSummaryResponse>("/tradeSummary"),
     postCseJson<CseSectorRow[]>("/allSectors"),
+    postCseJson<CseGicsSectorSummeryResponse>("/GICSSectorSummery"),
     postCseJson<CseActiveRow[]>("/mostActiveTrades"),
     postCseJson<unknown>("/dailyMarketSummery").then((raw) => {
       if (!Array.isArray(raw) || raw.length === 0) {
@@ -1034,6 +1143,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     marketSummary,
     tradeSummary,
     sectors,
+    gicsSummery,
     mostActive,
     dailyMarket,
     notices,

@@ -9,7 +9,7 @@ import {
  * - Corpus tip: 2025-08-15
  * - White rice + red nadu both present (prefer white)
  * - Eggs present
- * - Sugar / wheat flour quotes far behind tip (stale, basketWhenFresh)
+ * - Sugar / wheat flour quotes far behind tip (stale; excluded from basket)
  * - Fuel diesel/petrol rows that must never become staples
  */
 const FIXTURE_CSV = `date,admin1,admin2,market,market_id,latitude,longitude,category,commodity,commodity_id,unit,priceflag,pricetype,currency,price,usdprice
@@ -104,18 +104,18 @@ assert.ok(eggs);
 assert.equal(eggs.priceLkr, 55);
 assert.equal(eggs.stale, false);
 
-// --- 5. Basket excludes stale staples with basketWhenFresh (sugar, wheat) ---
+// --- 5. Basket excludes all stale staples (sugar, wheat in this fixture) ---
 const freshBasket =
   rice.priceLkr * 10 + // rice
   280 * 3 + // onions
   420 * 2 + // lentils
   145 * 8 + // coconut
   eggs.priceLkr * 30; // eggs
-// Sugar (250*2) and wheat (310*3) must NOT contribute when stale + basketWhenFresh.
+// Sugar (250*2) and wheat (310*3) must NOT contribute when stale.
 assert.equal(
   snapshot.essentialsBasketLkr,
   Math.round(freshBasket),
-  "basket excludes stale sugar/wheat (basketWhenFresh)",
+  "basket excludes stale sugar/wheat (non-stale staples only)",
 );
 assert.ok(
   snapshot.essentialsBasketLkr < freshBasket + sugar.priceLkr * 2,

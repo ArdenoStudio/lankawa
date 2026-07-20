@@ -1478,6 +1478,39 @@ function dedupeOffers(offers: CardOffer[]): CardOffer[] {
   return out;
 }
 
+/** Canonical merchant token for gap coverage (keeps Cargills Online distinct). */
+export function merchantCoverageToken(merchant: string): string {
+  const raw = merchant.trim().toLowerCase().replace(/\s+/g, " ");
+  if (/cargills\s*online/.test(raw)) {
+    return "cargills online";
+  }
+  const resolved = resolveMerchantFromText(merchant);
+  return (resolved ?? raw).toLowerCase();
+}
+
+/** Merchant + weekday slot used when filling seed gaps around live rows. */
+export function offerCoverageKey(offer: CardOffer): string {
+  const merchant = merchantCoverageToken(offer.merchant);
+  const weekday = (offer.weekdayHint ?? "").toLowerCase();
+  return `${merchant}|${weekday}`;
+}
+
+/**
+ * Prefer live offers active today; fill uncovered merchant/weekday slots from seed.
+ * Live rows are marked `isSeed: false`; gap rows `isSeed: true`.
+ */
+export function mergeTodaysLiveWithSeed(
+  liveTodays: CardOffer[],
+  seedTodays: CardOffer[],
+): CardOffer[] {
+  const live = liveTodays.map((offer) => ({ ...offer, isSeed: false }));
+  const covered = new Set(live.map(offerCoverageKey));
+  const gaps = seedTodays
+    .filter((offer) => !covered.has(offerCoverageKey(offer)))
+    .map((offer) => ({ ...offer, isSeed: true }));
+  return dedupeOffers([...live, ...gaps]);
+}
+
 function buildSeedSnapshot(now: Date): CardOffersSnapshot {
   return {
     sourceId: seed.sourceId,
@@ -1485,13 +1518,18 @@ function buildSeedSnapshot(now: Date): CardOffersSnapshot {
     asOf: seed.asOf,
     isSeed: true,
     methodologyNote: seed.methodologyNote,
-    offers: filterTodaysOffers(seed.offers, now),
+    offers: filterTodaysOffers(seed.offers, now).map((offer) => ({
+      ...offer,
+      isSeed: true,
+    })),
   };
 }
 
 /**
  * Live Sampath + HNB + Visa LK JSON + ComBank/Pan Asia/DFCC/People's/NTB HTML,
- * filtered to offers active today. Falls back to weekday-matched seed when live feeds are empty.
+ * filtered to offers active today. Keeps today's live rows and fills missing
+ * merchant/weekday slots from seed (per-offer isSeed). Full seed only when no
+ * live offer matches today.
  */
 export async function getTodaysCardOffers(
   now: Date = new Date(),
@@ -1520,20 +1558,29 @@ export async function getTodaysCardOffers(
     ...ntb,
     ...visa,
   ]);
-  const todays = filterTodaysOffers(live, now);
+  const todaysLive = filterTodaysOffers(live, now);
+  const todaysSeed = filterTodaysOffers(seed.offers, now);
+  const offers = mergeTodaysLiveWithSeed(todaysLive, todaysSeed);
 
-  if (todays.length === 0) {
-    return buildSeedSnapshot(now);
+  if (todaysLive.length === 0) {
+    return {
+      ...buildSeedSnapshot(now),
+      offers,
+    };
   }
 
+  const usedSeedGaps = offers.some((offer) => offer.isSeed);
   return {
     sourceId: "bank_card_offers",
-    sourceName: "Bank supermarket card days",
+    sourceName: usedSeedGaps
+      ? "Bank supermarket card days (partial live)"
+      : "Bank supermarket card days",
     asOf,
     isSeed: false,
-    methodologyNote:
-      "Public indicative supermarket card promotions from Sampath JSON, HNB Venus JSON, Visa LK VMORC perks JSON (Glomark/supermarket merchantName filter), ComBank rewards HTML, Pan Asia arr_offers JS (after Sucuri cookie), DFCC supermarket hub HTML/RSC, People's Bank supermarket offer-card HTML, and NTB Mastercard promotions/hub HTML. Weekday cadence parsed from offer copy when present; otherwise validTo gates inclusion. Lankawa is not affiliated with the banks or merchants — confirm at checkout and on the bank site.",
-    offers: todays,
+    methodologyNote: usedSeedGaps
+      ? "Mixed live/seed supermarket card days: live rows from Sampath JSON, HNB Venus JSON, Visa LK VMORC perks JSON, ComBank rewards HTML, Pan Asia arr_offers JS (after Sucuri cookie), DFCC supermarket hub HTML/RSC, People's Bank supermarket offer-card HTML, and NTB Mastercard promotions/hub HTML. Missing merchant/weekday slots filled from curated seed (per-offer isSeed). Weekday cadence parsed from offer copy when present; otherwise validTo gates inclusion. Lankawa is not affiliated with the banks or merchants — confirm at checkout and on the bank site."
+      : "Public indicative supermarket card promotions from Sampath JSON, HNB Venus JSON, Visa LK VMORC perks JSON (Glomark/supermarket merchantName filter), ComBank rewards HTML, Pan Asia arr_offers JS (after Sucuri cookie), DFCC supermarket hub HTML/RSC, People's Bank supermarket offer-card HTML, and NTB Mastercard promotions/hub HTML. Weekday cadence parsed from offer copy when present; otherwise validTo gates inclusion. Lankawa is not affiliated with the banks or merchants — confirm at checkout and on the bank site.",
+    offers,
   };
 }
 

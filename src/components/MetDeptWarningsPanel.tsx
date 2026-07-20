@@ -54,6 +54,16 @@ export function MetDeptWarningsPanel({
     validWindow: string;
     areas: string;
     noSummary: string;
+    actionRequired: string;
+    damageExpected: string;
+    urgency: string;
+    severity: string;
+    certainty: string;
+    capXml: string;
+    officialPage: string;
+    feedCapOnly: string;
+    feedEnriched: string;
+    honesty: string;
     sourceNote: string;
     provenance: string;
   };
@@ -66,6 +76,13 @@ export function MetDeptWarningsPanel({
           formatTime(timestamp, locale),
         )
       : null;
+
+  const feedNote =
+    snapshot?.feedMode === "cap"
+      ? labels.feedCapOnly
+      : snapshot?.feedMode === "advisory+cap"
+        ? labels.feedEnriched
+        : null;
 
   return (
     <section className="space-y-4">
@@ -92,7 +109,12 @@ export function MetDeptWarningsPanel({
           </div>
         ) : (
           <div className="space-y-4">
-            <p className="text-sm text-slate-400">{labels.activeCount}</p>
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <p className="text-sm text-slate-400">{labels.activeCount}</p>
+              {feedNote ? (
+                <p className="text-xs text-slate-500">{feedNote}</p>
+              ) : null}
+            </div>
             <ul className="space-y-3">
               {snapshot.warnings.map((warning) => {
                 const windowLabel = formatWindow(
@@ -106,6 +128,17 @@ export function MetDeptWarningsPanel({
                   ...warning.divisions,
                   ...warning.areas,
                 ].slice(0, 8);
+                const capMeta = [
+                  warning.urgency
+                    ? `${labels.urgency}: ${warning.urgency}`
+                    : null,
+                  warning.severity
+                    ? `${labels.severity}: ${warning.severity}`
+                    : null,
+                  warning.certainty
+                    ? `${labels.certainty}: ${warning.certainty}`
+                    : null,
+                ].filter(Boolean);
 
                 return (
                   <li
@@ -133,6 +166,12 @@ export function MetDeptWarningsPanel({
                       <p className="mt-3 text-xs text-slate-500">{windowLabel}</p>
                     ) : null}
 
+                    {capMeta.length > 0 ? (
+                      <p className="mt-2 text-xs text-slate-500">
+                        {capMeta.join(" · ")}
+                      </p>
+                    ) : null}
+
                     {warning.summaryBullets.length > 0 ? (
                       <ul className="mt-3 space-y-2 text-sm text-slate-300">
                         {warning.summaryBullets.map((bullet) => (
@@ -146,9 +185,52 @@ export function MetDeptWarningsPanel({
                       <p className="mt-3 text-sm text-slate-500">{labels.noSummary}</p>
                     )}
 
+                    {warning.actionRequired ? (
+                      <p className="mt-3 text-sm text-slate-300">
+                        <span className="text-slate-500">
+                          {labels.actionRequired}:{" "}
+                        </span>
+                        {warning.actionRequired}
+                      </p>
+                    ) : null}
+
+                    {warning.damageExpected ? (
+                      <p className="mt-2 text-sm text-slate-300">
+                        <span className="text-slate-500">
+                          {labels.damageExpected}:{" "}
+                        </span>
+                        {warning.damageExpected}
+                      </p>
+                    ) : null}
+
                     {areas.length > 0 ? (
                       <p className="mt-3 text-xs text-slate-500">
                         {labels.areas}: {areas.join(", ")}
+                      </p>
+                    ) : null}
+
+                    {warning.capUrl || warning.webUrl ? (
+                      <p className="mt-3 flex flex-wrap gap-3 text-xs">
+                        {warning.capUrl ? (
+                          <a
+                            href={warning.capUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-slate-300 hover:text-white"
+                          >
+                            {labels.capXml}
+                          </a>
+                        ) : null}
+                        {warning.webUrl ? (
+                          <a
+                            href={warning.webUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-slate-300 hover:text-white"
+                          >
+                            {labels.officialPage}
+                          </a>
+                        ) : null}
                       </p>
                     ) : null}
                   </li>
@@ -159,16 +241,23 @@ export function MetDeptWarningsPanel({
         )}
 
         {snapshot ? (
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4 text-xs text-slate-500">
-            <p>{labels.sourceNote}</p>
-            <Link
-              href={snapshot.provenancePath}
-              className="text-slate-300 hover:text-white"
-            >
-              {labels.provenance}
-            </Link>
+          <div className="mt-5 space-y-2 border-t border-white/10 pt-4 text-xs text-slate-500">
+            <p>{labels.honesty}</p>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p>{labels.sourceNote}</p>
+              <Link
+                href={snapshot.provenancePath}
+                className="text-slate-300 hover:text-white"
+              >
+                {labels.provenance}
+              </Link>
+            </div>
           </div>
-        ) : null}
+        ) : (
+          <p className="mt-5 border-t border-white/10 pt-4 text-xs text-slate-500">
+            {labels.honesty}
+          </p>
+        )}
       </article>
     </section>
   );

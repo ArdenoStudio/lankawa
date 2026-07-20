@@ -373,12 +373,25 @@ function seedQuote(id: string): RemittanceBankQuote | undefined {
   return withSpread({ ...seed, isSeed: true });
 }
 
+/** Prefer live banks for "best" highlights; fall back to full board if all seed. */
+export function pickBestBuy(banks: RemittanceBankQuote[]): RemittanceBankQuote {
+  const live = banks.filter((bank) => !bank.isSeed);
+  const pool = live.length > 0 ? live : banks;
+  return [...pool].sort((a, b) => b.buyLkr - a.buyLkr)[0];
+}
+
+export function pickBestSell(banks: RemittanceBankQuote[]): RemittanceBankQuote {
+  const live = banks.filter((bank) => !bank.isSeed);
+  const pool = live.length > 0 ? live : banks;
+  return [...pool].sort((a, b) => a.sellLkr - b.sellLkr)[0];
+}
+
 function buildSeedSnapshot(): RemittanceTtSnapshot {
   const banks = remittanceData.banks.map((bank) =>
     withSpread({ ...bank, isSeed: true }),
   );
-  const bestBuy = [...banks].sort((a, b) => b.buyLkr - a.buyLkr)[0];
-  const bestSell = [...banks].sort((a, b) => a.sellLkr - b.sellLkr)[0];
+  const bestBuy = pickBestBuy(banks);
+  const bestSell = pickBestSell(banks);
 
   return {
     sourceId: remittanceData.sourceId,
@@ -508,8 +521,8 @@ export async function fetchRemittanceTtSnapshot(): Promise<RemittanceTtSnapshot>
   const liveCount = banks.filter((bank) => !bank.isSeed).length;
   const seedCount = banks.filter((bank) => bank.isSeed).length;
   const allLive = liveCount === BANK_SOURCES.length;
-  const bestBuy = [...banks].sort((a, b) => b.buyLkr - a.buyLkr)[0];
-  const bestSell = [...banks].sort((a, b) => a.sellLkr - b.sellLkr)[0];
+  const bestBuy = pickBestBuy(banks);
+  const bestSell = pickBestSell(banks);
 
   return {
     sourceId: remittanceData.sourceId,

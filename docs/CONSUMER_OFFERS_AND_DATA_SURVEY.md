@@ -11,9 +11,13 @@ Detailed bank/sector notes live in sibling docs listed in §5.
 
 | Area | Status |
 |------|--------|
-| Bank remittance TT | ComBank/HNB/Seylan/Sampath JSON FX + People's/NDB HTML (+ seed) |
-| Food / retail prices | FoodLK → WFP → SPAR → Life |
-| Card / wallet / telecom / loyalty offers | **Supermarket card-days live** (`card-offers.ts`): Sampath JSON + HNB Venus + **Visa LK perks JSON (Glomark/supermarket `merchantName` filter)** + ComBank HTML + DFCC `/cards/supermarkets-credit` HTML/RSC + Pan Asia `arr_offers` (Sucuri cookie; may seed-fallback when WAF re-challenges) + People's/NTB HTML; seed includes PABC/DFCC + Visa Glomark Thu |
+| Bank remittance TT | **7 banks** (`remittance-banks.ts`): ComBank/HNB/Seylan/Sampath JSON + People's/NDB/NSB HTML; per-bank seed fallback |
+| Food / retail prices | FoodLK hub/staples → **WFP hardened** (drop fuel, prefer fresher staples, stale sugar/flour flags, loud corpus as-of) → SPAR → Life → seed |
+| Supermarket card days | **Multi-bank live** (`card-offers.ts` → `/food`, COL, economy): Sampath/HNB JSON + Visa LK perks (Glomark/supermarket `merchantName`) + ComBank/DFCC/Pan Asia/People's/NTB HTML; weekday filter + `card_day` alert pins; seed incl. PABC/DFCC/Visa |
+| Irrigation gauges | **Shipped** ArcGIS FeatureServer on `/disaster` (`irrigation-gauges.ts`) |
+| CEB demand clusters | **Shipped** `GetDemandMgmtClusters` on `/economy` (`demand-mgmt-clusters.ts`) |
+| NWSDB water bill | **Shipped** BillCalculator + seed slabs on `/economy` (`nwsdb.ts`) |
+| CSE deepen | **Shipped** notices strip (`GET /notifications` + `POST /approvedAnnouncement`) + watchlist `companyInfoSummery` via `/api/v1/cse/quotes` |
 
 ---
 
@@ -103,7 +107,7 @@ Cron → Sampath JSON + HNB Venus JSON + Visa LK perks JSON (supermarket merchan
 
 | Find | Why |
 |------|-----|
-| **Irrigation Dept ArcGIS gauges** | Live river levels — better than stale lk-flood-api tip |
+| **Irrigation Dept ArcGIS gauges** | Live river levels — shipped on `/disaster`; also stale/down fallback in `flood.ts` when lk-flood-api lags >6 h |
 | **CEB `GetDemandMgmtClusters`** | Geo outage clusters + customer counts — **shipped** on `/economy` household energy (`demand-mgmt-clusters.ts`, seed fallback). See [`INTEGRATIONS.md`](./INTEGRATIONS.md) |
 | **NWSDB `BillCalculator` JSON** | Live water tariff slabs |
 | **CSE** `GICSSectorSummery`, `companyInfoSummery`, GET notifications | Watchlist quotes + real notices ([CSE_API_DOCS.md](./CSE_API_DOCS.md)) |

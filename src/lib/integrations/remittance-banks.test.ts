@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
-import {
-  getRemittanceTtSeedSnapshot,
+import {getRemittanceTtSeedSnapshot,
   parseCombankUsdTt,
   parseHnbUsdTt,
   parseNdbUsdTt,
@@ -8,8 +7,7 @@ import {
   parsePeoplesUsdTt,
   parseSampathUsdTt,
   parseSeylanUsdTt,
-  parseUsdLkrBand,
-} from "./remittance-banks";
+  parseUsdLkrBand, pickBestBuy, pickBestSell } from "./remittance-banks";
 
 const COMBANK_FIXTURE = [
   {
@@ -184,3 +182,12 @@ assert.ok(seed.banks.some((bank) => bank.id === "ndb"));
 assert.ok(seed.banks.some((bank) => bank.id === "nsb"));
 
 console.log("remittance-banks.test.ts: ok");
+
+{
+  const mixed = [
+    { id: "a", name: "A", buyLkr: 340, sellLkr: 350, note: "", spreadLkr: 10, isSeed: true },
+    { id: "b", name: "B", buyLkr: 330, sellLkr: 338, note: "", spreadLkr: 8, isSeed: false },
+  ];
+  assert.equal(pickBestBuy(mixed).id, "b", "best buy prefers live over higher seed");
+  assert.equal(pickBestSell(mixed).id, "b", "best sell prefers live");
+}

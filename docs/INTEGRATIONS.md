@@ -142,7 +142,7 @@ Lankawa needs Colombo Stock Exchange (CSE) market data for the economy pulse. Tw
 
 Reference endpoints (from Chime probe, Jul 2026): `aspiData`, `snpData`, `tradeSummary`, `marketSummery`, `marketStatus`.
 
-**Deepen (unused / wrong-method notices):** [`CSE_API_DOCS.md`](./CSE_API_DOCS.md) — `GET /notifications`, `POST /approvedAnnouncement`, `POST /GICSSectorSummery`, market-status vocabulary.
+**Deepen (wired):** [`CSE_API_DOCS.md`](./CSE_API_DOCS.md) — `GET /notifications`, `POST /approvedAnnouncement`, `POST /GICSSectorSummery` (PER/PBV/DY join on sectors), market-status vocabulary.
 
 ## Weather (Open-Meteo)
 

@@ -107,21 +107,22 @@ export async function MorningDeltaStrip() {
   if (cardOffers) {
     const count = cardOffers.offers.length;
     const lead = cardOffers.offers[0];
+    const baseLabel =
+      count === 0
+        ? t("morningDeltaCardDaysNone")
+        : lead
+          ? t("morningDeltaCardDaysValue", {
+              count,
+              merchant: lead.merchant,
+              discount: lead.discountLabel,
+            })
+          : t("morningDeltaCardDaysCount", { count });
     items.push({
       id: "card-days",
       label: t("morningDeltaCardDays"),
-      deltaLabel:
-        count === 0
-          ? t("morningDeltaCardDaysNone")
-          : lead
-            ? t("morningDeltaCardDaysValue", {
-                count,
-                merchant: lead.merchant,
-                discount: lead.discountLabel,
-              })
-            : t("morningDeltaCardDaysCount", { count }),
+      deltaLabel: cardOffers.isSeed ? `${baseLabel} · seed` : baseLabel,
       asOf: cardOffers.asOf,
-      href: "/cost-of-living",
+      href: "/food",
     });
   }
 

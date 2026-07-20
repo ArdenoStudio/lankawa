@@ -6,6 +6,14 @@ import { getSourceProvenancePath } from "@/lib/sources";
 export async function SupermarketCardDays() {
   const t = await getTranslations("cardOffers");
   const snapshot = await getTodaysCardOffers();
+  const liveCount = snapshot.offers.filter((offer) => !offer.isSeed).length;
+  const seedCount = snapshot.offers.filter((offer) => offer.isSeed).length;
+  const statusLabel =
+    liveCount > 0 && seedCount > 0
+      ? t("mixed")
+      : snapshot.isSeed || liveCount === 0
+        ? t("seed")
+        : t("live");
 
   return (
     <section className="space-y-4 border border-white/15 bg-black px-4 py-5 sm:px-5">
@@ -15,9 +23,14 @@ export async function SupermarketCardDays() {
             {t("title")}
           </h2>
           <p className="mt-1 text-sm text-neutral-400">{t("subtitle")}</p>
+          {snapshot.offers.length > 0 ? (
+            <p className="mt-1 text-xs text-neutral-500">
+              {t("coverage", { live: liveCount, seed: seedCount })}
+            </p>
+          ) : null}
         </div>
         <span className="text-xs uppercase tracking-[0.16em] text-neutral-500">
-          {snapshot.isSeed ? t("seed") : t("live")}
+          {statusLabel}
         </span>
       </div>
 
@@ -38,6 +51,15 @@ export async function SupermarketCardDays() {
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
                     {offer.bank}
+                    {offer.isSeed ? (
+                      <span className="ml-2 font-normal normal-case tracking-normal text-neutral-600">
+                        {t("bankSeed")}
+                      </span>
+                    ) : (
+                      <span className="ml-2 font-normal normal-case tracking-normal text-neutral-600">
+                        {t("bankLive")}
+                      </span>
+                    )}
                     {offer.weekdayHint ? (
                       <>
                         {" · "}

@@ -27,6 +27,8 @@ FoodLK cleaned API  ──(200 + real metrics)──►  provenance: live / food
      ▼
 WFP HDX CSV (direct)  ──────────────►  provenance: wfp_hdx
      │  (lagged markets — not live supermarket)
+     │  hardenings: drop fuel rows; prefer fresher staples near corpus tip;
+     │  flag stale sugar/flour; loud corpus as-of on /food
      │  fetch/parse fail
      ▼
 SPAR2U products.json (1 page)  ─────►  provenance: spar2u / spar2u_retail
@@ -64,7 +66,7 @@ Loyalty apps (Keells Nexus, Cargills Rewards, SPAR Rewards, Softlogic ONE) have 
 
 | Source | URL / endpoint | API? | Notes | Lankawa call path |
 |--------|----------------|------|-------|-------------------|
-| **WFP HDX** | [Dataset](https://data.humdata.org/dataset/wfp-food-prices-for-sri-lanka) · CSV `…/download/wfp_food_prices_lka.csv` | Public CSV (HDX). Suffix without `_lka` → S3 `NoSuchKey`. | Strongest historical retail/wholesale series; **publishes with lag** | **Direct** `food-direct.ts` → `sourceId: wfp_hdx` when FoodLK fails — never presented as same-day supermarket |
+| **WFP HDX** | [Dataset](https://data.humdata.org/dataset/wfp-food-prices-for-sri-lanka) · CSV `…/download/wfp_food_prices_lka.csv` | Public CSV (HDX). Suffix without `_lka` → S3 `NoSuchKey`. | Strongest historical series; **publishes with lag**. Parse hardenings (shipped): exclude fuel/petrol/diesel; prefer commodities near corpus tip; mark sugar/flour stale when quote lags tip; surface `corpusAsOf` loudly on `/food` | **Direct** `food-direct.ts` → `sourceId: wfp_hdx` when FoodLK fails — never same-day supermarket |
 | **HARTI** | Index `https://www.harti.gov.lk/daily-price.php` · daily English PDF under `/assets/pdf/food_price/daily/eng/…` | PDF parse | Multi-market veg/fruit — **still needed for fresh civic food** | Planned via FoodLK — **not** live in Lankawa yet |
 | **CBSL price report** | Index `https://www.cbsl.gov.lk/en/statistics/economic-indicators/price-report` · PDF under `/sites/default/files/cbslweb_documents/…` | PDF parse | Selected commodities — **still needed for fresh civic food** | FoodLK only; Lankawa treasury yields stay seed (separate path) |
 | **DOA SHEP** | `https://infohub.doa.gov.lk/wp-admin/admin-ajax.php?action=get_veg_data&item=…` | WordPress AJAX JSON | **Currently 404** / unstable | Do not call from Lankawa until FoodLK marks healthy |

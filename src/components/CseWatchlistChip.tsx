@@ -33,7 +33,6 @@ function WatchlistInner() {
 
   useEffect(() => {
     if (symbols.length === 0) {
-      setQuotes([]);
       return;
     }
 

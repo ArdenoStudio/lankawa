@@ -37,7 +37,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "River station flood alert levels aggregated for national monitoring.",
     methodology:
-      "Lankawa polls river station alert levels every few minutes, groups stations by alert level (NORMAL, WATCH, etc.), and displays counts on the pulse, disaster page, and source health dashboard.",
+      "Lankawa polls river station alert levels every few minutes, groups stations by alert level (NORMAL, WATCH, etc.), and displays counts on the pulse, disaster page, and source health dashboard. For station-level readings (`fetchLatestFloodLevels`), when lk-flood-api timestamps lag by more than 6 hours (or the API is down), live Irrigation ArcGIS gauges are preferred via the same FloodStationLevel shape — see irrigation_arcgis_gauges.",
     metrics: ["flood_stations"],
   },
   {
@@ -50,7 +50,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Public Irrigation Department ArcGIS FeatureServer for major-river gauge levels, rainfall, and alert thresholds.",
     methodology:
-      "Lankawa queries gauges_2_view ordered by EditDate DESC, collapses to latest-per-gauge, and maps water_level against alertpull/minorpull/majorpull into NORMAL/ALERT/WARNING/DANGER. Shown on the disaster page with seed fallback when ArcGIS is unreachable. Civic republish — not an official DMC flood warning.",
+      "Lankawa queries gauges_2_view ordered by EditDate DESC, collapses to latest-per-gauge, and maps water_level against alertpull/minorpull/majorpull into NORMAL/ALERT/WARNING/DANGER. Primary panel on `/disaster`; also used as a stale/down fallback for district/province flood station lists when lk-flood-api lags. Seed fallback when ArcGIS is unreachable. Civic republish — not an official DMC flood warning.",
     metrics: [
       "irrigation_gauge_count",
       "irrigation_elevated_count",
@@ -252,7 +252,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "District-scale landslide watch/warning context for Sri Lanka’s highland wet season.",
     methodology:
-      "Lankawa combines a curated district seed overlay with best-effort confirmation of the latest DMC landslide document via the public lk_dmc index. Not an official evacuation map. Always verify NBRO/DMC bulletins before acting.",
+      "Lankawa reads the public lk_dmc landslide summary, then parses tip blocks.json (district names + Level 1/2/3 DSD cells by bbox) for watch/warning tiers. If the tip layout is missing or unparseable, a curated seed overlay is shown with explicit seed labels. Civic republish — not an official evacuation map. Always verify NBRO/DMC bulletins before acting.",
     metrics: ["landslide_watch_count", "landslide_warning_count"],
   },
   {
@@ -434,7 +434,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Direct WFP/HDX CSV retail and wholesale staple prices for Sri Lanka.",
     methodology:
-      "While FoodLK public API returns 500s, Lankawa fetches the HDX CSV `wfp_food_prices_lka.csv` via `food-direct.ts`, averages latest retail (else wholesale) quotes for rice, onions, lentils, coconut, sugar, and wheat flour, and estimates an essentials basket. District meal bands remain seed. Not HARTI or NCPI.",
+      "While FoodLK public API returns 500s, Lankawa fetches the HDX CSV `wfp_food_prices_lka.csv` via `food-direct.ts`, averages latest retail (else wholesale) quotes for rice, onions, lentils, coconut, sugar, and wheat flour, and estimates an essentials basket from non-stale staples only (lagged quotes stay visible but are excluded). District meal bands remain seed. Not HARTI or NCPI.",
     metrics: ["food_basket_estimate", "staple_prices"],
   },
   {
@@ -743,7 +743,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Public weather warnings and advisories from Sri Lanka's Department of Meteorology.",
     methodology:
-      "Lankawa reads the public Weather Advisory System dashboard JSON and CAP RSS feed with short server-side timeouts. Active hazards are displayed as published by the Met Department; if the feed is unavailable, the disaster page shows a neutral unavailable state instead of inferring conditions.",
+      "Lankawa reads the public Weather Advisory System dashboard JSON (`/dashboard-api/advisories`) and CAP RSS (`/cap/en/rss.xml`) with short server-side timeouts. When RSS items are present, linked CAP 1.1 XML files are fetched (capped) to enrich urgency/severity/certainty, instruction, and area text. Advisories remain the active source of truth; CAP-only rows appear only when the dashboard lists no hazards but CAP publishes items. There is no curated seed fallback — unavailable means the advisory API failed; empty means the dashboard reports no active hazards.",
     metrics: ["weather_warnings"],
   },
   {
@@ -795,7 +795,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "ASPI, S&P SL20, sectors, most-active trades, foreign/domestic summary, exchange notices, and per-symbol quotes from public CSE JSON endpoints.",
     methodology:
-      "Read-only fetch of undocumented public endpoints on `cse.lk` (e.g. `aspiData`, `marketSummery`, `tradeSummary`, `allSectors`, `mostActiveTrades`, `dailyMarketSummery`, `GET /notifications`, `approvedAnnouncement`, `companyInfoSummery`) — catalogued in `docs/CSE_API_DOCS.md` and Cookie-Cat21/cse-api-docs; adapter logic ported from the Chime/koel boundary, not PulseCSE. Browser CORS blocks client use — server proxy only. Surfaced on `/economy` and watchlist quotes via `/api/v1/cse/quotes`.",
+      "Read-only fetch of undocumented public endpoints on `cse.lk` (e.g. `aspiData`, `marketSummery`, `tradeSummary`, `allSectors`, `GICSSectorSummery`, `mostActiveTrades`, `dailyMarketSummery`, `GET /notifications`, `approvedAnnouncement`, `companyInfoSummery`) — catalogued in `docs/CSE_API_DOCS.md` and Cookie-Cat21/cse-api-docs; adapter logic ported from the Chime/koel boundary, not PulseCSE. Browser CORS blocks client use — server proxy only. Surfaced on `/economy` and watchlist quotes via `/api/v1/cse/quotes`.",
     metrics: [
       "cse_aspi",
       "cse_market_status",
@@ -829,7 +829,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Public indicative supermarket card promotions from major Sri Lankan banks — Keells, Cargills, SPAR, Glomark, LAUGFS day-of-week discounts.",
     methodology:
-      "Server-side fetch via `card-offers.ts` of public bank/network offer surfaces: Sampath `card-promotions?category=super_markets`, HNB Venus `get_all_web_card_promos` (supermarket merchant filter), Visa LK `POST /offers/api/portal/portal/perks/` (VMORC; `siteId=www_visa_com_lk` + supermarket `merchantName` filter — Glomark Thu etc.), ComBank `/rewards-promotions` HTML, Pan Asia `arr_offers` (Sucuri), DFCC supermarket hub, People's supermarket category HTML, and NTB promotions/hub HTML. Weekday cadence parsed from offer copy when present; otherwise validTo >= today. Short timeouts, seed fallback with isSeed honesty (includes curated Visa Glomark). Lankawa is not affiliated with the banks or merchants — offers are public indicative marketing; confirm at checkout and on the issuer/network site. Surfaced on `/cost-of-living`, `/food`, and `/economy`; home morning-delta strip links to `/cost-of-living`.",
+      "Server-side fetch via `card-offers.ts` of public bank/network offer surfaces: Sampath `card-promotions?category=super_markets`, HNB Venus `get_all_web_card_promos` (supermarket merchant filter), Visa LK `POST /offers/api/portal/portal/perks/` (VMORC; `siteId=www_visa_com_lk` + supermarket `merchantName` filter — Glomark Thu etc.), ComBank `/rewards-promotions` HTML, Pan Asia `arr_offers` (Sucuri), DFCC supermarket hub, People's supermarket category HTML, and NTB promotions/hub HTML. Weekday cadence parsed from offer copy when present; otherwise validTo >= today. Keeps today's live rows and fills missing merchant/weekday slots from seed (per-offer isSeed); full seed only when no live offer matches today. Lankawa is not affiliated with the banks or merchants — offers are public indicative marketing; confirm at checkout and on the issuer/network site. Surfaced on `/cost-of-living`, `/food`, and `/economy`; home morning-delta strip links to `/food`.",
     metrics: ["supermarket_card_days"],
   },
   {

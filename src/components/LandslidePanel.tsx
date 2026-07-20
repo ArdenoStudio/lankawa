@@ -15,13 +15,20 @@ export function LandslidePanel({
     subtitle: string;
     watch: string;
     warning: string;
+    watchSeed: string;
+    warningSeed: string;
     asOf: string;
     seed: string;
+    live: string;
     honesty: string;
+    honestySeed: string;
     source: string;
     nbro: string;
+    bulletin: string;
     topDistricts: string;
+    topDistrictsSeed: string;
     noneActive: string;
+    noneActiveSeed: string;
   };
 }) {
   const active = snapshot.districts
@@ -40,19 +47,34 @@ export function LandslidePanel({
             {labels.subtitle}
           </p>
         </div>
-        <FreshnessBadge tier={snapshot.tier} />
+        <div className="flex items-center gap-2">
+          <span className="text-xs uppercase tracking-wide text-neutral-500">
+            {snapshot.isSeed ? labels.seed : labels.live}
+          </span>
+          <FreshnessBadge tier={snapshot.tier} />
+        </div>
       </div>
 
       <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
+        {snapshot.isSeed ? (
+          <p className="mb-4 rounded-xl border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-xs leading-relaxed text-amber-100/90">
+            {labels.honestySeed}
+          </p>
+        ) : null}
+
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-xl border border-white/10 bg-black/20 p-3">
-            <p className="text-xs text-slate-500">{labels.watch}</p>
+            <p className="text-xs text-slate-500">
+              {snapshot.isSeed ? labels.watchSeed : labels.watch}
+            </p>
             <p className="mt-1 text-3xl font-semibold text-white">
               {snapshot.watchCount}
             </p>
           </div>
           <div className="rounded-xl border border-white/10 bg-black/20 p-3">
-            <p className="text-xs text-slate-500">{labels.warning}</p>
+            <p className="text-xs text-slate-500">
+              {snapshot.isSeed ? labels.warningSeed : labels.warning}
+            </p>
             <p className="mt-1 text-3xl font-semibold text-white">
               {snapshot.warningCount}
             </p>
@@ -62,15 +84,17 @@ export function LandslidePanel({
         <p className="mt-4 text-sm text-slate-300">{snapshot.summary}</p>
         <p className="mt-2 text-xs text-slate-500">
           {labels.asOf}: {snapshot.asOf}
-          {snapshot.isSeed ? ` · ${labels.seed}` : null}
+          {snapshot.isSeed ? ` · ${labels.seed}` : ` · ${labels.live}`}
         </p>
 
         <div className="mt-4">
           <h3 className="text-sm font-semibold text-white">
-            {labels.topDistricts}
+            {snapshot.isSeed ? labels.topDistrictsSeed : labels.topDistricts}
           </h3>
           {active.length === 0 ? (
-            <p className="mt-2 text-sm text-slate-500">{labels.noneActive}</p>
+            <p className="mt-2 text-sm text-slate-500">
+              {snapshot.isSeed ? labels.noneActiveSeed : labels.noneActive}
+            </p>
           ) : (
             <ul className="mt-2 space-y-2 text-sm">
               {active.map((row) => {
@@ -111,6 +135,15 @@ export function LandslidePanel({
           >
             {labels.source}
           </Link>
+          {" · "}
+          <a
+            href={snapshot.releaseUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="text-white underline decoration-white/30 hover:decoration-white"
+          >
+            {labels.bulletin}
+          </a>
           {" · "}
           <a
             href={snapshot.nbroUrl}

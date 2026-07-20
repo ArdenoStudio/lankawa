@@ -400,33 +400,33 @@ export default async function EconomyPage({
         </div>
       </section>
 
-      <RemittanceBoard
-        snapshot={remittanceTt}
-        labels={{
-          title: t("remittanceBoard.title"),
-          subtitle: t("remittanceBoard.subtitle"),
-          bank: t("remittanceBoard.bank"),
-          buy: t("remittanceBoard.buy"),
-          sell: t("remittanceBoard.sell"),
-          spread: t("remittanceBoard.spread"),
-          bestBuy: t("remittanceBoard.bestBuy"),
-          bestSell: t("remittanceBoard.bestSell"),
-          best: t("remittanceBoard.best"),
-          seed: t("remittanceBoard.seed"),
-          live: t("remittanceBoard.live"),
-          mixed: t("remittanceBoard.mixed"),
-          bankSeed: t("remittanceBoard.bankSeed"),
-          bankLive: t("remittanceBoard.bankLive"),
-          coverage: t("remittanceBoard.coverage"),
-          asOf: t("remittanceBoard.asOf"),
-          source: t("remittanceBoard.source"),
-          honesty: t("remittanceBoard.honesty"),
-        }}
-      />
-
-      <SupermarketCardDays />
-
-      <RemittanceCalculator rates={latestFxRate} />
+      <div className="space-y-4">
+        <RemittanceBoard
+          snapshot={remittanceTt}
+          labels={{
+            title: t("remittanceBoard.title"),
+            subtitle: t("remittanceBoard.subtitle"),
+            bank: t("remittanceBoard.bank"),
+            buy: t("remittanceBoard.buy"),
+            sell: t("remittanceBoard.sell"),
+            spread: t("remittanceBoard.spread"),
+            bestBuy: t("remittanceBoard.bestBuy"),
+            bestSell: t("remittanceBoard.bestSell"),
+            best: t("remittanceBoard.best"),
+            seed: t("remittanceBoard.seed"),
+            live: t("remittanceBoard.live"),
+            mixed: t("remittanceBoard.mixed"),
+            bankSeed: t("remittanceBoard.bankSeed"),
+            bankLive: t("remittanceBoard.bankLive"),
+            coverage: t("remittanceBoard.coverage"),
+            asOf: t("remittanceBoard.asOf"),
+            source: t("remittanceBoard.source"),
+            honesty: t("remittanceBoard.honesty"),
+          }}
+        />
+        <RemittanceCalculator rates={latestFxRate} />
+        <SupermarketCardDays />
+      </div>
 
       <CseMarketCard
         snapshot={cseSnapshot}
