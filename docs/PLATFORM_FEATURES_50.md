@@ -1,8 +1,9 @@
 # Platform features backlog — 55 shippable ideas
 
-**Status:** Active backlog (Jul 2026)  
+**Status:** P01–P65 implemented as shippable scaffolds (Jul 2026) on `cursor/platform-features-build-3c69` — live depth still gated by adapters/keys  
 **Scope:** Whole Lankawa product — economy, disaster, atlas, household, health, civic, retention, trust/ops — **plus** news (cross-links to `NEWS_RSS_MASTER_PLAN.md`).  
-**Rule:** Sisters = data backends. RSS for news, not paid scrapers. No protest tracker. No multi-GB mosaics in-browser.
+**Rule:** Sisters = data backends. RSS for news, not paid scrapers. No protest tracker. No multi-GB mosaics in-browser.  
+**Merge:** See `PLATFORM_FEATURES_MASTER_PLAN.md` §5.
 
 Related docs: `MASTER_PLAN.md` · `DATA_EXPANSION_RESEARCH.md` · `NEWS_RSS_MASTER_PLAN.md` · `IDEAS_BACKLOG.md`
 
