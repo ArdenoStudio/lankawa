@@ -45,6 +45,8 @@ Bookmark libs (Tremor, HyperUI, DaisyUI, shadcn blocks) informed layout density 
 
 Cite Cookie-Cat docs as a **catalog**, not as an upstream SLA. CSE HTML/API can change without notice.
 
+**Broker alternatives (Asia Securities / Softlogic / CAL):** No public CSE equity quote APIs. Softlogic & CAL trading sit behind ATrad login; CAL has one unofficial HTTP JSON mobile feed for treasuries/FX/UT (not market-wide equities). Details: [`STOCK_BROKER_APIS_RESEARCH.md`](./STOCK_BROKER_APIS_RESEARCH.md).
+
 ---
 
 ## Satellite — year-1 useful vs park
