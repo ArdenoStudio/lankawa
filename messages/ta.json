@@ -751,12 +751,14 @@
     "remittanceBoard": {
       "title": "Bank TT remittance board",
       "subtitle": "Indicative USD→LKR telegraphic-transfer style bands from major banks — compare beside the CBSL calculator.",
+      "bank": "Bank",
       "buy": "Buy (LKR)",
       "sell": "Sell (LKR)",
       "spread": "Spread",
       "bestBuy": "Best buy for senders",
       "bestSell": "Best sell for receivers",
-      "seed": "Seed அல்லது partial board — live bank page scrape இல்லை அல்லது முழுமையற்றது.",
+      "seed": "Full seed board — அனைத்து live bank FX fetch-களும் தோல்வி.",
+      "bankSeed": "seed",
       "asOf": "As of {date}",
       "source": "Source provenance",
       "honesty": "Indicative only. Bank fees, corridors, and same-day TT products differ. Not CBSL official rates."
@@ -1432,14 +1434,16 @@
     "intensity": "Relative cost",
     "disclaimer": "Representative food price intelligence — not official NCPI. Seed fallback used when FoodLK endpoints are unavailable.",
     "disclaimerLife": "FoodLK API கிடைக்கவில்லை. தலைப்பு எண்கள் Ariva Life Platform food அடுக்கிலிருந்து; மாவட்ட meal bands seed மதிப்பீடுகள்.",
-    "disclaimerWfp": "FoodLK கிடைக்கவில்லை. Staple/basket WFP HDX Sri Lanka CSV (direct) இலிருந்து. மாவட்ட meal bands seed. HARTI/NCPI அல்ல.",
+    "disclaimerWfp": "FoodLK கிடைக்கவில்லை. Staple/basket WFP HDX Sri Lanka CSV (direct) இலிருந்து — lagged market averages, அதேநாள் shelf விலைகள் அல்ல. மாவட்ட meal bands seed. HARTI/NCPI அல்ல.",
     "disclaimerSpar": "FoodLK மற்றும் WFP HDX கிடைக்கவில்லை. Staples SPAR2U retail catalog (one page) இலிருந்து. மாவட்ட meal bands seed. HARTI/NCPI அல்ல.",
     "disclaimerSeed": "Seed தரவு — FoodLK, WFP HDX, SPAR2U, மற்றும் Life food முனைகள் கிடைக்கவில்லை. பிரதிநிதி எண்கள் மட்டும்.",
     "bannerLife": "FoodLK தற்காலிகமாக கிடைக்கவில்லை. முக்கிய மற்றும் basket எண்கள் Ariva Life Platform food adapter-லிருந்து — live FoodLK scrape அல்ல.",
-    "bannerWfp": "FoodLK down. Live WFP HDX staple prices (direct CSV). HARTI PDF ingest இன்னும் FoodLK வழியாக திட்டமிடப்பட்டுள்ளது.",
+    "bannerWfp": "இன்று காலை விலைகள் அல்ல — WFP HDX lag-உடன் வெளியிடுகிறது. FoodLK down; staples WFP HDX Sri Lanka CSV (direct) இலிருந்து. HARTI PDF ingest இன்னும் FoodLK வழியாக திட்டமிடப்பட்டுள்ளது.",
+    "corpusAsOfLoud": "சந்தை விலைகள் {monthYear} அன்று",
+    "staleStaple": "பழைய quote",
     "bannerSpar": "FoodLK மற்றும் WFP HDX கிடைக்கவில்லை. SPAR2U retail shelf staples (one catalog page). HARTI PDF ingest இன்னும் FoodLK வழியாக திட்டமிடப்பட்டுள்ளது.",
     "provenanceLive": "Live · FoodLK",
-    "provenanceWfp": "Live · WFP HDX",
+    "provenanceWfp": "WFP HDX · lagged",
     "provenanceSpar": "Live · SPAR2U",
     "provenanceLife": "Life federation",
     "provenanceSeed": "Seed",
@@ -1967,5 +1971,17 @@
     "quietHours": "Quiet hours {start}:00–{end}:00 (local)",
     "quietActive": "Quiet hours active — pin toasts should stay silent.",
     "honesty": "Scaffold only: no Web Push subscription is stored on Lankawa servers yet."
+  },
+  "cardOffers": {
+    "title": "இன்றைய சூப்பர்மார்க்கெட் அட்டை நாட்கள்",
+    "subtitle": "முக்கிய சூப்பர்மார்க்கெட் சங்கிலிகளில் பொது வங்கி அட்டை தள்ளுபடிகள் — இன்றைக்கு வடிகட்டப்பட்டவை.",
+    "seed": "Seed",
+    "live": "Live",
+    "empty": "இன்றைக்கு பொருந்தும் சூப்பர்மார்க்கெட் அட்டை நாட்கள் இல்லை. வழக்கமான ஷாப்பிங் நாளில் மீண்டும் பாருங்கள், அல்லது வங்கி சலுகைப் பக்கத்தைத் திறக்கவும்.",
+    "weekday": "{day}",
+    "validTo": "{date} வரை செல்லுபடியாகும்",
+    "asOf": "{date} அன்று",
+    "source": "மூல ஆதாரம்",
+    "honesty": "குறிப்பான பொது வங்கி சலுகைகள் — செக்அவுட்டிலும் வங்கி தளத்திலும் உறுதிப்படுத்துங்கள். வங்கிகள் அல்லது வியாபாரிகளுடன் இணைக்கப்படவில்லை."
   }
 }

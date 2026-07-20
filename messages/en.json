@@ -769,12 +769,14 @@
     "remittanceBoard": {
       "title": "Bank TT remittance board",
       "subtitle": "Indicative USD→LKR telegraphic-transfer style bands from major banks — compare beside the CBSL calculator.",
+      "bank": "Bank",
       "buy": "Buy (LKR)",
       "sell": "Sell (LKR)",
       "spread": "Spread",
       "bestBuy": "Best buy for senders",
       "bestSell": "Best sell for receivers",
-      "seed": "Seed or partial board — live bank page scrape unavailable or incomplete.",
+      "seed": "Full seed board — all live bank FX fetches failed.",
+      "bankSeed": "seed",
       "asOf": "As of {date}",
       "source": "Source provenance",
       "honesty": "Indicative only. Bank fees, corridors, and same-day TT products differ. Not CBSL official rates."
@@ -1450,14 +1452,16 @@
     "intensity": "Relative cost",
     "disclaimer": "Representative food price intelligence — not official NCPI. Seed fallback used when FoodLK endpoints are unavailable.",
     "disclaimerLife": "FoodLK API was unavailable at fetch time. Headline figures come from the Ariva Life Platform food federation layer; district meal bands use Lankawa seed estimates until FoodLK recovers.",
-    "disclaimerWfp": "FoodLK was unavailable. Staple prices and essentials basket are from the WFP HDX Sri Lanka CSV (direct). District meal bands remain Lankawa seed. Not HARTI or NCPI.",
+    "disclaimerWfp": "FoodLK was unavailable. Staple prices and essentials basket are from the WFP HDX Sri Lanka CSV (direct) — lagged market averages, not same-day shelf prices. District meal bands remain Lankawa seed. Not HARTI or NCPI.",
     "disclaimerSpar": "FoodLK and WFP HDX were unavailable. Staple prices are from a single SPAR2U retail catalog page. District meal bands remain Lankawa seed. Not HARTI or NCPI.",
     "disclaimerSeed": "Showing seed fallback data — FoodLK, WFP HDX, SPAR2U, and Life Platform food endpoints were unavailable. Figures are representative, not live market quotes.",
     "bannerLife": "FoodLK is temporarily unreachable. Staple and basket figures come from the Ariva Life Platform food adapter — representative estimates, not live FoodLK scrapes.",
-    "bannerWfp": "FoodLK is down. Showing live WFP HDX staple prices (direct CSV). HARTI PDF ingest is still planned via FoodLK.",
+    "bannerWfp": "Not this morning's prices — WFP HDX publishes with lag. FoodLK is down; staples come from the WFP HDX Sri Lanka CSV (direct). HARTI PDF ingest is still planned via FoodLK.",
+    "corpusAsOfLoud": "Market prices as of {monthYear}",
+    "staleStaple": "Stale quote",
     "bannerSpar": "FoodLK and WFP HDX were unavailable. Showing SPAR2U retail shelf staples (one catalog page). HARTI PDF ingest is still planned via FoodLK.",
     "provenanceLive": "Live · FoodLK",
-    "provenanceWfp": "Live · WFP HDX",
+    "provenanceWfp": "WFP HDX · lagged",
     "provenanceSpar": "Live · SPAR2U",
     "provenanceLife": "Life federation",
     "provenanceSeed": "Seed",
@@ -1967,5 +1971,17 @@
     "quietHours": "Quiet hours {start}:00–{end}:00 (local)",
     "quietActive": "Quiet hours active — pin toasts should stay silent.",
     "honesty": "Scaffold only: no Web Push subscription is stored on Lankawa servers yet."
+  },
+  "cardOffers": {
+    "title": "Today's supermarket card days",
+    "subtitle": "Public bank card discounts at major supermarket chains — filtered for today.",
+    "seed": "Seed",
+    "live": "Live",
+    "empty": "No supermarket card days match today. Check back on the usual shopping weekday, or open a bank offers page.",
+    "weekday": "{day}",
+    "validTo": "Valid through {date}",
+    "asOf": "As of {date}",
+    "source": "Source provenance",
+    "honesty": "Indicative public bank offers — confirm at checkout and on the bank site. Not affiliated with the banks or merchants."
   }
 }

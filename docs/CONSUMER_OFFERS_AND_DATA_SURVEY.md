@@ -11,7 +11,7 @@ Detailed bank/sector notes live in sibling docs listed in §5.
 
 | Area | Status |
 |------|--------|
-| Bank remittance TT | People's / NDB / Sampath HTML scrape (+ seed) |
+| Bank remittance TT | ComBank/HNB/Seylan/Sampath JSON FX + People's/NDB HTML (+ seed) |
 | Food / retail prices | FoodLK → WFP → SPAR → Life |
 | Card / wallet / telecom / loyalty offers | **None** |
 

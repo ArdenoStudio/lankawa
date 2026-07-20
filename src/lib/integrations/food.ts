@@ -261,9 +261,12 @@ export async function fetchFoodSnapshot(): Promise<FoodFetchResult | null> {
       sourceId: wfp.sourceId,
       sourceName: wfp.sourceName,
       asOf: wfp.asOf,
+      corpusAsOf: wfp.corpusAsOf,
+      staleStapleCount: wfp.staleStapleCount,
       essentialsBasketLkr: wfp.essentialsBasketLkr,
       retailOffers: wfp.retailOffers,
       marketQuotes: wfp.marketQuotes,
+      // Staples already carry note / stale / quoteAsOf from WFP mapping.
       stapleItems: wfp.stapleItems,
       districts: seed.districts,
       mixedSeedDistricts: true,

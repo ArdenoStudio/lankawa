@@ -21,6 +21,7 @@ import { PucslTariffCard } from "@/components/PucslTariffCard";
 import { PulseCard } from "@/components/PulseCard";
 import { RemittanceBoard } from "@/components/RemittanceBoard";
 import { RemittanceCalculator } from "@/components/RemittanceCalculator";
+import { SupermarketCardDays } from "@/components/SupermarketCardDays";
 import { TreasuryYieldStrip } from "@/components/TreasuryYieldStrip";
 import { WorldPumpCompare } from "@/components/WorldPumpCompare";
 import { Link } from "@/i18n/navigation";
@@ -365,17 +366,21 @@ export default async function EconomyPage({
         labels={{
           title: t("remittanceBoard.title"),
           subtitle: t("remittanceBoard.subtitle"),
+          bank: t("remittanceBoard.bank"),
           buy: t("remittanceBoard.buy"),
           sell: t("remittanceBoard.sell"),
           spread: t("remittanceBoard.spread"),
           bestBuy: t("remittanceBoard.bestBuy"),
           bestSell: t("remittanceBoard.bestSell"),
           seed: t("remittanceBoard.seed"),
+          bankSeed: t("remittanceBoard.bankSeed"),
           asOf: t("remittanceBoard.asOf"),
           source: t("remittanceBoard.source"),
           honesty: t("remittanceBoard.honesty"),
         }}
       />
+
+      <SupermarketCardDays />
 
       <RemittanceCalculator rates={latestFxRate} />
 

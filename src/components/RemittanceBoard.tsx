@@ -11,12 +11,14 @@ export function RemittanceBoard({
   labels: {
     title: string;
     subtitle: string;
+    bank: string;
     buy: string;
     sell: string;
     spread: string;
     bestBuy: string;
     bestSell: string;
     seed: string;
+    bankSeed: string;
     asOf: string;
     source: string;
     honesty: string;
@@ -57,7 +59,7 @@ export function RemittanceBoard({
         <table className="min-w-full text-left text-sm">
           <thead className="border-b border-white/10 text-xs uppercase tracking-wide text-slate-500">
             <tr>
-              <th className="px-4 py-3 font-medium">Bank</th>
+              <th className="px-4 py-3 font-medium">{labels.bank}</th>
               <th className="px-4 py-3 font-medium">{labels.buy}</th>
               <th className="px-4 py-3 font-medium">{labels.sell}</th>
               <th className="px-4 py-3 font-medium">{labels.spread}</th>
@@ -67,7 +69,14 @@ export function RemittanceBoard({
             {snapshot.banks.map((bank) => (
               <tr key={bank.id} className="border-b border-white/5 last:border-0">
                 <td className="px-4 py-3">
-                  <p className="font-medium text-white">{bank.name}</p>
+                  <p className="font-medium text-white">
+                    {bank.name}
+                    {bank.isSeed ? (
+                      <span className="ml-2 text-xs font-normal text-amber-200/80">
+                        {labels.bankSeed}
+                      </span>
+                    ) : null}
+                  </p>
                   <p className="text-xs text-slate-500">{bank.note}</p>
                 </td>
                 <td className="px-4 py-3 text-slate-200">

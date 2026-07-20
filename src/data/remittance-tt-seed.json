@@ -2,29 +2,50 @@
   "sourceId": "bank_remittance_tt",
   "sourceName": "Bank TT remittance board (seed)",
   "asOf": "2026-07-18",
-  "methodologyNote": "Indicative telegraphic-transfer style USD/LKR buy-sell bands curated from public bank rate pages for morning comparison. Not live scrapes until adapters stabilize. Not CBSL official rates. Fees and corridor products differ by bank.",
+  "methodologyNote": "Indicative telegraphic-transfer style USD/LKR buy-sell bands curated from public bank rate pages and JSON FX APIs for morning comparison. Live adapters prefer bank JSON (Commercial, HNB, Seylan, Sampath) and HTML scrape (People's, NDB); this seed fills failed banks. Not CBSL official rates. Fees and corridor products differ by bank.",
   "corridor": "USD → LKR",
   "banks": [
     {
-      "id": "peoples",
-      "name": "People's Bank",
-      "buyLkr": 301.2,
-      "sellLkr": 308.5,
-      "note": "TT / telegraphic transfer indicative"
+      "id": "commercial",
+      "name": "Commercial Bank",
+      "buyLkr": 331.5,
+      "sellLkr": 339.5,
+      "note": "TT indicative (seed)"
     },
     {
-      "id": "ndb",
-      "name": "NDB Bank",
-      "buyLkr": 300.8,
-      "sellLkr": 308.9,
-      "note": "TT indicative"
+      "id": "hnb",
+      "name": "Hatton National Bank",
+      "buyLkr": 331.8,
+      "sellLkr": 339.2,
+      "note": "TT indicative (seed)"
+    },
+    {
+      "id": "seylan",
+      "name": "Seylan Bank",
+      "buyLkr": 332.0,
+      "sellLkr": 339.0,
+      "note": "TT indicative (seed)"
     },
     {
       "id": "sampath",
       "name": "Sampath Bank",
-      "buyLkr": 301.0,
-      "sellLkr": 308.75,
-      "note": "TT indicative"
+      "buyLkr": 331.0,
+      "sellLkr": 340.0,
+      "note": "TTBUY/TTSEL indicative (seed)"
+    },
+    {
+      "id": "peoples",
+      "name": "People's Bank",
+      "buyLkr": 331.2,
+      "sellLkr": 339.8,
+      "note": "TT / telegraphic transfer indicative (seed)"
+    },
+    {
+      "id": "ndb",
+      "name": "NDB Bank",
+      "buyLkr": 330.8,
+      "sellLkr": 340.1,
+      "note": "TT indicative (seed)"
     }
   ]
 }

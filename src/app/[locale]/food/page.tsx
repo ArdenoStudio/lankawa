@@ -2,9 +2,23 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FoodDistrictTable } from "@/components/FoodDistrictTable";
 import { FoodStapleGrid } from "@/components/FoodStapleGrid";
 import { HartiEssentialsNote } from "@/components/HartiEssentialsNote";
+import { SupermarketCardDays } from "@/components/SupermarketCardDays";
 import { Link } from "@/i18n/navigation";
 import { getSourceProvenancePath } from "@/lib/sources";
 import { getFoodData } from "@/lib/food";
+
+function formatMarketMonthYear(isoOrDate: string, locale: string): string {
+  const raw = isoOrDate.includes("T") ? isoOrDate : `${isoOrDate}T00:00:00.000Z`;
+  const date = new Date(raw);
+  if (Number.isNaN(date.getTime())) {
+    return isoOrDate.slice(0, 7);
+  }
+  return date.toLocaleDateString(locale, {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
 
 export default async function FoodPage({
   params,
@@ -16,6 +30,8 @@ export default async function FoodPage({
   const t = await getTranslations("food");
   const snapshot = await getFoodData();
   const provenance = snapshot.provenance ?? "seed";
+  const wfpAsOfSource = snapshot.corpusAsOf ?? snapshot.asOf;
+  const wfpMonthYear = formatMarketMonthYear(wfpAsOfSource, locale);
 
   return (
     <div className="space-y-8">
@@ -47,9 +63,14 @@ export default async function FoodPage({
           </p>
         ) : null}
         {provenance === "wfp_hdx" ? (
-          <p className="mt-3 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-sm text-slate-200">
-            {t("bannerWfp")}
-          </p>
+          <div className="mt-4 space-y-3 rounded-2xl border border-amber-300/40 bg-amber-400/[0.08] px-5 py-5">
+            <p className="text-2xl font-semibold tracking-tight text-amber-50 sm:text-3xl">
+              {t("corpusAsOfLoud", { monthYear: wfpMonthYear })}
+            </p>
+            <p className="max-w-2xl text-base leading-relaxed text-amber-50/90">
+              {t("bannerWfp")}
+            </p>
+          </div>
         ) : null}
         {provenance === "spar2u" ? (
           <p className="mt-3 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-sm text-slate-200">
@@ -59,6 +80,8 @@ export default async function FoodPage({
       </div>
 
       <HartiEssentialsNote provenance={provenance} />
+
+      <SupermarketCardDays />
 
       <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">

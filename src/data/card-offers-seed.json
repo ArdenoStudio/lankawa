@@ -1,0 +1,68 @@
+{
+  "sourceId": "bank_card_offers",
+  "sourceName": "Bank supermarket card days (seed)",
+  "asOf": "2026-07-20",
+  "methodologyNote": "Curated public supermarket card-day examples for morning check when live bank fetches fail. Confirm at checkout and on the bank site. Lankawa is not affiliated with the banks or merchants.",
+  "offers": [
+    {
+      "id": "seed-combank-keells-sat",
+      "bank": "Commercial Bank",
+      "merchant": "Keells",
+      "title": "Enjoy the best supermarket deals at Keells with ComBank Credit Cards",
+      "discountLabel": "Up to 25% Off",
+      "validTo": "2026-07-25",
+      "weekdayHint": "saturday",
+      "sourceUrl": "https://www.combank.lk/rewards-promotion/supermarket/enjoy-the-best-supermarket-deals-at-keells-with-combank-credit-cards",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-combank-cargills-fri",
+      "bank": "Commercial Bank",
+      "merchant": "Cargills Food City",
+      "title": "Enjoy the best supermarket deals at Cargills Food City with ComBank Credit Cards",
+      "discountLabel": "Up to 25% Off",
+      "validTo": "2026-07-31",
+      "weekdayHint": "friday",
+      "sourceUrl": "https://www.combank.lk/rewards-promotion/supermarket/enjoy-the-best-supermarket-deals-at-cargills-food-city-with-combank-credit-cards",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-sampath-laugfs-wed",
+      "bank": "Sampath Bank",
+      "merchant": "LAUGFS Supermarkets",
+      "title": "10% Discount on TOTAL BILL at all LAUGFS Supermarket outlets on EVERY WEDNESDAY",
+      "discountLabel": "10% Discount",
+      "validTo": "2026-07-29",
+      "weekdayHint": "wednesday",
+      "sourceUrl": "https://www.sampath.lk/en/card-promotions",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-hnb-glomark-fri",
+      "bank": "HNB",
+      "merchant": "Glomark",
+      "title": "Get 25% off on bills above LKR 7,500 at Glomark - Softlogic Supermarkets",
+      "discountLabel": "25% off",
+      "validTo": "2026-07-31",
+      "weekdayHint": "friday",
+      "sourceUrl": "https://www.hnb.net",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-combank-spar-tue",
+      "bank": "Commercial Bank",
+      "merchant": "SPAR Supermarket",
+      "title": "Enjoy the best supermarket fresh deals at Spar Supermarket with ComBank Credit Cards",
+      "discountLabel": "Up to 20% Off",
+      "validTo": "2026-07-28",
+      "weekdayHint": "tuesday",
+      "sourceUrl": "https://www.combank.lk/rewards-promotion/supermarket/enjoy-the-best-supermarket-fresh-deals-at-spar-supermarket-with-combank-credit-cards",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    }
+  ]
+}

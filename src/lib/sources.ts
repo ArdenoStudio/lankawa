@@ -766,8 +766,21 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Indicative USD→LKR telegraphic-transfer style buy/sell bands from major Sri Lankan banks.",
     methodology:
-      "Attempts timed fetches of public bank exchange-rate pages (People's, NDB, Sampath) via `remittance-banks.ts`, then falls back to a curated seed board. isSeed is true unless a full live board parses. Not CBSL official rates; fees and corridors differ by product. Pair with the CBSL remittance calculator on /economy.",
+      "Timed fetches via `remittance-banks.ts`: JSON FX APIs for Commercial (`combank.lk/api/exchange-rates` TT columns), HNB (`venus.hnb.lk/api/get_exchange_rates_contents_web`), Seylan (`seylan.lk/api/exchange-rates-get-value/USD`), and Sampath (`sampath.lk/api/exchange-rates` TTBUY/TTSEL); HTML scrape for People's and NDB (`ndbbank.com/rates/exchange-rates`). Per-bank isSeed when that bank fails; board isSeed only when all banks fail (full seed). LankawaBot UA + short timeouts. Not CBSL official rates; fees and corridors differ by product. Pair with the CBSL remittance calculator on /economy.",
     metrics: ["remittance_tt_buy", "remittance_tt_sell"],
+  },
+  {
+    id: "bank_card_offers",
+    name: "Bank supermarket card days",
+    category: "economy",
+    url: "internal://economy/card-offers",
+    cadenceMinutes: 360,
+    adapter: "api",
+    description:
+      "Today's supermarket card promotions from major Sri Lankan banks — Keells, Cargills, SPAR, Glomark, LAUGFS day-of-week discounts.",
+    methodology:
+      "Server-side fetch via `card-offers.ts`: Sampath `card-promotions?category=super_markets`, HNB Venus `get_all_web_card_promos` (supermarket merchant filter), and ComBank `/rewards-promotions` HTML (`a.reward` links). Weekday cadence parsed from offer copy when present; otherwise validTo >= today. UA LankawaBot/1.0, short timeouts, seed fallback with isSeed honesty. Confirm at checkout — not affiliated. Surfaced on `/food` and `/economy`.",
+    metrics: ["supermarket_card_days"],
   },
   {
     id: "news_rss",
