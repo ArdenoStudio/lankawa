@@ -19,3 +19,8 @@ pip install -r requirements.txt
 python scripts/probe.py
 python scripts/build_site.py
 ```
+
+## Clients
+
+- TypeScript: [`typescript/`](./typescript/) — `@cookie-cat21/amana-union-cargills-bank-docs-client`
+- JavaScript (ESM, no build): [`javascript/`](./javascript/) — `client.mjs`

@@ -80,6 +80,26 @@ NEW = {
     "coverageEmpty": "No packages match.",
     "coverageY": "Y",
     "coverageP": "P",
+    "tsClientsTitle": "TypeScript + JavaScript clients",
+    "tsClientsSubtitle": (
+        "Unofficial thin clients for every Tier A/B staging package — "
+        "typed TypeScript under typescript/, zero-build ESM under javascript/."
+    ),
+    "tsClientsBanner": (
+        "Not affiliated with upstream operators. Default 1s delay. "
+        "Parked endpoints throw. See api-docs/TYPESCRIPT_CLIENTS.md."
+    ),
+    "tsClientsNavLink": "Open TS/JS clients index",
+    "tsClientsStats": "{count} packages with clients",
+    "tsClientsColPackage": "Package",
+    "tsClientsColNpm": "npm name",
+    "tsClientsColClass": "Class",
+    "tsClientsColMethods": "Methods",
+    "tsClientsExample": (
+        "import { CombankApiDocsClient } from '@cookie-cat21/combank-api-docs-client';\n"
+        "const client = new CombankApiDocsClient({ defaultDelayMs: 1000 });\n"
+        "const fx = await client.exchangeRates();"
+    ),
 }
 
 

@@ -35,6 +35,7 @@ const MODULE_PATHS = [
   "developers/api-catalog",
   "developers/api-catalog/pagination-lab",
   "developers/api-catalog/field-coverage",
+  "developers/api-catalog/ts-clients",
   "embed",
   "assistant",
   "ardeno",

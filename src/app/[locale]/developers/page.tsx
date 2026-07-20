@@ -124,6 +124,12 @@ export default async function DevelopersPage({
           >
             {t("coverageNavLink")}
           </Link>
+          <Link
+            href="/developers/api-catalog/ts-clients"
+            className="text-sm text-teal-300 hover:text-teal-200"
+          >
+            {t("tsClientsNavLink")}
+          </Link>
         </div>
       </section>
     </div>

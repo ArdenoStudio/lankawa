@@ -15,6 +15,9 @@ Each folder under `packages/<slug>/` is designed to become its **own public GitH
 | `MISSED_AND_BACKLOG.md` | Surfaces added after the first Tier A/B pass + parks |
 | `FIELD_COVERAGE_MATRIX.yaml` / `.md` | Canonical field coverage (Y/P/N/K) across all packages |
 | `../src/lib/api-docs-field-coverage.json` | App mirror for `/developers/api-catalog/field-coverage` |
+| `TYPESCRIPT_CLIENTS.md` | Index of TS + JS clients for every package |
+| `packages/<slug>/typescript/` | Typed unofficial client (`npm run typecheck`) |
+| `packages/<slug>/javascript/` | Zero-build ESM twin (`client.mjs`) |
 
 ## Tiers
 
@@ -30,7 +33,9 @@ scripts/probe.py
 scripts/build_site.py
 docs/ETHICS.md
 examples/
-python/
+python/                  # thin helpers (fill on extract)
+typescript/              # typed unofficial client
+javascript/              # zero-build ESM twin
 site/                    # static Pages output
 .github/workflows/probe.yml
 .github/workflows/pages.yml
@@ -46,6 +51,7 @@ requirements.txt
 python3 scripts/scaffold-api-docs.py   # initial scaffold (idempotent-ish)
 python3 scripts/enrich-api-docs.py     # fill stubs, add missed, rebuild INDEX + JSON
 python3 scripts/build-field-coverage-matrix.py  # FIELD_COVERAGE_MATRIX + app JSON
+python3 scripts/scaffold-ts-clients.py          # typescript/ + javascript/ clients for all packages
 ```
 
 ## In-app explorer
@@ -53,6 +59,7 @@ python3 scripts/build-field-coverage-matrix.py  # FIELD_COVERAGE_MATRIX + app JS
 - Category explorer: `/[locale]/developers/api-catalog`
 - Pagination lab: `/[locale]/developers/api-catalog/pagination-lab`
 - Field coverage matrix: `/[locale]/developers/api-catalog/field-coverage`
+- TS/JS clients index: `/[locale]/developers/api-catalog/ts-clients`
 
 Lab endpoints are those with `pagination.lab: true` in `catalog/endpoints.yaml` (HNB page/limit, Sampath page_number, ArcGIS offset, Visa pageRequest, CEB A–Y groups, CSE client slice, WFP full download, …).
 

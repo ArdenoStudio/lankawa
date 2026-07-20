@@ -46,3 +46,6 @@ ingest/output/
 ingest/**/__pycache__/
 __pycache__/
 *.pyc
+# api-docs TS clients
+api-docs/packages/*/typescript/node_modules/
+api-docs/packages/*/typescript/dist/

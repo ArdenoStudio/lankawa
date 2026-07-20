@@ -41,6 +41,12 @@ python scripts/probe.py
 python scripts/build_site.py
 ```
 
+
+## Clients
+
+- TypeScript: [`typescript/`](./typescript/) — `@cookie-cat21/dfcc-rates-docs-client`
+- JavaScript (ESM, no build): [`javascript/`](./javascript/) — `client.mjs`
+
 ## License
 
 MIT for docs/harness. Upstream data remains subject to upstream terms.

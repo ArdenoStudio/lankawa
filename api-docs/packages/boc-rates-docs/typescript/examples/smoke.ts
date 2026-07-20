@@ -1,0 +1,18 @@
+import { BocRatesDocsClient } from "../src/index.js";
+
+/**
+ * Live smoke — polite delay on. Run: npm run smoke
+ * May fail if upstream is down / blocks this environment.
+ */
+async function main() {
+  const client = new BocRatesDocsClient({ defaultDelayMs: 1000 });
+  console.log("smoke", BocRatesDocsClient.slug, "->", "ratesTariffHtml");
+  const data = await client.ratesTariffHtml();
+  const preview = typeof data === "string" ? data.slice(0, 200) : JSON.stringify(data)?.slice(0, 200);
+  console.log("ok", preview);
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
