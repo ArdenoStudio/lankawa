@@ -47,6 +47,15 @@ export async function NewsPulse({ headlineLimit = 5 }: { headlineLimit?: number 
   const sourceLabels = {
     daily_mirror: t("sourceMirror"),
     ada_derana: t("sourceAda"),
+    lankadeepa: t("sourceLankadeepa"),
+    tamil_guardian: t("sourceTamilGuardian"),
+    economynext: t("sourceEconomyNext"),
+    newswire: t("sourceNewswire"),
+    island: t("sourceIsland"),
+    lbo: t("sourceLbo"),
+    ada_derana_biz: t("sourceAdaBiz"),
+    roar: t("sourceRoar"),
+    dmc_rss: t("sourceDmc"),
   };
 
   return (

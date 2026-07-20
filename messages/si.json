@@ -200,7 +200,16 @@
     "sourceAda": "Ada Derana",
     "feed": "Atom පෝෂණය",
     "clusterLabel": "Story cluster",
-    "clusterMeta": "{count} headlines · {outlets} outlets"
+    "clusterMeta": "{count} headlines · {outlets} outlets",
+    "sourceLankadeepa": "Lankadeepa",
+    "sourceTamilGuardian": "Tamil Guardian",
+    "sourceEconomyNext": "EconomyNext",
+    "sourceNewswire": "Newswire",
+    "sourceIsland": "Island",
+    "sourceLbo": "Lanka Business Online",
+    "sourceAdaBiz": "Ada Derana Biz",
+    "sourceRoar": "Roar Media",
+    "sourceDmc": "Disaster Management Centre"
   },
   "shareMorning": {
     "title": "Lankawa morning check",

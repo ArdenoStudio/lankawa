@@ -48,6 +48,10 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 - Data Saver mode: header toggle persists `lankawa_data_saver`, skips cricket visually, caps home news at 5 headlines, and avoids loading heavy map bundles where possible.
 - Share morning check: home Today section now shares FX, fuel, weather, and power via Web Share API or copies plain text for WhatsApp/manual sharing.
 
+## News / RSS (exhaustive)
+
+See **`docs/NEWS_RSS_BACKLOG.md`** — **75** concrete additions (N01–N75): more feeds (Island, LBO, Biz Ada, DMC…), parser fields, `/news` page, clusters, district news, alert pins, brief archive, civic RSS, ops/canaries. Strategy: **RSS only**, no paid scrape APIs.
+
 ## Explicitly defer
 
 - Protest/unrest tracking
@@ -55,6 +59,7 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 - FoodLK UI as live while upstream 500s
 - Entity Sport cricket ($150+/mo)
 - Paywalling election results
+- Paid news scrape APIs (RapidAPI / World News) as core deps
 
 ## Agent count note
 
