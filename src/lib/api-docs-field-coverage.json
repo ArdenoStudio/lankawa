@@ -1,0 +1,1453 @@
+{
+  "version": 1,
+  "title": "Field coverage matrix — all Tier A/B api-docs packages",
+  "legend": {
+    "Y": "Full machine-readable field (JSON or stable parse)",
+    "P": "Partial — HTML scrape, derived, or incomplete",
+    "N": "Not available on this surface",
+    "K": "Parked / out of scope for this package"
+  },
+  "notes": [
+    "Canonical fields follow Lankawa snapshot types (RemittanceBankQuote, BankDepositRateQuote, CardOffer, etc.).",
+    "Aggregator packs (sl-bank-*) inherit best-of sibling coverage.",
+    "Y/P/N/K is research-time judgment from deep-dives — re-probe after extraction.",
+    "See docs/BANK_FD_API_SCHEMAS.md for FD field maps; this matrix covers all domains."
+  ],
+  "domains": {
+    "fx_tt": {
+      "title": "FX / remittance TT (USD→LKR)",
+      "canonical_fields": [
+        "buyLkr",
+        "sellLkr",
+        "asOf",
+        "spreadLkr",
+        "currency",
+        "ttBuy",
+        "ttSell",
+        "ddBuy",
+        "ddSell",
+        "chequeBuy",
+        "chequeSell"
+      ],
+      "packages": {
+        "combank-api-docs": {
+          "coverage": {
+            "buyLkr": "Y",
+            "sellLkr": "Y",
+            "asOf": "P",
+            "spreadLkr": "P",
+            "currency": "Y",
+            "ttBuy": "Y",
+            "ttSell": "Y",
+            "ddBuy": "Y",
+            "ddSell": "Y",
+            "chequeBuy": "P",
+            "chequeSell": "P"
+          },
+          "counts": {
+            "Y": 7,
+            "P": 4,
+            "N": 0,
+            "K": 0
+          }
+        },
+        "sampath-api-docs": {
+          "coverage": {
+            "buyLkr": "Y",
+            "sellLkr": "Y",
+            "asOf": "P",
+            "spreadLkr": "P",
+            "currency": "Y",
+            "ttBuy": "Y",
+            "ttSell": "Y",
+            "ddBuy": "N",
+            "ddSell": "N",
+            "chequeBuy": "N",
+            "chequeSell": "N"
+          },
+          "counts": {
+            "Y": 5,
+            "P": 2,
+            "N": 4,
+            "K": 0
+          }
+        },
+        "hnb-venus-api-docs": {
+          "coverage": {
+            "buyLkr": "Y",
+            "sellLkr": "Y",
+            "asOf": "Y",
+            "spreadLkr": "P",
+            "currency": "Y",
+            "ttBuy": "Y",
+            "ttSell": "Y",
+            "ddBuy": "N",
+            "ddSell": "N",
+            "chequeBuy": "N",
+            "chequeSell": "N"
+          },
+          "counts": {
+            "Y": 6,
+            "P": 1,
+            "N": 4,
+            "K": 0
+          }
+        },
+        "seylan-api-docs": {
+          "coverage": {
+            "buyLkr": "Y",
+            "sellLkr": "Y",
+            "asOf": "N",
+            "spreadLkr": "P",
+            "currency": "Y",
+            "ttBuy": "Y",
+            "ttSell": "Y",
+            "ddBuy": "N",
+            "ddSell": "N",
+            "chequeBuy": "N",
+            "chequeSell": "N"
+          },
+          "counts": {
+            "Y": 5,
+            "P": 1,
+            "N": 5,
+            "K": 0
+          }
+        },
+        "nsb-rates-docs": {
+          "coverage": {
+            "buyLkr": "P",
+            "sellLkr": "P",
+            "asOf": "P",
+            "spreadLkr": "P",
+            "currency": "P",
+            "ttBuy": "P",
+            "ttSell": "P",
+            "ddBuy": "N",
+            "ddSell": "N",
+            "chequeBuy": "N",
+            "chequeSell": "N"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 4,
+            "K": 0
+          }
+        },
+        "dfcc-rates-docs": {
+          "coverage": {
+            "buyLkr": "P",
+            "sellLkr": "P",
+            "asOf": "P",
+            "spreadLkr": "P",
+            "currency": "P",
+            "ttBuy": "P",
+            "ttSell": "P",
+            "ddBuy": "N",
+            "ddSell": "N",
+            "chequeBuy": "N",
+            "chequeSell": "N"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 4,
+            "K": 0
+          }
+        },
+        "boc-rates-docs": {
+          "coverage": {
+            "buyLkr": "P",
+            "sellLkr": "P",
+            "asOf": "P",
+            "spreadLkr": "P",
+            "currency": "P",
+            "ttBuy": "P",
+            "ttSell": "P",
+            "ddBuy": "N",
+            "ddSell": "N",
+            "chequeBuy": "N",
+            "chequeSell": "N"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 4,
+            "K": 0
+          }
+        },
+        "peoples-bank-rates-docs": {
+          "coverage": {
+            "buyLkr": "P",
+            "sellLkr": "P",
+            "asOf": "P",
+            "spreadLkr": "P",
+            "currency": "P",
+            "ttBuy": "P",
+            "ttSell": "P",
+            "ddBuy": "N",
+            "ddSell": "N",
+            "chequeBuy": "N",
+            "chequeSell": "N"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 4,
+            "K": 0
+          }
+        },
+        "ndb-rates-docs": {
+          "coverage": {
+            "buyLkr": "P",
+            "sellLkr": "P",
+            "asOf": "P",
+            "spreadLkr": "P",
+            "currency": "P",
+            "ttBuy": "P",
+            "ttSell": "P",
+            "ddBuy": "N",
+            "ddSell": "N",
+            "chequeBuy": "N",
+            "chequeSell": "N"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 4,
+            "K": 0
+          }
+        },
+        "cbsl-public-data-docs": {
+          "coverage": {
+            "buyLkr": "P",
+            "sellLkr": "P",
+            "asOf": "Y",
+            "spreadLkr": "P",
+            "currency": "Y",
+            "ttBuy": "P",
+            "ttSell": "P",
+            "ddBuy": "N",
+            "ddSell": "N",
+            "chequeBuy": "N",
+            "chequeSell": "N"
+          },
+          "counts": {
+            "Y": 2,
+            "P": 5,
+            "N": 4,
+            "K": 0
+          }
+        },
+        "sl-bank-remittance-tt-docs": {
+          "coverage": {
+            "buyLkr": "Y",
+            "sellLkr": "Y",
+            "asOf": "Y",
+            "spreadLkr": "Y",
+            "currency": "Y",
+            "ttBuy": "Y",
+            "ttSell": "Y",
+            "ddBuy": "P",
+            "ddSell": "P",
+            "chequeBuy": "N",
+            "chequeSell": "N"
+          },
+          "counts": {
+            "Y": 7,
+            "P": 2,
+            "N": 2,
+            "K": 0
+          }
+        },
+        "pabc-card-offers-docs": {
+          "coverage": {
+            "buyLkr": "K",
+            "sellLkr": "K",
+            "asOf": "K",
+            "spreadLkr": "K",
+            "currency": "K",
+            "ttBuy": "K",
+            "ttSell": "K",
+            "ddBuy": "K",
+            "ddSell": "K",
+            "chequeBuy": "K",
+            "chequeSell": "K"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 0,
+            "N": 0,
+            "K": 11
+          }
+        },
+        "amana-union-cargills-bank-docs": {
+          "coverage": {
+            "buyLkr": "P",
+            "sellLkr": "P",
+            "asOf": "P",
+            "spreadLkr": "P",
+            "currency": "P",
+            "ttBuy": "P",
+            "ttSell": "P",
+            "ddBuy": "N",
+            "ddSell": "N",
+            "chequeBuy": "N",
+            "chequeSell": "N"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 4,
+            "K": 0
+          }
+        },
+        "sdb-rates-docs": {
+          "coverage": {
+            "buyLkr": "P",
+            "sellLkr": "P",
+            "asOf": "P",
+            "spreadLkr": "P",
+            "currency": "P",
+            "ttBuy": "P",
+            "ttSell": "P",
+            "ddBuy": "N",
+            "ddSell": "N",
+            "chequeBuy": "N",
+            "chequeSell": "N"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 4,
+            "K": 0
+          }
+        }
+      }
+    },
+    "fd_deposits": {
+      "title": "Fixed deposits / interest rates",
+      "canonical_fields": [
+        "tenorMonths",
+        "paidIn",
+        "ratePa",
+        "aerPa",
+        "effectiveFrom",
+        "seniorCitizen",
+        "productCode",
+        "productName",
+        "currency"
+      ],
+      "packages": {
+        "combank-api-docs": {
+          "coverage": {
+            "tenorMonths": "Y",
+            "paidIn": "Y",
+            "ratePa": "Y",
+            "aerPa": "N",
+            "effectiveFrom": "N",
+            "seniorCitizen": "N",
+            "productCode": "P",
+            "productName": "P",
+            "currency": "P"
+          },
+          "counts": {
+            "Y": 3,
+            "P": 3,
+            "N": 3,
+            "K": 0
+          }
+        },
+        "sampath-api-docs": {
+          "coverage": {
+            "tenorMonths": "Y",
+            "paidIn": "Y",
+            "ratePa": "Y",
+            "aerPa": "Y",
+            "effectiveFrom": "Y",
+            "seniorCitizen": "Y",
+            "productCode": "Y",
+            "productName": "Y",
+            "currency": "P"
+          },
+          "counts": {
+            "Y": 8,
+            "P": 1,
+            "N": 0,
+            "K": 0
+          }
+        },
+        "seylan-api-docs": {
+          "coverage": {
+            "tenorMonths": "Y",
+            "paidIn": "Y",
+            "ratePa": "Y",
+            "aerPa": "N",
+            "effectiveFrom": "N",
+            "seniorCitizen": "Y",
+            "productCode": "Y",
+            "productName": "P",
+            "currency": "P"
+          },
+          "counts": {
+            "Y": 5,
+            "P": 2,
+            "N": 2,
+            "K": 0
+          }
+        },
+        "hnb-venus-api-docs": {
+          "coverage": {
+            "tenorMonths": "Y",
+            "paidIn": "Y",
+            "ratePa": "Y",
+            "aerPa": "Y",
+            "effectiveFrom": "Y",
+            "seniorCitizen": "Y",
+            "productCode": "P",
+            "productName": "Y",
+            "currency": "P"
+          },
+          "counts": {
+            "Y": 7,
+            "P": 2,
+            "N": 0,
+            "K": 0
+          }
+        },
+        "nsb-rates-docs": {
+          "coverage": {
+            "tenorMonths": "P",
+            "paidIn": "P",
+            "ratePa": "P",
+            "aerPa": "N",
+            "effectiveFrom": "P",
+            "seniorCitizen": "P",
+            "productCode": "N",
+            "productName": "P",
+            "currency": "P"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 2,
+            "K": 0
+          }
+        },
+        "dfcc-rates-docs": {
+          "coverage": {
+            "tenorMonths": "P",
+            "paidIn": "P",
+            "ratePa": "P",
+            "aerPa": "N",
+            "effectiveFrom": "P",
+            "seniorCitizen": "P",
+            "productCode": "N",
+            "productName": "P",
+            "currency": "P"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 2,
+            "K": 0
+          }
+        },
+        "boc-rates-docs": {
+          "coverage": {
+            "tenorMonths": "P",
+            "paidIn": "P",
+            "ratePa": "P",
+            "aerPa": "N",
+            "effectiveFrom": "P",
+            "seniorCitizen": "P",
+            "productCode": "K",
+            "productName": "P",
+            "currency": "P"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 1,
+            "K": 1
+          }
+        },
+        "peoples-bank-rates-docs": {
+          "coverage": {
+            "tenorMonths": "P",
+            "paidIn": "P",
+            "ratePa": "P",
+            "aerPa": "N",
+            "effectiveFrom": "P",
+            "seniorCitizen": "P",
+            "productCode": "N",
+            "productName": "P",
+            "currency": "P"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 2,
+            "K": 0
+          }
+        },
+        "ndb-rates-docs": {
+          "coverage": {
+            "tenorMonths": "P",
+            "paidIn": "P",
+            "ratePa": "P",
+            "aerPa": "N",
+            "effectiveFrom": "P",
+            "seniorCitizen": "P",
+            "productCode": "N",
+            "productName": "P",
+            "currency": "P"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 2,
+            "K": 0
+          }
+        },
+        "pabc-card-offers-docs": {
+          "coverage": {
+            "tenorMonths": "P",
+            "paidIn": "P",
+            "ratePa": "P",
+            "aerPa": "N",
+            "effectiveFrom": "P",
+            "seniorCitizen": "Y",
+            "productCode": "N",
+            "productName": "P",
+            "currency": "P"
+          },
+          "counts": {
+            "Y": 1,
+            "P": 6,
+            "N": 2,
+            "K": 0
+          }
+        },
+        "sl-bank-fd-rates-docs": {
+          "coverage": {
+            "tenorMonths": "Y",
+            "paidIn": "Y",
+            "ratePa": "Y",
+            "aerPa": "Y",
+            "effectiveFrom": "Y",
+            "seniorCitizen": "Y",
+            "productCode": "Y",
+            "productName": "Y",
+            "currency": "Y"
+          },
+          "counts": {
+            "Y": 9,
+            "P": 0,
+            "N": 0,
+            "K": 0
+          }
+        },
+        "cbsl-public-data-docs": {
+          "coverage": {
+            "tenorMonths": "N",
+            "paidIn": "N",
+            "ratePa": "P",
+            "aerPa": "N",
+            "effectiveFrom": "Y",
+            "seniorCitizen": "N",
+            "productCode": "N",
+            "productName": "P",
+            "currency": "P"
+          },
+          "counts": {
+            "Y": 1,
+            "P": 3,
+            "N": 5,
+            "K": 0
+          }
+        },
+        "sdb-rates-docs": {
+          "coverage": {
+            "tenorMonths": "P",
+            "paidIn": "P",
+            "ratePa": "P",
+            "aerPa": "N",
+            "effectiveFrom": "P",
+            "seniorCitizen": "P",
+            "productCode": "N",
+            "productName": "P",
+            "currency": "P"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 2,
+            "K": 0
+          }
+        },
+        "amana-union-cargills-bank-docs": {
+          "coverage": {
+            "tenorMonths": "P",
+            "paidIn": "P",
+            "ratePa": "P",
+            "aerPa": "N",
+            "effectiveFrom": "P",
+            "seniorCitizen": "P",
+            "productCode": "N",
+            "productName": "P",
+            "currency": "P"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 2,
+            "K": 0
+          }
+        },
+        "sc-hsbc-offers-park-docs": {
+          "coverage": {
+            "tenorMonths": "K",
+            "paidIn": "K",
+            "ratePa": "K",
+            "aerPa": "K",
+            "effectiveFrom": "K",
+            "seniorCitizen": "K",
+            "productCode": "K",
+            "productName": "K",
+            "currency": "K"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 0,
+            "N": 0,
+            "K": 9
+          }
+        }
+      }
+    },
+    "card_offers": {
+      "title": "Supermarket / card offers",
+      "canonical_fields": [
+        "bank",
+        "merchant",
+        "title",
+        "discountLabel",
+        "weekdayHint",
+        "validTo",
+        "cardType",
+        "sourceUrl",
+        "asOf",
+        "minSpend"
+      ],
+      "packages": {
+        "sampath-api-docs": {
+          "coverage": {
+            "bank": "Y",
+            "merchant": "Y",
+            "title": "Y",
+            "discountLabel": "Y",
+            "weekdayHint": "P",
+            "validTo": "Y",
+            "cardType": "P",
+            "sourceUrl": "Y",
+            "asOf": "P",
+            "minSpend": "P"
+          },
+          "counts": {
+            "Y": 6,
+            "P": 4,
+            "N": 0,
+            "K": 0
+          }
+        },
+        "hnb-venus-api-docs": {
+          "coverage": {
+            "bank": "Y",
+            "merchant": "Y",
+            "title": "Y",
+            "discountLabel": "P",
+            "weekdayHint": "P",
+            "validTo": "P",
+            "cardType": "Y",
+            "sourceUrl": "Y",
+            "asOf": "P",
+            "minSpend": "P"
+          },
+          "counts": {
+            "Y": 5,
+            "P": 5,
+            "N": 0,
+            "K": 0
+          }
+        },
+        "combank-api-docs": {
+          "coverage": {
+            "bank": "Y",
+            "merchant": "P",
+            "title": "Y",
+            "discountLabel": "P",
+            "weekdayHint": "P",
+            "validTo": "P",
+            "cardType": "P",
+            "sourceUrl": "Y",
+            "asOf": "P",
+            "minSpend": "N"
+          },
+          "counts": {
+            "Y": 3,
+            "P": 6,
+            "N": 1,
+            "K": 0
+          }
+        },
+        "visa-lk-perks-api-docs": {
+          "coverage": {
+            "bank": "P",
+            "merchant": "Y",
+            "title": "Y",
+            "discountLabel": "Y",
+            "weekdayHint": "P",
+            "validTo": "Y",
+            "cardType": "P",
+            "sourceUrl": "Y",
+            "asOf": "P",
+            "minSpend": "P"
+          },
+          "counts": {
+            "Y": 5,
+            "P": 5,
+            "N": 0,
+            "K": 0
+          }
+        },
+        "dfcc-rates-docs": {
+          "coverage": {
+            "bank": "Y",
+            "merchant": "P",
+            "title": "P",
+            "discountLabel": "P",
+            "weekdayHint": "P",
+            "validTo": "P",
+            "cardType": "P",
+            "sourceUrl": "Y",
+            "asOf": "P",
+            "minSpend": "N"
+          },
+          "counts": {
+            "Y": 2,
+            "P": 7,
+            "N": 1,
+            "K": 0
+          }
+        },
+        "peoples-bank-rates-docs": {
+          "coverage": {
+            "bank": "Y",
+            "merchant": "P",
+            "title": "P",
+            "discountLabel": "P",
+            "weekdayHint": "P",
+            "validTo": "P",
+            "cardType": "P",
+            "sourceUrl": "Y",
+            "asOf": "P",
+            "minSpend": "N"
+          },
+          "counts": {
+            "Y": 2,
+            "P": 7,
+            "N": 1,
+            "K": 0
+          }
+        },
+        "ndb-rates-docs": {
+          "coverage": {
+            "bank": "Y",
+            "merchant": "P",
+            "title": "P",
+            "discountLabel": "P",
+            "weekdayHint": "P",
+            "validTo": "P",
+            "cardType": "P",
+            "sourceUrl": "Y",
+            "asOf": "P",
+            "minSpend": "N"
+          },
+          "counts": {
+            "Y": 2,
+            "P": 7,
+            "N": 1,
+            "K": 0
+          }
+        },
+        "pabc-card-offers-docs": {
+          "coverage": {
+            "bank": "Y",
+            "merchant": "Y",
+            "title": "Y",
+            "discountLabel": "Y",
+            "weekdayHint": "P",
+            "validTo": "P",
+            "cardType": "P",
+            "sourceUrl": "Y",
+            "asOf": "P",
+            "minSpend": "N"
+          },
+          "counts": {
+            "Y": 5,
+            "P": 4,
+            "N": 1,
+            "K": 0
+          }
+        },
+        "ntb-amex-offers-docs": {
+          "coverage": {
+            "bank": "Y",
+            "merchant": "P",
+            "title": "P",
+            "discountLabel": "P",
+            "weekdayHint": "P",
+            "validTo": "P",
+            "cardType": "P",
+            "sourceUrl": "Y",
+            "asOf": "P",
+            "minSpend": "N"
+          },
+          "counts": {
+            "Y": 2,
+            "P": 7,
+            "N": 1,
+            "K": 0
+          }
+        },
+        "sl-bank-card-offers-docs": {
+          "coverage": {
+            "bank": "Y",
+            "merchant": "Y",
+            "title": "Y",
+            "discountLabel": "Y",
+            "weekdayHint": "Y",
+            "validTo": "Y",
+            "cardType": "Y",
+            "sourceUrl": "Y",
+            "asOf": "Y",
+            "minSpend": "P"
+          },
+          "counts": {
+            "Y": 9,
+            "P": 1,
+            "N": 0,
+            "K": 0
+          }
+        },
+        "mypromo-park-docs": {
+          "coverage": {
+            "bank": "K",
+            "merchant": "K",
+            "title": "K",
+            "discountLabel": "K",
+            "weekdayHint": "K",
+            "validTo": "K",
+            "cardType": "K",
+            "sourceUrl": "K",
+            "asOf": "K",
+            "minSpend": "K"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 0,
+            "N": 0,
+            "K": 10
+          }
+        },
+        "sc-hsbc-offers-park-docs": {
+          "coverage": {
+            "bank": "K",
+            "merchant": "K",
+            "title": "K",
+            "discountLabel": "K",
+            "weekdayHint": "K",
+            "validTo": "K",
+            "cardType": "K",
+            "sourceUrl": "K",
+            "asOf": "K",
+            "minSpend": "K"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 0,
+            "N": 0,
+            "K": 10
+          }
+        },
+        "amana-union-cargills-bank-docs": {
+          "coverage": {
+            "bank": "Y",
+            "merchant": "P",
+            "title": "P",
+            "discountLabel": "P",
+            "weekdayHint": "P",
+            "validTo": "P",
+            "cardType": "P",
+            "sourceUrl": "Y",
+            "asOf": "P",
+            "minSpend": "N"
+          },
+          "counts": {
+            "Y": 2,
+            "P": 7,
+            "N": 1,
+            "K": 0
+          }
+        }
+      }
+    },
+    "food_prices": {
+      "title": "Food / staples prices",
+      "canonical_fields": [
+        "commodity",
+        "unit",
+        "priceLkr",
+        "marketOrDistrict",
+        "asOf",
+        "currency",
+        "sourceLag",
+        "basketId"
+      ],
+      "packages": {
+        "foodlk-api-docs": {
+          "coverage": {
+            "commodity": "Y",
+            "unit": "Y",
+            "priceLkr": "Y",
+            "marketOrDistrict": "P",
+            "asOf": "Y",
+            "currency": "Y",
+            "sourceLag": "P",
+            "basketId": "Y"
+          },
+          "counts": {
+            "Y": 6,
+            "P": 2,
+            "N": 0,
+            "K": 0
+          }
+        },
+        "wfp-hdx-lka-food-docs": {
+          "coverage": {
+            "commodity": "Y",
+            "unit": "Y",
+            "priceLkr": "Y",
+            "marketOrDistrict": "Y",
+            "asOf": "Y",
+            "currency": "Y",
+            "sourceLag": "Y",
+            "basketId": "P"
+          },
+          "counts": {
+            "Y": 7,
+            "P": 1,
+            "N": 0,
+            "K": 0
+          }
+        },
+        "harti-cbsl-food-pdf-docs": {
+          "coverage": {
+            "commodity": "P",
+            "unit": "P",
+            "priceLkr": "P",
+            "marketOrDistrict": "P",
+            "asOf": "P",
+            "currency": "P",
+            "sourceLag": "P",
+            "basketId": "N"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 7,
+            "N": 1,
+            "K": 0
+          }
+        },
+        "ardeno-sister-backends-docs": {
+          "coverage": {
+            "commodity": "Y",
+            "unit": "Y",
+            "priceLkr": "Y",
+            "marketOrDistrict": "P",
+            "asOf": "Y",
+            "currency": "Y",
+            "sourceLag": "P",
+            "basketId": "Y"
+          },
+          "counts": {
+            "Y": 6,
+            "P": 2,
+            "N": 0,
+            "K": 0
+          }
+        }
+      }
+    },
+    "markets_cse": {
+      "title": "CSE / markets",
+      "canonical_fields": [
+        "symbol",
+        "name",
+        "lastPrice",
+        "change",
+        "changePct",
+        "volume",
+        "sector",
+        "asOf",
+        "announcementTitle"
+      ],
+      "packages": {
+        "cse-api-docs-deepen": {
+          "coverage": {
+            "symbol": "Y",
+            "name": "Y",
+            "lastPrice": "Y",
+            "change": "Y",
+            "changePct": "Y",
+            "volume": "Y",
+            "sector": "Y",
+            "asOf": "Y",
+            "announcementTitle": "Y"
+          },
+          "counts": {
+            "Y": 9,
+            "P": 0,
+            "N": 0,
+            "K": 0
+          }
+        }
+      }
+    },
+    "utilities": {
+      "title": "Power / water / irrigation",
+      "canonical_fields": [
+        "groupId",
+        "clusterName",
+        "scheduleWindow",
+        "billTotalLkr",
+        "consumption",
+        "gaugeLevel",
+        "alertStatus",
+        "rainfallMm",
+        "asOf"
+      ],
+      "packages": {
+        "cebcare-api-docs": {
+          "coverage": {
+            "groupId": "Y",
+            "clusterName": "Y",
+            "scheduleWindow": "Y",
+            "billTotalLkr": "N",
+            "consumption": "N",
+            "gaugeLevel": "N",
+            "alertStatus": "P",
+            "rainfallMm": "N",
+            "asOf": "P"
+          },
+          "counts": {
+            "Y": 3,
+            "P": 2,
+            "N": 4,
+            "K": 0
+          }
+        },
+        "nwsdb-bill-api-docs": {
+          "coverage": {
+            "groupId": "N",
+            "clusterName": "N",
+            "scheduleWindow": "N",
+            "billTotalLkr": "Y",
+            "consumption": "Y",
+            "gaugeLevel": "N",
+            "alertStatus": "N",
+            "rainfallMm": "N",
+            "asOf": "P"
+          },
+          "counts": {
+            "Y": 2,
+            "P": 1,
+            "N": 6,
+            "K": 0
+          }
+        },
+        "irrigation-arcgis-api-docs": {
+          "coverage": {
+            "groupId": "N",
+            "clusterName": "N",
+            "scheduleWindow": "N",
+            "billTotalLkr": "N",
+            "consumption": "N",
+            "gaugeLevel": "Y",
+            "alertStatus": "Y",
+            "rainfallMm": "Y",
+            "asOf": "Y"
+          },
+          "counts": {
+            "Y": 4,
+            "P": 0,
+            "N": 5,
+            "K": 0
+          }
+        },
+        "leco-outages-docs": {
+          "coverage": {
+            "groupId": "N",
+            "clusterName": "P",
+            "scheduleWindow": "P",
+            "billTotalLkr": "N",
+            "consumption": "N",
+            "gaugeLevel": "N",
+            "alertStatus": "P",
+            "rainfallMm": "N",
+            "asOf": "P"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 4,
+            "N": 5,
+            "K": 0
+          }
+        },
+        "lk-flood-api-docs": {
+          "coverage": {
+            "groupId": "N",
+            "clusterName": "N",
+            "scheduleWindow": "N",
+            "billTotalLkr": "N",
+            "consumption": "N",
+            "gaugeLevel": "Y",
+            "alertStatus": "Y",
+            "rainfallMm": "N",
+            "asOf": "Y"
+          },
+          "counts": {
+            "Y": 3,
+            "P": 0,
+            "N": 6,
+            "K": 0
+          }
+        }
+      }
+    },
+    "weather_aqi": {
+      "title": "Weather / air quality / warnings",
+      "canonical_fields": [
+        "tempC",
+        "precipMm",
+        "uvIndex",
+        "pm25",
+        "usAqi",
+        "warningLevel",
+        "capLanguage",
+        "asOf",
+        "latLon"
+      ],
+      "packages": {
+        "open-meteo-lk-docs": {
+          "coverage": {
+            "tempC": "Y",
+            "precipMm": "Y",
+            "uvIndex": "Y",
+            "pm25": "Y",
+            "usAqi": "Y",
+            "warningLevel": "N",
+            "capLanguage": "N",
+            "asOf": "Y",
+            "latLon": "Y"
+          },
+          "counts": {
+            "Y": 7,
+            "P": 0,
+            "N": 2,
+            "K": 0
+          }
+        },
+        "openaq-lk-docs": {
+          "coverage": {
+            "tempC": "N",
+            "precipMm": "N",
+            "uvIndex": "N",
+            "pm25": "Y",
+            "usAqi": "P",
+            "warningLevel": "N",
+            "capLanguage": "N",
+            "asOf": "Y",
+            "latLon": "Y"
+          },
+          "counts": {
+            "Y": 3,
+            "P": 1,
+            "N": 5,
+            "K": 0
+          }
+        },
+        "metdept-cap-api-docs": {
+          "coverage": {
+            "tempC": "N",
+            "precipMm": "N",
+            "uvIndex": "N",
+            "pm25": "N",
+            "usAqi": "N",
+            "warningLevel": "Y",
+            "capLanguage": "Y",
+            "asOf": "Y",
+            "latLon": "P"
+          },
+          "counts": {
+            "Y": 3,
+            "P": 1,
+            "N": 5,
+            "K": 0
+          }
+        },
+        "gdacs-firms-docs": {
+          "coverage": {
+            "tempC": "N",
+            "precipMm": "N",
+            "uvIndex": "N",
+            "pm25": "N",
+            "usAqi": "N",
+            "warningLevel": "Y",
+            "capLanguage": "N",
+            "asOf": "Y",
+            "latLon": "Y"
+          },
+          "counts": {
+            "Y": 3,
+            "P": 0,
+            "N": 6,
+            "K": 0
+          }
+        }
+      }
+    },
+    "fuel_energy": {
+      "title": "Fuel / LPG / EMI retail",
+      "canonical_fields": [
+        "product",
+        "priceLkr",
+        "unit",
+        "asOf",
+        "worldCompare",
+        "emiBank",
+        "emiTenorMonths",
+        "emiMonthlyLkr"
+      ],
+      "packages": {
+        "octane-fuel-api-docs": {
+          "coverage": {
+            "product": "Y",
+            "priceLkr": "Y",
+            "unit": "Y",
+            "asOf": "Y",
+            "worldCompare": "Y",
+            "emiBank": "N",
+            "emiTenorMonths": "N",
+            "emiMonthlyLkr": "N"
+          },
+          "counts": {
+            "Y": 5,
+            "P": 0,
+            "N": 3,
+            "K": 0
+          }
+        },
+        "litro-laugfs-lpg-docs": {
+          "coverage": {
+            "product": "P",
+            "priceLkr": "P",
+            "unit": "P",
+            "asOf": "P",
+            "worldCompare": "N",
+            "emiBank": "N",
+            "emiTenorMonths": "N",
+            "emiMonthlyLkr": "N"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 4,
+            "N": 4,
+            "K": 0
+          }
+        },
+        "singer-emi-api-docs": {
+          "coverage": {
+            "product": "Y",
+            "priceLkr": "Y",
+            "unit": "P",
+            "asOf": "P",
+            "worldCompare": "N",
+            "emiBank": "Y",
+            "emiTenorMonths": "Y",
+            "emiMonthlyLkr": "Y"
+          },
+          "counts": {
+            "Y": 5,
+            "P": 2,
+            "N": 1,
+            "K": 0
+          }
+        },
+        "softlogic-emi-park-docs": {
+          "coverage": {
+            "product": "K",
+            "priceLkr": "K",
+            "unit": "K",
+            "asOf": "K",
+            "worldCompare": "K",
+            "emiBank": "K",
+            "emiTenorMonths": "K",
+            "emiMonthlyLkr": "K"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 0,
+            "N": 0,
+            "K": 8
+          }
+        },
+        "ardeno-sister-backends-docs": {
+          "coverage": {
+            "product": "Y",
+            "priceLkr": "Y",
+            "unit": "Y",
+            "asOf": "Y",
+            "worldCompare": "Y",
+            "emiBank": "N",
+            "emiTenorMonths": "N",
+            "emiMonthlyLkr": "N"
+          },
+          "counts": {
+            "Y": 5,
+            "P": 0,
+            "N": 3,
+            "K": 0
+          }
+        }
+      }
+    },
+    "macro_cbsl": {
+      "title": "CBSL macro / policy / gold",
+      "canonical_fields": [
+        "opr",
+        "sdfr",
+        "slfr",
+        "awpr",
+        "tbillYield",
+        "goldPrice",
+        "asOf",
+        "bulletinUrl"
+      ],
+      "packages": {
+        "cbsl-public-data-docs": {
+          "coverage": {
+            "opr": "Y",
+            "sdfr": "Y",
+            "slfr": "Y",
+            "awpr": "Y",
+            "tbillYield": "Y",
+            "goldPrice": "P",
+            "asOf": "Y",
+            "bulletinUrl": "Y"
+          },
+          "counts": {
+            "Y": 7,
+            "P": 1,
+            "N": 0,
+            "K": 0
+          }
+        },
+        "gold-retail-rates-docs": {
+          "coverage": {
+            "opr": "N",
+            "sdfr": "N",
+            "slfr": "N",
+            "awpr": "N",
+            "tbillYield": "N",
+            "goldPrice": "P",
+            "asOf": "P",
+            "bulletinUrl": "N"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 2,
+            "N": 6,
+            "K": 0
+          }
+        }
+      }
+    },
+    "platform_misc": {
+      "title": "Platform / tenders / packs",
+      "canonical_fields": [
+        "tenderTitle",
+        "closingDate",
+        "district",
+        "category",
+        "healthOk",
+        "openapiPath"
+      ],
+      "packages": {
+        "promise-lk-tenders-docs": {
+          "coverage": {
+            "tenderTitle": "P",
+            "closingDate": "P",
+            "district": "P",
+            "category": "P",
+            "healthOk": "N",
+            "openapiPath": "N"
+          },
+          "counts": {
+            "Y": 0,
+            "P": 4,
+            "N": 2,
+            "K": 0
+          }
+        },
+        "ardeno-sister-backends-docs": {
+          "coverage": {
+            "tenderTitle": "N",
+            "closingDate": "N",
+            "district": "N",
+            "category": "N",
+            "healthOk": "Y",
+            "openapiPath": "Y"
+          },
+          "counts": {
+            "Y": 2,
+            "P": 0,
+            "N": 4,
+            "K": 0
+          }
+        },
+        "foodlk-api-docs": {
+          "coverage": {
+            "tenderTitle": "N",
+            "closingDate": "N",
+            "district": "N",
+            "category": "N",
+            "healthOk": "Y",
+            "openapiPath": "Y"
+          },
+          "counts": {
+            "Y": 2,
+            "P": 0,
+            "N": 4,
+            "K": 0
+          }
+        }
+      }
+    }
+  },
+  "package_count_indexed": 40,
+  "package_count_in_matrix": 40,
+  "packages_without_domain_row": []
+}

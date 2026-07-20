@@ -118,6 +118,12 @@ export default async function DevelopersPage({
           >
             {t("catalogLabLink")}
           </Link>
+          <Link
+            href="/developers/api-catalog/field-coverage"
+            className="text-sm text-teal-300 hover:text-teal-200"
+          >
+            {t("coverageNavLink")}
+          </Link>
         </div>
       </section>
     </div>

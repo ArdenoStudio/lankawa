@@ -1258,7 +1258,19 @@
     "labOffset": "Offset",
     "labGroup": "CEB group",
     "labEmpty": "No pagination-lab endpoints match.",
-    "labBody": "Example request body"
+    "labBody": "Example request body",
+    "coverageTitle": "Field coverage matrix",
+    "coverageSubtitle": "Canonical Lankawa snapshot fields mapped across every Tier A/B api-docs package — FX, FD, cards, food, CSE, utilities, weather, fuel, macro.",
+    "coverageBanner": "Y = full machine field · P = partial/scrape · N = absent · K = parked. Source: api-docs/FIELD_COVERAGE_MATRIX.yaml.",
+    "coverageNavLink": "Open field coverage matrix",
+    "coverageStats": "{domains} domains · {packages} packages covered",
+    "coverageDomain": "Domain",
+    "coverageAllDomains": "All domains",
+    "coverageSearch": "Filter packages",
+    "coverageLegend": "Legend",
+    "coverageEmpty": "No packages match.",
+    "coverageY": "Y",
+    "coverageP": "P"
   },
   "budget": {
     "title": "National Budget Tracker",

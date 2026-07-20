@@ -13,6 +13,8 @@ Each folder under `packages/<slug>/` is designed to become its **own public GitH
 | `shared/ETHICS.md` | Shared ethics / rate-limit rules |
 | `../src/lib/api-docs-catalog.json` | App mirror of INDEX for `/developers/api-catalog` |
 | `MISSED_AND_BACKLOG.md` | Surfaces added after the first Tier A/B pass + parks |
+| `FIELD_COVERAGE_MATRIX.yaml` / `.md` | Canonical field coverage (Y/P/N/K) across all packages |
+| `../src/lib/api-docs-field-coverage.json` | App mirror for `/developers/api-catalog/field-coverage` |
 
 ## Tiers
 
@@ -43,12 +45,14 @@ requirements.txt
 ```bash
 python3 scripts/scaffold-api-docs.py   # initial scaffold (idempotent-ish)
 python3 scripts/enrich-api-docs.py     # fill stubs, add missed, rebuild INDEX + JSON
+python3 scripts/build-field-coverage-matrix.py  # FIELD_COVERAGE_MATRIX + app JSON
 ```
 
 ## In-app explorer
 
 - Category explorer: `/[locale]/developers/api-catalog`
 - Pagination lab: `/[locale]/developers/api-catalog/pagination-lab`
+- Field coverage matrix: `/[locale]/developers/api-catalog/field-coverage`
 
 Lab endpoints are those with `pagination.lab: true` in `catalog/endpoints.yaml` (HNB page/limit, Sampath page_number, ArcGIS offset, Visa pageRequest, CEB A–Y groups, CSE client slice, WFP full download, …).
 

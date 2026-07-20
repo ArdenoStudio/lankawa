@@ -31,12 +31,13 @@ You are extracting **unofficial Sri Lanka API documentation packages** from the 
 7. **No PII in samples.** Redact phones, emails, account numbers, bill account IDs.
 8. **Do not publish secrets.** No FIRMS `MAP_KEY` in git — document env var. No Visa session cookies.
 9. **Pagination lab endpoints** (`pagination.lab: true` in YAML) must get a dedicated `docs/PAGINATION.md` section with parameter tables and curl examples for page 1 vs page 2 (or offset 0 vs N).
-10. **Link back** in each README: “Research staged in ArdenoStudio/lankawa `api-docs/packages/<slug>`” and cite `source_docs_in_lankawa` paths.
-11. **GitHub Pages** via `.github/workflows/pages.yml` building `site/` from `scripts/build_site.py`.
-12. **Weekly probe** via `.github/workflows/probe.yml` (Monday cron + workflow_dispatch), upload `catalog/last_probe.json` + `samples/` as artifacts.
-13. **Do not copy Lankawa product UI** (Next.js, i18n, teal cards). Extracted repos are static docs + Python harness only.
-14. **Commit quality:** conventional, descriptive commits; meaningful initial README; tag `v0.1.0` after first green probe (optional but preferred).
-15. **If an endpoint 404s/500s on first probe:** keep it in `endpoints.yaml` with `status: degraded|parked` and a note — do not silently delete research.
+10. **Field coverage:** Copy the relevant rows for this slug from `api-docs/FIELD_COVERAGE_MATRIX.md` into `docs/FIELD_COVERAGE.md` (canonical fields + Y/P/N/K). Expand with native upstream field names → canonical map (see Lankawa `docs/BANK_FD_API_SCHEMAS.md` for FD style).
+11. **Link back** in each README: “Research staged in ArdenoStudio/lankawa `api-docs/packages/<slug>`” and cite `source_docs_in_lankawa` paths.
+12. **GitHub Pages** via `.github/workflows/pages.yml` building `site/` from `scripts/build_site.py`.
+13. **Weekly probe** via `.github/workflows/probe.yml` (Monday cron + workflow_dispatch), upload `catalog/last_probe.json` + `samples/` as artifacts.
+14. **Do not copy Lankawa product UI** (Next.js, i18n, teal cards). Extracted repos are static docs + Python harness only.
+15. **Commit quality:** conventional, descriptive commits; meaningful initial README; tag `v0.1.0` after first green probe (optional but preferred).
+16. **If an endpoint 404s/500s on first probe:** keep it in `endpoints.yaml` with `status: degraded|parked` and a note — do not silently delete research.
 
 ### Per-package checklist (run for EVERY slug)
 
