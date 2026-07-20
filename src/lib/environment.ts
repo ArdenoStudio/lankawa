@@ -1,7 +1,10 @@
 import envData from "@/data/environment-seed.json";
 import type { AqiBand, EnvironmentDistrictStat, EnvironmentSnapshot } from "./types";
 
-export { getEnvironmentData } from "./integrations/aqi";
+export {
+  fetchColomboOpenMeteoAirQuality,
+  getEnvironmentData,
+} from "./integrations/aqi";
 
 const snapshot = envData as EnvironmentSnapshot;
 

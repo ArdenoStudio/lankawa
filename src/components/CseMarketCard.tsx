@@ -1,7 +1,7 @@
 import { DataSaverGate } from "@/components/DataSaverGate";
 import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { Link } from "@/i18n/navigation";
-import type { CseMover, CseSnapshot } from "@/lib/integrations/cse";
+import type { CseSnapshot } from "@/lib/integrations/cse";
 import { getSourceProvenancePath } from "@/lib/sources";
 
 function formatCompact(value: number | null): string {
@@ -52,53 +52,6 @@ function formatSectorValuation(sector: {
   return parts.length > 0 ? parts.join(" · ") : null;
 }
 
-function MoverList({
-  title,
-  movers,
-  emptyLabel,
-}: {
-  title: string;
-  movers: CseMover[];
-  emptyLabel: string;
-}) {
-  return (
-    <div className="space-y-3">
-      <h3 className="text-sm font-medium text-slate-300">{title}</h3>
-      {movers.length === 0 ? (
-        <p className="text-sm text-slate-500">{emptyLabel}</p>
-      ) : (
-        <ul className="space-y-2">
-          {movers.map((mover) => {
-            return (
-              <li
-                key={mover.symbol}
-                className="flex items-start justify-between gap-3 rounded-xl border border-white/5 bg-black/10 px-3 py-2"
-              >
-                <div>
-                  <p className="text-sm font-medium text-white">{mover.symbol}</p>
-                  <p className="text-xs text-slate-500">{mover.name}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-medium text-white">
-                    {mover.price.toLocaleString(undefined, {
-                      maximumFractionDigits: 2,
-                    })}
-                  </p>
-                  <p
-                    className="text-xs font-medium text-slate-300"
-                  >
-                    {formatChange(mover.change, mover.changePct)}
-                  </p>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-    </div>
-  );
-}
-
 export function CseMarketCard({
   snapshot,
   labels,
@@ -110,14 +63,11 @@ export function CseMarketCard({
     sourceName: string;
     aspi: string;
     snp: string;
-    gainers: string;
-    losers: string;
     marketStatus: string;
     trades: string;
     shareVolume: string;
     turnover: string;
     fallbackNote: string;
-    noMovers: string;
     sectors: string;
     mostActive: string;
     foreign: string;
@@ -218,19 +168,6 @@ export function CseMarketCard({
             </div>
           </article>
         ) : null}
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2">
-        <MoverList
-          title={labels.gainers}
-          movers={snapshot.topGainers}
-          emptyLabel={labels.noMovers}
-        />
-        <MoverList
-          title={labels.losers}
-          movers={snapshot.topLosers}
-          emptyLabel={labels.noMovers}
-        />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">

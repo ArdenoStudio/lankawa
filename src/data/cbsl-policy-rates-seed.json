@@ -1,0 +1,16 @@
+{
+  "sourceId": "cbsl_policy_rates",
+  "sourceName": "Central Bank of Sri Lanka — Policy rates",
+  "asOf": "2026-05-26",
+  "effectiveDate": "2026-05-26",
+  "unit": "%",
+  "opr": 8.75,
+  "sdfr": 8.25,
+  "slfr": 9.25,
+  "srr": 2.0,
+  "isSeed": true,
+  "boardUrl": "https://www.cbsl.gov.lk/cbsl_custom/param/plrates.php",
+  "policyPageUrl": "https://www.cbsl.gov.lk/en/rates-and-indicators/policy-rates",
+  "historyExcelUrl": "https://www.cbsl.gov.lk/sites/default/files/cbslweb_documents/about/historical_policy_interest_rates.xlsx",
+  "note": "Tip OPR/SDFR/SLFR from historical_policy_interest_rates.xlsx effective 26.05.2026 (8.75 / 8.25 / 9.25); SRR 2.00 from plrates.php probe 2026-07-20. From 27 Nov 2024 CBSL uses a single Overnight Policy Rate (OPR); SDFR/SLFR remain as a published corridor only."
+}

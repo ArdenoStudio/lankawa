@@ -97,7 +97,18 @@
     "morningDeltaCardDaysNone": "අද නැත",
     "morningDeltaCardDaysCount": "අද {count}",
     "morningDeltaCardDaysValue": "{count} · {merchant} {discount}",
-    "morningDeltaCardDaysSeed": "{value} · seed"
+    "morningDeltaCardDaysSeed": "{value} · seed",
+    "aqiStripLabel": "Colombo air quality pollutants",
+    "aqiStripTitle": "Colombo air quality",
+    "aqiStripAsOf": "as of {date}",
+    "aqiStripSource": "Open-Meteo provenance",
+    "aqiStripUsAqi": "US AQI",
+    "aqiStripPm25": "PM2.5",
+    "aqiStripPm10": "PM10",
+    "aqiStripNo2": "NO₂",
+    "aqiStripO3": "O₃",
+    "aqiStripDust": "Dust",
+    "aqiStripHonesty": "Open-Meteo model grid near Colombo — not a DMC/CEA station reading. Units μg/m³ except AQI."
   },
   "modules": {
     "districts": {
@@ -714,6 +725,10 @@
       "snp": "S&P SL20",
       "gainers": "ඉහළම ඉහළ යෑම්",
       "losers": "ඉහළම පහළ යෑම්",
+      "moversTitle": "දිනයේ චලනයන්",
+      "moversSubtitle": "CSE පොදු පුවරුවෙන් ඉහළම ඉහළ/පහළ යෑම් — ticker, අවසන් මිල, සහ % වෙනස.",
+      "moversSeed": "Seed",
+      "moversHonesty": "topGainers / topLooses කැමති; නැතිනම් tradeSummary, ඉන්පසු seed. ආයෝජන උපදෙස් නොවේ.",
       "marketStatus": "වෙළඳපොළ තත්ත්වය",
       "trades": "වෙළඳ ගනුදෙනු",
       "shareVolume": "කොටස් පරිමාව",
@@ -835,6 +850,24 @@
       "metricsLabel": "හොඳම TT මිලදී ගැනීම සහ විකිණීම",
       "tableLabel": "බැංකු TT remittance අනුපාත"
     },
+    "depositRates": {
+      "title": "බැංකු FD අනුපාත",
+      "subtitle": "පොදු tenor වල indicative LKR fixed-deposit maturity rates — ප්‍රසිද්ධ බැංකු quotes සසඳන්න.",
+      "tenor": "Tenor",
+      "best": "Best",
+      "seed": "Full seed board — සියලු live bank FD fetch අසාර්ථකයි.",
+      "live": "Live",
+      "mixed": "Mixed",
+      "bankSeed": "seed",
+      "bankLive": "live",
+      "coverage": "{live} live · {seed} seed",
+      "asOf": "As of {date}",
+      "source": "Source provenance",
+      "honesty": "Public indicative only. Lankawa මෙම බැංකු සමඟ affiliated නොවේ. Deposit advice නොවේ — මුදල් තැබීමට පෙර බැංකු අඩවියේ rates, AER සහ කොන්දේසි තහවුරු කරන්න.",
+      "tableLabel": "Tenor අනුව බැංකු FD maturity rates",
+      "months": "මාස {n}",
+      "paidIn": "කල්පිරීමේදී පොලී"
+    },
     "fxAnomaly": "Unusual day-over-day move",
     "fxAnomalyQuiet": "Within recent MAD band",
     "householdEnergy": {
@@ -900,6 +933,23 @@
       "asOf": "As of {date}",
       "seed": "Seed",
       "honesty": "Cron persists these into observations when the database is configured."
+    },
+    "policyRates": {
+      "title": "CBSL ප්‍රතිපත්ති අනුපාත",
+      "subtitle": "Overnight Policy Rate සහ SDFR/SLFR corridor — බැංකු තැන්පතු උපුටා ගැනීම් නොවේ.",
+      "opr": "OPR",
+      "sdfr": "SDFR",
+      "slfr": "SLFR",
+      "srr": "SRR",
+      "liveBadge": "සජීවී board",
+      "seedBadge": "Seed tip",
+      "corridorBadge": "Corridor (seed tip)",
+      "cbslLink": "CBSL ප්‍රතිපත්ති පිටුව",
+      "asOf": "{date} වන විට",
+      "effective": "ප්‍රතිපත්ති tip {date}",
+      "seed": "සම්පූර්ණ seed — plrates.php නොමැත",
+      "corridorSeed": "Corridor policy Excel tip වෙතින්",
+      "honesty": "2024 නොවැ 27 සිට CBSL තනි OPR භාවිතා කරයි; SDFR/SLFR corridor පමණි. තැන්පතු හෝ ණය උපදෙස් නොවේ."
     }
   },
   "search": {

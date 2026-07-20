@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AlertPins } from "@/components/AlertPins";
 import { WebPushOptIn } from "@/components/WebPushOptIn";
 import { BriefSubscribeForm } from "@/components/BriefSubscribeForm";
+import { ColomboAirQualityStrip } from "@/components/ColomboAirQualityStrip";
 import { CricketCard } from "@/components/CricketCard";
 import { CseWatchlistChip } from "@/components/CseWatchlistChip";
 import { DataSaverGate } from "@/components/DataSaverGate";
@@ -134,6 +135,7 @@ export default async function HomePage({
           ))}
         </div>
         <MorningDeltaStrip />
+        <ColomboAirQualityStrip />
       </section>
 
       <DataSaverGate hideUntilHydrated>

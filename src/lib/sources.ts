@@ -136,6 +136,19 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["inflation_ccpi", "gdp_growth", "forex_reserves", "usd_lkr_series"],
   },
   {
+    id: "cbsl_policy_rates",
+    name: "Central Bank of Sri Lanka — Policy rates",
+    category: "economy",
+    url: "https://www.cbsl.gov.lk/en/rates-and-indicators/policy-rates",
+    cadenceMinutes: 1440,
+    adapter: "scrape",
+    description:
+      "Overnight Policy Rate (OPR) with SDFR/SLFR corridor and Statutory Reserve Ratio (SRR).",
+    methodology:
+      "OPR (+ SRR when present) scraped from the public CBSL plrates.php board. That endpoint intermittently returns HTTP 500 with a still-usable HTML body — Lankawa parses the body when OPR is present and retries once. SDFR/SLFR are usually absent from the board and come from a curated tip of historical_policy_interest_rates.xlsx (effective 26.05.2026). From 27 Nov 2024 CBSL uses a single OPR; SDFR/SLFR are corridor only, not primary instruments. Full seed fallback when the board fails. See docs/CBSL_RATES_API_DEEP_DIVE.md.",
+    metrics: ["opr", "sdfr", "slfr", "srr"],
+  },
+  {
     id: "cbsl_payments_bulletin",
     name: "CBSL Payments Bulletin",
     category: "economy",
@@ -686,8 +699,21 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "OpenAQ PM2.5 observations for Colombo and other Sri Lanka locations where public sensors are available.",
     methodology:
-      "Lankawa queries OpenAQ v3 locations and latest PM2.5 readings for Sri Lanka when an OpenAQ API key is configured. Districts with live matches are overlaid on the seed AQI map; unmatched districts retain seed values with mixed-coverage provenance.",
+      "Lankawa queries OpenAQ v3 locations and latest PM2.5 readings for Sri Lanka when an OpenAQ API key is configured. Districts with live matches are overlaid on the seed AQI map; unmatched districts retain seed values with mixed-coverage provenance. When OpenAQ misses Colombo, Open-Meteo air-quality (us_aqi / PM2.5) fills that district.",
     metrics: ["aqi", "pm25"],
+  },
+  {
+    id: "open_meteo_air_quality",
+    name: "Open-Meteo Air Quality",
+    category: "environment",
+    url: "https://air-quality-api.open-meteo.com/v1/air-quality",
+    cadenceMinutes: 60,
+    adapter: "api",
+    description:
+      "Modelled Colombo multi-pollutant air quality (US/EU AQI, PM2.5/PM10, NO₂, O₃, dust) from Open-Meteo.",
+    methodology:
+      "Lankawa polls air-quality-api.open-meteo.com for Colombo coordinates with current european_aqi, us_aqi, pm10, pm2_5, NO₂, SO₂, O₃, CO, UV, and dust. Used as a Colombo fallback when OpenAQ has no live station match, and surfaced as a home multi-pollutant strip. Model grid — not a DMC/CEA official station.",
+    metrics: ["aqi", "pm25", "pm10", "no2", "o3", "dust"],
   },
   {
     id: "election_commission_2019",
@@ -838,6 +864,19 @@ export const SOURCES: SourceDefinition[] = [
     methodology:
       "Timed fetches via `remittance-banks.ts` of public bank FX surfaces: Commercial (`combank.lk/api/exchange-rates` TT columns), HNB (`venus.hnb.lk/api/get_exchange_rates_contents_web`), Seylan (`seylan.lk/api/exchange-rates-get-value/USD`), Sampath (`sampath.lk/api/exchange-rates` TTBUY/TTSEL), plus HTML scrape for People's (`peoplesbank.lk/exchange-rates/` TT columns), NDB (`ndbbank.com/rates/exchange-rates` TT columns), NSB (`nsb.lk/rates-tarriffs/nsb-exchange-rates/` TT columns), BOC (`boc.lk/rates-tariff` Telegraphic/PFCA/BFCA columns — POST `/api/exchange-rates` still 500, not wired), and DFCC (`dfcc.lk/rates-and-tariff/exchange-rates` TT Buying / DD·TT Selling). Per-bank isSeed when that bank fails; board isSeed only when all banks fail (full seed). LankawaBot UA + short timeouts. Lankawa is not affiliated with these banks — quotes are public indicative only, not advice or a remittance product. Not CBSL official rates; fees and corridors differ by product. Pair with the CBSL remittance calculator on /economy.",
     metrics: ["remittance_tt_buy", "remittance_tt_sell"],
+  },
+  {
+    id: "bank_deposit_rates",
+    name: "Bank FD deposit rates",
+    category: "economy",
+    url: "https://www.combank.lk/api/interest-rates-fd",
+    cadenceMinutes: 1440,
+    adapter: "api",
+    description:
+      "Public indicative LKR fixed-deposit interest rates (maturity strip) from major Sri Lankan banks.",
+    methodology:
+      "Timed fetches via `bank-deposit-rates.ts` of public bank FD JSON: Commercial (`combank.lk/api/interest-rates-fd`), Sampath (`sampath.lk/api/rates-and-charges/external` FDNOR maturity+monthly for 3/6/12/24/36/60M), Seylan (`GET seylan.lk/get-fd-data` — JSON body despite text/html), HNB Venus (`get_interest_rates_contents` Fixed Deposits Interest Rates maturity rows). Comparison matrix prefers maturity at common tenors. Per-bank seed when that bank fails; board isSeed only when all fail. LankawaBot UA + short timeouts. Lankawa is not affiliated with these banks — indicative only, not deposit advice. Schema: `docs/BANK_FD_API_SCHEMAS.md`. Surfaced on `/economy` beside the remittance board.",
+    metrics: ["fd_maturity_rate"],
   },
   {
     id: "bank_card_offers",

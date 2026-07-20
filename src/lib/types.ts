@@ -380,6 +380,25 @@ export interface EnvironmentSnapshot {
   districts: EnvironmentDistrictStat[];
 }
 
+/** Colombo multi-pollutant reading from Open-Meteo air-quality model grid. */
+export interface ColomboAirQualitySnapshot {
+  sourceId: "open_meteo_air_quality";
+  sourceName: string;
+  asOf: string;
+  usAqi: number;
+  europeanAqi: number | null;
+  pm25: number;
+  pm10: number | null;
+  nitrogenDioxide: number | null;
+  sulphurDioxide: number | null;
+  ozone: number | null;
+  carbonMonoxide: number | null;
+  dust: number | null;
+  uvIndex: number | null;
+  band: AqiBand;
+  honestyNote: string;
+}
+
 export interface MpScorecardSnapshot {
   sourceId: string;
   sourceName: string;

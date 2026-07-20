@@ -97,7 +97,18 @@
     "morningDeltaCardDaysNone": "None today",
     "morningDeltaCardDaysCount": "{count} today",
     "morningDeltaCardDaysValue": "{count} · {merchant} {discount}",
-    "morningDeltaCardDaysSeed": "{value} · seed"
+    "morningDeltaCardDaysSeed": "{value} · seed",
+    "aqiStripLabel": "Colombo air quality pollutants",
+    "aqiStripTitle": "Colombo air quality",
+    "aqiStripAsOf": "as of {date}",
+    "aqiStripSource": "Open-Meteo provenance",
+    "aqiStripUsAqi": "US AQI",
+    "aqiStripPm25": "PM2.5",
+    "aqiStripPm10": "PM10",
+    "aqiStripNo2": "NO₂",
+    "aqiStripO3": "O₃",
+    "aqiStripDust": "Dust",
+    "aqiStripHonesty": "Open-Meteo model grid near Colombo — not a DMC/CEA station reading. Units μg/m³ except AQI."
   },
   "a11y": {
     "skipToContent": "Skip to main content"
@@ -734,6 +745,10 @@
       "snp": "S&P SL20",
       "gainers": "Top gainers",
       "losers": "Top losers",
+      "moversTitle": "Session movers",
+      "moversSubtitle": "Top gainers and losers from the public CSE board — ticker, last, and % change.",
+      "moversSeed": "Seed",
+      "moversHonesty": "Prefers dedicated topGainers / topLooses; falls back to tradeSummary sort, then seed. Not investment advice.",
       "marketStatus": "Market status",
       "trades": "Trades",
       "shareVolume": "Share volume",
@@ -855,6 +870,24 @@
       "metricsLabel": "Best TT buy and sell highlights",
       "tableLabel": "Bank TT remittance rates"
     },
+    "depositRates": {
+      "title": "Bank FD rates",
+      "subtitle": "Indicative LKR fixed-deposit maturity rates at common tenors — compare public bank quotes.",
+      "tenor": "Tenor",
+      "best": "Best",
+      "seed": "Full seed board — all live bank FD fetches failed.",
+      "live": "Live",
+      "mixed": "Mixed",
+      "bankSeed": "seed",
+      "bankLive": "live",
+      "coverage": "{live} live · {seed} seed",
+      "asOf": "As of {date}",
+      "source": "Source provenance",
+      "honesty": "Public indicative only. Lankawa is not affiliated with these banks. Not deposit advice — confirm rates, AER, and terms on the bank site before placing funds.",
+      "tableLabel": "Bank fixed deposit maturity rates by tenor",
+      "months": "{n} mo",
+      "paidIn": "Interest at maturity"
+    },
     "fxAnomaly": "Unusual day-over-day move",
     "fxAnomalyQuiet": "Within recent MAD band",
     "treasury": {
@@ -909,6 +942,23 @@
       "asOf": "As of {date}",
       "seed": "Seed",
       "honesty": "Cron persists these into observations when the database is configured."
+    },
+    "policyRates": {
+      "title": "CBSL policy rates",
+      "subtitle": "Overnight Policy Rate with SDFR/SLFR corridor — not bank deposit quotes.",
+      "opr": "OPR",
+      "sdfr": "SDFR",
+      "slfr": "SLFR",
+      "srr": "SRR",
+      "liveBadge": "Live board",
+      "seedBadge": "Seed tip",
+      "corridorBadge": "Corridor (seed tip)",
+      "cbslLink": "CBSL policy page",
+      "asOf": "As of {date}",
+      "effective": "Policy tip {date}",
+      "seed": "Full seed — plrates.php unavailable",
+      "corridorSeed": "Corridor from policy Excel tip",
+      "honesty": "Since 27 Nov 2024 CBSL sets a single OPR; SDFR/SLFR are a published corridor only. Not deposit or lending advice."
     }
   },
   "search": {

@@ -423,11 +423,21 @@ async function buildColomboAqiMetric(checkedAt: string): Promise<{
   const source =
     getSource(environment.sourceId) ?? getSource("environment_aqi_seed")!;
   const isSeed = environment.sourceId === "environment_aqi_seed";
+  const isOpenMeteo = environment.sourceId === "open_meteo_air_quality";
   const tier = computeFreshnessTier(
     environment.asOf,
     source.cadenceMinutes,
     new Date(checkedAt).getTime(),
   );
+
+  let note = "Colombo reading unavailable";
+  if (isSeed) {
+    note = "Seed — not a live sensor reading";
+  } else if (colombo != null) {
+    note = isOpenMeteo
+      ? `PM2.5 ${colombo.pm25} · ${colombo.band.replace(/_/g, " ")} · Open-Meteo model`
+      : `PM2.5 ${colombo.pm25} · ${colombo.band.replace(/_/g, " ")}`;
+  }
 
   return {
     metric: {
@@ -439,11 +449,7 @@ async function buildColomboAqiMetric(checkedAt: string): Promise<{
       tier,
       sourceId: source.id,
       provenancePath: getSourceProvenancePath(source.id),
-      note: isSeed
-        ? "Seed — not a live sensor reading"
-        : colombo != null
-          ? `PM2.5 ${colombo.pm25} · ${colombo.band.replace(/_/g, " ")}`
-          : "Colombo reading unavailable",
+      note,
     },
     health: {
       id: source.id,

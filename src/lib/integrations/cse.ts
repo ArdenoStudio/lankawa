@@ -100,6 +100,8 @@ export interface CseSnapshot {
   snp: CseIndex;
   topGainers: CseMover[];
   topLosers: CseMover[];
+  /** True when movers came from seed (dedicated + tradeSummary both missed). */
+  moversIsFallback: boolean;
   summary: CseMarketSummary | null;
   sectors: CseSector[];
   mostActive: CseActiveTrade[];
@@ -186,6 +188,17 @@ interface CseTradeSummaryRow {
 
 interface CseTradeSummaryResponse {
   reqTradeSummery?: CseTradeSummaryRow[];
+}
+
+/** Dedicated `POST /topGainers` / `POST /topLooses` row (CSE spelling). */
+interface CseDedicatedMoverRow {
+  id?: number;
+  securityId?: number;
+  symbol?: string;
+  price?: number;
+  change?: number;
+  changePercentage?: number;
+  tradeDate?: number;
 }
 
 interface CseSectorRow {
@@ -315,6 +328,7 @@ const SEED_SNAPSHOT: Omit<CseSnapshot, "tier" | "isFallback"> = {
       changePct: -1.27,
     },
   ],
+  moversIsFallback: true,
   summary: {
     tradeCount: 13_397,
     shareVolume: 31_937_752,
@@ -891,6 +905,79 @@ function pickTopMovers(rows: CseTradeSummaryRow[]): {
 }
 
 /**
+ * Parse dedicated `POST /topGainers` / `POST /topLooses` list payloads.
+ * No company `name` on these rows — UI shows ticker (name = symbol).
+ */
+export function parseDedicatedMovers(raw: unknown, limit = 5): CseMover[] {
+  const rows = Array.isArray(raw)
+    ? (raw as CseDedicatedMoverRow[])
+    : raw &&
+        typeof raw === "object" &&
+        Array.isArray((raw as { list?: unknown }).list)
+      ? ((raw as { list: CseDedicatedMoverRow[] }).list)
+      : [];
+
+  return rows
+    .map((row): CseMover | null => {
+      if (!row || typeof row !== "object") {
+        return null;
+      }
+      if (typeof row.symbol !== "string" || !row.symbol.trim()) {
+        return null;
+      }
+      const price = finiteNumber(row.price);
+      if (price == null) {
+        return null;
+      }
+      const symbol = row.symbol.trim().toUpperCase();
+      return {
+        symbol,
+        name: symbol,
+        price,
+        change: finiteNumber(row.change),
+        changePct: finiteNumber(row.changePercentage),
+      };
+    })
+    .filter((mover): mover is CseMover => mover != null)
+    .slice(0, limit);
+}
+
+function resolveMovers(parts: {
+  dedicatedGainers: unknown;
+  dedicatedLosers: unknown;
+  tradeSummary: CseTradeSummaryResponse | null;
+}): {
+  topGainers: CseMover[];
+  topLosers: CseMover[];
+  moversIsFallback: boolean;
+} {
+  const dedicatedGainers = parseDedicatedMovers(parts.dedicatedGainers);
+  const dedicatedLosers = parseDedicatedMovers(parts.dedicatedLosers);
+  const fromTrade = pickTopMovers(parts.tradeSummary?.reqTradeSummery ?? []);
+
+  const topGainers =
+    dedicatedGainers.length > 0
+      ? dedicatedGainers
+      : fromTrade.topGainers.length > 0
+        ? fromTrade.topGainers
+        : SEED_SNAPSHOT.topGainers;
+  const topLosers =
+    dedicatedLosers.length > 0
+      ? dedicatedLosers
+      : fromTrade.topLosers.length > 0
+        ? fromTrade.topLosers
+        : SEED_SNAPSHOT.topLosers;
+
+  const moversIsFallback =
+    dedicatedGainers.length === 0 &&
+    dedicatedLosers.length === 0 &&
+    fromTrade.topGainers.length === 0 &&
+    fromTrade.topLosers.length === 0;
+
+  return { topGainers, topLosers, moversIsFallback };
+}
+
+/**
  * Parse `POST /GICSSectorSummery` into a map keyed by S&P sector code
  * (`sectorId` == `allSectors.indexCodeSp`).
  */
@@ -1003,6 +1090,8 @@ function buildSnapshotFromLive(parts: {
   marketStatus: CseMarketStatusResponse | null;
   marketSummary: CseMarketSummaryResponse | null;
   tradeSummary: CseTradeSummaryResponse | null;
+  dedicatedGainers: unknown;
+  dedicatedLosers: unknown;
   sectors: CseSectorRow[] | null;
   gicsSummery: unknown;
   mostActive: CseActiveRow[] | null;
@@ -1026,7 +1115,11 @@ function buildSnapshotFromLive(parts: {
     return null;
   }
 
-  const movers = pickTopMovers(parts.tradeSummary?.reqTradeSummery ?? []);
+  const movers = resolveMovers({
+    dedicatedGainers: parts.dedicatedGainers,
+    dedicatedLosers: parts.dedicatedLosers,
+    tradeSummary: parts.tradeSummary,
+  });
   const summaryObservedAt = msToIso(
     parts.marketSummary?.tradeDate,
     aspi.observedAt,
@@ -1051,10 +1144,9 @@ function buildSnapshotFromLive(parts: {
         : null,
     aspi,
     snp,
-    topGainers:
-      movers.topGainers.length > 0 ? movers.topGainers : SEED_SNAPSHOT.topGainers,
-    topLosers:
-      movers.topLosers.length > 0 ? movers.topLosers : SEED_SNAPSHOT.topLosers,
+    topGainers: movers.topGainers,
+    topLosers: movers.topLosers,
+    moversIsFallback: movers.moversIsFallback,
     summary: parts.marketSummary
       ? {
           tradeCount: finiteNumber(parts.marketSummary.trades),
@@ -1109,6 +1201,8 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     marketStatus,
     marketSummary,
     tradeSummary,
+    dedicatedGainers,
+    dedicatedLosers,
     sectors,
     gicsSummery,
     mostActive,
@@ -1120,6 +1214,9 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     postCseJson<CseMarketStatusResponse>("/marketStatus"),
     postCseJson<CseMarketSummaryResponse>("/marketSummery"),
     postCseJson<CseTradeSummaryResponse>("/tradeSummary"),
+    postCseJson<unknown>("/topGainers"),
+    // CSE spelling — keep path as `topLooses`.
+    postCseJson<unknown>("/topLooses"),
     postCseJson<CseSectorRow[]>("/allSectors"),
     postCseJson<CseGicsSectorSummeryResponse>("/GICSSectorSummery"),
     postCseJson<CseActiveRow[]>("/mostActiveTrades"),
@@ -1142,6 +1239,8 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     marketStatus,
     marketSummary,
     tradeSummary,
+    dedicatedGainers,
+    dedicatedLosers,
     sectors,
     gicsSummery,
     mostActive,
