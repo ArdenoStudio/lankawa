@@ -5,6 +5,11 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { DISTRICTS, getDistrictName } from "@/lib/districts";
 import {
+  districtSlugsForDsQuery,
+  getDsDivisionName,
+  matchDsDivisions,
+} from "@/lib/ds-divisions";
+import {
   getAllPublicServices,
   getPublicServiceName,
   getServiceTypeLabelKey,
@@ -30,15 +35,27 @@ export function ServicesDirectory({
   const t = useTranslations("services");
   const locale = useLocale();
   const [query, setQuery] = useState(initialQuery ?? "");
+  const [dsQuery, setDsQuery] = useState("");
   const [districtFilter, setDistrictFilter] = useState(initialDistrict ?? "all");
   const [typeFilter, setTypeFilter] = useState<PublicServiceType | "all">("all");
 
   const facilities = getAllPublicServices();
+  const dsMatches = useMemo(() => matchDsDivisions(dsQuery), [dsQuery]);
+  const dsDistrictSlugs = useMemo(
+    () => districtSlugsForDsQuery(dsQuery),
+    [dsQuery],
+  );
 
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     return facilities.filter((facility) => {
       if (districtFilter !== "all" && facility.districtSlug !== districtFilter) {
+        return false;
+      }
+      if (
+        dsDistrictSlugs.length > 0 &&
+        !dsDistrictSlugs.includes(facility.districtSlug)
+      ) {
         return false;
       }
       if (typeFilter !== "all" && facility.type !== typeFilter) {
@@ -57,7 +74,7 @@ export function ServicesDirectory({
         .toLowerCase();
       return haystack.includes(normalized);
     });
-  }, [districtFilter, facilities, query, typeFilter]);
+  }, [districtFilter, dsDistrictSlugs, facilities, query, typeFilter]);
 
   return (
     <div className="space-y-6">
@@ -68,6 +85,14 @@ export function ServicesDirectory({
           onChange={(event) => setQuery(event.target.value)}
           placeholder={t("searchPlaceholder")}
           className="w-full rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-slate-500 focus:border-teal-400/40 focus:outline-none sm:max-w-xs"
+        />
+        <input
+          type="search"
+          value={dsQuery}
+          onChange={(event) => setDsQuery(event.target.value)}
+          placeholder={t("dsSearchPlaceholder")}
+          className="w-full rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-slate-500 focus:border-teal-400/40 focus:outline-none sm:max-w-xs"
+          aria-label={t("dsSearchLabel")}
         />
         <select
           value={districtFilter}
@@ -96,6 +121,20 @@ export function ServicesDirectory({
           ))}
         </select>
       </div>
+
+      {dsQuery.trim() ? (
+        <p className="text-xs text-slate-500">
+          {dsMatches.length === 0
+            ? t("dsSearchNone")
+            : t("dsSearchHint", {
+                names: dsMatches
+                  .slice(0, 3)
+                  .map((d) => getDsDivisionName(d, locale))
+                  .join(", "),
+                districts: dsDistrictSlugs.length,
+              })}
+        </p>
+      ) : null}
 
       <p className="text-sm text-slate-400">
         {t("resultsCount", { count: filtered.length })}

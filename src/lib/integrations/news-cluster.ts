@@ -1,6 +1,8 @@
+import { createHash } from "node:crypto";
 import type { NewsHeadline } from "./news";
 
 export interface NewsCluster {
+  id: string;
   topic: string;
   headlines: NewsHeadline[];
   score: number;
@@ -50,6 +52,18 @@ function jaccard(a: Set<string>, b: Set<string>): number {
   return union === 0 ? 0 : intersection / union;
 }
 
+/** Stable cluster id from topic tokens (slug + short hash). */
+export function clusterIdFromTopic(topic: string): string {
+  const slug = topic
+    .toLowerCase()
+    .normalize("NFKC")
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 48);
+  const hash = createHash("sha256").update(topic.trim().toLowerCase()).digest("hex").slice(0, 8);
+  return `${slug || "topic"}-${hash}`;
+}
+
 /** Lightweight title clustering (E2 without pgvector). Threshold ~0.35 Jaccard. */
 export function clusterHeadlines(
   headlines: NewsHeadline[],
@@ -84,14 +98,27 @@ export function clusterHeadlines(
   return clusters
     .map((cluster) => {
       const topic =
-        [...cluster.tokens].slice(0, 4).join(" ") ||
+        [...cluster.tokens].sort().slice(0, 4).join(" ") ||
         cluster.headlines[0]?.title.slice(0, 48) ||
         "topic";
       return {
+        id: clusterIdFromTopic(topic),
         topic,
         headlines: cluster.headlines,
         score: cluster.headlines.length,
       };
     })
     .sort((a, b) => b.score - a.score);
+}
+
+/** Find a cluster by slugified topic id within the given headline set. */
+export function getClusterById(
+  id: string,
+  headlines: NewsHeadline[],
+  threshold = 0.35,
+): NewsCluster | null {
+  return (
+    clusterHeadlines(headlines, threshold).find((cluster) => cluster.id === id) ??
+    null
+  );
 }

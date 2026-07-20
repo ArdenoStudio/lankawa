@@ -1,4 +1,4 @@
-const CACHE_NAME = "lankawa-offline-v4";
+const CACHE_NAME = "lankawa-offline-v5";
 const OFFLINE_ASSETS = [
   "/geo/districts.geojson",
   "/favicon.svg",
@@ -66,6 +66,41 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
+self.addEventListener("message", (event) => {
+  const data = event.data;
+  if (!data || data.type !== "lankawa:cache-home-services") {
+    return;
+  }
+  const slug = typeof data.districtSlug === "string" ? data.districtSlug : "";
+  if (!slug || !DISTRICT_SLUGS.includes(slug)) {
+    return;
+  }
+
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(async (cache) => {
+      const urls = [
+        `/api/v1/services?district=${slug}`,
+        `/api/v1/districts/${slug}`,
+        `/en/services?district=${slug}`,
+        `/si/services?district=${slug}`,
+        `/ta/services?district=${slug}`,
+      ];
+      await Promise.all(
+        urls.map(async (url) => {
+          try {
+            const response = await fetch(url, { credentials: "same-origin" });
+            if (response.ok) {
+              await cache.put(url, response.clone());
+            }
+          } catch {
+            // Best-effort offline pack.
+          }
+        }),
+      );
+    }),
+  );
+});
+
 self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
@@ -80,6 +115,7 @@ self.addEventListener("fetch", (event) => {
     url.pathname.startsWith("/geo/") ||
     url.pathname.startsWith("/districts/") ||
     url.pathname.startsWith("/api/v1/districts") ||
+    url.pathname.startsWith("/api/v1/services") ||
     url.pathname === "/api/v1/pulse" ||
     url.pathname === "/api/v1/brief" ||
     url.pathname === "/en" ||
@@ -111,6 +147,17 @@ self.addEventListener("fetch", (event) => {
           const briefCached = await cache.match(`/api/v1/brief?locale=${locale}`);
           if (briefCached) {
             return briefCached;
+          }
+        }
+        if (url.pathname.startsWith("/api/v1/services")) {
+          const district = url.searchParams.get("district");
+          if (district) {
+            const servicesCached = await cache.match(
+              `/api/v1/services?district=${district}`,
+            );
+            if (servicesCached) {
+              return servicesCached;
+            }
           }
         }
         if (isDocument) {

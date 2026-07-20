@@ -1,0 +1,27 @@
+{
+  "sourceId": "moh_notices_seed",
+  "sourceName": "Ministry of Health notices (seed)",
+  "asOf": "2026-07-15",
+  "isSeed": true,
+  "methodologyNote": "Seed MoH-style public health notices for the /health strip until a stable MoH RSS endpoint is wired. Not clinical advice.",
+  "notices": [
+    {
+      "id": "moh-dengue-2026-07",
+      "title": "Dengue prevention week — remove breeding sites",
+      "url": "https://www.health.gov.lk/",
+      "publishedAt": "2026-07-14T08:00:00.000Z"
+    },
+    {
+      "id": "moh-heat-2026-07",
+      "title": "Heat stress advisory for outdoor workers",
+      "url": "https://www.health.gov.lk/",
+      "publishedAt": "2026-07-10T08:00:00.000Z"
+    },
+    {
+      "id": "moh-vaccination-2026-06",
+      "title": "Routine immunisation schedule reminder",
+      "url": "https://www.health.gov.lk/",
+      "publishedAt": "2026-06-28T08:00:00.000Z"
+    }
+  ]
+}

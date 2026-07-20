@@ -1,0 +1,21 @@
+{
+  "sourceId": "coconut_index_seed",
+  "sourceName": "Food staple observations (coconut)",
+  "asOf": "2026-07-18",
+  "isSeed": true,
+  "unit": "LKR",
+  "itemUnit": "each",
+  "methodologyNote": "Seed history of coconut unit prices used by the COL Coconut Index. Replaced by live Food/Life observations when available.",
+  "series": [
+    { "date": "2026-06-20", "priceLkr": 138 },
+    { "date": "2026-06-23", "priceLkr": 140 },
+    { "date": "2026-06-26", "priceLkr": 142 },
+    { "date": "2026-06-29", "priceLkr": 141 },
+    { "date": "2026-07-02", "priceLkr": 143 },
+    { "date": "2026-07-05", "priceLkr": 144 },
+    { "date": "2026-07-08", "priceLkr": 145 },
+    { "date": "2026-07-11", "priceLkr": 144 },
+    { "date": "2026-07-14", "priceLkr": 146 },
+    { "date": "2026-07-18", "priceLkr": 145 }
+  ]
+}

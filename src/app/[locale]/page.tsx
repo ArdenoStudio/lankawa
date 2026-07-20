@@ -1,9 +1,14 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AlertPins } from "@/components/AlertPins";
+import { WebPushOptIn } from "@/components/WebPushOptIn";
 import { BriefSubscribeForm } from "@/components/BriefSubscribeForm";
 import { CricketCard } from "@/components/CricketCard";
+import { CseWatchlistChip } from "@/components/CseWatchlistChip";
 import { DataSaverGate } from "@/components/DataSaverGate";
+import { DistrictMorningPack } from "@/components/DistrictMorningPack";
 import { HomeDistrictPin } from "@/components/HomeDistrictPin";
+import { HomeHazardToast } from "@/components/HomeHazardToast";
 import { MorningBrief } from "@/components/MorningBrief";
 import { MorningDeltaStrip } from "@/components/MorningDeltaStrip";
 import { NewsPulse } from "@/components/NewsPulse";
@@ -16,7 +21,35 @@ import { SourceHealthBar } from "@/components/SourceHealthBar";
 import { WeekLedger } from "@/components/WeekLedger";
 import { Link } from "@/i18n/navigation";
 import { buildAlertSignalContext } from "@/lib/alert-context";
+import { getAllDistrictMorningPacks } from "@/lib/district-morning";
+import { fetchFirmsSnapshot } from "@/lib/integrations/firms";
+import { fetchLandslideSnapshot } from "@/lib/integrations/landslide";
 import { buildPulseSnapshot, getTodayPulseMetrics } from "@/lib/pulse";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
+  const ogImage = "/api/og/morning";
+  return {
+    title: t("title"),
+    description: t("description"),
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      images: [{ url: ogImage, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+      images: [ogImage],
+    },
+  };
+}
 
 export default async function HomePage({
   params,
@@ -26,14 +59,24 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("home");
-  const snapshot = await buildPulseSnapshot();
+  const [snapshot, firms, landslides] = await Promise.all([
+    buildPulseSnapshot(),
+    fetchFirmsSnapshot(),
+    fetchLandslideSnapshot(),
+  ]);
   const alertContext = await buildAlertSignalContext(snapshot);
+  const morningPacks = getAllDistrictMorningPacks();
   const todayMetrics = getTodayPulseMetrics(snapshot.metrics);
   const shareMetrics = todayMetrics
     .filter((metric) =>
-      ["usd_lkr", "fuel_petrol_92", "fuel_diesel", "weather_colombo", "power_status"].includes(
-        metric.id,
-      ),
+      [
+        "usd_lkr",
+        "fuel_petrol_92",
+        "fuel_diesel",
+        "weather_colombo",
+        "aqi_colombo",
+        "power_status",
+      ].includes(metric.id),
     )
     .map((metric) => ({
       id: metric.id,
@@ -43,14 +86,31 @@ export default async function HomePage({
       note: metric.note,
     }));
 
+  const hazardFires = firms.fires.map((fire) => ({
+    id: fire.id,
+    latitude: fire.latitude,
+    longitude: fire.longitude,
+  }));
+  const hazardLandslides = landslides.districts.map((row) => ({
+    slug: row.slug,
+    tier: row.tier,
+  }));
+
   return (
     <div className="space-y-10 md:space-y-14">
       <RetentionBeacon locale={locale} />
       <HeroSection />
       <OfflineMorningShell />
       <HomeDistrictPin locale={locale} />
+      <DistrictMorningPack packs={morningPacks} locale={locale} />
+      <HomeHazardToast
+        locale={locale}
+        fires={hazardFires}
+        landslides={hazardLandslides}
+      />
       <WeekLedger />
       <AlertPins context={alertContext} />
+      <WebPushOptIn />
 
       <section className="space-y-5" id="today">
         <div className="flex flex-wrap items-end justify-between gap-4">
@@ -79,6 +139,8 @@ export default async function HomePage({
       <DataSaverGate hideUntilHydrated>
         <CricketCard />
       </DataSaverGate>
+
+      <CseWatchlistChip />
 
       <MorningBrief locale={locale} />
       <BriefSubscribeForm />

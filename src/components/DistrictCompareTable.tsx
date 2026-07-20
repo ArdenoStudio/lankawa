@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { DistrictCompareRow } from "@/lib/compare";
+import { formatPropertyPrice } from "@/lib/property";
 
 export function DistrictCompareTable({ rows }: { rows: DistrictCompareRow[] }) {
   const t = useTranslations("compare");
@@ -72,6 +73,27 @@ export function DistrictCompareTable({ rows }: { rows: DistrictCompareRow[] }) {
       label: t("costOfLiving"),
       format: (row) =>
         row.costOfLivingIndex != null ? String(row.costOfLivingIndex) : "—",
+    },
+    {
+      key: "propertyAvgPrice",
+      label: t("propertyAvgPrice"),
+      format: (row) =>
+        row.propertyAvgPrice != null
+          ? `LKR ${formatPropertyPrice(row.propertyAvgPrice)}/perch`
+          : "—",
+    },
+    {
+      key: "greeneryDelta",
+      label: t("greeneryDelta"),
+      format: (row) =>
+        row.greeneryDelta != null
+          ? `${row.greeneryDelta > 0 ? "+" : ""}${row.greeneryDelta}`
+          : "—",
+    },
+    {
+      key: "aqi",
+      label: t("aqi"),
+      format: (row) => (row.aqi != null ? String(row.aqi) : "—"),
     },
   ];
 

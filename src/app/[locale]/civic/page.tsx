@@ -1,4 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { CivicResearchStrip } from "@/components/CivicResearchStrip";
+import { HansardHonestyNote } from "@/components/HansardHonestyNote";
 import { MpScorecardList } from "@/components/MpScorecardList";
 import { Link } from "@/i18n/navigation";
 import { getMpScorecardSnapshot } from "@/lib/civic";
@@ -29,6 +31,10 @@ export default async function CivicPage({
           </Link>
         </p>
       </div>
+
+      <CivicResearchStrip locale={locale} />
+
+      <HansardHonestyNote />
 
       <MpScorecardList members={snapshot.members} locale={locale} />
 

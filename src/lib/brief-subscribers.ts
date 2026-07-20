@@ -30,8 +30,51 @@ export function createConfirmToken(): string {
   return randomBytes(24).toString("hex");
 }
 
+/** Same entropy as confirm tokens; used in one-click unsubscribe links. */
+export function createUnsubscribeToken(): string {
+  return createConfirmToken();
+}
+
 export function hashEmail(email: string): string {
   return createHash("sha256").update(normalizeEmail(email)).digest("hex");
+}
+
+export function getBriefSiteBaseUrl(): string {
+  const raw =
+    process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://lankawa.vercel.app";
+  return raw.replace(/\/$/, "");
+}
+
+export function buildUnsubscribeUrl(input: {
+  token: string;
+  email?: string;
+  locale?: string;
+}): string {
+  const base = getBriefSiteBaseUrl();
+  const locale = ["en", "si", "ta"].includes(input.locale ?? "")
+    ? (input.locale as string)
+    : "en";
+  const params = new URLSearchParams({ token: input.token });
+  if (input.email) {
+    params.set("email", normalizeEmail(input.email));
+  }
+  return `${base}/${locale}/unsubscribe?${params.toString()}`;
+}
+
+export function buildUnsubscribeApiUrl(input: {
+  token: string;
+  email?: string;
+  locale?: string;
+}): string {
+  const base = getBriefSiteBaseUrl();
+  const params = new URLSearchParams({ token: input.token });
+  if (input.email) {
+    params.set("email", normalizeEmail(input.email));
+  }
+  if (input.locale) {
+    params.set("locale", input.locale);
+  }
+  return `${base}/api/v1/subscribe/unsubscribe?${params.toString()}`;
 }
 
 export async function upsertBriefSubscriber(input: {
@@ -170,10 +213,58 @@ export async function markSubscriberSent(id: string): Promise<void> {
   );
 }
 
+export async function unsubscribeBriefSubscriber(input: {
+  token: string;
+  email?: string;
+}): Promise<{ ok: true } | { ok: false; error: string }> {
+  const config = getDbConfig();
+  if (!config) {
+    return { ok: false, error: "Database not configured." };
+  }
+
+  const token = input.token.trim();
+  if (!token) {
+    return { ok: false, error: "Missing token" };
+  }
+
+  const filters = [`confirm_token=eq.${encodeURIComponent(token)}`];
+  if (input.email) {
+    filters.push(`email=eq.${encodeURIComponent(normalizeEmail(input.email))}`);
+  }
+
+  const response = await fetch(
+    `${config.url}/rest/v1/brief_subscribers?${filters.join("&")}`,
+    {
+      method: "PATCH",
+      headers: {
+        apikey: config.key,
+        Authorization: `Bearer ${config.key}`,
+        "Content-Type": "application/json",
+        Prefer: "return=representation",
+      },
+      body: JSON.stringify({
+        unsubscribed_at: new Date().toISOString(),
+      }),
+    },
+  );
+
+  if (!response.ok) {
+    return { ok: false, error: `Unsubscribe failed (${response.status})` };
+  }
+
+  const rows = (await response.json()) as unknown[];
+  if (!Array.isArray(rows) || rows.length === 0) {
+    return { ok: false, error: "Subscriber not found for token." };
+  }
+
+  return { ok: true };
+}
+
 export async function sendResendEmail(input: {
   to: string;
   subject: string;
   text: string;
+  html?: string;
 }): Promise<{ ok: boolean; error?: string }> {
   const apiKey = process.env.RESEND_API_KEY?.trim();
   const from = process.env.BRIEF_FROM_EMAIL?.trim();
@@ -182,18 +273,23 @@ export async function sendResendEmail(input: {
     return { ok: false, error: "RESEND_API_KEY / BRIEF_FROM_EMAIL not set" };
   }
 
+  const payload: Record<string, unknown> = {
+    from,
+    to: [input.to],
+    subject: input.subject,
+    text: input.text,
+  };
+  if (input.html) {
+    payload.html = input.html;
+  }
+
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      from,
-      to: [input.to],
-      subject: input.subject,
-      text: input.text,
-    }),
+    body: JSON.stringify(payload),
   });
 
   if (!response.ok) {

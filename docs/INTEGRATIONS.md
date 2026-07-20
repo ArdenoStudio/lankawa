@@ -224,3 +224,6 @@ Reference endpoints (from Chime probe, Jul 2026): `aspiData`, `snpData`, `tradeS
 - OpenAQ / tenders / dengue adapters with seed fallback ✅
 - Morning brief (`/api/v1/brief`) + cricket card + retention analytics ✅
 - COL composite + methodology page ✅
+- Signed change webhooks (P62): HMAC-SHA256 helper in `src/lib/webhook-hmac.ts`; partner docs on `/developers`; set `LANKAWA_WEBHOOK_SECRET` when delivery is enabled ✅
+- Widget SDK snippet (P63): documented drop-in script on `/developers` (iframe remains preferred until npm package) ✅
+- NDVI weekly cron path (P40): `lankawa_land_pulse` seed → observations via `buildNdviObservationRows` ✅

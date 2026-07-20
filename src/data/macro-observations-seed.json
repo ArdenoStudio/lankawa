@@ -1,0 +1,30 @@
+{
+  "sourceId": "cbsl_macro",
+  "sourceName": "Central Bank of Sri Lanka",
+  "asOf": "2025-06-30",
+  "isSeed": true,
+  "methodologyNote": "Macro observation strip seed for inflation and reserves. Cron persists the same indicators into observations when the database is configured; UI stays seed-honest until live rows exist.",
+  "observations": [
+    {
+      "id": "inflation_ccpi",
+      "label": "CCPI Inflation (YoY)",
+      "value": 0.5,
+      "unit": "%",
+      "period": "June 2025"
+    },
+    {
+      "id": "forex_reserves",
+      "label": "Gross Official Reserves",
+      "value": 6.1,
+      "unit": "USD bn",
+      "period": "May 2025"
+    },
+    {
+      "id": "gdp_growth",
+      "label": "Real GDP Growth",
+      "value": 5.0,
+      "unit": "%",
+      "period": "2024"
+    }
+  ]
+}

@@ -200,11 +200,23 @@
   "news": {
     "title": "Sri Lanka news pulse",
     "subtitle": "Latest headlines from public Sinhala, Tamil, and English RSS feeds.",
+    "pageTitle": "Sri Lanka news",
+    "pageSubtitle": "Story clusters and headlines from public Sinhala, Tamil, and English RSS feeds.",
     "viewAll": "All headlines",
     "viewSource": "View source",
     "provenance": "Aggregated from public RSS feeds",
     "noHeadlines": "News headlines are temporarily unavailable.",
     "headlineCount": "{count} headlines tracked",
+    "headlinesTitle": "Latest headlines",
+    "clustersTitle": "Story clusters",
+    "clustersSubtitle": "Same story across outlets, ranked by agreement.",
+    "clusterMembersTitle": "Headlines in this cluster",
+    "clusterWindow": "First seen {first} · Last seen {last}",
+    "backToNews": "Back to news",
+    "feedHealthTitle": "Feed health",
+    "feedHealthSubtitle": "Per-outlet fetch status from the latest poll.",
+    "feedHealthOk": "{count} items",
+    "feedHealthError": "Unavailable",
     "sourceMirror": "Daily Mirror",
     "sourceAda": "Ada Derana",
     "feed": "Atom feed",
@@ -218,7 +230,12 @@
     "sourceLbo": "Lanka Business Online",
     "sourceAdaBiz": "Ada Derana Biz",
     "sourceRoar": "Roar Media",
-    "sourceDmc": "Disaster Management Centre"
+    "sourceDmc": "Disaster Management Centre",
+    "topicRailsTitle": "Topic rails",
+    "topicRailsSubtitle": "Cluster topics you can open or cite.",
+    "citeCluster": "Cite cluster",
+    "citeCopied": "Citation copied",
+    "feedDelta": "Delta feed"
   },
   "shareMorning": {
     "title": "Lankawa morning check",
@@ -339,7 +356,29 @@
     "relatedCostOfLiving": "Cost of living",
     "relatedCostOfLivingDesc": "District index with fuel, property, and food basket",
     "relatedCivic": "MP scorecard",
-    "relatedCivicDesc": "Sample parliamentary attendance and activity"
+    "relatedCivicDesc": "Sample parliamentary attendance and activity",
+    "pressTitle": "In the press",
+    "pressSubtitle": "Recent headlines mentioning this district.",
+    "pressViewAll": "All news",
+    "pressEmpty": "No recent headlines mention this district.",
+    "pressHonesty": "Keyword match against public RSS titles — not a full media monitor.",
+    "census": {
+      "title": "Census 2024 footnote",
+      "population": "Indicative population",
+      "seed": "Seed",
+      "honesty": "Stale-OK population context from curated DCS/HDX tables — not a live census API.",
+      "source": "Census footnote provenance"
+    },
+    "marine": {
+      "title": "Marine swell",
+      "subtitle": "Nearshore wave height for this coastal district (Open-Meteo marine or seed).",
+      "seed": "Seed",
+      "waveHeight": "Wave height",
+      "wavePeriod": "Wave period",
+      "waveDirection": "Wave direction",
+      "honesty": "Not a Met Dept or Navy warning.",
+      "asOf": "As of {time}"
+    }
   },
   "provinces": {
     "title": "Provinces",
@@ -364,7 +403,14 @@
     "relatedProperty": "Property pulse",
     "relatedPropertyDesc": "District land price bands in this province",
     "relatedLocalGov": "Local government",
-    "relatedLocalGovDesc": "Search MC, UC, and PS bodies by district"
+    "relatedLocalGovDesc": "Search MC, UC, and PS bodies by district",
+    "pulseTitle": "Province pulse",
+    "pulseSubtitle": "Best-effort aggregate across districts in this province.",
+    "pulseDengue": "Dengue cases (week)",
+    "pulseAqi": "Average AQI",
+    "pulseAqiValue": "{value} · {count} districts",
+    "pulseFlood": "Flood stations elevated",
+    "pulseFloodUnavailable": "Unavailable"
   },
   "elections": {
     "eyebrow": "Electoral intelligence",
@@ -398,7 +444,16 @@
     "adminDistricts": "Administrative districts covered",
     "historyTitle": "Historical elections",
     "historySubtitle": "Explore presidential cycles from 2010 to 2024 with swing charts.",
-    "historyLink": "Open election history"
+    "historyLink": "Open election history",
+    "nightMode": {
+      "offTitle": "Election night refresh mode",
+      "offBody": "Enable for a louder banner and reminder to refresh during live counting.",
+      "onTitle": "Election night mode on",
+      "onBody": "Refresh this page periodically. Cadence honesty: results here are still the published seed ledger until a live EC feed lands.",
+      "enable": "Enable",
+      "disable": "Disable",
+      "honesty": "Not a live Election Commission feed. Manual refresh only — no auto-polling."
+    }
   },
   "swing": {
     "title": "Electoral swing (2019 → 2024)",
@@ -432,13 +487,20 @@
   },
   "disaster": {
     "title": "Disaster & Flood",
-    "subtitle": "Flood monitoring and CEB power outage status aggregated on Lankawa.",
+    "subtitle": "Flood monitoring, CEB and LECO power notices, and DMC bulletins aggregated on Lankawa.",
     "normal": "Normal",
     "stations": "stations",
     "floodTitle": "Flood monitoring",
     "floodSubtitle": "River station alert levels from the public flood API.",
     "powerTitle": "Power outages",
-    "powerSubtitle": "Scheduled demand-management cuts and sampled present breakdown outages from CEB Care.",
+    "powerSubtitle": "CEB Care national schedule/outages beside LECO Western/coastal interruption notices.",
+    "cebCardTitle": "CEB (national)",
+    "lecoCardTitle": "LECO (Western)",
+    "lecoStatusLabel": "Western / coastal LECO status",
+    "lecoNoAffectedAreas": "No current-month LECO interruptions parsed for sampled branches.",
+    "lecoSeed": "Seed / unknown — LECO scrape failed; not a claim of clear supply.",
+    "lecoHonesty": "LECO covers Western coastal branches only. Scheduled notices are scraped from leco.lk — verify with LECO 1910 before acting.",
+    "lecoSourceNote": "LECO interruption notices provenance",
     "powerStatusLabel": "National supply status",
     "powerStatus": {
       "normal": "Normal",
@@ -450,6 +512,17 @@
     "powerNoAffectedAreas": "No affected areas reported in the latest CEB Care check.",
     "powerObservedAt": "Checked {time}",
     "powerSourceNote": "Source: CEB Care demand-management schedule and present-outage map (cebcare.ceb.lk).",
+    "concentrationTitle": "Outage concentration by district",
+    "concentrationSubtitle": "Heuristic mention counts from CEB and LECO affected-area labels — not an official feeder map.",
+    "concentrationDistrict": "District",
+    "concentrationMentions": "Mentions",
+    "concentrationEmpty": "No district names matched in the latest affected-area labels.",
+    "concentrationHonesty": "District scores are string-match heuristics on area labels. Missing a district does not mean clear supply.",
+    "dmcTitle": "DMC bulletins",
+    "dmcSubtitle": "Latest Disaster Management Centre headlines from the public RSS feed.",
+    "dmcEmpty": "No DMC RSS headlines available right now.",
+    "dmcViewAll": "All news",
+    "dmcHonesty": "Headlines only — verify the linked DMC bulletin before acting.",
     "metTitle": "Met Dept warnings",
     "metSubtitle": "Weather warnings and advisories from the Department of Meteorology public dashboard.",
     "metUnavailableTitle": "Warnings unavailable",
@@ -516,7 +589,38 @@
     "gdacsCountry": "Country",
     "gdacsReport": "GDACS report",
     "firmsSource": "NASA FIRMS provenance",
-    "gdacsSource": "GDACS provenance"
+    "gdacsSource": "GDACS provenance",
+    "cyclone": {
+      "title": "Cyclone watch (JTWC / GDACS)",
+      "subtitle": "Tropical cyclone events in the Indian Ocean / South Asia window.",
+      "empty": "Basin quiet — no active tropical cyclone events in the GDACS window.",
+      "active": "Active cyclone / tropical storm signals in the regional window.",
+      "alertLevel": "Alert",
+      "report": "GDACS report",
+      "honesty": "Seasonal watch from GDACS TC events. Not a Met Dept cyclone warning — verify official bulletins.",
+      "source": "GDACS provenance"
+    },
+    "glofas": {
+      "title": "GloFAS basin discharge",
+      "subtitle": "Open-Meteo Flood simulated river discharge near major basin centroids.",
+      "seed": "Seed scaffold",
+      "discharge": "Latest discharge",
+      "empty": "No basin discharge series available right now.",
+      "honesty": "Complements local river gauges — not an official DMC flood warning.",
+      "asOf": "Checked {date}"
+    },
+    "mapMode_gfm": "Flood extent pins",
+    "mapLegendGfm": "White pins mark seed GFM / flood-extent attention points — pins only, not mosaics.",
+    "mapGfmHonesty": "{count} seed pins as of {date}. Not a DMC inundation map."
+  },
+  "homeHazard": {
+    "eyebrow": "Home district attention",
+    "title": "Hazard signal near {district}",
+    "landslide": "Landslide overlay: {tier}",
+    "fires": "{count, plural, one {# nearby FIRMS fire pin} other {# nearby FIRMS fire pins}}",
+    "honesty": "Not an official evacuation order. FIRMS pins are satellite detections; landslide tiers are a civic overlay.",
+    "openDisaster": "Open disaster hub",
+    "dismiss": "Dismiss"
   },
   "economy": {
     "title": "Economic Pulse",
@@ -545,11 +649,26 @@
     "lpg": {
       "eyebrow": "Household LPG",
       "title": "Cylinder prices",
-      "subtitle": "Colombo 12.5 kg refill reference",
+      "subtitle": "Colombo 12.5 kg refill reference — filter other districts below",
       "cylinder12_5": "12.5 kg refill",
       "asOf": "As of {date}",
       "source": "Source",
-      "seed": "Seed snapshot"
+      "seed": "Seed snapshot",
+      "otherDistricts": "+ {count} other districts with 12.5 kg prices",
+      "filterLabel": "District",
+      "allDistricts": "All districts",
+      "emptyDistrict": "No 12.5 kg prices for this district"
+    },
+    "householdEnergy": {
+      "title": "Household energy at a glance",
+      "subtitle": "Fuel, Colombo LPG 12.5 kg, and an indicative electricity bill teaser.",
+      "fuelTitle": "Fuel (latest)",
+      "lpgTitle": "LPG Colombo 12.5 kg",
+      "tariffTitle": "Electricity estimate",
+      "tariffTeaser": "Indicative domestic bill at 90 kWh/month from PUCSL slabs.",
+      "tariffCta": "Open full tariff calculator",
+      "emptyFuel": "Fuel prices unavailable",
+      "emptyLpg": "LPG prices unavailable"
     },
     "remittance": {
       "title": "Remittance calculator",
@@ -588,7 +707,11 @@
       "foreignBuy": "Foreign purchase",
       "foreignSell": "Foreign sales",
       "noSectors": "No sector rows",
-      "noActive": "No active trades"
+      "noActive": "No active trades",
+      "highLow": "Session high / low",
+      "notices": "Exchange notices",
+      "noNotices": "No exchange notices available",
+      "sectorsSkipped": "Sectors skipped in Data Saver"
     },
     "debt": {
       "title": "Foreign debt composition",
@@ -651,13 +774,48 @@
       "spread": "Spread",
       "bestBuy": "Best buy for senders",
       "bestSell": "Best sell for receivers",
-      "seed": "Seed snapshot — not a live bank scrape yet.",
+      "seed": "Seed or partial board — live bank page scrape unavailable or incomplete.",
       "asOf": "As of {date}",
       "source": "Source provenance",
       "honesty": "Indicative only. Bank fees, corridors, and same-day TT products differ. Not CBSL official rates."
     },
     "fxAnomaly": "Unusual day-over-day move",
-    "fxAnomalyQuiet": "Within recent MAD band"
+    "fxAnomalyQuiet": "Within recent MAD band",
+    "treasury": {
+      "title": "CBSL T-bill / WAYR",
+      "subtitle": "Latest auction yields — stale-OK seed until live PDF ingest.",
+      "wayr": "WAYR",
+      "tbill91": "91-day T-bill",
+      "tbill182": "182-day T-bill",
+      "tbill364": "364-day T-bill",
+      "asOf": "As of {date}",
+      "seed": "Seed snapshot — not a live CBSL scrape"
+    },
+    "marketsPress": {
+      "title": "Markets in the press",
+      "subtitle": "Headlines from Lanka Business Online and Ada Derana Biz RSS.",
+      "viewAll": "All news",
+      "empty": "No market press headlines available right now.",
+      "sourceLbo": "Lanka Business Online",
+      "sourceAdaBiz": "Ada Derana Biz",
+      "honesty": "Aggregated from public RSS — not Lankawa analysis."
+    },
+    "generationMix": {
+      "title": "Generation mix",
+      "subtitle": "Indicative hydro / thermal / renewable shares under the tariff card.",
+      "seed": "Seed",
+      "hydro": "Hydro share (recent months)",
+      "asOf": "As of {date}",
+      "honesty": "Not a live SCADA feed — verify against the latest PUCSL/CEB digest.",
+      "source": "PUCSL tariff provenance"
+    },
+    "macroObs": {
+      "title": "Macro observations",
+      "subtitle": "Inflation and reserves strip — seed until live CBSL observations land.",
+      "asOf": "As of {date}",
+      "seed": "Seed",
+      "honesty": "Cron persists these into observations when the database is configured."
+    }
   },
   "search": {
     "label": "Search Lankawa",
@@ -687,7 +845,11 @@
     "typeSchool": "School",
     "typeGnOffice": "GN office",
     "resultsCount": "{count} facilities",
-    "noResults": "No facilities match your filters."
+    "noResults": "No facilities match your filters.",
+    "dsSearchPlaceholder": "DS division (stub)…",
+    "dsSearchLabel": "DS division search",
+    "dsSearchNone": "No DS divisions matched — try Homagama, Negombo, or Jaffna.",
+    "dsSearchHint": "Matched {names} → filtering {districts, plural, one {# district} other {# districts}}."
   },
   "brand": {
     "tagline": "Built for Sri Lankans, by Sri Lankans.",
@@ -906,7 +1068,13 @@
     "changesSummary": "Product changelog",
     "changesDescription": "Curated Lankawa surface changelog entries.",
     "subscribeSummary": "Morning brief subscribe",
-    "subscribeDescription": "Double opt-in email subscription for the cached morning brief."
+    "subscribeDescription": "Double opt-in email subscription for the cached morning brief.",
+    "webhookTitle": "Signed change webhooks",
+    "webhookBody": "Partners can verify changelog deliveries with HMAC-SHA256. Sign the raw JSON body; send header X-Lankawa-Signature: sha256=<hex>. Helper: signWebhookBody / verifyWebhookSignature in src/lib/webhook-hmac.ts. Set LANKAWA_WEBHOOK_SECRET when a delivery endpoint is enabled.",
+    "webhookExample": "X-Lankawa-Signature: sha256=<hmac-sha256-hex-of-body>",
+    "widgetSdkTitle": "Widget SDK snippet",
+    "widgetSdkBody": "Beyond iframes — drop-in script scaffold that mounts a same-origin embed. Prefer iframe for production until the npm package ships.",
+    "widgetSdkSnippet": "<div id=\"lankawa-widget\" data-widget=\"brief\"></div>\n<script src=\"https://lankawa.vercel.app/embed/widget.js\" defer></script>"
   },
   "budget": {
     "title": "National Budget Tracker",
@@ -941,6 +1109,18 @@
       "highways": "Ministry of Highways",
       "plantation": "Plantation Industries",
       "power": "Power & Energy"
+    },
+    "yoy": {
+      "title": "Year-over-year budget",
+      "subtitle": "Totals, sector, and ministry deltas beyond the single-year seed breakdown.",
+      "seed": "Seed",
+      "methodology": "YoY compares the two most recent fiscal years in the seed ledger. Not an official appropriation series.",
+      "prior": "Prior year",
+      "current": "Current year",
+      "delta": "{pct}% YoY",
+      "totalsTitle": "Totals YoY",
+      "sectorsTitle": "Sector YoY",
+      "ministriesTitle": "Ministry allocations"
     }
   },
   "health": {
@@ -950,6 +1130,10 @@
     "nationalCases": "National cases (week)",
     "nationalChange": "Week-on-week change",
     "reportDate": "Report date",
+    "spikeTitle": "Week-over-week spike attention",
+    "spikeNational": "National change {pct}% vs prior week (≥20% threshold).",
+    "spikeDistrict": "{district} at {pct}% WoW — {count, plural, one {# district} other {# districts}} at or above the 20% spike threshold.",
+    "spikeHonesty": "Same threshold as the home dengue_spike alert pin. Not a clinical forecast — verify with Epidemiology Unit reports.",
     "districtTableTitle": "District dengue cases",
     "districtTableSubtitle": "Sorted by case count. Click a district for its full profile.",
     "district": "District",
@@ -968,11 +1152,22 @@
     "mapLegendModerate": "Moderate",
     "mapLegendLow": "Lower cases",
     "environmentLink": "See also",
-    "environmentLinkAction": "air quality by district"
+    "environmentLinkAction": "air quality by district",
+    "moh": {
+      "title": "MoH notices",
+      "subtitle": "Public health notices with provenance — seed until MoH RSS is wired.",
+      "seed": "Seed",
+      "empty": "No MoH notices available right now.",
+      "honesty": "Not clinical advice. Verify linked Ministry of Health publications before acting."
+    },
+    "urbanHeatTitle": "Colombo urban heat (monthly)",
+    "urbanHeatSeed": "Seed",
+    "urbanHeatBody": "{city} · {month}: LST anomaly +{anomaly}°C · night min ~{night}°C.",
+    "urbanHeatHonesty": "Seed LST note for health context. Not a heat-health warning — verify Met Dept / MoH advisories."
   },
   "compare": {
     "title": "District Compare",
-    "subtitle": "Side-by-side comparison of population, elections, flood monitoring, services, and health metrics.",
+    "subtitle": "Side-by-side comparison of population, elections, flood monitoring, services, health, property, land, and air quality.",
     "districtA": "First district",
     "districtB": "Second district",
     "compareAction": "Compare",
@@ -986,7 +1181,34 @@
     "services": "Public services",
     "dengueCases": "Dengue cases (week)",
     "costOfLiving": "Cost of living index",
+    "propertyAvgPrice": "Property avg (median/perch)",
+    "greeneryDelta": "Greenery Δ (2018→2024)",
+    "aqi": "AQI",
+    "pickerHint": "Atlas metrics include property, greenery change, and AQI when available.",
     "empty": "Select districts to compare using the picker above."
+  },
+  "shareCompare": {
+    "title": "Lankawa compare · {names}",
+    "button": "Share compare",
+    "hint": "WhatsApp-ready plain text — share sheet or copy.",
+    "copied": "Compare summary copied.",
+    "error": "Could not share. Try copying from the page.",
+    "footer": "Source: Lankawa — not an official government publication."
+  },
+  "districtMorning": {
+    "title": "District morning pack",
+    "demoNote": "Demo pack for {district} — pin a home district above for yours.",
+    "pinnedSubtitle": "Morning signals for {district}.",
+    "pinHint": "Pin a district",
+    "dengue": "Dengue cases (week)",
+    "aqi": "AQI",
+    "colNote": "Cost of living",
+    "colNoteValue": "Index {index} · rank {rank} · {vs}",
+    "colAtNational": "at national",
+    "colAboveNational": "+{value} vs national",
+    "colBelowNational": "−{value} vs national",
+    "landDelta": "Greenery Δ",
+    "openDistrict": "Open district page"
   },
   "transport": {
     "title": "Transport Directory",
@@ -1035,7 +1257,27 @@
     "vsNational": "base {base}",
     "disclaimer": "Seed composite index — not an official NCPI or CPI publication. For illustration only.",
     "methodologyLink": "Read methodology",
-    "disclaimerLive": "Composite refreshed from live federation inputs where available. Not an official NCPI publication."
+    "disclaimerLive": "Composite refreshed from live federation inputs where available. Not an official NCPI publication.",
+    "movers": {
+      "title": "What moved your basket",
+      "subtitle": "Largest recent fuel and food staple deltas that feed the cost-of-living composite.",
+      "empty": "No basket movers available right now.",
+      "fuel": "Fuel",
+      "food": "Food",
+      "honestyLive": "live",
+      "honestySeed": "seed"
+    },
+    "coconutSpark": {
+      "title": "Coconut Index history",
+      "subtitle": "7–30 day unit-price spark when observations exist.",
+      "seed": "Seed",
+      "delta": "{pct}% over window",
+      "honesty": "Seed history until Food/Life coconut observations persist.",
+      "empty": "No coconut observations available for a spark yet."
+    },
+    "choroplethTitle": "District index map",
+    "choroplethSubtitle": "Monochrome table-map of the COL composite by district (brighter = higher index).",
+    "choroplethHonesty": "Simple SVG choropleth from the composite index — not an official NCPI map."
   },
   "environment": {
     "title": "Environment & Air Quality",
@@ -1056,7 +1298,7 @@
   },
   "embed": {
     "title": "Embeddable Widgets",
-    "subtitle": "Preview same-origin Lankawa widgets for today, pulse, fuel, and FX — embed via iframe with minimal chrome.",
+    "subtitle": "Preview same-origin Lankawa widgets for today, pulse, fuel, FX, CSE, and brief — embed via iframe with minimal chrome.",
     "developersLink": "Developer documentation",
     "widget_today": "Today widget",
     "widget_todayDesc": "Compact daily metrics for FX, fuel, weather, power, and flood stations.",
@@ -1066,6 +1308,10 @@
     "widget_fuelDesc": "Current CPC petrol and diesel prices.",
     "widget_fx": "FX widget",
     "widget_fxDesc": "USD/LKR sell rate from CBSL.",
+    "widget_cse": "CSE widget",
+    "widget_cseDesc": "Compact ASPI and S&P SL20 snapshot from the Colombo Stock Exchange.",
+    "widget_brief": "Brief widget",
+    "widget_briefDesc": "Morning brief bullets for partner iframes.",
     "disclaimer": "Widgets are served from lankawa.vercel.app — no external UI links."
   },
   "pwa": {
@@ -1074,7 +1320,10 @@
     "installAction": "Install",
     "installDismiss": "Not now",
     "offlineTitle": "Offline morning shell",
-    "offlineBody": "You are offline. Showing the last cached home pulse, brief, and district pages when available."
+    "offlineBody": "You are offline. Showing the last cached home pulse, brief, and district pages when available.",
+    "offlineServicesHint": "Home district services for {district} are preferred in the offline pack when previously cached.",
+    "offlineServicesLink": "Open services",
+    "offlineServicesPinHint": "Pin a home district to cache its services pack for offline mornings."
   },
   "civic": {
     "title": "MP Scorecards",
@@ -1088,7 +1337,14 @@
     "viewScorecard": "View scorecard",
     "viewAdminDistrict": "View admin district",
     "back": "Back to civic",
-    "disclaimer": "Illustrative seed data only. Not scraped from Manthri.lk or official Hansard records."
+    "disclaimer": "Illustrative seed data only. Not scraped from Manthri.lk or official Hansard records.",
+    "researchTitle": "CPA / Verité research drops",
+    "researchSubtitle": "Policy research notes with provenance — seed until live RSS.",
+    "researchSeed": "Seed strip — not scraped from CPA or Verité feeds yet.",
+    "researchLive": "From public research feeds.",
+    "hansardTitle": "Hansard / MP ingest honesty",
+    "hansardBody": "Scorecards remain seed illustrations. Live Hansard or Manthri.lk ingest is not wired — we do not fake attendance from unofficial scrapes.",
+    "hansardHonesty": "Seed-honest until a licensed Hansard / Parliament data path exists."
   },
   "tenders": {
     "title": "Government Tenders",
@@ -1109,7 +1365,9 @@
     "district": "District",
     "estimatedValue": "Estimated value",
     "closingDate": "Closing date",
-    "disclaimer": "Static seed notices modeled on e-GP formats. Not live procurement data."
+    "disclaimer": "Static seed notices modeled on e-GP formats. Not live procurement data.",
+    "closingSoonPin": "Closing within {days}d",
+    "closesInDays": "in {days}d"
   },
   "property": {
     "title": "Property & Housing Pulse",
@@ -1132,7 +1390,14 @@
     "trend": "YoY trend",
     "intensity": "Relative price",
     "disclaimer": "Representative seed data aligned with PropertyLK patterns. Not a property valuation service — verify with licensed professionals.",
-    "disclaimerSeed": "Showing seed fallback data — the live PropertyLK API was unavailable at fetch time. Figures are representative, not valuations."
+    "disclaimerSeed": "Showing seed fallback data — the live PropertyLK API was unavailable at fetch time. Figures are representative, not valuations.",
+    "listings": {
+      "title": "Listing count",
+      "subtitle": "National sample size + recent trend spark.",
+      "seed": "Seed",
+      "delta": "{pct}% vs series start",
+      "honesty": "Uses PropertyLK district counts when live; otherwise seed history. Not a valuation."
+    }
   },
   "vehicles": {
     "title": "Vehicle Market Pulse",
@@ -1151,7 +1416,17 @@
     "medianPrice": "Median price",
     "popularModel": "Top model",
     "intensity": "Relative price",
-    "disclaimer": "Market intelligence from classified listings — not official valuations. Seed fallback used when the Vehicle Platform API is unavailable."
+    "disclaimer": "Market intelligence from classified listings — not official valuations. Seed fallback used when the Vehicle Platform API is unavailable.",
+    "modelDiveTitle": "Make / model median deep-dive",
+    "modelDiveSubtitle": "District → model medians from seed listings. Drill in by make or district.",
+    "modelDiveSeed": "Seed scaffold",
+    "modelDiveDistrict": "District",
+    "modelDiveAllDistricts": "All districts",
+    "modelDiveMake": "Make",
+    "modelDiveAllMakes": "All makes",
+    "modelDiveModel": "Model",
+    "modelDiveEmpty": "No model rows match these filters.",
+    "modelDiveHonesty": "Seed make/model medians — not live Vehicle API drill-in. Not a valuation."
   },
   "food": {
     "title": "Food Price Pulse",
@@ -1174,7 +1449,11 @@
     "disclaimer": "Representative food price intelligence — not official NCPI. Seed fallback used when FoodLK endpoints are unavailable.",
     "disclaimerLife": "FoodLK API was unavailable at fetch time. Headline figures come from the Ariva Life Platform food federation layer; district meal bands use Lankawa seed estimates until FoodLK recovers.",
     "disclaimerSeed": "Showing seed fallback data — FoodLK and Life Platform food endpoints were unavailable. Figures are representative, not live market quotes.",
-    "bannerLife": "FoodLK is temporarily unreachable. Staple and basket figures come from the Ariva Life Platform food adapter — representative estimates, not live FoodLK scrapes."
+    "bannerLife": "FoodLK is temporarily unreachable. Staple and basket figures come from the Ariva Life Platform food adapter — representative estimates, not live FoodLK scrapes.",
+    "hartiTitle": "HARTI / essentials fallback",
+    "hartiBodyLife": "FoodLK is down. Essentials basket figures come from the Life federation layer until FoodLK recovers — not HARTI live ingest yet.",
+    "hartiBodySeed": "FoodLK and Life food endpoints are unavailable. Showing seed essentials. HARTI wholesale ingest is planned when FoodLK stays down.",
+    "hartiHonesty": "Not official HARTI or NCPI. Labels stay seed-honest until a HARTI adapter lands."
   },
   "ardeno": {
     "eyebrow": "Sister platforms",
@@ -1223,7 +1502,8 @@
     "allTypes": "All types",
     "resultsCount": "{count} bodies",
     "noResults": "No local bodies match your filters.",
-    "disclaimer": "Representative seed directory — not an exhaustive official gazette list."
+    "disclaimer": "Representative seed directory — not an exhaustive official gazette list.",
+    "contactPhone": "Phone"
   },
   "status": {
     "title": "Platform status",
@@ -1261,7 +1541,9 @@
       "colombo": "Tell me about Colombo district",
       "flood": "How many flood stations are active?",
       "elections": "Who won the 2024 presidential election?"
-    }
+    },
+    "scopedDistrict": "Scoping answers to your home district: {district}.",
+    "scopedDistrictHint": "Pin a home district to scope assistant answers to that atlas profile."
   },
   "learn": {
     "eyebrow": "Trust & transparency",
@@ -1528,7 +1810,15 @@
     "ndviNational": "Weekly NDVI anomaly",
     "ndviHint": "Negative = greenery stress vs seasonal baseline (ETL-curated)",
     "topNdviStress": "Top NDVI stress districts",
-    "ndviDistrict": "NDVI anomaly"
+    "ndviDistrict": "NDVI anomaly",
+    "chartSkipped": "Land chart skipped in Data Saver.",
+    "yearCompareTitle": "Year compare",
+    "yearCompareSubtitle": "Toggle 2018 ↔ 2024 for greenery or built-up index rankings.",
+    "yearCompareYearLabel": "Year",
+    "yearCompareMetricLabel": "Metric",
+    "yearCompareGreenery": "Greenery",
+    "yearCompareBuiltUp": "Built-up",
+    "yearCompareHonesty": "Interactive seed indices — not Survey Department land use."
   },
   "landChangeMethodology": {
     "back": "Back to environment",
@@ -1569,7 +1859,21 @@
     "pin_fire": "Fires (FIRMS)",
     "help_fire": "Fire when NASA FIRMS detects active fires in Sri Lanka",
     "pin_gdacs": "GDACS hazard",
-    "help_gdacs": "Fire on Orange/Red GDACS events in the regional window"
+    "help_gdacs": "Fire on Orange/Red GDACS events in the regional window",
+    "pin_fuel_revision": "Fuel revision window",
+    "help_fuel_revision": "Fire when the latest CPC fuel revision falls within the last 10 days",
+    "pin_met_flood": "Met ∩ flood",
+    "help_met_flood": "Fire when a Met warning coincides with elevated or rising flood gauges",
+    "pin_dengue_spike": "Dengue spike",
+    "help_dengue_spike": "Fire when any district or national dengue WoW change is ≥ 20%",
+    "pin_cse_move": "CSE ASPI move",
+    "help_cse_move": "Fire when ASPI absolute session change is ≥ 1%",
+    "pin_col_basket": "COL basket move",
+    "help_col_basket": "Fire when a tracked fuel price day-delta is ≥ 5 LKR/L",
+    "pin_news_cluster": "News cluster",
+    "help_news_cluster": "Fire when a headline cluster spans 3 or more outlets",
+    "pin_tender_closing": "Tenders closing soon",
+    "help_tender_closing": "Fire when e-GP tenders close within 7 days"
   },
   "weekLedger": {
     "title": "Week ledger",
@@ -1595,6 +1899,56 @@
     "submitting": "Sending…",
     "ok": "Check your email to confirm.",
     "error": "Could not subscribe right now.",
-    "privacy": "We only use your email for the morning brief. Confirm link required. No selling lists."
+    "privacy": "We only use your email for the morning brief. Confirm link required. No selling lists.",
+    "unsubscribe": {
+      "title": "Unsubscribe from morning brief",
+      "subtitle": "Stop daily brief emails. Use the link from your email, or paste the token below.",
+      "emailLabel": "Email (optional)",
+      "emailPlaceholder": "you@example.com",
+      "tokenLabel": "Unsubscribe token",
+      "tokenPlaceholder": "Token from your email link",
+      "submit": "Unsubscribe",
+      "submitting": "Updating…",
+      "success": "You are unsubscribed from the morning brief.",
+      "error": "Could not unsubscribe. Check the token and try again.",
+      "homeLink": "Back to Lankawa"
+    },
+    "archive": {
+      "eyebrow": "Brief archive",
+      "title": "Morning brief · {date}",
+      "subtitle": "Archived bullets for this Colombo calendar day.",
+      "generated": "Generated {date}",
+      "emptyTitle": "No archived brief for this date yet.",
+      "emptyBody": "Archives appear after a brief is generated and written to disk. Seed and empty environments show this placeholder.",
+      "todayLink": "See today’s live brief on the home page",
+      "homeLink": "Back to home"
+    }
+  },
+  "cseWatchlist": {
+    "title": "CSE watchlist",
+    "subtitle": "Pin up to {max} symbols on this device.",
+    "viewMarket": "Open CSE board",
+    "savedLabel": "Saved symbols",
+    "empty": "No symbols pinned yet — tap below.",
+    "remove": "Remove from watchlist",
+    "privacy": "Saved in this browser only. Hidden when Data Saver is on."
+  },
+  "webPush": {
+    "title": "Alert push (opt-in)",
+    "subtitle": "Browser permission scaffold for fired alert pins. Quiet hours are local-only until a push server lands.",
+    "permissionLabel": "Permission",
+    "permission_default": "Not asked",
+    "permission_granted": "Granted",
+    "permission_denied": "Denied",
+    "unsupportedShort": "Unsupported",
+    "unsupported": "This browser does not support Notification permission.",
+    "enable": "Enable notifications",
+    "granted": "Permission granted — push delivery server not configured yet.",
+    "denied": "Permission denied. You can re-enable in browser settings.",
+    "dismissed": "Permission dismissed.",
+    "error": "Could not request permission.",
+    "quietHours": "Quiet hours {start}:00–{end}:00 (local)",
+    "quietActive": "Quiet hours active — pin toasts should stay silent.",
+    "honesty": "Scaffold only: no Web Push subscription is stored on Lankawa servers yet."
   }
 }

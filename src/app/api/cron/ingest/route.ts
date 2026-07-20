@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
+  getSourceConsecutiveFailures,
   isDatabaseConfigured,
   recordIngestRun,
   reportSourceHealth,
@@ -11,6 +12,8 @@ import { buildCseSnapshot } from "@/lib/integrations/cse";
 import { fetchNewsPulse } from "@/lib/integrations/news";
 import { fetchPowerStatus } from "@/lib/integrations/power";
 import { fetchColomboWeather } from "@/lib/integrations/weather";
+import { buildNdviObservationRows } from "@/lib/ndvi-ingest";
+import { maybeAlertAdapterFailure } from "@/lib/ops-telegram";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -201,6 +204,8 @@ export async function GET(request: NextRequest) {
         },
       }));
     }),
+    // P40 — NDVI weekly path scaffold (seed → observations write)
+    runSource("lankawa_land_pulse", async () => buildNdviObservationRows()),
   ]);
 
   const finishedAt = new Date().toISOString();
@@ -213,14 +218,33 @@ export async function GET(request: NextRequest) {
   if (isDatabaseConfigured()) {
     await Promise.all(
       runs.map(async (run) => {
+        let consecutiveFailures = 0;
+        if (run.ok) {
+          consecutiveFailures = 0;
+        } else {
+          const previous = await getSourceConsecutiveFailures(run.sourceId).catch(
+            () => 0,
+          );
+          consecutiveFailures = previous + 1;
+        }
+
         await reportSourceHealth({
           source_id: run.sourceId,
           ok: run.ok,
           latency_ms: run.latencyMs,
           observations_count: run.count,
           error: run.error,
-          consecutive_failures: run.ok ? 0 : 1,
+          consecutive_failures: consecutiveFailures,
         }).catch(() => undefined);
+
+        if (!run.ok) {
+          await maybeAlertAdapterFailure({
+            sourceId: run.sourceId,
+            consecutiveFailures,
+            error: run.error,
+            checkedAt: finishedAt,
+          }).catch(() => undefined);
+        }
 
         await recordIngestRun({
           sourceId: run.sourceId,

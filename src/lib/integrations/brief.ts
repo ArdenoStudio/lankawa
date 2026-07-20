@@ -5,9 +5,30 @@ import { clusterHeadlines } from "@/lib/integrations/news-cluster";
 import { getSourceProvenancePath } from "@/lib/sources";
 
 const BRIEF_CACHE_PATH = path.join(process.cwd(), "ingest", "output", "brief.json");
+const BRIEF_ARCHIVE_DIR = path.join(
+  process.cwd(),
+  "ingest",
+  "output",
+  "brief-archive",
+);
 const BRIEF_CADENCE_MINUTES = 30;
 const NEWS_SOURCE_ID = "news_rss";
 const FETCH_TIMEOUT_MS = 15_000;
+
+/** YYYY-MM-DD in Asia/Colombo for archive keys. */
+export function briefDateKey(isoOrDate: string | Date = new Date()): string {
+  const date = typeof isoOrDate === "string" ? new Date(isoOrDate) : isoOrDate;
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Colombo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(date);
+}
+
+export function isBriefDateKey(value: string): boolean {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value);
+}
 
 const SUPPORTED_LOCALES = ["en", "si", "ta"] as const;
 
@@ -306,6 +327,37 @@ async function readCachedBrief(
   }
 }
 
+interface BriefArchivePayload {
+  date: string;
+  briefs: Partial<Record<MorningBriefLocale, MorningBrief>>;
+}
+
+async function writeArchivedBrief(brief: MorningBrief): Promise<void> {
+  const date = briefDateKey(brief.generatedAt);
+  const archivePath = path.join(BRIEF_ARCHIVE_DIR, `${date}.json`);
+
+  try {
+    let existing: BriefArchivePayload = { date, briefs: {} };
+    try {
+      existing = JSON.parse(
+        await readFile(archivePath, "utf8"),
+      ) as BriefArchivePayload;
+    } catch {
+      existing = { date, briefs: {} };
+    }
+    const briefs = { ...(existing.briefs ?? {}) };
+    briefs[brief.locale] = brief;
+    await mkdir(BRIEF_ARCHIVE_DIR, { recursive: true });
+    await writeFile(
+      archivePath,
+      `${JSON.stringify({ date, briefs }, null, 2)}\n`,
+      "utf8",
+    );
+  } catch {
+    // Archive is best effort for serverless environments.
+  }
+}
+
 async function writeCachedBrief(brief: MorningBrief): Promise<void> {
   memoryBriefCache.set(brief.locale, brief);
 
@@ -327,6 +379,38 @@ async function writeCachedBrief(brief: MorningBrief): Promise<void> {
   } catch {
     // File-system cache is best effort for serverless environments.
   }
+
+  await writeArchivedBrief(brief);
+}
+
+export async function loadArchivedBrief(
+  date: string,
+  localeInput: string = "en",
+): Promise<MorningBrief | null> {
+  if (!isBriefDateKey(date)) {
+    return null;
+  }
+
+  const locale = normalizeLocale(localeInput);
+
+  try {
+    const archivePath = path.join(BRIEF_ARCHIVE_DIR, `${date}.json`);
+    const raw = await readFile(archivePath, "utf8");
+    const data = JSON.parse(raw) as BriefArchivePayload;
+    const archived = data.briefs?.[locale];
+    if (isMorningBrief(archived)) {
+      return archived;
+    }
+  } catch {
+    // Fall through to live brief.json when date matches.
+  }
+
+  const cached = await readCachedBrief(locale);
+  if (cached && briefDateKey(cached.generatedAt) === date) {
+    return cached;
+  }
+
+  return null;
 }
 
 function briefPrompt(headlines: NewsHeadline[], locale: MorningBriefLocale): string {

@@ -7,6 +7,7 @@ import {
   buildCseSnapshot,
   CSE_SOURCE_ID,
 } from "./integrations/cse";
+import { getEnvironmentData } from "./integrations/aqi";
 import { buildNewsPulseMetric, fetchNewsPulse } from "./integrations/news";
 import { fetchOctanePrices, pickCpcPrice } from "./integrations/octane";
 import { buildPowerPulseMetric } from "./integrations/power";
@@ -18,20 +19,7 @@ import { formatVehiclePrice } from "./vehicle";
 import { getSource, getSourceProvenancePath } from "./sources";
 import type { PulseMetric, PulseSnapshot, SourceHealth } from "./types";
 
-export const TODAY_METRIC_IDS = [
-  "usd_lkr",
-  "fuel_petrol_92",
-  "fuel_diesel",
-  "weather_colombo",
-  "power_status",
-  "flood_stations",
-] as const;
-
-export function getTodayPulseMetrics(metrics: PulseMetric[]): PulseMetric[] {
-  return TODAY_METRIC_IDS.map((id) => metrics.find((metric) => metric.id === id)).filter(
-    (metric): metric is PulseMetric => metric != null,
-  );
-}
+export { TODAY_METRIC_IDS, getTodayPulseMetrics } from "./pulse-today";
 
 const FX_FALLBACK_RATE = 302.5;
 const FX_FALLBACK_DATE = "2026-07-18T00:00:00.000Z";
@@ -424,10 +412,66 @@ async function buildCseData(checkedAt: string): Promise<{
   }
 }
 
+async function buildColomboAqiMetric(checkedAt: string): Promise<{
+  metric: PulseMetric;
+  health: SourceHealth;
+}> {
+  const environment = await getEnvironmentData();
+  const colombo = environment.districts.find(
+    (district) => district.slug === "colombo",
+  );
+  const source =
+    getSource(environment.sourceId) ?? getSource("environment_aqi_seed")!;
+  const isSeed = environment.sourceId === "environment_aqi_seed";
+  const tier = computeFreshnessTier(
+    environment.asOf,
+    source.cadenceMinutes,
+    new Date(checkedAt).getTime(),
+  );
+
+  return {
+    metric: {
+      id: "aqi_colombo",
+      label: "Colombo AQI",
+      value: colombo != null ? String(colombo.aqi) : "—",
+      unit: "AQI",
+      observedAt: environment.asOf,
+      tier,
+      sourceId: source.id,
+      provenancePath: getSourceProvenancePath(source.id),
+      note: isSeed
+        ? "Seed — not a live sensor reading"
+        : colombo != null
+          ? `PM2.5 ${colombo.pm25} · ${colombo.band.replace(/_/g, " ")}`
+          : "Colombo reading unavailable",
+    },
+    health: {
+      id: source.id,
+      name: source.name,
+      category: source.category,
+      tier,
+      lastSuccessAt: environment.asOf,
+      lastCheckedAt: checkedAt,
+      error: null,
+      provenancePath: getSourceProvenancePath(source.id),
+    },
+  };
+}
+
 export async function buildPulseSnapshot(): Promise<PulseSnapshot> {
   const checkedAt = new Date().toISOString();
-  const [fuel, flood, fx, weather, power, news, cse, propertySnapshot, vehicleSnapshot] =
-    await Promise.all([
+  const [
+    fuel,
+    flood,
+    fx,
+    weather,
+    power,
+    news,
+    cse,
+    propertySnapshot,
+    vehicleSnapshot,
+    aqi,
+  ] = await Promise.all([
       buildFuelMetrics(checkedAt),
       buildFloodData(checkedAt),
       buildFxMetric(checkedAt),
@@ -437,6 +481,7 @@ export async function buildPulseSnapshot(): Promise<PulseSnapshot> {
       buildCseData(checkedAt),
       getPropertyData(),
       getVehicleData(),
+      buildColomboAqiMetric(checkedAt),
     ]);
 
   const normalStations =
@@ -517,6 +562,7 @@ export async function buildPulseSnapshot(): Promise<PulseSnapshot> {
       provenancePath: flood.health.provenancePath,
       note: `${normalStations} stations reporting normal levels`,
     },
+    aqi.metric,
     ...(news.contribution ? [news.contribution.metric] : []),
   ];
 
@@ -531,6 +577,7 @@ export async function buildPulseSnapshot(): Promise<PulseSnapshot> {
       weather.health,
       power.health,
       cse.health,
+      aqi.health,
       ...(news.contribution ? [news.contribution.health] : []),
     ],
   };

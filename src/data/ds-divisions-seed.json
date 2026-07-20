@@ -1,0 +1,78 @@
+{
+  "sourceId": "ds_divisions_gazetteer_stub",
+  "sourceName": "DS division gazetteer (stub)",
+  "asOf": "2026-07-01",
+  "methodologyNote": "Stub DS-division names mapped to admin districts for services search. Not a full Survey Dept gazetteer.",
+  "divisions": [
+    {
+      "slug": "colombo",
+      "name": "Colombo",
+      "nameSi": "කොළඹ",
+      "nameTa": "கொழும்பு",
+      "districtSlug": "colombo"
+    },
+    {
+      "slug": "thimbirigasyaya",
+      "name": "Thimbirigasyaya",
+      "nameSi": "තිඹිරිගස්යාය",
+      "nameTa": "திம்பிரிகஸ்யாய",
+      "districtSlug": "colombo"
+    },
+    {
+      "slug": "homagama",
+      "name": "Homagama",
+      "nameSi": "හෝමාගම",
+      "nameTa": "ஹோமாகம",
+      "districtSlug": "colombo"
+    },
+    {
+      "slug": "negombo",
+      "name": "Negombo",
+      "nameSi": "මීගමුව",
+      "nameTa": "நீர்கொழும்பு",
+      "districtSlug": "gampaha"
+    },
+    {
+      "slug": "gampaha",
+      "name": "Gampaha",
+      "nameSi": "ගම්පහ",
+      "nameTa": "கம்பஹா",
+      "districtSlug": "gampaha"
+    },
+    {
+      "slug": "kalutara",
+      "name": "Kalutara",
+      "nameSi": "කළුතර",
+      "nameTa": "களுத்துறை",
+      "districtSlug": "kalutara"
+    },
+    {
+      "slug": "kandy",
+      "name": "Kandy",
+      "nameSi": "මහනුවර",
+      "nameTa": "கண்டி",
+      "districtSlug": "kandy"
+    },
+    {
+      "slug": "galle",
+      "name": "Galle",
+      "nameSi": "ගාල්ල",
+      "nameTa": "காலி",
+      "districtSlug": "galle"
+    },
+    {
+      "slug": "jaffna",
+      "name": "Jaffna",
+      "nameSi": "යාපනය",
+      "nameTa": "யாழ்ப்பாணம்",
+      "districtSlug": "jaffna"
+    },
+    {
+      "slug": "batticaloa",
+      "name": "Batticaloa",
+      "nameSi": "මඩකලපුව",
+      "nameTa": "மட்டக்களப்பு",
+      "districtSlug": "batticaloa"
+    }
+  ]
+}

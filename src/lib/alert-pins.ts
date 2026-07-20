@@ -7,6 +7,13 @@ export const ALERT_PIN_IDS = [
   "landslide",
   "fire",
   "gdacs",
+  "fuel_revision",
+  "met_flood",
+  "dengue_spike",
+  "cse_move",
+  "col_basket",
+  "news_cluster",
+  "tender_closing",
 ] as const;
 
 export type AlertPinId = (typeof ALERT_PIN_IDS)[number];
@@ -30,6 +37,20 @@ export interface AlertSignalContext {
   fireDetail: string | null;
   gdacsAttention: boolean;
   gdacsDetail: string | null;
+  fuelRevisionAttention: boolean;
+  fuelRevisionDetail: string | null;
+  metFloodAttention: boolean;
+  metFloodDetail: string | null;
+  dengueSpikeAttention: boolean;
+  dengueSpikeDetail: string | null;
+  cseMoveAttention: boolean;
+  cseMoveDetail: string | null;
+  colBasketAttention: boolean;
+  colBasketDetail: string | null;
+  newsClusterAttention: boolean;
+  newsClusterDetail: string | null;
+  tenderClosingAttention: boolean;
+  tenderClosingDetail: string | null;
 }
 
 export interface FiredAlert {
@@ -125,6 +146,77 @@ export function evaluateAlertPins(
           fired.push({
             id: pin,
             detail: context.gdacsDetail ?? "Regional GDACS hazard alert",
+          });
+        }
+        break;
+      }
+      case "fuel_revision": {
+        if (context.fuelRevisionAttention) {
+          fired.push({
+            id: pin,
+            detail:
+              context.fuelRevisionDetail ?? "CPC fuel revision window active",
+          });
+        }
+        break;
+      }
+      case "met_flood": {
+        if (context.metFloodAttention) {
+          fired.push({
+            id: pin,
+            detail:
+              context.metFloodDetail ??
+              "Met warning with elevated or rising flood",
+          });
+        }
+        break;
+      }
+      case "dengue_spike": {
+        if (context.dengueSpikeAttention) {
+          fired.push({
+            id: pin,
+            detail:
+              context.dengueSpikeDetail ?? "Dengue week-over-week spike",
+          });
+        }
+        break;
+      }
+      case "cse_move": {
+        if (context.cseMoveAttention) {
+          fired.push({
+            id: pin,
+            detail: context.cseMoveDetail ?? "ASPI session move ≥ 1%",
+          });
+        }
+        break;
+      }
+      case "col_basket": {
+        if (context.colBasketAttention) {
+          fired.push({
+            id: pin,
+            detail:
+              context.colBasketDetail ?? "Household basket input moved sharply",
+          });
+        }
+        break;
+      }
+      case "news_cluster": {
+        if (context.newsClusterAttention) {
+          fired.push({
+            id: pin,
+            detail:
+              context.newsClusterDetail ?? "Multi-outlet news cluster active",
+          });
+        }
+        break;
+      }
+      case "tender_closing": {
+        if (context.tenderClosingAttention) {
+          fired.push({
+            id: pin,
+            detail:
+              context.tenderClosingDetail ??
+              "e-GP tenders closing within 7 days",
           });
         }
         break;

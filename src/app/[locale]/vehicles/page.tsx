@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { VehicleDistrictTable } from "@/components/VehicleDistrictTable";
+import { VehicleModelDeepDive } from "@/components/VehicleModelDeepDive";
 import { VehiclePopularMakes } from "@/components/VehiclePopularMakes";
 import { Link } from "@/i18n/navigation";
 import { getSourceProvenancePath } from "@/lib/sources";
@@ -67,6 +68,8 @@ export default async function VehiclesPage({
         <h2 className="text-xl font-semibold text-white">{t("popularMakesTitle")}</h2>
         <VehiclePopularMakes snapshot={snapshot} />
       </section>
+
+      <VehicleModelDeepDive />
 
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-white">{t("tableTitle")}</h2>

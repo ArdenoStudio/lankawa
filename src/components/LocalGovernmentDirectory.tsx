@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { DISTRICTS, getDistrictName } from "@/lib/districts";
+import { getLocalGovContactDeepen } from "@/lib/local-gov-contacts";
 import {
   filterLocalGovernment,
   getLocalGovernmentName,
@@ -115,19 +116,37 @@ export function LocalGovernmentDirectory({
                 </span>
               </h3>
               <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                {bodies.map((body) => (
-                  <article
-                    key={body.id}
-                    className="rounded-xl border border-white/10 bg-white/5 p-3"
-                  >
-                    <p className="text-sm font-medium text-white">
-                      {getLocalGovernmentName(body, locale)}
-                    </p>
-                    <span className="mt-2 inline-flex rounded-full border border-teal-500/30 bg-teal-500/10 px-2 py-0.5 text-xs text-teal-100">
-                      {t(getLocalGovernmentTypeLabelKey(body.type))}
-                    </span>
-                  </article>
-                ))}
+                {bodies.map((body) => {
+                  const contact = getLocalGovContactDeepen(body.id);
+                  return (
+                    <article
+                      key={body.id}
+                      className="rounded-xl border border-white/10 bg-white/5 p-3"
+                    >
+                      <p className="text-sm font-medium text-white">
+                        {getLocalGovernmentName(body, locale)}
+                      </p>
+                      <span className="mt-2 inline-flex rounded-full border border-teal-500/30 bg-teal-500/10 px-2 py-0.5 text-xs text-teal-100">
+                        {t(getLocalGovernmentTypeLabelKey(body.type))}
+                      </span>
+                      {contact ? (
+                        <div className="mt-3 space-y-1 border-t border-white/10 pt-2 text-xs text-slate-400">
+                          {contact.officeAddress ? (
+                            <p>{contact.officeAddress}</p>
+                          ) : null}
+                          {contact.phone ? (
+                            <p>
+                              {t("contactPhone")}: {contact.phone}
+                            </p>
+                          ) : null}
+                          {contact.meetingNote ? (
+                            <p className="text-slate-500">{contact.meetingNote}</p>
+                          ) : null}
+                        </div>
+                      ) : null}
+                    </article>
+                  );
+                })}
               </div>
             </section>
           );

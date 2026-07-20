@@ -1,9 +1,10 @@
 # Platform features master plan
 
-**Status:** Active (Jul 2026)  
+**Status:** PF-0…PF-6 shipped in code (Jul 2026) — merge via `cursor/platform-features-build-3c69`  
 **Inventory:** `docs/PLATFORM_FEATURES_50.md` (P01–P65)  
 **News deep-dive:** `docs/NEWS_RSS_MASTER_PLAN.md` (NR-0…NR-6)  
-**Parent:** `docs/MASTER_PLAN.md`
+**Parent:** `docs/MASTER_PLAN.md`  
+**Merge order:** See §5 below.
 
 This plan sequences **whole-product** features (economy, disaster, atlas, household, health, civic, retention, news slice). The inventory file wins on *what*; **this file wins on order**.
 
@@ -94,12 +95,27 @@ PF-0 ──► PF-1 ──► PF-2
 
 ---
 
-## 5. Immediate next build (suggested)
+## 5. Merge order (avoid oversights)
 
-```
-1 P64 i18n CI gate          (cheap, protects all waves)
-2 P16 + P21 personal weather/pack
-3 P51 alert pin expansion
-4 P01 + P02 CSE deepen
-5 P56 + P57 news canary + store   (start PF-3)
-```
+Already on `main` (do not re-merge): **#5–#16** (charts, data expansion, news RSS backlog/plan, platform feature docs).
+
+**Ship next as one PR** from `cursor/platform-features-build-3c69` → `main` (covers PF-0…PF-6 / P01–P65 scaffolds). After CI green:
+
+1. Merge that PR.  
+2. Redeploy Vercel **Production** from `main`.  
+3. Set ops env if missing: `NASA_FIRMS_MAP_KEY`, `TELEGRAM_OPS_BOT_TOKEN` + `TELEGRAM_OPS_CHAT_ID`, OpenAQ key if used, Resend for HTML brief.
+
+If you ever **split** this mega-branch into smaller PRs, merge in this dependency order only:
+
+| Order | Slice | Why first |
+|------:|-------|-----------|
+| 1 | Foundation: i18n CI (`check:i18n`), alert pins + tests, Data Saver gates | Protects every later UI change |
+| 2 | News: feed health, 7d archive, `/news`, clusters, Atom `?since=` | Brief/retention cite headlines |
+| 3 | Retention: HTML brief email, unsubscribe, `/brief/[date]`, embeds, morning OG | Depends on news + pulse |
+| 4 | Home personalization: district pack, hazard toast, AQI Today, weather coords | Core habit loop |
+| 5 | Economy: CSE notices/range/watchlist, LPG district, COL movers, energy, treasury, remittance path | Money deepen |
+| 6 | Disaster: LECO, DMC strip, power concentration, GloFAS/GFM, cyclone, Met∩flood | Hazard harden |
+| 7 | Atlas/civic: compare deepen, province pulse, tenders closing, research drops, district press | After home pin exists |
+| 8 | Depth scaffolds: choropleth, marine, NDVI cron stub, election night, web push UI, webhooks, widget.js | Lowest urgency; seed-honest |
+
+Do **not** merge depth (8) before foundation (1) or you lose the i18n CI safety net.

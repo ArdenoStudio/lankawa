@@ -1,18 +1,28 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { CycloneWatchCard } from "@/components/CycloneWatchCard";
 import { DataSaverGate } from "@/components/DataSaverGate";
 import { DisasterRiskMap } from "@/components/DisasterRiskMap";
+import { DmcBulletinStrip } from "@/components/DmcBulletinStrip";
 import { EarthquakePanel } from "@/components/EarthquakePanel";
+import { FreshnessBadge } from "@/components/FreshnessBadge";
+import { GlofasBasinPanel } from "@/components/GlofasBasinPanel";
 import { HazardPinsPanel } from "@/components/HazardPinsPanel";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
 import { LandslidePanel } from "@/components/LandslidePanel";
 import { MetDeptWarningsPanel } from "@/components/MetDeptWarningsPanel";
+import { Link } from "@/i18n/navigation";
+import { buildCycloneWatch } from "@/lib/cyclone-watch";
 import { fetchEarthquakeSnapshot } from "@/lib/integrations/earthquake";
 import { fetchFirmsSnapshot } from "@/lib/integrations/firms";
 import { fetchGdacsSnapshot } from "@/lib/integrations/gdacs";
+import { fetchGlofasBasinSnapshot } from "@/lib/integrations/glofas";
 import { fetchLandslideSnapshot } from "@/lib/integrations/landslide";
+import { fetchLECOOutages } from "@/lib/integrations/leco";
 import { fetchMetDeptWarnings } from "@/lib/integrations/metdept";
 import { fetchPowerStatus } from "@/lib/integrations/power";
+import { powerConcentrationByDistrict } from "@/lib/power-concentration";
 import { buildPulseSnapshot } from "@/lib/pulse";
+import { getSourceProvenancePath } from "@/lib/sources";
 
 export default async function DisasterPage({
   params,
@@ -22,16 +32,33 @@ export default async function DisasterPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("disaster");
-  const [snapshot, power, earthquakes, metWarnings, landslides, firms, gdacs] =
-    await Promise.all([
-      buildPulseSnapshot(),
-      fetchPowerStatus(),
-      fetchEarthquakeSnapshot(),
-      fetchMetDeptWarnings(),
-      fetchLandslideSnapshot(),
-      fetchFirmsSnapshot(),
-      fetchGdacsSnapshot(),
-    ]);
+  const [
+    snapshot,
+    power,
+    leco,
+    earthquakes,
+    metWarnings,
+    landslides,
+    firms,
+    gdacs,
+    glofas,
+  ] = await Promise.all([
+    buildPulseSnapshot(),
+    fetchPowerStatus(),
+    fetchLECOOutages(),
+    fetchEarthquakeSnapshot(),
+    fetchMetDeptWarnings(),
+    fetchLandslideSnapshot(),
+    fetchFirmsSnapshot(),
+    fetchGdacsSnapshot(),
+    fetchGlofasBasinSnapshot(),
+  ]);
+
+  const cycloneWatch = buildCycloneWatch(gdacs);
+  const concentration = powerConcentrationByDistrict([
+    ...power.affectedAreas,
+    ...leco.affectedAreas,
+  ]);
 
   return (
     <div className="space-y-6">
@@ -40,47 +67,186 @@ export default async function DisasterPage({
         <p className="mt-2 max-w-2xl text-slate-400">{t("subtitle")}</p>
       </div>
 
+      <DmcBulletinStrip />
+
+      <CycloneWatchCard
+        watch={cycloneWatch}
+        locale={locale}
+        labels={{
+          title: t("cyclone.title"),
+          subtitle: t("cyclone.subtitle"),
+          empty: t("cyclone.empty"),
+          active: t("cyclone.active"),
+          alertLevel: t("cyclone.alertLevel"),
+          report: t("cyclone.report"),
+          honesty: t("cyclone.honesty"),
+          source: t("cyclone.source"),
+        }}
+      />
+
+      <GlofasBasinPanel
+        snapshot={glofas}
+        labels={{
+          title: t("glofas.title"),
+          subtitle: t("glofas.subtitle"),
+          seed: t("glofas.seed"),
+          discharge: t("glofas.discharge"),
+          empty: t("glofas.empty"),
+          honesty: t("glofas.honesty"),
+          asOf: t("glofas.asOf"),
+        }}
+      />
+
       <section className="space-y-4">
         <div>
           <h2 className="text-xl font-semibold text-white">{t("powerTitle")}</h2>
           <p className="mt-1 text-sm text-slate-400">{t("powerSubtitle")}</p>
         </div>
-        <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <p className="text-sm text-slate-400">{t("powerStatusLabel")}</p>
-              <p className="mt-1 text-2xl font-semibold text-teal-300">
-                {t(`powerStatus.${power.status}`)}
+        <div className="grid gap-4 lg:grid-cols-2">
+          <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p className="text-sm font-medium text-slate-200">
+                  {t("cebCardTitle")}
+                </p>
+                <p className="mt-2 text-sm text-slate-400">{t("powerStatusLabel")}</p>
+                <p className="mt-1 text-2xl font-semibold text-teal-300">
+                  {t(`powerStatus.${power.status}`)}
+                </p>
+              </div>
+              <p className="text-xs text-slate-500">
+                {t("powerObservedAt", {
+                  time: new Date(power.observedAt).toLocaleString(locale),
+                })}
               </p>
             </div>
-            <p className="text-xs text-slate-500">
-              {t("powerObservedAt", {
-                time: new Date(power.observedAt).toLocaleString(locale),
-              })}
+            <p className="mt-4 text-sm text-slate-300">{power.summary}</p>
+            {power.affectedAreas.length > 0 ? (
+              <div className="mt-4">
+                <p className="text-sm font-medium text-slate-200">
+                  {t("powerAffectedAreas")}
+                </p>
+                <ul className="mt-2 grid gap-2 sm:grid-cols-2">
+                  {power.affectedAreas.map((area) => (
+                    <li
+                      key={area}
+                      className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-slate-300"
+                    >
+                      {area}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="mt-4 text-sm text-slate-500">{t("powerNoAffectedAreas")}</p>
+            )}
+            <p className="mt-4 text-xs text-slate-500">{t("powerSourceNote")}</p>
+          </article>
+
+          <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p className="text-sm font-medium text-slate-200">
+                  {t("lecoCardTitle")}
+                </p>
+                <p className="mt-2 text-sm text-slate-400">{t("lecoStatusLabel")}</p>
+                <p className="mt-1 text-2xl font-semibold text-teal-300">
+                  {t(`powerStatus.${leco.status}`)}
+                </p>
+              </div>
+              <div className="flex flex-col items-end gap-2">
+                <FreshnessBadge tier={leco.tier} />
+                <p className="text-xs text-slate-500">
+                  {t("powerObservedAt", {
+                    time: new Date(leco.observedAt).toLocaleString(locale),
+                  })}
+                </p>
+              </div>
+            </div>
+            <p className="mt-4 text-sm text-slate-300">{leco.summary}</p>
+            {leco.isSeed ? (
+              <p className="mt-2 text-xs text-amber-200/80">{t("lecoSeed")}</p>
+            ) : null}
+            {leco.affectedAreas.length > 0 ? (
+              <div className="mt-4">
+                <p className="text-sm font-medium text-slate-200">
+                  {t("powerAffectedAreas")}
+                </p>
+                <ul className="mt-2 grid gap-2 sm:grid-cols-2">
+                  {leco.affectedAreas.map((area) => (
+                    <li
+                      key={area}
+                      className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-slate-300"
+                    >
+                      {area}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="mt-4 text-sm text-slate-500">{t("lecoNoAffectedAreas")}</p>
+            )}
+            <p className="mt-4 text-xs text-slate-500">{t("lecoHonesty")}</p>
+            <p className="mt-2 text-xs text-slate-500">
+              <Link
+                href={getSourceProvenancePath("leco_power")}
+                className="text-teal-300 hover:text-teal-200"
+              >
+                {t("lecoSourceNote")}
+              </Link>
             </p>
-          </div>
-          <p className="mt-4 text-sm text-slate-300">{power.summary}</p>
-          {power.affectedAreas.length > 0 ? (
-            <div className="mt-4">
-              <p className="text-sm font-medium text-slate-200">
-                {t("powerAffectedAreas")}
-              </p>
-              <ul className="mt-2 grid gap-2 sm:grid-cols-2">
-                {power.affectedAreas.map((area) => (
-                  <li
-                    key={area}
-                    className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-slate-300"
+          </article>
+        </div>
+      </section>
+
+      <section className="space-y-3">
+        <div>
+          <h2 className="text-xl font-semibold text-white">
+            {t("concentrationTitle")}
+          </h2>
+          <p className="mt-1 text-sm text-slate-400">
+            {t("concentrationSubtitle")}
+          </p>
+        </div>
+        {concentration.length === 0 ? (
+          <p className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-slate-500">
+            {t("concentrationEmpty")}
+          </p>
+        ) : (
+          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
+            <table className="min-w-full text-left text-sm">
+              <thead className="border-b border-white/10 text-slate-400">
+                <tr>
+                  <th className="px-4 py-3 font-medium">
+                    {t("concentrationDistrict")}
+                  </th>
+                  <th className="px-4 py-3 font-medium">
+                    {t("concentrationMentions")}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {concentration.map((row) => (
+                  <tr
+                    key={row.slug}
+                    className="border-b border-white/5 text-slate-200 last:border-0"
                   >
-                    {area}
-                  </li>
+                    <td className="px-4 py-2.5">
+                      <Link
+                        href={`/districts/${row.slug}`}
+                        className="text-teal-300 hover:text-teal-200"
+                      >
+                        {row.name}
+                      </Link>
+                    </td>
+                    <td className="px-4 py-2.5 tabular-nums">{row.mentions}</td>
+                  </tr>
                 ))}
-              </ul>
-            </div>
-          ) : (
-            <p className="mt-4 text-sm text-slate-500">{t("powerNoAffectedAreas")}</p>
-          )}
-          <p className="mt-4 text-xs text-slate-500">{t("powerSourceNote")}</p>
-        </article>
+              </tbody>
+            </table>
+          </div>
+        )}
+        <p className="text-xs text-slate-500">{t("concentrationHonesty")}</p>
       </section>
 
       <InlineExplainerBanner slug="flood-levels" />

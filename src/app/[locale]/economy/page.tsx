@@ -10,12 +10,18 @@ import {
   MacroIndicatorCard,
 } from "@/components/EconomyCards";
 import { DataSaverGate } from "@/components/DataSaverGate";
+import { HouseholdEnergySection } from "@/components/HouseholdEnergySection";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
+import { LpgDistrictFilter } from "@/components/LpgDistrictFilter";
+import { MacroObservationsStrip } from "@/components/MacroObservationsStrip";
+import { MarketsPressStrip } from "@/components/MarketsPressStrip";
 import { NcpiInflationCard } from "@/components/NcpiInflationCard";
+import { PucslGenerationMixSpark } from "@/components/PucslGenerationMixSpark";
 import { PucslTariffCard } from "@/components/PucslTariffCard";
 import { PulseCard } from "@/components/PulseCard";
 import { RemittanceBoard } from "@/components/RemittanceBoard";
 import { RemittanceCalculator } from "@/components/RemittanceCalculator";
+import { TreasuryYieldStrip } from "@/components/TreasuryYieldStrip";
 import { WorldPumpCompare } from "@/components/WorldPumpCompare";
 import { Link } from "@/i18n/navigation";
 import { getEconomyMacroSnapshot, getFxSeries, getLatestFxRate } from "@/lib/economy";
@@ -34,10 +40,14 @@ import { getWorldPumpSnapshot } from "@/lib/world-pump";
 
 export default async function EconomyPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams?: Promise<{ district?: string }>;
 }) {
   const { locale } = await params;
+  const query = searchParams ? await searchParams : {};
+  const preferredDistrict = query.district?.trim() || null;
   setRequestLocale(locale);
   const t = await getTranslations("economy");
   const snapshot = await buildPulseSnapshot();
@@ -45,7 +55,7 @@ export default async function EconomyPage({
   const fxSeries = await getFxSeries();
   const fxAnomaly = computeFxAnomaly(fxSeries);
   const latestFxRate = await getLatestFxRate();
-  const remittanceTt = getRemittanceTtSnapshot();
+  const remittanceTt = await getRemittanceTtSnapshot();
   const [fuelHistory, fuelRevisions] = await Promise.all([
     getFuelHistorySeries(90),
     getFuelRevisionSteps(8),
@@ -61,6 +71,9 @@ export default async function EconomyPage({
   const petrolMetric = snapshot.metrics.find(
     (metric) => metric.id === "fuel_petrol_92",
   );
+  const dieselMetric = snapshot.metrics.find(
+    (metric) => metric.id === "fuel_diesel",
+  );
   const usdMetric = snapshot.metrics.find((metric) => metric.id === "usd_lkr");
   const worldPump = getWorldPumpSnapshot({
     sriLankaPetrolLkr: petrolMetric ? Number(petrolMetric.value) : null,
@@ -69,6 +82,15 @@ export default async function EconomyPage({
   const economyMetrics = snapshot.metrics.filter((metric) =>
     ["usd_lkr", "fuel_petrol_92", "fuel_diesel"].includes(metric.id),
   );
+  const householdFuel = [petrolMetric, dieselMetric]
+    .filter((metric): metric is NonNullable<typeof metric> => metric != null)
+    .map((metric) => ({
+      id: metric.id,
+      label: metric.label,
+      value: metric.value,
+      unit: metric.unit,
+      tier: metric.tier,
+    }));
 
   return (
     <div className="space-y-8">
@@ -78,6 +100,10 @@ export default async function EconomyPage({
       </div>
 
       <InlineExplainerBanner slug="fx-rates" />
+
+      <TreasuryYieldStrip locale={locale} />
+
+      <MacroObservationsStrip locale={locale} />
 
       <DataSaverGate hideUntilHydrated>
         <CricketCard variant="economy" />
@@ -126,6 +152,7 @@ export default async function EconomyPage({
           <LpgPriceCard
             snapshot={lpgSnapshot}
             locale={locale}
+            preferredDistrict={preferredDistrict}
             labels={{
               eyebrow: t("lpg.eyebrow"),
               title: t("lpg.title"),
@@ -136,10 +163,42 @@ export default async function EconomyPage({
               }),
               source: t("lpg.source"),
               seed: t("lpg.seed"),
+              otherDistricts: t("lpg.otherDistricts"),
             }}
+            filter={
+              <LpgDistrictFilter
+                prices={lpgSnapshot.prices}
+                locale={locale}
+                preferredDistrict={preferredDistrict}
+                labels={{
+                  filterLabel: t("lpg.filterLabel"),
+                  allDistricts: t("lpg.allDistricts"),
+                  cylinder12_5: t("lpg.cylinder12_5"),
+                  empty: t("lpg.emptyDistrict"),
+                }}
+              />
+            }
           />
         </div>
       </section>
+
+      <HouseholdEnergySection
+        fuel={householdFuel}
+        lpg={lpgSnapshot}
+        locale={locale}
+        labels={{
+          title: t("householdEnergy.title"),
+          subtitle: t("householdEnergy.subtitle"),
+          fuelTitle: t("householdEnergy.fuelTitle"),
+          lpgTitle: t("householdEnergy.lpgTitle"),
+          tariffTitle: t("householdEnergy.tariffTitle"),
+          tariffTeaser: t("householdEnergy.tariffTeaser"),
+          tariffCta: t("householdEnergy.tariffCta"),
+          cylinder12_5: t("lpg.cylinder12_5"),
+          emptyFuel: t("householdEnergy.emptyFuel"),
+          emptyLpg: t("householdEnergy.emptyLpg"),
+        }}
+      />
 
       <section className="space-y-4">
         <div>
@@ -237,7 +296,7 @@ export default async function EconomyPage({
         </div>
       </section>
 
-      <section className="space-y-4">
+      <section id="household-tariffs" className="space-y-4">
         <div>
           <h2 className="text-xl font-semibold text-white">
             {t("householdTitle")}
@@ -287,6 +346,17 @@ export default async function EconomyPage({
               none: t("tariff.none"),
             }}
           />
+          <PucslGenerationMixSpark
+            labels={{
+              title: t("generationMix.title"),
+              subtitle: t("generationMix.subtitle"),
+              seed: t("generationMix.seed"),
+              hydro: t("generationMix.hydro"),
+              asOf: t("generationMix.asOf"),
+              honesty: t("generationMix.honesty"),
+              source: t("generationMix.source"),
+            }}
+          />
         </div>
       </section>
 
@@ -333,9 +403,15 @@ export default async function EconomyPage({
           foreignBuy: t("cse.foreignBuy"),
           foreignSell: t("cse.foreignSell"),
           noSectors: t("cse.noSectors"),
+          sectorsSkipped: t("cse.sectorsSkipped"),
           noActive: t("cse.noActive"),
+          highLow: t("cse.highLow"),
+          notices: t("cse.notices"),
+          noNotices: t("cse.noNotices"),
         }}
       />
+
+      <MarketsPressStrip locale={locale} />
     </div>
   );
 }

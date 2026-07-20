@@ -1,0 +1,78 @@
+{
+  "sourceId": "vehicle_model_medians_seed",
+  "sourceName": "AutoLens LK make/model medians (seed)",
+  "asOf": "2026-06-16",
+  "methodologyNote": "Seed make/model median deep-dive by district. Not live Vehicle API drill-in until partner endpoint lands.",
+  "models": [
+    {
+      "make": "Suzuki",
+      "model": "Wagon R",
+      "districtSlug": "colombo",
+      "medianPriceLkr": 4200000,
+      "listingCount": 820
+    },
+    {
+      "make": "Suzuki",
+      "model": "Alto",
+      "districtSlug": "colombo",
+      "medianPriceLkr": 3100000,
+      "listingCount": 640
+    },
+    {
+      "make": "Toyota",
+      "model": "Aqua",
+      "districtSlug": "colombo",
+      "medianPriceLkr": 7800000,
+      "listingCount": 510
+    },
+    {
+      "make": "Toyota",
+      "model": "Prius",
+      "districtSlug": "colombo",
+      "medianPriceLkr": 9200000,
+      "listingCount": 290
+    },
+    {
+      "make": "Suzuki",
+      "model": "Wagon R",
+      "districtSlug": "gampaha",
+      "medianPriceLkr": 3900000,
+      "listingCount": 410
+    },
+    {
+      "make": "Suzuki",
+      "model": "Alto",
+      "districtSlug": "kandy",
+      "medianPriceLkr": 3000000,
+      "listingCount": 280
+    },
+    {
+      "make": "Toyota",
+      "model": "Aqua",
+      "districtSlug": "galle",
+      "medianPriceLkr": 7400000,
+      "listingCount": 120
+    },
+    {
+      "make": "Nissan",
+      "model": "Leaf",
+      "districtSlug": "colombo",
+      "medianPriceLkr": 6500000,
+      "listingCount": 180
+    },
+    {
+      "make": "Honda",
+      "model": "Vezel",
+      "districtSlug": "gampaha",
+      "medianPriceLkr": 10500000,
+      "listingCount": 95
+    },
+    {
+      "make": "Toyota",
+      "model": "Axio",
+      "districtSlug": "kurunegala",
+      "medianPriceLkr": 6800000,
+      "listingCount": 140
+    }
+  ]
+}

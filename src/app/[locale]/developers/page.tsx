@@ -38,6 +38,22 @@ export default async function DevelopersPage({
         </Link>
       </section>
 
+      <section className="rounded-2xl border border-white/10 bg-white/5 p-5">
+        <h2 className="text-lg font-semibold text-white">{t("widgetSdkTitle")}</h2>
+        <p className="mt-2 text-slate-300">{t("widgetSdkBody")}</p>
+        <pre className="mt-4 overflow-x-auto rounded-xl bg-slate-950/80 p-4 text-xs text-slate-300">
+          {t("widgetSdkSnippet")}
+        </pre>
+      </section>
+
+      <section className="rounded-2xl border border-white/10 bg-white/5 p-5">
+        <h2 className="text-lg font-semibold text-white">{t("webhookTitle")}</h2>
+        <p className="mt-2 text-slate-300">{t("webhookBody")}</p>
+        <code className="mt-4 block overflow-x-auto rounded-xl bg-slate-950/80 p-4 text-xs text-slate-300">
+          {t("webhookExample")}
+        </code>
+      </section>
+
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold text-white">{t("endpointsTitle")}</h2>
         {apiEndpoints.map((endpoint) => (

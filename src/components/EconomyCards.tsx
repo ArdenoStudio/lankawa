@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { ChartExportButton } from "@/components/ChartExportButton";
 import { MonoLineChart } from "@/components/charts/MonoLineChart";
 import { CitationCard } from "@/components/CitationCard";
@@ -359,6 +360,8 @@ export function LpgPriceCard({
   snapshot,
   labels,
   locale,
+  preferredDistrict = null,
+  filter,
 }: {
   snapshot: LpgPriceSnapshot;
   labels: {
@@ -369,9 +372,21 @@ export function LpgPriceCard({
     asOf: string;
     source: string;
     seed: string;
+    otherDistricts?: string;
   };
   locale: string;
+  preferredDistrict?: string | null;
+  filter?: ReactNode;
 }) {
+  const districtKey = preferredDistrict?.trim().toLowerCase() || "colombo";
+  const preferredPrices = snapshot.prices
+    .filter(
+      (price) =>
+        price.district.toLowerCase() === districtKey &&
+        price.cylinderKg === 12.5,
+    )
+    .sort((a, b) => a.provider.localeCompare(b.provider));
+
   const colomboPrices = snapshot.prices
     .filter(
       (price) =>
@@ -379,9 +394,23 @@ export function LpgPriceCard({
     )
     .sort((a, b) => a.provider.localeCompare(b.provider));
 
-  if (colomboPrices.length === 0) {
+  const featuredPrices =
+    preferredPrices.length > 0 ? preferredPrices : colomboPrices;
+
+  if (featuredPrices.length === 0 && !filter) {
     return null;
   }
+
+  const otherDistrictCount = new Set(
+    snapshot.prices
+      .filter((price) => price.cylinderKg === 12.5)
+      .map((price) => price.district.toLowerCase())
+      .filter((district) => district !== "colombo"),
+  ).size;
+
+  const featuredDistrict =
+    featuredPrices[0]?.district ??
+    (preferredDistrict?.trim() || "Colombo");
 
   return (
     <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
@@ -392,33 +421,49 @@ export function LpgPriceCard({
             {labels.title}
           </h3>
           <p className="mt-1 text-xs text-slate-500">{labels.subtitle}</p>
+          {labels.otherDistricts && otherDistrictCount > 0 ? (
+            <p className="mt-1 text-xs text-slate-500">
+              {labels.otherDistricts.replace(
+                "{count}",
+                String(otherDistrictCount),
+              )}
+            </p>
+          ) : null}
         </div>
         <FreshnessBadge tier={snapshot.tier} />
       </div>
 
-      <div className="mt-4 space-y-3">
-        {colomboPrices.map((price) => (
-          <div
-            key={`${price.provider}-${price.district}-${price.cylinderKg}`}
-            className="rounded-xl border border-white/10 bg-black/15 p-3"
-          >
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="text-sm font-medium text-white">{price.provider}</p>
-                <p className="text-xs text-slate-500">{labels.cylinder12_5}</p>
+      {filter ? (
+        <div className="mt-4">{filter}</div>
+      ) : (
+        <div className="mt-4 space-y-3">
+          {featuredPrices.map((price) => (
+            <div
+              key={`${price.provider}-${price.district}-${price.cylinderKg}`}
+              className="rounded-xl border border-white/10 bg-black/15 p-3"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm font-medium text-white">
+                    {price.provider}
+                  </p>
+                  <p className="text-xs text-slate-500">
+                    {featuredDistrict} · {labels.cylinder12_5}
+                  </p>
+                </div>
+                <p className="text-xl font-semibold text-white">
+                  {price.priceLkr.toLocaleString(locale, {
+                    maximumFractionDigits: 0,
+                  })}
+                  <span className="ml-1 text-xs font-normal text-slate-400">
+                    LKR
+                  </span>
+                </p>
               </div>
-              <p className="text-xl font-semibold text-white">
-                {price.priceLkr.toLocaleString(locale, {
-                  maximumFractionDigits: 0,
-                })}
-                <span className="ml-1 text-xs font-normal text-slate-400">
-                  LKR
-                </span>
-              </p>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       <footer className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-white/10 pt-4 text-xs text-slate-500">
         <span>

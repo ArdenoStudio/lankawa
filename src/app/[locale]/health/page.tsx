@@ -1,8 +1,14 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { HealthViewToggle } from "@/components/DengueChoroplethMap";
+import { MohNoticesStrip } from "@/components/MohNoticesStrip";
+import { UrbanHeatNote } from "@/components/UrbanHeatNote";
 import { Link } from "@/i18n/navigation";
+import { getDistrict, getDistrictName } from "@/lib/districts";
 import { getDengueData } from "@/lib/health";
 import { getSourceProvenancePath } from "@/lib/sources";
+
+/** Matches `DENGUE_SPIKE_PCT` in alert-context for pin + page honesty. */
+const DENGUE_SPIKE_PCT = 20;
 
 export default async function HealthPage({
   params,
@@ -13,6 +19,13 @@ export default async function HealthPage({
   setRequestLocale(locale);
   const t = await getTranslations("health");
   const snapshot = await getDengueData();
+
+  const nationalSpike = Math.abs(snapshot.nationalChangePct) >= DENGUE_SPIKE_PCT;
+  const districtSpikes = snapshot.districts
+    .filter((district) => Math.abs(district.changePct) >= DENGUE_SPIKE_PCT)
+    .sort((a, b) => Math.abs(b.changePct) - Math.abs(a.changePct));
+  const topDistrictSpike = districtSpikes[0];
+  const showSpikeNote = nationalSpike || Boolean(topDistrictSpike);
 
   return (
     <div className="space-y-8">
@@ -33,6 +46,38 @@ export default async function HealthPage({
           </Link>
         </p>
       </div>
+
+      <MohNoticesStrip />
+
+      <UrbanHeatNote />
+
+      {showSpikeNote ? (
+        <aside className="rounded-2xl border border-white/15 bg-white/[0.04] px-4 py-3 text-sm text-slate-200">
+          <p className="font-medium text-white">{t("spikeTitle")}</p>
+          {nationalSpike ? (
+            <p className="mt-1 text-slate-300">
+              {t("spikeNational", {
+                pct: `${snapshot.nationalChangePct >= 0 ? "+" : ""}${snapshot.nationalChangePct.toFixed(1)}`,
+              })}
+            </p>
+          ) : null}
+          {topDistrictSpike ? (
+            <p className="mt-1 text-slate-300">
+              {t("spikeDistrict", {
+                district: (() => {
+                  const district = getDistrict(topDistrictSpike.slug);
+                  return district
+                    ? getDistrictName(district, locale)
+                    : topDistrictSpike.slug;
+                })(),
+                pct: `${topDistrictSpike.changePct >= 0 ? "+" : ""}${topDistrictSpike.changePct.toFixed(1)}`,
+                count: districtSpikes.length,
+              })}
+            </p>
+          ) : null}
+          <p className="mt-2 text-xs text-slate-500">{t("spikeHonesty")}</p>
+        </aside>
+      ) : null}
 
       <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">

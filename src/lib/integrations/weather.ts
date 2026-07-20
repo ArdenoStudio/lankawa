@@ -1,14 +1,10 @@
 import { getLatestObservation, isDatabaseConfigured } from "../db";
+import { getDistrictCoords } from "../district-coords";
 import { computeFreshnessTier } from "../freshness";
 import { getSource, getSourceProvenancePath } from "../sources";
 import type { FreshnessTier, PulseMetric, SourceHealth } from "../types";
 
-const OPEN_METEO_URL =
-  "https://api.open-meteo.com/v1/forecast?latitude=6.9271&longitude=79.8612" +
-  "&current=temperature_2m,weather_code,precipitation,uv_index" +
-  "&daily=uv_index_max,precipitation_sum&forecast_days=7&timezone=Asia/Colombo";
-
-export interface ColomboWeather {
+export interface PlaceWeather {
   temp: number;
   label: string;
   precipitation: number;
@@ -17,7 +13,12 @@ export interface ColomboWeather {
   rainNext7dMm: number | null;
   rainTomorrowMm: number | null;
   observedAt: string;
+  placeLabel: string;
+  districtSlug: string;
 }
+
+/** @deprecated Use PlaceWeather — kept for call-site compatibility. */
+export type ColomboWeather = PlaceWeather;
 
 interface OpenMeteoResponse {
   current?: {
@@ -48,8 +49,20 @@ export function wmoCodeToLabel(code: number): string {
   return "Unknown";
 }
 
-export async function fetchColomboWeather(): Promise<ColomboWeather> {
-  const response = await fetch(OPEN_METEO_URL, {
+function buildOpenMeteoUrl(latitude: number, longitude: number): string {
+  return (
+    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}` +
+    "&current=temperature_2m,weather_code,precipitation,uv_index" +
+    "&daily=uv_index_max,precipitation_sum&forecast_days=7&timezone=Asia/Colombo"
+  );
+}
+
+export async function fetchPlaceWeather(
+  districtSlug = "colombo",
+  placeLabel = "Colombo",
+): Promise<PlaceWeather> {
+  const { latitude, longitude } = getDistrictCoords(districtSlug);
+  const response = await fetch(buildOpenMeteoUrl(latitude, longitude), {
     next: { revalidate: 1800 },
     headers: { Accept: "application/json" },
   });
@@ -81,19 +94,24 @@ export async function fetchColomboWeather(): Promise<ColomboWeather> {
     temp: current.temperature_2m,
     label: wmoCodeToLabel(current.weather_code),
     precipitation: current.precipitation,
-    uvIndex:
-      typeof current.uv_index === "number" ? current.uv_index : null,
+    uvIndex: typeof current.uv_index === "number" ? current.uv_index : null,
     uvIndexMaxToday: typeof uvMax[0] === "number" ? uvMax[0] : null,
     rainNext7dMm,
     rainTomorrowMm: typeof precipSums[1] === "number" ? precipSums[1] : null,
     observedAt: current.time ?? new Date().toISOString(),
+    placeLabel,
+    districtSlug,
   };
+}
+
+export async function fetchColomboWeather(): Promise<PlaceWeather> {
+  return fetchPlaceWeather("colombo", "Colombo");
 }
 
 function weatherContribution(
   source: NonNullable<ReturnType<typeof getSource>>,
   checkedAt: string,
-  weather: ColomboWeather,
+  weather: PlaceWeather,
 ): { metric: PulseMetric; health: SourceHealth } {
   const tier = computeFreshnessTier(weather.observedAt, source.cadenceMinutes);
   const noteParts = [weather.label];
@@ -111,7 +129,7 @@ function weatherContribution(
   return {
     metric: {
       id: "weather_colombo",
-      label: "Colombo weather",
+      label: `${weather.placeLabel} weather`,
       value: weather.temp.toFixed(1),
       unit: "°C",
       observedAt: weather.observedAt,
@@ -133,14 +151,19 @@ function weatherContribution(
   };
 }
 
-export async function buildWeatherPulseMetric(checkedAt: string): Promise<{
+export async function buildWeatherPulseMetric(
+  checkedAt: string,
+  options?: { districtSlug?: string; placeLabel?: string },
+): Promise<{
   metric: PulseMetric;
   health: SourceHealth;
 }> {
   const source = getSource("open_meteo")!;
+  const districtSlug = options?.districtSlug ?? "colombo";
+  const placeLabel = options?.placeLabel ?? "Colombo";
 
   try {
-    if (isDatabaseConfigured()) {
+    if (isDatabaseConfigured() && districtSlug === "colombo") {
       const dbObservation = await getLatestObservation(
         source.id,
         "weather_colombo_temp",
@@ -155,11 +178,13 @@ export async function buildWeatherPulseMetric(checkedAt: string): Promise<{
           rainNext7dMm: null,
           rainTomorrowMm: null,
           observedAt: dbObservation.observedAt,
+          placeLabel: "Colombo",
+          districtSlug: "colombo",
         });
       }
     }
 
-    const weather = await fetchColomboWeather();
+    const weather = await fetchPlaceWeather(districtSlug, placeLabel);
     return weatherContribution(source, checkedAt, weather);
   } catch (error) {
     const tier: FreshnessTier = "down";
@@ -167,7 +192,7 @@ export async function buildWeatherPulseMetric(checkedAt: string): Promise<{
     return {
       metric: {
         id: "weather_colombo",
-        label: "Colombo weather",
+        label: `${placeLabel} weather`,
         value: "—",
         unit: "°C",
         observedAt: null,

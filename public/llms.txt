@@ -58,6 +58,8 @@ OpenAPI: /api/v1/openapi.json
 - /embed/today
 - /embed/fuel
 - /embed/fx
+- /embed/cse
+- /embed/brief
 
 ## Live vs seed (verify via /api/v1/status)
 

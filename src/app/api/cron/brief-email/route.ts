@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { buildBriefEmailHtml } from "@/lib/brief-email-html";
 import {
+  buildUnsubscribeApiUrl,
   listConfirmedSubscribers,
   markSubscriberSent,
   sendResendEmail,
 } from "@/lib/brief-subscribers";
-import { buildMorningBrief } from "@/lib/integrations/brief";
+import { buildMorningBrief, briefDateKey } from "@/lib/integrations/brief";
 
 const DAILY_CAP = 200;
 
@@ -49,6 +51,12 @@ async function run(request: NextRequest) {
 
     try {
       const brief = await buildMorningBrief(subscriber.locale);
+      const date = briefDateKey(brief.generatedAt);
+      const unsubscribeUrl = buildUnsubscribeApiUrl({
+        token: subscriber.confirmToken,
+        email: subscriber.email,
+        locale: subscriber.locale,
+      });
       const text = [
         `Lankawa morning brief (${subscriber.locale})`,
         `Quality: ${brief.quality}`,
@@ -56,14 +64,22 @@ async function run(request: NextRequest) {
         ...brief.bullets.map((item) => `• ${item}`),
         "",
         `Topics: ${brief.topics.join(", ") || "n/a"}`,
-        "https://lankawa.lk",
-        "Unsubscribe: reply stop or contact the operators.",
+        `Open: https://lankawa.vercel.app/${subscriber.locale}/brief/${date}`,
+        `Unsubscribe: ${unsubscribeUrl}`,
       ].join("\n");
+
+      const html = buildBriefEmailHtml({
+        bullets: brief.bullets,
+        locale: subscriber.locale,
+        date,
+        unsubscribeUrl,
+      });
 
       const mail = await sendResendEmail({
         to: subscriber.email,
         subject: `Lankawa morning brief (${brief.locale})`,
         text,
+        html,
       });
 
       if (!mail.ok) {

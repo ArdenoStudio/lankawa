@@ -19,6 +19,17 @@ export const openApiSpec = {
         },
       },
     },
+    "/news/clusters": {
+      get: {
+        summary: "News story clusters",
+        responses: {
+          "200": {
+            description:
+              "Multi-outlet story clusters (Jaccard title similarity) with stable cluster ids and member headlines",
+          },
+        },
+      },
+    },
     "/cse": {
       get: {
         summary: "Colombo Stock Exchange snapshot",
