@@ -3,7 +3,7 @@
 **Status:** Research (medium thoroughness), Jul 2026  
 **Product rule:** Public marketing / storefront surfaces only. No reverse-engineering of authenticated loyalty apps (APK MITM, private tokens). Server-side fetch + provenance; never claim live when empty/blocked.
 
-Related: [`FOOD_API_SOURCES.md`](./FOOD_API_SOURCES.md), [`COMBANK_OFFERS_RESEARCH.md`](./COMBANK_OFFERS_RESEARCH.md), FoodLK [`DATA_SOURCES.md`](https://github.com/SuvenSeo/Food-Platform/blob/main/docs/DATA_SOURCES.md).
+Related: [`FOOD_API_SOURCES.md`](./FOOD_API_SOURCES.md), [`COMBANK_OFFERS_RESEARCH.md`](./COMBANK_OFFERS_RESEARCH.md), [`HOUSEHOLD_RETAIL_EMI_RESEARCH.md`](./HOUSEHOLD_RETAIL_EMI_RESEARCH.md) (MySoftlogic / Singer / Abans / Arpico EMI), FoodLK [`DATA_SOURCES.md`](https://github.com/SuvenSeo/Food-Platform/blob/main/docs/DATA_SOURCES.md).
 
 ---
 
