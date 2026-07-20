@@ -32,7 +32,9 @@ Open [http://localhost:3000/en](http://localhost:3000/en)
 
 ## Deployment
 
-See **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** for Vercel env vars, Supabase/Neon setup, cron schedule, and smoke-test URLs.
+Production: [https://lankawa.vercel.app/en](https://lankawa.vercel.app/en) · Vercel project: [suvenseoras-projects/lankawa](https://vercel.com/suvenseoras-projects/lankawa).
+
+See **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** for connecting the GitHub repo (required for auto-deploy), env vars, Supabase/Neon, cron, and `npm run check:prod-drift`.
 
 Copy `.env.example` to `.env.local` for local overrides.
 
