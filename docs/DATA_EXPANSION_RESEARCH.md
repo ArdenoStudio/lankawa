@@ -70,10 +70,16 @@ Cite Cookie-Cat docs as a **catalog**, not as an upstream SLA. CSE HTML/API can 
 |--------|-----|-------|
 | Open-Meteo (already used) | UV index, 7-day rain outlook, multi-city strip | Free, no key for core |
 | Open-Meteo Flood / GloFAS | Basin flood probability | Pair with LK Flood gauges |
+| Irrigation Dept ArcGIS gauges | Live river levels + rain + alert thresholds | **Prefer over stale lk-flood-api** — see `WEATHER_DISASTER_APIS_RESEARCH.md` |
+| MetDept WAS CAP RSS | Official weather warnings (already used) | `cap/{en,si,ta}/rss.xml` + `dashboard-api/advisories` |
+| DMC PDF indexes (nuuuwan/lk_dmc) | Landslide / flood bulletin metadata | No DMC CAP feed found |
+| NBRO live EW JSON | — | **None public**; NSDI `LHazard_10K` is static zonation only |
 | WAQI / OpenAQ | Colombo AQI | Health morning check |
 | JTWC / GDACS GeoJSON | Cyclone / multi-hazard alerts | Disaster hub |
 | Marine (Open-Meteo Marine) | West/south coast swell for fishers | Niche but sticky |
 | RainViewer / Blitzortung | Skip for now | License / attribution friction |
+
+Deep dive: [`docs/WEATHER_DISASTER_APIS_RESEARCH.md`](./WEATHER_DISASTER_APIS_RESEARCH.md).
 
 ---
 
