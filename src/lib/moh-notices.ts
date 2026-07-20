@@ -21,7 +21,17 @@ export interface MohNoticesSnapshot {
 }
 
 const seed = mohSeed as MohNoticesSnapshot;
-const MOH_FEED_IDS = new Set(["moh_rss", "moh_notices"]);
+
+/** NewsHeadline.source is the feed id (see parseRssItems); also accept display name. */
+const MOH_SOURCES = new Set([
+  "moh_rss",
+  "moh_notices",
+  "ministry of health",
+]);
+
+function isMohHeadline(headline: NewsHeadline): boolean {
+  return MOH_SOURCES.has(headline.source.trim().toLowerCase());
+}
 
 export function getMohNoticesSeed(): MohNoticesSnapshot {
   return seed;
@@ -40,9 +50,7 @@ function headlinesToNotices(headlines: NewsHeadline[]): MohNotice[] {
 export async function getMohNotices(limit = 5): Promise<MohNoticesSnapshot> {
   try {
     const pulse = await fetchNewsPulse();
-    const moh = pulse.headlines.filter((headline) =>
-      MOH_FEED_IDS.has(headline.source),
-    );
+    const moh = pulse.headlines.filter(isMohHeadline);
     if (moh.length > 0) {
       return {
         sourceId: "moh_rss",

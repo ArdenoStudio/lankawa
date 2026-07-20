@@ -177,9 +177,21 @@ export const SOURCES: SourceDefinition[] = [
     url: "https://www.health.gov.lk/",
     cadenceMinutes: 1440,
     adapter: "scrape",
-    description: "Public health notices strip on /health — seed until MoH RSS is live.",
+    description: "Public health notices strip on /health — live MoH RSS when available.",
     methodology:
-      "Seed notice list for the health page. When moh_rss appears in the news pulse, live headlines replace the seed strip.",
+      "Seed notice list for the health page. When moh_rss (feed id) or Ministry of Health (feed name) appears in the news pulse, live headlines replace the seed strip.",
+    metrics: ["moh_notices"],
+  },
+  {
+    id: "moh_rss",
+    name: "Ministry of Health RSS",
+    category: "health",
+    url: "https://www.health.gov.lk/feed/",
+    cadenceMinutes: 60,
+    adapter: "api",
+    description: "Live MoH public notices via WordPress RSS on /health.",
+    methodology:
+      "Headlines are pulled through `news.ts` feed id `moh_rss` and filtered in `moh-notices.ts` (matches feed id or display name). Falls back to moh_notices_seed when the feed is empty.",
     metrics: ["moh_notices"],
   },
   {
@@ -244,7 +256,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Centre for Policy Alternatives and Verité Research publication drops shown on /civic.",
     methodology:
-      "Curated seed strip until CPA/Verité RSS endpoints are wired. Each item links to the org homepage with honest seed labelling — not a live scrape.",
+      "Prefers live headlines from `cpa_rss` and `verite_rss` in the news pulse (`civic-research.ts`). Falls back to curated seed JSON with honest seed labelling when those feeds are empty.",
     metrics: ["civic_research_drops"],
   },
   {
@@ -374,7 +386,33 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Staple food prices, essentials basket, and district meal-cost bands.",
     methodology:
-      "Direct FoodLK API endpoints only (`/stats/summary`, `/categories/summary`, `/home/summary`). Never labeled live unless FoodLK itself returns 200.",
+      "Direct FoodLK API endpoints (`/stats/summary`, `/categories/summary`, `/home/summary`). Labeled live only when the payload contains real metric counts (offers/staples) — empty HTTP 200 shells are rejected. Upstream catalog: docs/FOOD_API_SOURCES.md.",
+    metrics: ["food_basket_estimate", "staple_prices"],
+  },
+  {
+    id: "wfp_hdx",
+    name: "WFP HDX food prices (Sri Lanka)",
+    category: "economy",
+    url: "https://data.humdata.org/dataset/wfp-food-prices-for-sri-lanka",
+    cadenceMinutes: 1440,
+    adapter: "api",
+    description:
+      "Direct WFP/HDX CSV retail and wholesale staple prices for Sri Lanka.",
+    methodology:
+      "While FoodLK public API returns 500s, Lankawa fetches the HDX CSV `wfp_food_prices_lka.csv` via `food-direct.ts`, averages latest retail (else wholesale) quotes for rice, onions, lentils, coconut, sugar, and wheat flour, and estimates an essentials basket. District meal bands remain seed. Not HARTI or NCPI.",
+    metrics: ["food_basket_estimate", "staple_prices"],
+  },
+  {
+    id: "spar2u_retail",
+    name: "SPAR2U retail catalog",
+    category: "economy",
+    url: "https://spar2u.lk/products.json",
+    cadenceMinutes: 360,
+    adapter: "api",
+    description:
+      "Optional single-page SPAR2U grocery catalog bypass for staple shelf prices.",
+    methodology:
+      "When FoodLK and WFP HDX fail, Lankawa fetches one page (`limit=250`) of SPAR2U Shopify `products.json` via `food-spar.ts` (UA LankawaBot/1.0, 12s timeout, revalidate 21600). First reasonable title matches for rice, dhal/lentil, onion, sugar, coconut, and flour become staples; pack sizes normalize to per-kg when labeled. HTTP 429 or fetch failures skip quietly to Life. District meal bands remain seed. Not HARTI or NCPI.",
     metrics: ["food_basket_estimate", "staple_prices"],
   },
   {
@@ -385,9 +423,9 @@ export const SOURCES: SourceDefinition[] = [
     cadenceMinutes: 3600,
     adapter: "partner",
     description:
-      "Food domain metrics when FoodLK direct endpoints fail.",
+      "Food domain metrics when FoodLK, WFP, and SPAR2U fail.",
     methodology:
-      "Server-side fetch from Life `/life/overview` food domain. Life may return degraded fixture structure if FoodLK is unreachable. District meal bands remain Lankawa seed until FoodLK recovers.",
+      "Server-side fetch from Life `/life/overview` food domain after FoodLK, WFP HDX, and SPAR2U retail. Healthy or degraded with metrics is accepted; seed/down fixture-only domains are skipped. District meal bands remain Lankawa seed until FoodLK recovers.",
     metrics: ["food_basket_estimate", "staple_prices"],
   },
   {
@@ -400,7 +438,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Staple food prices and district meal-cost estimates for cost-of-living enrichment.",
     methodology:
-      "Representative seed from FoodLK / Life Platform patterns. District monthly baskets align with the Lankawa cost-of-living seed. Used when live FoodLK endpoints return errors.",
+      "Representative seed from FoodLK / Life Platform patterns. District monthly baskets align with the Lankawa cost-of-living seed. Used when FoodLK, WFP HDX, SPAR2U, and Life food endpoints are unavailable.",
     metrics: ["food_basket_estimate", "staple_prices"],
   },
   {
@@ -741,7 +779,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Headline count and top story summaries from curated Sri Lanka news RSS feeds.",
     methodology:
-      "Server-side RSS/Atom parse of approved public feeds via `src/lib/integrations/news.ts` (Daily Mirror, Ada Derana, Lankadeepa, Tamil Guardian, EconomyNext, Newswire, Island, LBO, Ada Derana Biz, Roar, DMC). Headlines are normalized with source attribution. Home pulse links to provenance rather than external click-through. Expansion backlog: docs/NEWS_RSS_BACKLOG.md. No HTML scrape; no paid third-party news APIs as core deps.",
+      "Server-side RSS/Atom parse of approved public feeds via `src/lib/integrations/news.ts` (Daily Mirror, Ada Derana, Lankadeepa, Tamil Guardian, EconomyNext, Newswire, Island, LBO, Ada Derana Biz, Roar, DMC, Ministry of Health, CPA, Verité Research). Headlines are normalized with feed-id source attribution. Home pulse links to provenance rather than external click-through. Expansion backlog: docs/NEWS_RSS_BACKLOG.md. No HTML scrape; no paid third-party news APIs as core deps.",
     metrics: ["news_headlines"],
   },
   {

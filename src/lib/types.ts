@@ -342,8 +342,8 @@ export interface CostOfLivingDistrict {
 export interface CostOfLivingInputHonesty {
   fuel: "live" | "seed";
   property: "live" | "seed";
-  food: "live" | "life_federation" | "seed";
-  coconut: "live" | "life_federation" | "seed";
+  food: "live" | "wfp_hdx" | "spar2u" | "life_federation" | "seed";
+  coconut: "live" | "wfp_hdx" | "spar2u" | "life_federation" | "seed";
 }
 
 export interface CoconutIndex {

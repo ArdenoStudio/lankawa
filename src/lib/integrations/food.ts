@@ -1,4 +1,6 @@
 import { getFoodSnapshot } from "@/lib/food";
+import { fetchWfpFoodDirect } from "@/lib/integrations/food-direct";
+import { fetchSpar2uRetail } from "@/lib/integrations/food-spar";
 import type {
   FoodDistrictMealCost,
   FoodItemPrice,
@@ -13,7 +15,12 @@ const LIFE_API_BASE =
 
 const FETCH_TIMEOUT_MS = 8000;
 
-export type FoodProvenance = "live" | "life_federation" | "seed";
+export type FoodProvenance =
+  | "live"
+  | "wfp_hdx"
+  | "spar2u"
+  | "life_federation"
+  | "seed";
 
 export interface FoodFetchResult extends FoodSnapshot {
   provenance: FoodProvenance;
@@ -63,6 +70,91 @@ async function fetchJson<T>(url: string): Promise<T | null> {
   }
 }
 
+/** True only when FoodLK JSON carries real metric counts — not an empty 200 shell. */
+export function foodLkPayloadHasMetrics(
+  payload: Record<string, unknown>,
+): boolean {
+  if ("detail" in payload) {
+    return false;
+  }
+
+  const numericKeys = [
+    "offers_count",
+    "sources_count",
+    "categories_count",
+    "retail_offers",
+    "market_quotes",
+    "market_quotes_count",
+    "essentials_basket_lkr",
+    "essentialsBasketLkr",
+  ] as const;
+
+  for (const key of numericKeys) {
+    const value = payload[key];
+    if (typeof value === "number" && Number.isFinite(value) && value > 0) {
+      return true;
+    }
+  }
+
+  const items = payload.items;
+  if (Array.isArray(items) && items.length > 0) {
+    return true;
+  }
+
+  const staples = payload.staple_items ?? payload.stapleItems;
+  if (Array.isArray(staples) && staples.length > 0) {
+    return true;
+  }
+
+  const cheapest = payload.cheapest_offers ?? payload.cheapestOffers;
+  if (Array.isArray(cheapest) && cheapest.length > 0) {
+    return true;
+  }
+
+  return false;
+}
+
+function mapFoodLkPayload(
+  payload: Record<string, unknown>,
+): FoodFetchResult | null {
+  if (!foodLkPayloadHasMetrics(payload)) {
+    return null;
+  }
+
+  const seed = getFoodSnapshot();
+  const essentialsRaw =
+    payload.essentials_basket_lkr ?? payload.essentialsBasketLkr;
+  const retailRaw = payload.offers_count ?? payload.retail_offers;
+  const marketRaw =
+    payload.market_quotes_count ??
+    payload.market_quotes ??
+    payload.marketQuotes;
+
+  return {
+    ...seed,
+    provenance: "live",
+    sourceId: "food_platform_api",
+    sourceName: "FoodLK Price Intelligence",
+    asOf:
+      typeof payload.last_scrape_at === "string"
+        ? payload.last_scrape_at
+        : new Date().toISOString(),
+    essentialsBasketLkr:
+      typeof essentialsRaw === "number" && essentialsRaw > 0
+        ? Math.round(essentialsRaw)
+        : seed.essentialsBasketLkr,
+    retailOffers:
+      typeof retailRaw === "number" && retailRaw > 0
+        ? Math.round(retailRaw)
+        : seed.retailOffers,
+    marketQuotes:
+      typeof marketRaw === "number" && marketRaw > 0
+        ? Math.round(marketRaw)
+        : seed.marketQuotes,
+    mixedSeedDistricts: true,
+  };
+}
+
 function mapLifeFoodDomain(domain: LifeFoodDomain): FoodFetchResult {
   const seed = getFoodSnapshot();
   const essentials = domain.metrics?.find((metric) =>
@@ -109,7 +201,18 @@ function mapLifeFoodDomain(domain: LifeFoodDomain): FoodFetchResult {
   };
 }
 
-export async function fetchFoodSnapshot(): Promise<FoodFetchResult | null> {
+/** Skip Life when it is seed/down fixture-only; degraded with metrics is OK. */
+function isUsableLifeFoodDomain(domain: LifeFoodDomain): boolean {
+  if (domain.status === "seed" || domain.status === "down") {
+    return false;
+  }
+
+  const hasItems = (domain.top_items?.length ?? 0) > 0;
+  const hasMetrics = (domain.metrics?.length ?? 0) > 0;
+  return hasItems || hasMetrics;
+}
+
+async function fetchFoodLkLive(): Promise<FoodFetchResult | null> {
   const directEndpoints = [
     `${FOOD_API_BASE}/stats/summary`,
     `${FOOD_API_BASE}/categories/summary`,
@@ -118,30 +221,74 @@ export async function fetchFoodSnapshot(): Promise<FoodFetchResult | null> {
 
   for (const endpoint of directEndpoints) {
     const payload = await fetchJson<Record<string, unknown>>(endpoint);
-    if (payload && typeof payload === "object" && !("detail" in payload)) {
-      const seed = getFoodSnapshot();
-      return {
-        ...seed,
-        provenance: "live",
-        sourceId: "food_platform_api",
-        sourceName: "FoodLK Price Intelligence",
-        asOf: new Date().toISOString(),
-        mixedSeedDistricts: false,
-      };
+    if (!payload || typeof payload !== "object") {
+      continue;
+    }
+    const mapped = mapFoodLkPayload(payload);
+    if (mapped) {
+      return mapped;
     }
   }
 
+  return null;
+}
+
+async function fetchLifeFood(): Promise<FoodFetchResult | null> {
   const lifeOverview = await fetchJson<LifeOverviewResponse>(
     `${LIFE_API_BASE}/life/overview`,
   );
   const foodDomain = lifeOverview?.domains?.find(
     (domain) => domain.key === "food",
   );
-  if (foodDomain) {
+  if (foodDomain && isUsableLifeFoodDomain(foodDomain)) {
     return mapLifeFoodDomain(foodDomain);
   }
-
   return null;
+}
+
+export async function fetchFoodSnapshot(): Promise<FoodFetchResult | null> {
+  const foodLk = await fetchFoodLkLive();
+  if (foodLk) {
+    return foodLk;
+  }
+
+  const wfp = await fetchWfpFoodDirect();
+  if (wfp) {
+    const seed = getFoodSnapshot();
+    return {
+      ...seed,
+      provenance: "wfp_hdx",
+      sourceId: wfp.sourceId,
+      sourceName: wfp.sourceName,
+      asOf: wfp.asOf,
+      essentialsBasketLkr: wfp.essentialsBasketLkr,
+      retailOffers: wfp.retailOffers,
+      marketQuotes: wfp.marketQuotes,
+      stapleItems: wfp.stapleItems,
+      districts: seed.districts,
+      mixedSeedDistricts: true,
+    };
+  }
+
+  const spar = await fetchSpar2uRetail();
+  if (spar) {
+    const seed = getFoodSnapshot();
+    return {
+      ...seed,
+      provenance: "spar2u",
+      sourceId: spar.sourceId,
+      sourceName: spar.sourceName,
+      asOf: spar.asOf,
+      essentialsBasketLkr: spar.essentialsBasketLkr,
+      retailOffers: spar.retailOffers,
+      marketQuotes: spar.marketQuotes,
+      stapleItems: spar.stapleItems,
+      districts: seed.districts,
+      mixedSeedDistricts: true,
+    };
+  }
+
+  return fetchLifeFood();
 }
 
 export async function getFoodData(): Promise<FoodFetchResult> {

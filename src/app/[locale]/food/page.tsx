@@ -30,10 +30,30 @@ export default async function FoodPage({
           >
             {snapshot.sourceName}
           </Link>
+          {" · "}
+          {provenance === "live"
+            ? t("provenanceLive")
+            : provenance === "wfp_hdx"
+              ? t("provenanceWfp")
+              : provenance === "spar2u"
+                ? t("provenanceSpar")
+                : provenance === "life_federation"
+                  ? t("provenanceLife")
+                  : t("provenanceSeed")}
         </p>
         {provenance === "life_federation" ? (
           <p className="mt-3 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-sm text-slate-200">
             {t("bannerLife")}
+          </p>
+        ) : null}
+        {provenance === "wfp_hdx" ? (
+          <p className="mt-3 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-sm text-slate-200">
+            {t("bannerWfp")}
+          </p>
+        ) : null}
+        {provenance === "spar2u" ? (
+          <p className="mt-3 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-sm text-slate-200">
+            {t("bannerSpar")}
           </p>
         ) : null}
       </div>
@@ -82,7 +102,11 @@ export default async function FoodPage({
           ? t("disclaimerSeed")
           : provenance === "life_federation"
             ? t("disclaimerLife")
-            : t("disclaimer")}
+            : provenance === "wfp_hdx"
+              ? t("disclaimerWfp")
+              : provenance === "spar2u"
+                ? t("disclaimerSpar")
+                : t("disclaimer")}
       </p>
     </div>
   );

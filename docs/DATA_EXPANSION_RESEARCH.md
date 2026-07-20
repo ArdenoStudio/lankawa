@@ -19,6 +19,16 @@ Bookmark libs (Tremor, HyperUI, DaisyUI, shadcn blocks) informed layout density 
 
 ---
 
+## Food upstream APIs (FoodLK sister + direct)
+
+**Catalog:** [`FOOD_API_SOURCES.md`](./FOOD_API_SOURCES.md) — same spirit as cse-api-docs for FoodLK upstreams ([SuvenSeo/Food-Platform](https://github.com/SuvenSeo/Food-Platform)).
+
+**Verdict (Jul 2026):** FoodLK Fly API often returns HTTP 500. Lankawa call order is FoodLK (real metrics only) → **WFP HDX CSV direct** → SPAR2U retail JSON (rate-limited) → Life federation → seed. Prefer fixing FoodLK sync long-term; keep WFP bypass.
+
+**Live-data sequencing:** [`LIVE_DATA_PLAN.md`](./LIVE_DATA_PLAN.md).
+
+---
+
 ## CSE API ([Cookie-Cat21/cse-api-docs](https://github.com/Cookie-Cat21/cse-api-docs))
 
 **Verdict:** Not a separate hosted API. The repo documents unofficial `https://www.cse.lk/api/*` endpoints that Lankawa already calls server-side (`src/lib/integrations/cse.ts`). Browser CORS blocks client use; keep server proxy.
