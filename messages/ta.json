@@ -97,7 +97,18 @@
     "morningDeltaCardDaysNone": "இன்று இல்லை",
     "morningDeltaCardDaysCount": "இன்று {count}",
     "morningDeltaCardDaysValue": "{count} · {merchant} {discount}",
-    "morningDeltaCardDaysSeed": "{value} · seed"
+    "morningDeltaCardDaysSeed": "{value} · seed",
+    "aqiStripLabel": "Colombo air quality pollutants",
+    "aqiStripTitle": "Colombo air quality",
+    "aqiStripAsOf": "as of {date}",
+    "aqiStripSource": "Open-Meteo provenance",
+    "aqiStripUsAqi": "US AQI",
+    "aqiStripPm25": "PM2.5",
+    "aqiStripPm10": "PM10",
+    "aqiStripNo2": "NO₂",
+    "aqiStripO3": "O₃",
+    "aqiStripDust": "Dust",
+    "aqiStripHonesty": "Open-Meteo model grid near Colombo — not a DMC/CEA station reading. Units μg/m³ except AQI."
   },
   "modules": {
     "districts": {
@@ -716,6 +727,10 @@
       "snp": "S&P SL20",
       "gainers": "அதிக ஏற்றம்",
       "losers": "அதிக இறக்கம்",
+      "moversTitle": "அமர்வு நகர்வுகள்",
+      "moversSubtitle": "CSE பொதுப் பலகையிலிருந்து அதிக ஏற்றம்/இறக்கம் — ticker, கடைசி விலை, % மாற்றம்.",
+      "moversSeed": "Seed",
+      "moversHonesty": "topGainers / topLooses முன்னுரிமை; இல்லையெனில் tradeSummary, பிறகு seed. முதலீட்டு ஆலோசனை அல்ல.",
       "marketStatus": "சந்தை நிலை",
       "trades": "வர்த்தகங்கள்",
       "shareVolume": "பங்கு அளவு",
@@ -837,6 +852,24 @@
       "metricsLabel": "சிறந்த TT வாங்கல் மற்றும் விற்பனை",
       "tableLabel": "வங்கி TT பரிமாற்ற விகிதங்கள்"
     },
+    "depositRates": {
+      "title": "வங்கி FD விகிதங்கள்",
+      "subtitle": "பொதுவான tenure-களில் indicative LKR fixed-deposit maturity rates — வங்கி quotes ஒப்பிடுக.",
+      "tenor": "Tenure",
+      "best": "Best",
+      "seed": "Full seed board — அனைத்து live bank FD fetch-களும் தோல்வி.",
+      "live": "Live",
+      "mixed": "Mixed",
+      "bankSeed": "seed",
+      "bankLive": "live",
+      "coverage": "{live} live · {seed} seed",
+      "asOf": "As of {date}",
+      "source": "Source provenance",
+      "honesty": "Public indicative only. Lankawa இந்த வங்கிகளுடன் affiliated அல்ல. Deposit advice அல்ல — பணம் வைப்பதற்கு முன் வங்கி தளத்தில் rates, AER மற்றும் நிபந்தனைகளை உறுதிப்படுத்துங்கள்.",
+      "tableLabel": "Tenure வாரியாக வங்கி FD maturity rates",
+      "months": "{n} மாதங்கள்",
+      "paidIn": "முதிர்வில் வட்டி"
+    },
     "fxAnomaly": "Unusual day-over-day move",
     "fxAnomalyQuiet": "Within recent MAD band",
     "treasury": {
@@ -891,6 +924,23 @@
       "asOf": "As of {date}",
       "seed": "Seed",
       "honesty": "Cron persists these into observations when the database is configured."
+    },
+    "policyRates": {
+      "title": "CBSL கொள்கை விகிதங்கள்",
+      "subtitle": "Overnight Policy Rate மற்றும் SDFR/SLFR corridor — வங்கி வைப்பு மேற்கோள்கள் அல்ல.",
+      "opr": "OPR",
+      "sdfr": "SDFR",
+      "slfr": "SLFR",
+      "srr": "SRR",
+      "liveBadge": "நேரடி board",
+      "seedBadge": "Seed tip",
+      "corridorBadge": "Corridor (seed tip)",
+      "cbslLink": "CBSL கொள்கை பக்கம்",
+      "asOf": "{date} அன்று",
+      "effective": "கொள்கை tip {date}",
+      "seed": "முழு seed — plrates.php கிடைக்கவில்லை",
+      "corridorSeed": "Corridor policy Excel tip-இலிருந்து",
+      "honesty": "2024 நவ 27 முதல் CBSL ஒரே OPR பயன்படுத்துகிறது; SDFR/SLFR corridor மட்டும். வைப்பு அல்லது கடன் ஆலோசனை அல்ல."
     }
   },
   "search": {

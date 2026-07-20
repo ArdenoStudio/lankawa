@@ -1,7 +1,9 @@
 import envData from "@/data/environment-seed.json";
+import { getDistrictCoords } from "@/lib/district-coords";
 import { DISTRICTS } from "@/lib/districts";
 import type {
   AqiBand,
+  ColomboAirQualitySnapshot,
   EnvironmentDistrictStat,
   EnvironmentSnapshot,
 } from "@/lib/types";
@@ -12,6 +14,12 @@ const OPENAQ_COUNTRY_ID = 184;
 const OPENAQ_PM25_PARAMETER_ID = 2;
 const OPENAQ_TIMEOUT_MS = 8_000;
 const OPENAQ_REVALIDATE_SECONDS = 3600;
+
+const OPEN_METEO_AQ_SOURCE_ID = "open_meteo_air_quality";
+const OPEN_METEO_AQ_SOURCE_NAME = "Open-Meteo Air Quality";
+const OPEN_METEO_AQ_TIMEOUT_MS = 8_000;
+const OPEN_METEO_AQ_REVALIDATE_SECONDS = 1800;
+const COLOMBO_SLUG = "colombo";
 
 const seedSnapshot = envData as EnvironmentSnapshot;
 
@@ -63,10 +71,27 @@ interface OpenAQV2LatestResponse {
   }>;
 }
 
+interface OpenMeteoAirQualityResponse {
+  current?: {
+    time?: string;
+    european_aqi?: number;
+    us_aqi?: number;
+    pm10?: number;
+    pm2_5?: number;
+    carbon_monoxide?: number;
+    nitrogen_dioxide?: number;
+    sulphur_dioxide?: number;
+    ozone?: number;
+    uv_index?: number;
+    dust?: number;
+  };
+}
+
 interface LiveReading {
   slug: string;
   pm25: number;
   observedAt: string;
+  aqi?: number;
 }
 
 function getOpenAqApiKey(): string | undefined {
@@ -161,7 +186,7 @@ function aqiBandFromAqi(aqi: number): AqiBand {
 }
 
 function readingToDistrictStat(reading: LiveReading): EnvironmentDistrictStat {
-  const aqi = pm25ToAqi(reading.pm25);
+  const aqi = reading.aqi ?? pm25ToAqi(reading.pm25);
   return {
     slug: reading.slug,
     aqi,
@@ -174,6 +199,104 @@ function latestTimestamp(readings: LiveReading[]): string {
   return readings
     .map((reading) => reading.observedAt)
     .sort((a, b) => Date.parse(b) - Date.parse(a))[0];
+}
+
+function roundOne(value: number): number {
+  return Math.round(value * 10) / 10;
+}
+
+function optionalNumber(value: number | undefined): number | null {
+  return typeof value === "number" && Number.isFinite(value) ? roundOne(value) : null;
+}
+
+function normalizeOpenMeteoObservedAt(time: string | undefined): string {
+  if (!time) {
+    return new Date().toISOString();
+  }
+  if (time.endsWith("Z") || /[+-]\d{2}:\d{2}$/.test(time)) {
+    return time;
+  }
+  // Open-Meteo returns local Asia/Colombo wall time without offset.
+  return `${time}:00+05:30`;
+}
+
+function buildOpenMeteoAirQualityUrl(latitude: number, longitude: number): string {
+  const params = new URLSearchParams({
+    latitude: String(latitude),
+    longitude: String(longitude),
+    current: [
+      "european_aqi",
+      "us_aqi",
+      "pm10",
+      "pm2_5",
+      "carbon_monoxide",
+      "nitrogen_dioxide",
+      "sulphur_dioxide",
+      "ozone",
+      "uv_index",
+      "dust",
+    ].join(","),
+    timezone: "Asia/Colombo",
+  });
+  return `https://air-quality-api.open-meteo.com/v1/air-quality?${params.toString()}`;
+}
+
+/**
+ * Colombo multi-pollutant air quality from Open-Meteo model grid.
+ * Complements OpenAQ station PM2.5 — not a DMC/CEA official reading.
+ */
+export async function fetchColomboOpenMeteoAirQuality(): Promise<ColomboAirQualitySnapshot | null> {
+  const { latitude, longitude } = getDistrictCoords(COLOMBO_SLUG);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), OPEN_METEO_AQ_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(buildOpenMeteoAirQualityUrl(latitude, longitude), {
+      signal: controller.signal,
+      next: { revalidate: OPEN_METEO_AQ_REVALIDATE_SECONDS },
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "LankawaBot/1.0 (+https://github.com/ArdenoStudio/lankawa)",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Open-Meteo air-quality returned ${response.status}`);
+    }
+
+    const data = (await response.json()) as OpenMeteoAirQualityResponse;
+    const current = data.current;
+    if (current?.us_aqi == null || current.pm2_5 == null) {
+      throw new Error("Open-Meteo air-quality response missing us_aqi or pm2_5");
+    }
+
+    const usAqi = Math.round(current.us_aqi);
+    return {
+      sourceId: OPEN_METEO_AQ_SOURCE_ID,
+      sourceName: OPEN_METEO_AQ_SOURCE_NAME,
+      asOf: normalizeOpenMeteoObservedAt(current.time),
+      usAqi,
+      europeanAqi:
+        typeof current.european_aqi === "number"
+          ? Math.round(current.european_aqi)
+          : null,
+      pm25: roundOne(current.pm2_5),
+      pm10: optionalNumber(current.pm10),
+      nitrogenDioxide: optionalNumber(current.nitrogen_dioxide),
+      sulphurDioxide: optionalNumber(current.sulphur_dioxide),
+      ozone: optionalNumber(current.ozone),
+      carbonMonoxide: optionalNumber(current.carbon_monoxide),
+      dust: optionalNumber(current.dust),
+      uvIndex: optionalNumber(current.uv_index),
+      band: aqiBandFromAqi(usAqi),
+      honestyNote:
+        "Open-Meteo air-quality model grid near Colombo — not a DMC/CEA station reading.",
+    };
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 async function fetchOpenAqV3Readings(): Promise<LiveReading[]> {
@@ -286,10 +409,10 @@ async function fetchLiveReadings(): Promise<LiveReading[]> {
 }
 
 export async function getEnvironmentData(): Promise<EnvironmentSnapshot> {
-  const readings = await fetchLiveReadings();
-  if (readings.length === 0) {
-    return seedSnapshot;
-  }
+  const [readings, openMeteoColombo] = await Promise.all([
+    fetchLiveReadings(),
+    fetchColomboOpenMeteoAirQuality(),
+  ]);
 
   const liveByDistrict = new Map<string, LiveReading>();
   for (const reading of readings) {
@@ -299,12 +422,37 @@ export async function getEnvironmentData(): Promise<EnvironmentSnapshot> {
     }
   }
 
+  const openAqCoveredColombo = liveByDistrict.has(COLOMBO_SLUG);
+  if (!openAqCoveredColombo && openMeteoColombo) {
+    liveByDistrict.set(COLOMBO_SLUG, {
+      slug: COLOMBO_SLUG,
+      pm25: openMeteoColombo.pm25,
+      aqi: openMeteoColombo.usAqi,
+      observedAt: openMeteoColombo.asOf,
+    });
+  }
+
+  if (liveByDistrict.size === 0) {
+    return seedSnapshot;
+  }
+
+  const openAqCount = readings.length;
+  const usedOpenMeteoFallback = !openAqCoveredColombo && openMeteoColombo != null;
+  let sourceId = OPENAQ_SOURCE_ID;
+  let sourceName = OPENAQ_SOURCE_NAME;
+
+  if (openAqCount === 0 && usedOpenMeteoFallback) {
+    sourceId = OPEN_METEO_AQ_SOURCE_ID;
+    sourceName = `${OPEN_METEO_AQ_SOURCE_NAME} (Colombo model + seed districts)`;
+  } else if (liveByDistrict.size < seedSnapshot.districts.length) {
+    sourceName = usedOpenMeteoFallback
+      ? `${OPENAQ_SOURCE_NAME} (mixed live + Open-Meteo Colombo + seed)`
+      : `${OPENAQ_SOURCE_NAME} (mixed live + seed coverage)`;
+  }
+
   return {
-    sourceId: OPENAQ_SOURCE_ID,
-    sourceName:
-      liveByDistrict.size === seedSnapshot.districts.length
-        ? OPENAQ_SOURCE_NAME
-        : `${OPENAQ_SOURCE_NAME} (mixed live + seed coverage)`,
+    sourceId,
+    sourceName,
     asOf: latestTimestamp([...liveByDistrict.values()]) ?? new Date().toISOString(),
     districts: seedSnapshot.districts.map((district) => {
       const live = liveByDistrict.get(district.slug);

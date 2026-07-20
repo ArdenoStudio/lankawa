@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CseAnnouncementsStrip } from "@/components/CseAnnouncementsStrip";
 import { CseMarketCard } from "@/components/CseMarketCard";
+import { CseMoversStrip } from "@/components/CseMoversStrip";
 import { DebtCompositionCard } from "@/components/DebtCompositionCard";
 import { CricketCard } from "@/components/CricketCard";
 import {
@@ -21,9 +22,11 @@ import { MarketsPressStrip } from "@/components/MarketsPressStrip";
 import { NcpiInflationCard } from "@/components/NcpiInflationCard";
 import { NwsdbWaterBillCard } from "@/components/NwsdbWaterBillCard";
 import { PaymentsBulletinStrip } from "@/components/PaymentsBulletinStrip";
+import { PolicyRatesStrip } from "@/components/PolicyRatesStrip";
 import { PucslGenerationMixSpark } from "@/components/PucslGenerationMixSpark";
 import { PucslTariffCard } from "@/components/PucslTariffCard";
 import { PulseCard } from "@/components/PulseCard";
+import { BankDepositRatesBoard } from "@/components/BankDepositRatesBoard";
 import { RemittanceBoard } from "@/components/RemittanceBoard";
 import { RemittanceCalculator } from "@/components/RemittanceCalculator";
 import { SupermarketCardDays } from "@/components/SupermarketCardDays";
@@ -33,6 +36,7 @@ import { Link } from "@/i18n/navigation";
 import { getEconomyMacroSnapshot, getFxSeries, getLatestFxRate } from "@/lib/economy";
 import { computeFxAnomaly } from "@/lib/fx-anomaly";
 import { getForeignDebtSnapshot } from "@/lib/foreign-debt";
+import { fetchBankDepositRatesSnapshot } from "@/lib/integrations/bank-deposit-rates";
 import { fetchLatestCbslGoldRate } from "@/lib/integrations/cbsl";
 import { fetchLpgPriceSnapshot } from "@/lib/integrations/lpg";
 import { getFuelHistorySeries, getFuelRevisionSteps } from "@/lib/fuel";
@@ -62,7 +66,10 @@ export default async function EconomyPage({
   const fxSeries = await getFxSeries();
   const fxAnomaly = computeFxAnomaly(fxSeries);
   const latestFxRate = await getLatestFxRate();
-  const remittanceTt = await getRemittanceTtSnapshot();
+  const [remittanceTt, depositRates] = await Promise.all([
+    getRemittanceTtSnapshot(),
+    fetchBankDepositRatesSnapshot(),
+  ]);
   const [fuelHistory, fuelRevisions] = await Promise.all([
     getFuelHistorySeries(90),
     getFuelRevisionSteps(8),
@@ -119,6 +126,8 @@ export default async function EconomyPage({
       <PaymentsBulletinStrip locale={locale} />
 
       <MacroObservationsStrip locale={locale} />
+
+      <PolicyRatesStrip locale={locale} />
 
       <DataSaverGate hideUntilHydrated>
         <CricketCard variant="economy" />
@@ -431,6 +440,27 @@ export default async function EconomyPage({
             tableLabel: t("remittanceBoard.tableLabel"),
           }}
         />
+        <BankDepositRatesBoard
+          snapshot={depositRates}
+          labels={{
+            title: t("depositRates.title"),
+            subtitle: t("depositRates.subtitle"),
+            tenor: t("depositRates.tenor"),
+            best: t("depositRates.best"),
+            seed: t("depositRates.seed"),
+            live: t("depositRates.live"),
+            mixed: t("depositRates.mixed"),
+            bankSeed: t("depositRates.bankSeed"),
+            bankLive: t("depositRates.bankLive"),
+            coverage: t("depositRates.coverage"),
+            asOf: t("depositRates.asOf"),
+            source: t("depositRates.source"),
+            honesty: t("depositRates.honesty"),
+            tableLabel: t("depositRates.tableLabel"),
+            months: t("depositRates.months"),
+            paidIn: t("depositRates.paidIn"),
+          }}
+        />
         <RemittanceCalculator rates={latestFxRate} />
         <SupermarketCardDays compact={false} limit={8} />
       </div>
@@ -443,14 +473,11 @@ export default async function EconomyPage({
           sourceName: t("cse.sourceName"),
           aspi: t("cse.aspi"),
           snp: t("cse.snp"),
-          gainers: t("cse.gainers"),
-          losers: t("cse.losers"),
           marketStatus: t("cse.marketStatus"),
           trades: t("cse.trades"),
           shareVolume: t("cse.shareVolume"),
           turnover: t("cse.turnover"),
           fallbackNote: t("cse.fallbackNote"),
-          noMovers: t("cse.noMovers"),
           sectors: t("cse.sectors"),
           mostActive: t("cse.mostActive"),
           foreign: t("cse.foreign"),
@@ -462,6 +489,23 @@ export default async function EconomyPage({
           sectorsSkipped: t("cse.sectorsSkipped"),
           noActive: t("cse.noActive"),
           highLow: t("cse.highLow"),
+        }}
+      />
+
+      <CseMoversStrip
+        topGainers={cseSnapshot.topGainers}
+        topLosers={cseSnapshot.topLosers}
+        isFallback={cseSnapshot.moversIsFallback}
+        sourceId={cseSnapshot.sourceId}
+        labels={{
+          title: t("cse.moversTitle"),
+          subtitle: t("cse.moversSubtitle"),
+          gainers: t("cse.gainers"),
+          losers: t("cse.losers"),
+          empty: t("cse.noMovers"),
+          seed: t("cse.moversSeed"),
+          honesty: t("cse.moversHonesty"),
+          sourceName: t("cse.sourceName"),
         }}
       />
 
