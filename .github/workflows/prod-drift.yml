@@ -1,0 +1,34 @@
+name: Production Drift
+
+# Fails when https://lankawa.vercel.app is behind main (OpenAPI + smoke routes).
+# No Vercel token required — read-only against the public site.
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      deploy_url:
+        description: Production base URL
+        required: false
+        default: https://lankawa.vercel.app
+
+concurrency:
+  group: prod-drift
+  cancel-in-progress: true
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DEPLOY_URL: ${{ inputs.deploy_url || 'https://lankawa.vercel.app' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check production drift
+        run: node scripts/check-prod-drift.mjs

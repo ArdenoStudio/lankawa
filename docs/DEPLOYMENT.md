@@ -2,15 +2,52 @@
 
 Production deployment targets [Vercel](https://vercel.com) with optional [Supabase](https://supabase.com) or [Neon](https://neon.tech) PostgreSQL. The app **works without any env vars** — database and ingest are enhancements.
 
+**Project:** [vercel.com/suvenseoras-projects/lankawa](https://vercel.com/suvenseoras-projects/lankawa)  
+**Production URL:** [https://lankawa.vercel.app](https://lankawa.vercel.app/en)  
+**GitHub repo:** [ArdenoStudio/lankawa](https://github.com/ArdenoStudio/lankawa) (`main`)
+
+## Connect GitHub → Vercel (required for auto-deploy)
+
+If new merges to `main` do not appear on production, Git is not linked (or production was not redeployed). Fix once:
+
+1. Open [Project → Settings → Git](https://vercel.com/suvenseoras-projects/lankawa/settings/git) (or click **Connect Git Repository** on the overview).
+2. Connect **`ArdenoStudio/lankawa`**. Production branch must be **`main`**.
+3. Confirm **Deploy Hooks / auto-deploy** for the production branch are enabled.
+4. Open **Deployments** → deploy the latest `main` commit to **Production** (or push an empty commit after linking).
+5. Verify sync:
+
+```bash
+npm run check:prod-drift
+```
+
+Expected: all local OpenAPI paths present on production; smoke routes (`/en/news`, `/api/v1/news/clusters`, `/embed/widget.js`, …) return 2xx.
+
+### Backup: GitHub Actions deploy (optional)
+
+If you cannot use Vercel Git integration, set these **GitHub repository secrets** and use `.github/workflows/deploy-vercel.yml`:
+
+| Secret | Where to find it |
+|--------|------------------|
+| `VERCEL_TOKEN` | [vercel.com/account/tokens](https://vercel.com/account/tokens) |
+| `VERCEL_ORG_ID` | Project → Settings → General → Team/Org ID (also in `.vercel/project.json` after `vercel link`) |
+| `VERCEL_PROJECT_ID` | Project → Settings → General → Project ID |
+
+Then either push to `main` or run **Actions → Deploy Vercel → Run workflow**. Prefer Git integration over this backup.
+
+### Drift monitor
+
+`.github/workflows/prod-drift.yml` runs on a schedule and on pushes to `main`. It fails when production OpenAPI/smoke routes lag this repo (no secrets required).
+
 ## Quick checklist
 
-- [ ] Deploy to Vercel (connect GitHub repo, `main` branch)
+- [ ] Connect GitHub repo `ArdenoStudio/lankawa` to Vercel (`main` → Production)
+- [ ] Redeploy Production from latest `main`; `npm run check:prod-drift` passes
 - [ ] Run Supabase/Neon migrations (`001_initial.sql`, `002_phase8.sql`, optional `003_*`, `004_brief_subscribers.sql`)
 - [ ] Set Vercel environment variables (see below)
 - [ ] Confirm cron: Vercel runs `/api/cron/ingest` daily at 06:00 UTC (`vercel.json`)
 - [ ] Optional morning brief: apply `004_brief_subscribers.sql`, set Resend + site URL, confirm `/api/cron/brief-email`
 - [ ] Optional: GitHub Actions ingest workflow with repository secrets
-- [ ] Smoke-test: `/api/v1/status`, `/en/status`, `/en/assistant`
+- [ ] Smoke-test: `/api/v1/status`, `/en/status`, `/en/assistant`, `/en/news`
 
 ## Environment variables
 
