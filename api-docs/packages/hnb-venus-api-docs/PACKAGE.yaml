@@ -1,0 +1,10 @@
+slug: hnb-venus-api-docs
+tier: A
+title: HNB Venus API
+host: https://venus.hnb.lk/api
+category: banks
+status: ready
+summary: '~57 Venus paths: FX, card promos, interest rates tables, pawning.'
+source_docs:
+- docs/BANK_API_DEEP_DIVE_HNB.md
+extract_to: Cookie-Cat21/hnb-venus-api-docs

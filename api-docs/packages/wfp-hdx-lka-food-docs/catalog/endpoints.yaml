@@ -1,0 +1,18 @@
+title: WFP HDX Sri Lanka Food Prices
+host: https://data.humdata.org
+tier: A
+category: food
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/FOOD_API_SOURCES.md
+endpoints:
+- id: wfp_food_prices_lka_csv
+  method: GET
+  url: https://data.humdata.org/dataset/0298c598-d312-4771-b564-f4ac4d831f05/resource/3638f0d6-9969-48cf-a919-1d879d037ec6/download/wfp_food_prices_lka.csv
+  path: /download/wfp_food_prices_lka.csv
+  summary: Full LKA CSV (~34k rows).
+  pagination:
+    style: full_download
+    notes: No server pagination — client chunk/filter
+    lab: true

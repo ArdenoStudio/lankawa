@@ -1,0 +1,25 @@
+title: Visa LK Perks API
+host: https://www.visa.com.lk
+tier: A
+category: cards
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/BANK_API_DEEP_DIVE_VISA_SC_FDRATES.md
+endpoints:
+- id: portal_perks
+  method: POST
+  url: https://www.visa.com.lk/offers/api/portal/portal/perks/
+  path: /offers/api/portal/portal/perks/
+  summary: VMORC perks; needs siteId + perkTypeRequests body.
+  pagination:
+    style: pageRequest
+    params:
+      pageRequest.index: 0-based
+      pageRequest.limit: page size
+    lab: true
+  body_json:
+    siteId: www.visa.com.lk
+    pageRequest:
+      index: 0
+      limit: 20

@@ -1,0 +1,23 @@
+title: Pan Asia Bank Card Offers
+host: https://www.pabc.com
+tier: B
+category: cards
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/AMANA_PABC_SDB_OFFERS_RESEARCH.md
+endpoints:
+- id: card_offers_js
+  method: GET
+  url: https://www.pabc.com/personal/cards/offers
+  path: /personal/cards/offers
+  summary: Offers page; arr_offers JS after Sucuri cookie.
+  pagination:
+    style: client_array
+    lab: true
+    notes: Parse arr_offers after WAF cookie
+- id: senior_fd_html
+  method: GET
+  url: https://www.pabc.com/personal/deposits/senior-citizens-fixed-deposit
+  path: /personal/deposits/senior-citizens-fixed-deposit
+  summary: Senior FD HTML (main ladder may be PDF-only).

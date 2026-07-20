@@ -1,0 +1,14 @@
+title: SANASA Development Bank rates
+host: https://www.sdb.lk
+tier: B
+category: banks
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/AMANA_PABC_SDB_OFFERS_RESEARCH.md
+endpoints:
+- id: rates_page
+  method: GET
+  url: https://www.sdb.lk/rates/
+  path: /rates/
+  summary: SDB rates HTML surfaces.

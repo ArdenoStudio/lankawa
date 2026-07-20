@@ -1,0 +1,17 @@
+title: Promise.lk tenders
+host: https://promise.lk
+tier: B
+category: platform
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/INTEGRATIONS.md
+endpoints:
+- id: procurements_list
+  method: GET
+  url: https://promise.lk/
+  path: /
+  summary: Public procurement listings (scrape/API as probed).
+  pagination:
+    style: html_list
+    lab: true

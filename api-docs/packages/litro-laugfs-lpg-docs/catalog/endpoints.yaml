@@ -1,0 +1,20 @@
+title: Litro + LAUGFS LPG price pages
+host: multi
+tier: B
+category: fuel
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/INTEGRATIONS.md
+- docs/EXISTING_APIS_UNUSED_ENDPOINTS.md
+endpoints:
+- id: litro_prices
+  method: GET
+  url: https://litrogas.com/
+  path: litrogas.com/
+  summary: Litro cylinder price HTML scrape surface.
+- id: laugfs_prices
+  method: GET
+  url: https://www.laugfs.lk/
+  path: laugfs.lk/
+  summary: LAUGFS LPG price HTML.

@@ -1,0 +1,29 @@
+title: Irrigation ArcGIS Gauges
+host: https://services3.arcgis.com
+tier: A
+category: disaster
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/EXISTING_APIS_UNUSED_ENDPOINTS.md
+- docs/WEATHER_DISASTER_APIS_RESEARCH.md
+endpoints:
+- id: gauges_2_view_query
+  method: GET
+  url: https://services3.arcgis.com/J7ZFXmR8rSmQ3FGf/arcgis/rest/services/gauges_2_view/FeatureServer/0/query?where=1%3D1&outFields=*&orderByFields=EditDate%20DESC&resultRecordCount=50&f=json
+  path: /gauges_2_view/FeatureServer/0/query
+  summary: Latest river gauge readings.
+  pagination:
+    style: arcgis
+    params:
+      resultOffset: offset
+      resultRecordCount: page size
+    lab: true
+- id: rainfall_24hr
+  method: GET
+  url: https://services3.arcgis.com/J7ZFXmR8rSmQ3FGf/arcgis/rest/services/24hr_rainfall/FeatureServer/0/query?where=1%3D1&outFields=*&resultRecordCount=50&f=json
+  path: /24hr_rainfall/FeatureServer/0/query
+  summary: 24-hour rainfall FeatureServer.
+  pagination:
+    style: arcgis
+    lab: true

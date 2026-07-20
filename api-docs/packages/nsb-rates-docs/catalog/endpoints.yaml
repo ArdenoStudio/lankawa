@@ -1,0 +1,19 @@
+title: NSB Rates Pages
+host: https://www.nsb.lk
+tier: B
+category: banks
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/BANK_API_DEEP_DIVE_SAMPATH_SEYLAN_NSB.md
+endpoints:
+- id: deposit_rates_html
+  method: GET
+  url: https://www.nsb.lk/rates-tarriffs/deposit-rates/
+  path: /rates-tarriffs/deposit-rates/
+  summary: Deposit rates HTML (note path typo tarriffs).
+- id: exchange_rates_html
+  method: GET
+  url: https://www.nsb.lk/rates-tarriffs/exchange-rates/
+  path: /rates-tarriffs/exchange-rates/
+  summary: FX TT HTML board.

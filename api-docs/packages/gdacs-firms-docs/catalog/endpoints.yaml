@@ -1,0 +1,24 @@
+title: GDACS + NASA FIRMS
+host: multi
+tier: B
+category: disaster
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/WEATHER_DISASTER_APIS_RESEARCH.md
+endpoints:
+- id: gdacs_events_rss
+  method: GET
+  url: https://www.gdacs.org/xml/rss.xml
+  path: /xml/rss.xml
+  summary: GDACS multi-hazard RSS.
+- id: firms_csv_lk
+  method: GET
+  url: https://firms.modaps.eosdis.nasa.gov/api/area/csv/DEMO_KEY/VIIRS_SNPP_NRT/79,5.5,82,10/1
+  path: /api/area/csv/.../VIIRS_SNPP_NRT/{bbox}/{days}
+  summary: FIRMS hotspot CSV for LK bbox (needs MAP_KEY).
+  pagination:
+    style: time_window
+    params:
+      days: 1-10
+    lab: true

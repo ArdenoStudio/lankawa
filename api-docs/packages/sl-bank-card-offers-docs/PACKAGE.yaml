@@ -1,0 +1,10 @@
+slug: sl-bank-card-offers-docs
+tier: B
+title: SL Bank Supermarket Card Offers
+host: multi
+category: cards
+status: ready
+summary: 'Multi-bank card days: Sampath/HNB/Visa JSON + HTML banks.'
+source_docs:
+- docs/CONSUMER_OFFERS_AND_DATA_SURVEY.md
+extract_to: Cookie-Cat21/sl-bank-card-offers-docs

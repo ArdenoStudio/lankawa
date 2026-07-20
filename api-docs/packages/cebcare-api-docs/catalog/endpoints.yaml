@@ -1,0 +1,24 @@
+title: CEB Care API
+host: https://cebcare.ceb.lk
+tier: A
+category: utilities
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/CEB_DEMAND_MGMT_CLUSTERS.md
+endpoints:
+- id: demand_mgmt_schedule
+  method: GET
+  url: https://cebcare.ceb.lk/Incognito/DemandMgmtSchedule
+  path: /Incognito/DemandMgmtSchedule
+  summary: HTML bootstrap for antiforgery token.
+- id: get_demand_mgmt_clusters
+  method: GET
+  url: https://cebcare.ceb.lk/Incognito/GetDemandMgmtClusters?LoadShedGroupId=A
+  path: /Incognito/GetDemandMgmtClusters
+  summary: Clusters for group A–Y; requires verification token.
+  pagination:
+    style: group_id
+    params:
+      LoadShedGroupId: A-Y
+    lab: true

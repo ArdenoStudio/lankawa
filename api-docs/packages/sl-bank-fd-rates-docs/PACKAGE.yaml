@@ -1,0 +1,11 @@
+slug: sl-bank-fd-rates-docs
+tier: B
+title: SL Bank Fixed Deposit Rates
+host: multi
+category: banks
+status: ready
+summary: Unified FD compare schemas + HTML peers.
+source_docs:
+- docs/BANK_FD_API_SCHEMAS.md
+- docs/BANK_AND_API_UNIVERSE.md
+extract_to: Cookie-Cat21/sl-bank-fd-rates-docs

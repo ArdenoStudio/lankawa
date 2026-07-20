@@ -1,0 +1,24 @@
+title: NWSDB Bill Calculator API
+host: https://ebis.waterboard.lk
+tier: A
+category: utilities
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/INTEGRATIONS.md
+endpoints:
+- id: bill_calculator
+  method: POST
+  url: https://ebis.waterboard.lk/api_nwsdb/bill/BillCalculator
+  path: /api_nwsdb/bill/BillCalculator
+  summary: Domestic bill estimate.
+  body_json:
+    CategoryId: 1
+    NoOfDays: 30
+    Consumption: 20
+    NoOfHouses: 1
+- id: get_tariff_adjustment
+  method: GET
+  url: https://ebis.waterboard.lk/api_nwsdb/bill/getTariffAdjustment
+  path: /api_nwsdb/bill/getTariffAdjustment
+  summary: Tariff adjustment metadata.

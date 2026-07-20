@@ -1,0 +1,19 @@
+title: HARTI + CBSL Food Price PDFs
+host: multi
+tier: B
+category: food
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/HARTI_CBSL_FOOD_PDF.md
+endpoints:
+- id: harti_daily_prices_index
+  method: GET
+  url: https://www.harti.gov.lk/index.php/en/market-information/daily-prices
+  path: /market-information/daily-prices
+  summary: HARTI daily price PDF index.
+- id: cbsl_weekly_food
+  method: GET
+  url: https://www.cbsl.gov.lk/en/statistics/economic-indicators
+  path: /en/statistics/economic-indicators
+  summary: CBSL food/economic indicator PDF entry points.

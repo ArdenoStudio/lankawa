@@ -1,0 +1,31 @@
+title: Sampath Bank API
+host: https://www.sampath.lk
+tier: A
+category: banks
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/BANK_API_DEEP_DIVE_SAMPATH_SEYLAN_NSB.md
+- docs/BANK_FD_API_SCHEMAS.md
+endpoints:
+- id: exchange_rates
+  method: GET
+  url: https://www.sampath.lk/api/exchange-rates
+  path: /api/exchange-rates
+  summary: TTBUY/TTSEL FX JSON.
+- id: rates_and_charges_external
+  method: GET
+  url: https://www.sampath.lk/api/rates-and-charges/external
+  path: /api/rates-and-charges/external
+  summary: local.term_and_deposite FD slabs + savings.
+- id: card_promotions_super_markets
+  method: GET
+  url: https://www.sampath.lk/api/card-promotions?category=super_markets&page_number=1&size=20
+  path: /api/card-promotions
+  summary: Supermarket card offers JSON.
+  pagination:
+    style: page_number
+    params:
+      page_number: 1-based
+      size: page size
+    lab: true

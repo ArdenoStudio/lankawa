@@ -1,0 +1,11 @@
+slug: openaq-lk-docs
+tier: A
+title: OpenAQ Sri Lanka
+host: https://api.openaq.org
+category: weather
+status: ready
+summary: OpenAQ Sri Lanka
+source_docs:
+- docs/WEATHER_DISASTER_APIS_RESEARCH.md
+- docs/EXISTING_APIS_UNUSED_ENDPOINTS.md
+extract_to: Cookie-Cat21/openaq-lk-docs

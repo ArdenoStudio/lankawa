@@ -32,6 +32,8 @@ const MODULE_PATHS = [
   "status",
   "developers",
   "developers/openapi",
+  "developers/api-catalog",
+  "developers/api-catalog/pagination-lab",
   "embed",
   "assistant",
   "ardeno",

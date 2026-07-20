@@ -1,0 +1,11 @@
+slug: open-meteo-lk-docs
+tier: B
+title: Open-Meteo Sri Lanka Recipes
+host: https://api.open-meteo.com
+category: weather
+status: ready
+summary: Colombo forecast, flood, marine, air-quality wrappers.
+source_docs:
+- docs/OCTANE_OPENMETEO_UNUSED_PROBE.md
+- docs/WEATHER_DISASTER_APIS_RESEARCH.md
+extract_to: Cookie-Cat21/open-meteo-lk-docs

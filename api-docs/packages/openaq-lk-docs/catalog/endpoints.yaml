@@ -1,0 +1,21 @@
+title: OpenAQ Sri Lanka
+host: https://api.openaq.org
+tier: A
+category: weather
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/WEATHER_DISASTER_APIS_RESEARCH.md
+- docs/EXISTING_APIS_UNUSED_ENDPOINTS.md
+endpoints:
+- id: locations_lk
+  method: GET
+  url: https://api.openaq.org/v3/locations?countries_id=207&limit=100
+  path: /v3/locations
+  summary: LK monitoring locations (country id may change).
+  pagination:
+    style: limit_page
+    params:
+      limit: page size
+      page: 1-based
+    lab: true

@@ -1,0 +1,10 @@
+slug: amana-union-cargills-bank-docs
+tier: B
+title: Amana / Union / Cargills Bank rates & offers
+host: multi
+category: banks
+status: ready
+summary: Amana / Union / Cargills Bank rates & offers
+source_docs:
+- docs/BANK_API_DEEP_DIVE_NTB_AMANA_UNION_CARGILLS.md
+extract_to: Cookie-Cat21/amana-union-cargills-bank-docs

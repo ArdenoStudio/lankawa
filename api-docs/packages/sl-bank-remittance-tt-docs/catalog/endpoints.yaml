@@ -1,0 +1,15 @@
+title: SL Bank Remittance TT Rates
+host: multi
+tier: B
+category: banks
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/BANK_AND_API_UNIVERSE.md
+endpoints:
+- id: pack_overview
+  method: GET
+  url: https://www.combank.lk/api/exchange-rates
+  path: (multi-host pack)
+  summary: 'Aggregator: ComBank/Sampath/HNB/Seylan/NSB/DFCC/BOC/People''s/NDB TT boards.'
+  pagination: null

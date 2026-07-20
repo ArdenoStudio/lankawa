@@ -1,0 +1,15 @@
+title: LECO Outage Notices
+host: https://www.leco.lk
+tier: B
+category: utilities
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/INTEGRATIONS.md
+- docs/WEATHER_DISASTER_APIS_RESEARCH.md
+endpoints:
+- id: interruption_notices
+  method: GET
+  url: https://www.leco.lk/pages_e.php?id=45
+  path: /pages_e.php?id=45
+  summary: LECO interruption notices HTML.

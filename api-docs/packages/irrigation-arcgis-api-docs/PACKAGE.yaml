@@ -1,0 +1,11 @@
+slug: irrigation-arcgis-api-docs
+tier: A
+title: Irrigation ArcGIS Gauges
+host: https://services3.arcgis.com
+category: disaster
+status: ready
+summary: gauges_2_view FeatureServer + rainfall/flood siblings.
+source_docs:
+- docs/EXISTING_APIS_UNUSED_ENDPOINTS.md
+- docs/WEATHER_DISASTER_APIS_RESEARCH.md
+extract_to: Cookie-Cat21/irrigation-arcgis-api-docs

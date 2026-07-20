@@ -1,0 +1,10 @@
+slug: pabc-card-offers-docs
+tier: B
+title: Pan Asia Bank Card Offers
+host: https://www.pabc.com
+category: cards
+status: ready
+summary: arr_offers JS after Sucuri cookie + senior FD HTML.
+source_docs:
+- docs/AMANA_PABC_SDB_OFFERS_RESEARCH.md
+extract_to: Cookie-Cat21/pabc-card-offers-docs
