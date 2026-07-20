@@ -26,6 +26,8 @@ export function RemittanceBoard({
     asOf: string;
     source: string;
     honesty: string;
+    metricsLabel: string;
+    tableLabel: string;
   };
 }) {
   const liveCount = snapshot.liveCount;
@@ -47,10 +49,18 @@ export function RemittanceBoard({
     .replace("{seed}", String(seedCount));
 
   return (
-    <section className="space-y-4">
+    <section
+      className="lk-motion-fade-up space-y-4"
+      aria-labelledby="remittance-board-heading"
+    >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 className="text-xl font-semibold text-white">{labels.title}</h2>
+          <h2
+            id="remittance-board-heading"
+            className="lk-motion-underline text-xl font-semibold text-white"
+          >
+            {labels.title}
+          </h2>
           <p className="mt-1 text-sm text-slate-400">{labels.subtitle}</p>
           <p className="mt-1 text-xs text-slate-500">{coverage}</p>
         </div>
@@ -68,8 +78,15 @@ export function RemittanceBoard({
         </div>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        <div className="rounded-xl border border-white/25 bg-black/20 p-3 ring-1 ring-inset ring-white/10">
+      <div
+        className="grid gap-3 sm:grid-cols-2"
+        role="group"
+        aria-label={labels.metricsLabel}
+      >
+        <div
+          className="lk-motion-slide-in rounded-xl border border-white/25 bg-black/20 p-3 ring-1 ring-inset ring-white/10"
+          style={{ animationDelay: "80ms" }}
+        >
           <p className="text-xs text-slate-500">{labels.bestBuy}</p>
           <p className="mt-1 text-lg font-semibold text-white">
             {snapshot.bestBuy.name}
@@ -87,7 +104,10 @@ export function RemittanceBoard({
             {snapshot.bestBuy.buyLkr.toFixed(2)} LKR
           </p>
         </div>
-        <div className="rounded-xl border border-white/25 bg-black/20 p-3 ring-1 ring-inset ring-white/10">
+        <div
+          className="lk-motion-slide-in rounded-xl border border-white/25 bg-black/20 p-3 ring-1 ring-inset ring-white/10"
+          style={{ animationDelay: "140ms" }}
+        >
           <p className="text-xs text-slate-500">{labels.bestSell}</p>
           <p className="mt-1 text-lg font-semibold text-white">
             {snapshot.bestSell.name}
@@ -107,8 +127,8 @@ export function RemittanceBoard({
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
-        <table className="min-w-full text-left text-sm">
+      <div className="lk-motion-slide-in overflow-x-auto rounded-2xl border border-white/10 bg-white/5" style={{ animationDelay: "200ms" }}>
+        <table className="min-w-full text-left text-sm" aria-label={labels.tableLabel}>
           <thead className="border-b border-white/10 text-xs uppercase tracking-wide text-slate-500">
             <tr>
               <th className="px-4 py-3 font-medium">{labels.bank}</th>

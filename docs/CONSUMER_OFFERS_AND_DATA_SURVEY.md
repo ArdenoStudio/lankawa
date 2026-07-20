@@ -11,13 +11,16 @@ Detailed bank/sector notes live in sibling docs listed in §5.
 
 | Area | Status |
 |------|--------|
-| Bank remittance TT | **7 banks** (`remittance-banks.ts`): ComBank/HNB/Seylan/Sampath JSON + People's/NDB/NSB HTML; per-bank seed fallback |
+| Bank remittance TT | **Shipped — 9 banks** (`remittance-banks.ts` → `/economy` board): ComBank/HNB/Seylan/Sampath JSON + People's/NDB/NSB/BOC/DFCC HTML; per-bank `isSeed` + board live/mixed/seed coverage; best buy/sell prefer live; BOC POST FX API still 500 — wired via `rates-tariff` HTML instead |
 | Food / retail prices | FoodLK hub/staples → **WFP hardened** (drop fuel, prefer fresher staples, stale sugar/flour flags, loud corpus as-of) → SPAR → Life → seed |
-| Supermarket card days | **Multi-bank live** (`card-offers.ts` → `/food`, COL, economy): Sampath/HNB JSON + Visa LK perks (Glomark/supermarket `merchantName`) + ComBank/DFCC/Pan Asia/People's/NTB HTML; weekday filter + `card_day` alert pins; seed incl. PABC/DFCC/Visa |
-| Irrigation gauges | **Shipped** ArcGIS FeatureServer on `/disaster` (`irrigation-gauges.ts`) |
+| Supermarket card days | **Shipped** (`card-offers.ts`): Sampath/HNB/Visa JSON + ComBank/DFCC/Pan Asia/People's/NTB MC + **NTB Amex** + **NDB** + **BOC** + **Amana** HTML; `mergeTodaysLiveWithSeed` + `rankTopCardOffers`; **compact 1–3 strip** on `/food`+COL; economy `limit=8`; MorningDelta chip; `card_day` pins; seed fallback (WAF/empty → seed for BOC/Amex) |
+| CBSL payments bulletin | **Shipped** quarterly seed strip on `/economy` (`payments-bulletin.ts` + `PaymentsBulletinStrip` + `cbsl-payments-bulletin-seed.json`; CEFTS/JustPay/LANKAQR 4Q 2025) |
+| Singer EMI | **Shipped** optional household chip on `/economy` (`singer-emi.ts` + `HouseholdEmiStrip`; Softlogic SKU crawl parked) |
+| Irrigation gauges | **Shipped** ArcGIS FeatureServer on `/disaster` (`irrigation-gauges.ts`); also flood dual-path when lk-flood-api stale |
 | CEB demand clusters | **Shipped** `GetDemandMgmtClusters` on `/economy` (`demand-mgmt-clusters.ts`) |
 | NWSDB water bill | **Shipped** BillCalculator + seed slabs on `/economy` (`nwsdb.ts`) |
-| CSE deepen | **Shipped** notices strip (`GET /notifications` + `POST /approvedAnnouncement`) + watchlist `companyInfoSummery` via `/api/v1/cse/quotes` |
+| CSE deepen | **Shipped** notices strip (`GET /notifications` + `POST /approvedAnnouncement`) + watchlist `companyInfoSummery` via `/api/v1/cse/quotes` (+ GICS valuation join) |
+| Parked this wave | MyPromo / hotels / EMI hospitals / HSBC / telco packs / PickMe / GTFS / wallets-as-offers |
 
 ---
 
@@ -97,7 +100,8 @@ Cron → Sampath JSON + HNB Venus JSON + Visa LK perks JSON (supermarket merchan
 | **Seylan** | `…/api/exchange-rates-get-value/USD` |
 | **Sampath** | Switch scrape → `sampath.lk/api/exchange-rates` (`TTBUY`/`TTSEL`) |
 | **NDB** | Fix URL → `/rates/exchange-rates` |
-| **BOC / DFCC** | HTML / embedded RSC |
+| **BOC** | HTML `boc.lk/rates-tariff` (TT last pair); POST `/api/exchange-rates` still 500 — not wired |
+| **DFCC** | HTML `dfcc.lk/rates-and-tariff/exchange-rates` (TT Buying + DD/TT Selling) |
 
 ---
 

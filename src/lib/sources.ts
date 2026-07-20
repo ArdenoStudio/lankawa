@@ -136,6 +136,26 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["inflation_ccpi", "gdp_growth", "forex_reserves", "usd_lkr_series"],
   },
   {
+    id: "cbsl_payments_bulletin",
+    name: "CBSL Payments Bulletin",
+    category: "economy",
+    url: "https://www.cbsl.gov.lk/en/publications/other-publications/statistical-publications/payments-bulletin",
+    cadenceMinutes: 129600,
+    adapter: "seed",
+    description:
+      "Quarterly payment and settlement systems statistics — CEFTS, JustPay, and LANKAQR volume/value from the English Payments Bulletin PDF.",
+    methodology:
+      "Curated seed extract from the tip CBSL Payments Bulletin PDF (Tables 18, 21–24; LankaPay). Cadence is quarterly — never presented as a live rails dashboard. Prefer bulletin tables over lankapay.net marketing counters. PDF tip and seed path: docs/CBSL_PAYMENTS_BULLETIN.md.",
+    metrics: [
+      "cefts_volume",
+      "cefts_value",
+      "justpay_volume",
+      "justpay_value",
+      "lankaqr_volume",
+      "lankaqr_merchants",
+    ],
+  },
+  {
     id: "dcs_ncpi",
     name: "Department of Census and Statistics — NCPI",
     category: "economy",
@@ -816,7 +836,7 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Public indicative USD→LKR telegraphic-transfer style buy/sell bands from major Sri Lankan banks.",
     methodology:
-      "Timed fetches via `remittance-banks.ts` of public bank FX surfaces: Commercial (`combank.lk/api/exchange-rates` TT columns), HNB (`venus.hnb.lk/api/get_exchange_rates_contents_web`), Seylan (`seylan.lk/api/exchange-rates-get-value/USD`), Sampath (`sampath.lk/api/exchange-rates` TTBUY/TTSEL), plus HTML scrape for People's (`peoplesbank.lk/exchange-rates/` TT columns), NDB (`ndbbank.com/rates/exchange-rates` TT columns), and NSB (`nsb.lk/rates-tarriffs/nsb-exchange-rates/` TT columns). BOC's POST exchange-rates API is not wired (unstable 500). Per-bank isSeed when that bank fails; board isSeed only when all banks fail (full seed). LankawaBot UA + short timeouts. Lankawa is not affiliated with these banks — quotes are public indicative only, not advice or a remittance product. Not CBSL official rates; fees and corridors differ by product. Pair with the CBSL remittance calculator on /economy.",
+      "Timed fetches via `remittance-banks.ts` of public bank FX surfaces: Commercial (`combank.lk/api/exchange-rates` TT columns), HNB (`venus.hnb.lk/api/get_exchange_rates_contents_web`), Seylan (`seylan.lk/api/exchange-rates-get-value/USD`), Sampath (`sampath.lk/api/exchange-rates` TTBUY/TTSEL), plus HTML scrape for People's (`peoplesbank.lk/exchange-rates/` TT columns), NDB (`ndbbank.com/rates/exchange-rates` TT columns), NSB (`nsb.lk/rates-tarriffs/nsb-exchange-rates/` TT columns), BOC (`boc.lk/rates-tariff` Telegraphic/PFCA/BFCA columns — POST `/api/exchange-rates` still 500, not wired), and DFCC (`dfcc.lk/rates-and-tariff/exchange-rates` TT Buying / DD·TT Selling). Per-bank isSeed when that bank fails; board isSeed only when all banks fail (full seed). LankawaBot UA + short timeouts. Lankawa is not affiliated with these banks — quotes are public indicative only, not advice or a remittance product. Not CBSL official rates; fees and corridors differ by product. Pair with the CBSL remittance calculator on /economy.",
     metrics: ["remittance_tt_buy", "remittance_tt_sell"],
   },
   {
@@ -829,8 +849,21 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Public indicative supermarket card promotions from major Sri Lankan banks — Keells, Cargills, SPAR, Glomark, LAUGFS day-of-week discounts.",
     methodology:
-      "Server-side fetch via `card-offers.ts` of public bank/network offer surfaces: Sampath `card-promotions?category=super_markets`, HNB Venus `get_all_web_card_promos` (supermarket merchant filter), Visa LK `POST /offers/api/portal/portal/perks/` (VMORC; `siteId=www_visa_com_lk` + supermarket `merchantName` filter — Glomark Thu etc.), ComBank `/rewards-promotions` HTML, Pan Asia `arr_offers` (Sucuri), DFCC supermarket hub, People's supermarket category HTML, and NTB promotions/hub HTML. Weekday cadence parsed from offer copy when present; otherwise validTo >= today. Keeps today's live rows and fills missing merchant/weekday slots from seed (per-offer isSeed); full seed only when no live offer matches today. Lankawa is not affiliated with the banks or merchants — offers are public indicative marketing; confirm at checkout and on the issuer/network site. Surfaced on `/cost-of-living`, `/food`, and `/economy`; home morning-delta strip links to `/food`.",
+      "Server-side fetch via `card-offers.ts` of public bank/network offer surfaces: Sampath `card-promotions?category=super_markets`, HNB Venus `get_all_web_card_promos` (supermarket merchant filter), Visa LK `POST /offers/api/portal/portal/perks/` (VMORC; `siteId=www_visa_com_lk` + supermarket `merchantName` filter — Glomark Thu etc.), ComBank `/rewards-promotions` HTML, Pan Asia `arr_offers` (Sucuri), DFCC supermarket hub, People's supermarket category HTML, NTB Mastercard promotions/hub HTML, NTB Amex `americanexpress.lk/en/offers/supermarket-offers` hub+detail HTML (browser UA; Imperva WAF → seed), NDB `/cards/card-offers/supermarkets` HTML slice, BOC `/personal-banking/card-offers` HTML (browser UA; CloudFront WAF → seed), and Amana debit `data-ics` Glomark Wednesday slice. Weekday cadence parsed from offer copy when present; otherwise validTo >= today. Keeps today's live rows and fills missing merchant/weekday slots from seed (per-offer isSeed); full seed only when no live offer matches today. Lankawa is not affiliated with the banks or merchants — offers are public indicative marketing; confirm at checkout and on the issuer/network site. Surfaced on `/cost-of-living`, `/food`, and `/economy`; home morning-delta strip links to `/food`.",
     metrics: ["supermarket_card_days"],
+  },
+  {
+    id: "singer_emi",
+    name: "Singer Sri Lanka — household EMI",
+    category: "economy",
+    url: "https://www.singersl.com/json-get-emi",
+    cadenceMinutes: 360,
+    adapter: "api",
+    description:
+      "Public multi-bank EMI / installment options for a featured Singer appliance sample SKU — not grocery card days.",
+    methodology:
+      "Server-side fetch via `singer-emi.ts`: `GET /json-get-emi?product_id=&product_price=` then capped `json-get-single-emi` per bank (max 6). Seed fallback with isSeed honesty when Imperva/WAF or timeouts. Monthly amounts are indicative for the sample SKU price only — confirm on singersl.com. Softlogic `variation-detail` per-SKU crawl intentionally skipped (too heavy for a thin chip). Abans/Arpico merchant EMI JSON not available — parked for bank IPP ingest. Surfaced on `/economy` under household tariffs.",
+    metrics: ["household_emi_banks", "household_emi_tenors"],
   },
   {
     id: "news_rss",

@@ -1,0 +1,30 @@
+{
+  "sourceId": "cbsl_payments_bulletin",
+  "sourceName": "CBSL Payments Bulletin",
+  "period": "2025-Q4",
+  "periodLabel": "Fourth Quarter 2025",
+  "asOf": "2026-05-21",
+  "periodEnd": "2025-12-31",
+  "isSeed": true,
+  "cadence": "quarterly",
+  "bulletinUrl": "https://www.cbsl.gov.lk/sites/default/files/Payments_Bulletin_4Q2025_e.pdf",
+  "indexUrl": "https://www.cbsl.gov.lk/en/publications/other-publications/statistical-publications/payments-bulletin",
+  "cefts": {
+    "volumeThousand": 71411,
+    "valueRsBillion": 6417,
+    "members": 50
+  },
+  "justpay": {
+    "volumeThousand": 7269,
+    "valueRsBillion": 38,
+    "enabledApps": 25
+  },
+  "lankaqr": {
+    "domesticVolumeThousand": 266,
+    "domesticValueRsMillion": 1330,
+    "merchantsRegistered": 460990,
+    "globalVolume": 17368,
+    "globalValueRsMillion": 296.2
+  },
+  "note": "Seed extract from CBSL Payments Bulletin 4Q 2025 (Tables 18, 21–24; LankaPay). Quarterly PDF only — not a live rails dashboard. Prefer bulletin tables over lankapay.net marketing counters."
+}

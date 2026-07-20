@@ -1,0 +1,71 @@
+{
+  "sourceId": "singer_emi",
+  "sourceName": "Singer Sri Lanka — household EMI",
+  "asOf": "2026-07-20",
+  "methodologyNote": "Curated seed from singersl.com json-get-emi / json-get-single-emi for a featured sample appliance SKU. Monthly amounts are indicative for that sample price only — confirm on singersl.com. Softlogic per-SKU variation-detail crawl parked (too heavy for a thin chip). Abans/Arpico EMI parked (no merchant EMI JSON; bank IPP later).",
+  "sampleProduct": {
+    "productId": 7884,
+    "productPriceLkr": 53699,
+    "label": "Sample appliance (Singer storefront SKU 7884)",
+    "productUrl": "https://www.singersl.com/bank-offers"
+  },
+  "banks": [
+    {
+      "id": 1,
+      "name": "Sampath Bank",
+      "callConvert": false,
+      "tenorsMonths": [6, 12, 20, 24],
+      "sampleMonthlyFormatted": ["5,400", "2,700", "1,620", "1,350"]
+    },
+    {
+      "id": 9,
+      "name": "Com Bank",
+      "callConvert": false,
+      "tenorsMonths": [6, 12, 18, 24, 36],
+      "sampleMonthlyFormatted": ["5,400", "2,700", "1,800", "1,350", "900"]
+    },
+    {
+      "id": 7,
+      "name": "DFCC",
+      "callConvert": true,
+      "tenorsMonths": [12],
+      "sampleMonthlyFormatted": ["2,700"]
+    },
+    {
+      "id": 10,
+      "name": "Peoples Bank",
+      "callConvert": true,
+      "tenorsMonths": [3, 6, 12, 18, 24, 30, 36],
+      "sampleMonthlyFormatted": ["10,800", "5,400", "2,700", "1,800", "1,350", "1,080", "900"]
+    },
+    {
+      "id": 11,
+      "name": "Seylan Bank",
+      "callConvert": true,
+      "tenorsMonths": [24],
+      "sampleMonthlyFormatted": ["1,350"]
+    },
+    {
+      "id": 6,
+      "name": "HNB",
+      "callConvert": true,
+      "tenorsMonths": [3, 6, 12, 24],
+      "sampleMonthlyFormatted": ["10,800", "5,400", "2,700", "1,350"]
+    },
+    {
+      "id": 8,
+      "name": "NDB",
+      "callConvert": true,
+      "tenorsMonths": [12],
+      "sampleMonthlyFormatted": ["2,700"]
+    },
+    {
+      "id": 21,
+      "name": "MintPay",
+      "callConvert": false,
+      "tenorsMonths": [3],
+      "sampleMonthlyFormatted": ["10,800"]
+    }
+  ],
+  "defaultTenorsMonths": [6, 12, 20, 24]
+}

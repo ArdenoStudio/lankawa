@@ -97,6 +97,22 @@ const MONTHS: Record<string, number> = {
   december: 12,
 };
 
+/** Abbreviated English months (BOC expiration cells: "30 Jul 2026"). */
+const SHORT_MONTHS: Record<string, number> = {
+  jan: 1,
+  feb: 2,
+  mar: 3,
+  apr: 4,
+  may: 5,
+  jun: 6,
+  jul: 7,
+  aug: 8,
+  sep: 9,
+  oct: 10,
+  nov: 11,
+  dec: 12,
+};
+
 const SAMPATH_URL =
   "https://www.sampath.lk/api/card-promotions?category=super_markets&page_number=1&size=20";
 const COMBANK_URL = "https://www.combank.lk/rewards-promotions";
@@ -107,6 +123,14 @@ const NTB_SUPERMARKET_HUB_URL =
   "https://www.nationstrust.com/promotions/enjoy-exclusive-savings-on-supermarkets";
 const PABC_URL = "https://www.pabcbank.com/card-offers/";
 const DFCC_URL = "https://www.dfcc.lk/cards/supermarkets-credit";
+const BOC_URL = "https://www.boc.lk/personal-banking/card-offers";
+const AMANA_SUPERMARKET_URL =
+  "https://www.amanabank.lk/personal/services/visa-debit-card/offers/supermarket.html";
+const NTB_AMEX_SUPERMARKET_URL =
+  "https://www.americanexpress.lk/en/offers/supermarket-offers";
+const NDB_CARD_OFFERS_URL = "https://www.ndbbank.com/cards/card-offers";
+const NDB_SUPERMARKET_OFFERS_URL =
+  "https://www.ndbbank.com/cards/card-offers/supermarkets";
 const PABC_SUPERMARKET_CAT = "18";
 /** Visa LK VMORC portal — POST body reconstructed from offers SPA (`main.*.js`). */
 const VISA_PERKS_URL =
@@ -291,10 +315,13 @@ export function parseWeekdayHints(text: string): string[] {
 export function parseSpecificOfferDates(text: string): string[] {
   const cleaned = stripHtml(text);
   // Skip pure end-date windows ("till 25th July 2026") — those are not shopping days.
+  // Require a second day after &/, so "LKR 1,000" does not look like "1st & …".
   if (
     /\b(?:till|until|valid until)\b/i.test(cleaned) &&
-    !/\bon\s+\d{1,2}/i.test(cleaned) &&
-    !/\b\d{1,2}(?:st|nd|rd|th)?\s*[&,]/i.test(cleaned)
+    !/\bon\s+\d{1,2}(?:st|nd|rd|th)?\b/i.test(cleaned) &&
+    !/\b\d{1,2}(?:st|nd|rd|th)?\s*(?:[&,/]|and)\s*\d{1,2}(?:st|nd|rd|th)?\b/i.test(
+      cleaned,
+    )
   ) {
     return [];
   }
@@ -497,6 +524,156 @@ export function filterTodaysOffers(
       const hint = parseWeekdayHint(offer.title);
       return hint ? { ...offer, weekdayHint: hint } : offer;
     });
+}
+
+/** Leading discount percent from labels like "Up to 20% Off" → 20; else 0. */
+export function parseDiscountPercent(label: string): number {
+  const match = label.match(/(\d+)\s*%/);
+  if (!match) {
+    return 0;
+  }
+  const n = Number(match[1]);
+  return Number.isFinite(n) ? n : 0;
+}
+
+/** Compact bank token for list strips (HNB, Sampath, ComBank, …). */
+export function shortBankLabel(bank: string): string {
+  const raw = bank.trim();
+  const lower = raw.toLowerCase();
+  if (/^hnb\b|hatton\s+national/i.test(lower)) {
+    return "HNB";
+  }
+  if (/sampath/i.test(lower)) {
+    return "Sampath";
+  }
+  if (/commercial|combank/i.test(lower)) {
+    return "ComBank";
+  }
+  if (/pan\s*asia|pabc/i.test(lower)) {
+    return "PABC";
+  }
+  if (/people'?s/i.test(lower)) {
+    return "People's";
+  }
+  if (
+    (/nations?\s*trust|\bntb\b/i.test(lower) || /american\s*express|\bamex\b/i.test(lower)) &&
+    /american\s*express|\bamex\b/i.test(lower)
+  ) {
+    return "NTB Amex";
+  }
+  if (/nations?\s*trust|\bntb\b/i.test(lower)) {
+    return "NTB";
+  }
+  if (/\bdfcc\b/i.test(lower)) {
+    return "DFCC";
+  }
+  if (/\bvisa\b/i.test(lower)) {
+    return "Visa";
+  }
+  if (/\bboc\b|bank\s+of\s+ceylon/i.test(lower)) {
+    return "BOC";
+  }
+  if (/\bndb\b/i.test(lower)) {
+    return "NDB";
+  }
+  if (/amana/i.test(lower)) {
+    return "Amana";
+  }
+  // First word / already-short brand.
+  const first = raw.split(/\s+/)[0] ?? raw;
+  return first.length <= 12 ? first : raw.slice(0, 12);
+}
+
+const WEEKDAY_SHORT: Record<string, string> = {
+  sunday: "Sun",
+  monday: "Mon",
+  tuesday: "Tue",
+  wednesday: "Wed",
+  thursday: "Thu",
+  friday: "Fri",
+  saturday: "Sat",
+  weekdays: "Wkdy",
+  weekend: "Wkend",
+};
+
+/** Abbreviated weekday for compact rows (Mon, Tue, …). */
+export function shortWeekdayLabel(hint: string | null | undefined): string | null {
+  if (!hint) {
+    return null;
+  }
+  return WEEKDAY_SHORT[hint.toLowerCase()] ?? hint.slice(0, 3);
+}
+
+/** Compact discount token: "20% Off" / "Up to 30% Discount" → "20%" / "30%". */
+export function compactDiscountLabel(label: string): string {
+  const pct = parseDiscountPercent(label);
+  return pct > 0 ? `${pct}%` : label.trim();
+}
+
+/**
+ * Rank supermarket card offers for a thin strip: prefer weekday match,
+ * higher discount %, unique merchants, and live rows over seed.
+ */
+export function rankTopCardOffers(
+  offers: CardOffer[],
+  limit = 3,
+  now: Date = new Date(),
+): CardOffer[] {
+  if (limit <= 0 || offers.length === 0) {
+    return [];
+  }
+
+  const todayWeekday = colomboWeekday(now);
+
+  const scored = offers.map((offer) => {
+    const hint = offer.weekdayHint ?? parseWeekdayHint(offer.title);
+    const weekdayMatch = matchesWeekdayHint(hint, todayWeekday) ? 1 : 0;
+    const live = offer.isSeed ? 0 : 1;
+    const discount = parseDiscountPercent(offer.discountLabel);
+    return { offer, weekdayMatch, live, discount };
+  });
+
+  scored.sort((a, b) => {
+    if (a.weekdayMatch !== b.weekdayMatch) {
+      return b.weekdayMatch - a.weekdayMatch;
+    }
+    if (a.live !== b.live) {
+      return b.live - a.live;
+    }
+    if (a.discount !== b.discount) {
+      return b.discount - a.discount;
+    }
+    return a.offer.id.localeCompare(b.offer.id);
+  });
+
+  const seenMerchants = new Set<string>();
+  const out: CardOffer[] = [];
+  for (const { offer } of scored) {
+    const token = merchantCoverageToken(offer.merchant);
+    if (seenMerchants.has(token)) {
+      continue;
+    }
+    seenMerchants.add(token);
+    out.push(offer);
+    if (out.length >= limit) {
+      break;
+    }
+  }
+  return out;
+}
+
+/** `Keells · HNB · 20% · Mon` — compact strip line. */
+export function formatCompactOfferLine(offer: CardOffer): string {
+  const parts = [
+    offer.merchant.trim(),
+    shortBankLabel(offer.bank),
+    compactDiscountLabel(offer.discountLabel),
+  ];
+  const day = shortWeekdayLabel(offer.weekdayHint);
+  if (day) {
+    parts.push(day);
+  }
+  return parts.join(" · ");
 }
 
 function msToDateIso(ms: unknown): string | null {
@@ -1195,6 +1372,473 @@ export function parseNtbSupermarketHubHtml(html: string, asOf: string): CardOffe
   return offers;
 }
 
+/** Parse "30 Jul 2026" / "30 July 2026" style bank expiration cells. */
+export function parseLooseDate(text: string): string | null {
+  const cleaned = stripHtml(text);
+  const named = cleaned.match(
+    /\b(\d{1,2})(?:st|nd|rd|th)?\s+(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{4})\b/i,
+  );
+  if (named) {
+    const day = Number(named[1]);
+    const month = MONTHS[named[2].toLowerCase()];
+    const year = Number(named[3]);
+    if (month && day >= 1 && day <= 31) {
+      return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    }
+  }
+  const short = cleaned.match(
+    /\b(\d{1,2})(?:st|nd|rd|th)?\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{4})\b/i,
+  );
+  if (short) {
+    const day = Number(short[1]);
+    const month = SHORT_MONTHS[short[2].toLowerCase().slice(0, 3)];
+    const year = Number(short[3]);
+    if (month && day >= 1 && day <= 31) {
+      return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    }
+  }
+  return parseValidToFromText(cleaned);
+}
+
+/**
+ * BOC `/personal-banking/card-offers` supermarket swiper cards.
+ * CloudFront WAF may block datacenter IPs — caller uses browser UA; empty → seed.
+ */
+export function parseBocCardOffersHtml(html: string, asOf: string): CardOffer[] {
+  if (/Request blocked|awsWafCookieDomainList|captcha-delivery/i.test(html)) {
+    // Challenge/block shells rarely include product cards; bail early for seed.
+    if (!/\/supermarkets\/[^"'>\s]+\/product/i.test(html)) {
+      return [];
+    }
+  }
+
+  const offers: CardOffer[] = [];
+  const seen = new Set<string>();
+  const anchorRe =
+    /<a\b([^>]*href="((?:https?:\/\/(?:www\.)?boc\.lk)?\/personal-banking\/card-offers\/supermarkets\/[^"]+)"[^>]*)>([\s\S]*?)<\/a>/gi;
+
+  let match: RegExpExecArray | null;
+  while ((match = anchorRe.exec(html)) != null) {
+    const href = match[2] ?? "";
+    const body = match[3] ?? "";
+    if (!/\/product/i.test(href)) {
+      continue;
+    }
+
+    const merchantRaw = stripHtml(body.match(/<h4[^>]*>([\s\S]*?)<\/h4>/i)?.[1] ?? "");
+    const description = stripHtml(
+      body.match(/<div class="description">([\s\S]*?)<\/div>/i)?.[1] ?? "",
+    );
+    const badge = stripHtml(
+      body.match(/<div class="offer">([\s\S]*?)<\/div>/i)?.[1] ?? "",
+    );
+    const expiration = stripHtml(
+      body.match(/Expiration date\s*:?\s*<\/td>\s*<td[^>]*>([\s\S]*?)<\/td>/i)?.[1] ??
+        "",
+    );
+    const merchant =
+      resolveMerchantFromText(merchantRaw, description, href) ||
+      merchantRaw ||
+      "Supermarket";
+    const title = (description || merchantRaw || merchant).slice(0, 180);
+    if (!title || !isSupermarketPromo(title, merchant) || !isShoppingDayPromo(title)) {
+      continue;
+    }
+
+    const blob = `${title} ${description} ${expiration}`;
+    const weekdays = parseWeekdayHints(blob);
+    const validTo =
+      parseLooseDate(expiration) ??
+      parseValidToFromText(blob);
+    const sourceUrl = href.startsWith("http") ? href : `https://www.boc.lk${href}`;
+    const slug = href
+      .replace(/^https?:\/\/[^/]+/, "")
+      .replace(/\W+/g, "-")
+      .replace(/-+/g, "-")
+      .slice(0, 72);
+
+    for (const offer of expandWeekdayOffers(
+      {
+        id: `boc-${slug}`,
+        bank: "Bank of Ceylon",
+        merchant,
+        title,
+        discountLabel: extractDiscountLabel(badge, title),
+        validTo,
+        sourceUrl,
+        asOf,
+      },
+      weekdays,
+    )) {
+      if (!seen.has(offer.id)) {
+        seen.add(offer.id);
+        offers.push(offer);
+      }
+    }
+  }
+
+  return offers;
+}
+
+/** Normalize Amana `data-ics` near-JSON (newlines / HTML entities inside description). */
+export function parseAmanaDataIcs(raw: string): {
+  start: string | null;
+  end: string | null;
+  summary: string;
+  description: string;
+} | null {
+  const decoded = decodeHtmlEntities(raw.trim());
+  const escaped = decoded.replace(/\r\n/g, "\n").replace(/\n/g, "\\n");
+  try {
+    const parsed = JSON.parse(escaped) as Record<string, unknown>;
+    return {
+      start: typeof parsed.start === "string" ? parsed.start.slice(0, 10) : null,
+      end: typeof parsed.end === "string" ? parsed.end.slice(0, 10) : null,
+      summary: String(parsed.summary ?? "").trim(),
+      description: String(parsed.description ?? "").trim(),
+    };
+  } catch {
+    const start = decoded.match(/"start"\s*:\s*"([^"]+)"/)?.[1]?.slice(0, 10) ?? null;
+    const end = decoded.match(/"end"\s*:\s*"([^"]+)"/)?.[1]?.slice(0, 10) ?? null;
+    const summary = decoded.match(/"summary"\s*:\s*"([^"]+)"/)?.[1]?.trim() ?? "";
+    const description =
+      decoded
+        .match(/"description"\s*:\s*"([\s\S]*?)"\s*}/)?.[1]
+        ?.replace(/\\n/g, "\n")
+        .trim() ?? "";
+    if (!summary && !description) {
+      return null;
+    }
+    return { start, end, summary, description };
+  }
+}
+
+/**
+ * Amana Bank debit Visa offers — Glomark Wednesday supermarket slice only.
+ * Parses `data-ics` on `offer-item-wrapper` cards (see AMANA_PABC_SDB_OFFERS_RESEARCH.md).
+ */
+export function parseAmanaDebitOffersHtml(html: string, asOf: string): CardOffer[] {
+  const offers: CardOffer[] = [];
+  const seen = new Set<string>();
+  const icsRe = /data-ics\s*=\s*(['"])([\s\S]*?)\1/gi;
+
+  let match: RegExpExecArray | null;
+  while ((match = icsRe.exec(html)) != null) {
+    const ics = parseAmanaDataIcs(match[2] ?? "");
+    if (!ics) {
+      continue;
+    }
+    const merchant =
+      resolveMerchantFromText(ics.summary, ics.description) || ics.summary;
+    // Glomark Wednesday supermarket slice only — skip local supers (Raheems, Zam Zam, …).
+    if (!/\bglomark\b/i.test(`${ics.summary} ${ics.description} ${merchant}`)) {
+      continue;
+    }
+    if (ics.start && asOf < ics.start) {
+      continue;
+    }
+    if (ics.end && ics.end < asOf) {
+      continue;
+    }
+
+    const title = stripHtml(
+      ics.description || `${ics.summary} for Amana Bank Debit Card Holders`,
+    ).slice(0, 180);
+    if (!title || !isSupermarketPromo(title, merchant) || !isShoppingDayPromo(title)) {
+      continue;
+    }
+
+    const blob = `${title} ${ics.summary} ${ics.description}`;
+    const weekdays = parseWeekdayHints(blob);
+    const cadence = weekdays.length > 0 ? weekdays : ["wednesday"];
+    const slug = `glomark-${ics.start ?? "open"}-${ics.end ?? "open"}`;
+
+    for (const offer of expandWeekdayOffers(
+      {
+        id: `amana-${slug}`,
+        bank: "Amana Bank",
+        merchant: "Glomark",
+        title,
+        discountLabel: extractDiscountLabel(ics.description, title),
+        validTo: ics.end ?? parseValidToFromText(blob),
+        sourceUrl: AMANA_SUPERMARKET_URL,
+        asOf,
+      },
+      cadence,
+    )) {
+      if (!seen.has(offer.id)) {
+        seen.add(offer.id);
+        offers.push(offer);
+      }
+    }
+  }
+
+  return offers;
+}
+
+function absoluteAmexUrl(href: string): string {
+  if (href.startsWith("http")) {
+    return href;
+  }
+  return `https://www.americanexpress.lk${href.startsWith("/") ? "" : "/"}${href}`;
+}
+
+function absoluteNdbUrl(href: string): string {
+  if (href.startsWith("http")) {
+    return href;
+  }
+  return `https://www.ndbbank.com${href.startsWith("/") ? "" : "/"}${href}`;
+}
+
+/**
+ * NTB Amex `americanexpress.lk/en/offers/supermarket-offers` hub cards
+ * (`a.alloffer-box-inner`). Listing often lacks DOW — pair with detail parse.
+ * Imperva/WAF may 403 bare bots; caller uses browser UA; empty → seed.
+ */
+export function parseNtbAmexSupermarketHubHtml(
+  html: string,
+  asOf: string,
+): CardOffer[] {
+  if (
+    /Access Denied|Pardon Our Interruption|incapsula|imperva/i.test(html) &&
+    !/alloffer-box-inner/i.test(html)
+  ) {
+    return [];
+  }
+
+  const offers: CardOffer[] = [];
+  const seen = new Set<string>();
+  const anchorRe =
+    /<a\b([^>]*href="((?:https?:\/\/(?:www\.)?americanexpress\.lk)?\/en\/offers\/supermarket-offers\/[^"]+)"[^>]*)>([\s\S]*?)<\/a>/gi;
+
+  let match: RegExpExecArray | null;
+  while ((match = anchorRe.exec(html)) != null) {
+    const attrs = match[1] ?? "";
+    const href = match[2] ?? "";
+    const body = match[3] ?? "";
+    if (!/alloffer-box-inner/i.test(attrs)) {
+      continue;
+    }
+    if (/\/calendar\//i.test(href)) {
+      continue;
+    }
+
+    const merchantRaw = stripHtml(
+      body.match(/<div class="alloffer-heading">([\s\S]*?)<\/div>/i)?.[1] ?? "",
+    );
+    const discountRaw = stripHtml(
+      body.match(/<div class="value-limit">([\s\S]*?)<\/div>/i)?.[1] ?? "",
+    );
+    const validRaw = stripHtml(
+      body.match(/Valid[^<]{0,80}/i)?.[0] ??
+        body.match(/<div>\s*(Valid[\s\S]*?)<\/div>/i)?.[1] ??
+        "",
+    );
+    const merchant =
+      merchantRaw.replace(/\s+/g, " ").trim() ||
+      resolveMerchantFromText(href) ||
+      "Supermarket";
+    const title = [discountRaw, merchant, validRaw].filter(Boolean).join(" — ").slice(0, 180);
+    if (!title || !isSupermarketPromo(title, merchant) || !isShoppingDayPromo(title)) {
+      continue;
+    }
+
+    const blob = `${title} ${merchant} ${validRaw}`;
+    const weekdays = parseWeekdayHints(blob);
+    const sourceUrl = absoluteAmexUrl(href);
+    const slug = href
+      .replace(/^https?:\/\/[^/]+/, "")
+      .replace(/\W+/g, "-")
+      .replace(/-+/g, "-")
+      .slice(0, 72);
+
+    for (const offer of expandWeekdayOffers(
+      {
+        id: `ntb-amex-hub-${slug}`,
+        bank: "Nations Trust Bank Amex",
+        merchant,
+        title,
+        discountLabel: extractDiscountLabel(discountRaw, title),
+        validTo: parseValidToFromText(blob),
+        sourceUrl,
+        asOf,
+      },
+      weekdays,
+    )) {
+      if (!seen.has(offer.id)) {
+        seen.add(offer.id);
+        offers.push(offer);
+      }
+    }
+  }
+
+  return offers;
+}
+
+/**
+ * NTB Amex supermarket detail page (`/en/offers/supermarket-offers/{slug}`).
+ * Prefer this for weekday cadence ("Valid every Sunday till …").
+ */
+export function parseNtbAmexOfferDetailHtml(
+  html: string,
+  asOf: string,
+  sourceUrl: string = NTB_AMEX_SUPERMARKET_URL,
+): CardOffer[] {
+  if (
+    /Access Denied|Pardon Our Interruption|incapsula|imperva/i.test(html) &&
+    !/offerdetail-text/i.test(html)
+  ) {
+    return [];
+  }
+
+  const merchantRaw = stripHtml(
+    html.match(
+      /<div class="[^"]*offer-details-top[^"]*"[\s\S]*?<h2[^>]*>([\s\S]*?)<\/h2>/i,
+    )?.[1] ??
+      html.match(/<h2[^>]*>([\s\S]*?)<\/h2>/i)?.[1] ??
+      "",
+  );
+  // Prefer offerdetail-text; cut at T&Cs tab / next tab-pane when present.
+  const detailBlock =
+    html.match(
+      /offerdetail-text[^>]*>([\s\S]*?)(?:id="nav-profile"|TERMS\s*&(?:amp;)?\s*CONDITIONS|<div class="tab-pane)/i,
+    )?.[1] ??
+    html.match(/offerdetail-text[^>]*>([\s\S]*)/i)?.[1] ??
+    html.match(/id="nav-home"[^>]*>([\s\S]*?)<div class="tab-pane/i)?.[1] ??
+    "";
+  if (!detailBlock && !merchantRaw) {
+    return [];
+  }
+
+  const detailText = stripHtml(detailBlock);
+  const merchant =
+    merchantRaw.replace(/\s+/g, " ").trim() ||
+    resolveMerchantFromText(detailText, sourceUrl) ||
+    "Supermarket";
+  if (!isSupermarketPromo(detailText, merchant) || !isShoppingDayPromo(detailText)) {
+    return [];
+  }
+
+  const weekdays = parseWeekdayHints(detailText);
+  const specificDates = parseSpecificOfferDates(detailText);
+  // Skip continuous bakery / no-cadence rows — they clutter "today's card days".
+  if (weekdays.length === 0 && specificDates.length === 0) {
+    return [];
+  }
+
+  const lead =
+    stripHtml(
+      detailBlock.match(
+        /<(?:div class="ewa-rteLine"|p)[^>]*>([\s\S]*?)<\/(?:div|p)>/i,
+      )?.[1] ?? "",
+    ) || detailText.slice(0, 160);
+  const title = `${lead}${weekdays.length ? "" : specificDates.length ? ` — ${specificDates.join(" & ")}` : ""}`.slice(
+    0,
+    180,
+  );
+  const slug = sourceUrl
+    .replace(/^https?:\/\/[^/]+/, "")
+    .replace(/\W+/g, "-")
+    .replace(/-+/g, "-")
+    .slice(0, 72);
+
+  return expandWeekdayOffers(
+    {
+      id: `ntb-amex-${slug || "detail"}`,
+      bank: "Nations Trust Bank Amex",
+      merchant,
+      title: title || `${merchant} American Express offer`,
+      discountLabel: extractDiscountLabel(lead, detailText),
+      validTo: parseValidToFromText(detailText),
+      sourceUrl,
+      asOf,
+    },
+    weekdays,
+  );
+}
+
+/**
+ * NDB `/cards/card-offers` (or `/supermarkets` category) offer-card HTML.
+ * Keeps supermarket merchants only (Glomark etc.); date-specific rows keep
+ * offer-date copy in the title for `parseSpecificOfferDates`.
+ */
+export function parseNdbCardOffersHtml(html: string, asOf: string): CardOffer[] {
+  if (
+    /Request blocked|Access Denied|captcha-delivery|incapsula/i.test(html) &&
+    !/offer-details\/\d+/i.test(html)
+  ) {
+    return [];
+  }
+
+  const offers: CardOffer[] = [];
+  const seen = new Set<string>();
+  const anchorRe =
+    /<a\b[^>]*href="((?:https?:\/\/(?:www\.)?ndbbank\.com)?(?:\/[a-z]{2})?\/cards\/card-offers\/offer-details\/\d+)"[^>]*>([\s\S]*?)<\/a>/gi;
+
+  let match: RegExpExecArray | null;
+  while ((match = anchorRe.exec(html)) != null) {
+    const href = match[1] ?? "";
+    const body = match[2] ?? "";
+    if (!/offer-card/i.test(body) && !/card-title/i.test(body)) {
+      continue;
+    }
+
+    const titleRaw = stripHtml(
+      body.match(/<h5[^>]*class="[^"]*card-title[^"]*"[^>]*>([\s\S]*?)<\/h5>/i)?.[1] ??
+        "",
+    );
+    const merchantRaw = stripHtml(
+      body.match(/<p class="card-title">([\s\S]*?)<\/p>/i)?.[1] ?? "",
+    );
+    const dateRaw = stripHtml(
+      body.match(/<p class="offer-date[^"]*"[^>]*>([\s\S]*?)<\/p>/i)?.[1] ?? "",
+    );
+    const merchant =
+      merchantRaw.replace(/\s+/g, " ").trim() ||
+      resolveMerchantFromText(titleRaw, href) ||
+      "";
+    if (!merchant || !isSupermarketPromo(titleRaw, merchant)) {
+      continue;
+    }
+    if (!isShoppingDayPromo(titleRaw)) {
+      continue;
+    }
+
+    const title = [titleRaw, merchantRaw, dateRaw].filter(Boolean).join(" — ").slice(0, 180);
+    const blob = `${title} ${dateRaw}`;
+    const weekdays = parseWeekdayHints(blob);
+    const specificDates = parseSpecificOfferDates(blob);
+    const validTo =
+      specificDates.length > 0
+        ? specificDates[specificDates.length - 1]!
+        : parseValidToFromText(blob);
+    const sourceUrl = absoluteNdbUrl(href);
+    const offerId = href.match(/offer-details\/(\d+)/i)?.[1] ?? "x";
+    const baseId = `ndb-offer-${offerId}`;
+
+    for (const offer of expandWeekdayOffers(
+      {
+        id: baseId,
+        bank: "NDB Bank",
+        merchant: resolveMerchantFromText(merchant) ?? merchant,
+        title,
+        discountLabel: extractDiscountLabel(titleRaw, title),
+        validTo,
+        sourceUrl,
+        asOf,
+      },
+      weekdays,
+    )) {
+      if (!seen.has(offer.id)) {
+        seen.add(offer.id);
+        offers.push(offer);
+      }
+    }
+  }
+
+  return offers;
+}
+
 async function fetchJson(
   url: string,
 ): Promise<unknown | null> {
@@ -1418,6 +2062,95 @@ async function fetchNtbOffers(asOf: string): Promise<CardOffer[]> {
 }
 
 /**
+ * NTB Amex supermarket hub + detail enrichment for weekday cadence.
+ * Imperva often 403s non-browser UAs — empty result → seed.
+ */
+async function fetchNtbAmexOffers(asOf: string): Promise<CardOffer[]> {
+  const hub = await fetchText(NTB_AMEX_SUPERMARKET_URL, { userAgent: PABC_UA });
+  if (!hub?.ok) {
+    return [];
+  }
+  const hubOffers = parseNtbAmexSupermarketHubHtml(hub.text, asOf);
+  const detailUrls = [
+    ...new Set(
+      hubOffers
+        .map((offer) => offer.sourceUrl)
+        .filter((url) => /\/supermarket-offers\/[^/]+$/i.test(url)),
+    ),
+  ];
+  if (detailUrls.length === 0) {
+    return hubOffers.filter(
+      (offer) =>
+        Boolean(offer.weekdayHint) ||
+        parseSpecificOfferDates(offer.title).length > 0,
+    );
+  }
+
+  const detailPages = await Promise.all(
+    detailUrls.map((url) => fetchText(url, { userAgent: PABC_UA })),
+  );
+  const fromDetails: CardOffer[] = [];
+  for (let i = 0; i < detailUrls.length; i += 1) {
+    const page = detailPages[i];
+    if (!page?.ok) {
+      continue;
+    }
+    fromDetails.push(
+      ...parseNtbAmexOfferDetailHtml(page.text, asOf, detailUrls[i]!),
+    );
+  }
+  if (fromDetails.length > 0) {
+    return dedupeOffers(fromDetails);
+  }
+  return hubOffers.filter(
+    (offer) =>
+      Boolean(offer.weekdayHint) ||
+      parseSpecificOfferDates(offer.title).length > 0,
+  );
+}
+
+/** NDB supermarket category slice, with full card-offers HTML fallback. */
+async function fetchNdbOffers(asOf: string): Promise<CardOffer[]> {
+  const category = await fetchText(NDB_SUPERMARKET_OFFERS_URL, {
+    userAgent: PABC_UA,
+  });
+  if (category?.ok) {
+    const fromCategory = parseNdbCardOffersHtml(category.text, asOf);
+    if (fromCategory.length > 0) {
+      return fromCategory;
+    }
+  }
+  const listing = await fetchText(NDB_CARD_OFFERS_URL, { userAgent: PABC_UA });
+  if (!listing?.ok) {
+    return [];
+  }
+  return parseNdbCardOffersHtml(listing.text, asOf);
+}
+
+/** Browser UA — BOC CloudFront WAF often rejects short bot UAs. */
+async function fetchBocOffers(asOf: string): Promise<CardOffer[]> {
+  const result = await fetchText(BOC_URL, {
+    userAgent: PABC_UA,
+    acceptLanguage: "en-US,en;q=0.9",
+  });
+  if (!result?.ok) {
+    return [];
+  }
+  return parseBocCardOffersHtml(result.text, asOf);
+}
+
+async function fetchAmanaOffers(asOf: string): Promise<CardOffer[]> {
+  const result = await fetchText(AMANA_SUPERMARKET_URL, {
+    userAgent: PABC_UA,
+    acceptLanguage: "en-US,en;q=0.9",
+  });
+  if (!result?.ok) {
+    return [];
+  }
+  return parseAmanaDebitOffersHtml(result.text, asOf);
+}
+
+/**
  * Visa LK perks JSON — supermarket/Glomark slice only.
  * Body shape from the public offers SPA (`siteId` + `perkTypeRequests`); empty/`{}`
  * POST returns 400 validation failure. Server-side Origin/Referer is enough (no auth).
@@ -1464,20 +2197,6 @@ async function fetchVisaSupermarketOffers(asOf: string): Promise<CardOffer[]> {
     .filter((offer): offer is CardOffer => offer != null);
 }
 
-function dedupeOffers(offers: CardOffer[]): CardOffer[] {
-  const seen = new Set<string>();
-  const out: CardOffer[] = [];
-  for (const offer of offers) {
-    const key = `${offer.bank}|${offer.merchant}|${offer.weekdayHint ?? ""}|${offer.discountLabel}`;
-    if (seen.has(key)) {
-      continue;
-    }
-    seen.add(key);
-    out.push(offer);
-  }
-  return out;
-}
-
 /** Canonical merchant token for gap coverage (keeps Cargills Online distinct). */
 export function merchantCoverageToken(merchant: string): string {
   const raw = merchant.trim().toLowerCase().replace(/\s+/g, " ");
@@ -1488,6 +2207,14 @@ export function merchantCoverageToken(merchant: string): string {
   return (resolved ?? raw).toLowerCase();
 }
 
+/** Merchant + bank + weekday identity used when collapsing duplicate live scrapes. */
+export function offerDedupeKey(offer: CardOffer): string {
+  const merchant = merchantCoverageToken(offer.merchant);
+  const bank = offer.bank.trim().toLowerCase();
+  const weekday = (offer.weekdayHint ?? "").toLowerCase();
+  return `${merchant}|${bank}|${weekday}`;
+}
+
 /** Merchant + weekday slot used when filling seed gaps around live rows. */
 export function offerCoverageKey(offer: CardOffer): string {
   const merchant = merchantCoverageToken(offer.merchant);
@@ -1495,9 +2222,47 @@ export function offerCoverageKey(offer: CardOffer): string {
   return `${merchant}|${weekday}`;
 }
 
+function isBetterOffer(candidate: CardOffer, current: CardOffer): boolean {
+  const byDiscount =
+    parseDiscountPercent(candidate.discountLabel) -
+    parseDiscountPercent(current.discountLabel);
+  if (byDiscount !== 0) {
+    return byDiscount > 0;
+  }
+  // Prefer live over seed when % ties.
+  if (!candidate.isSeed && current.isSeed) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Collapse duplicate bank/merchant/weekday rows; keep the best discount
+ * (higher %, then live over seed). First-seen order of winning keys is preserved.
+ */
+export function dedupeOffers(offers: CardOffer[]): CardOffer[] {
+  const best = new Map<string, CardOffer>();
+  const order: string[] = [];
+  for (const offer of offers) {
+    const key = offerDedupeKey(offer);
+    const existing = best.get(key);
+    if (!existing) {
+      best.set(key, offer);
+      order.push(key);
+      continue;
+    }
+    if (isBetterOffer(offer, existing)) {
+      best.set(key, offer);
+    }
+  }
+  return order.map((key) => best.get(key)!);
+}
+
 /**
  * Prefer live offers active today; fill uncovered merchant/weekday slots from seed.
  * Live rows are marked `isSeed: false`; gap rows `isSeed: true`.
+ * After merge, collapses merchant+bank+weekday duplicates to the best discount so
+ * multi-source scrapes cannot explode the compact civic strip.
  */
 export function mergeTodaysLiveWithSeed(
   liveTodays: CardOffer[],
@@ -1526,27 +2291,43 @@ function buildSeedSnapshot(now: Date): CardOffersSnapshot {
 }
 
 /**
- * Live Sampath + HNB + Visa LK JSON + ComBank/Pan Asia/DFCC/People's/NTB HTML,
- * filtered to offers active today. Keeps today's live rows and fills missing
- * merchant/weekday slots from seed (per-offer isSeed). Full seed only when no
- * live offer matches today.
+ * Live Sampath + HNB + Visa LK JSON + ComBank/Pan Asia/DFCC/People's/NTB MC/
+ * NTB Amex/NDB/BOC/Amana HTML, filtered to offers active today. Keeps today's
+ * live rows and fills missing merchant/weekday slots from seed (per-offer
+ * isSeed). Full seed only when no live offer matches today.
  */
 export async function getTodaysCardOffers(
   now: Date = new Date(),
 ): Promise<CardOffersSnapshot> {
   const asOf = colomboDateIso(now);
 
-  const [sampath, hnb, combank, pabc, dfcc, peoples, ntb, visa] =
-    await Promise.all([
-      fetchSampathOffers(asOf),
-      fetchHnbOffers(asOf),
-      fetchCombankOffers(asOf),
-      fetchPabcOffers(asOf),
-      fetchDfccOffers(asOf),
-      fetchPeoplesOffers(asOf),
-      fetchNtbOffers(asOf),
-      fetchVisaSupermarketOffers(asOf),
-    ]);
+  const [
+    sampath,
+    hnb,
+    combank,
+    pabc,
+    dfcc,
+    peoples,
+    ntb,
+    ntbAmex,
+    ndb,
+    visa,
+    boc,
+    amana,
+  ] = await Promise.all([
+    fetchSampathOffers(asOf),
+    fetchHnbOffers(asOf),
+    fetchCombankOffers(asOf),
+    fetchPabcOffers(asOf),
+    fetchDfccOffers(asOf),
+    fetchPeoplesOffers(asOf),
+    fetchNtbOffers(asOf),
+    fetchNtbAmexOffers(asOf),
+    fetchNdbOffers(asOf),
+    fetchVisaSupermarketOffers(asOf),
+    fetchBocOffers(asOf),
+    fetchAmanaOffers(asOf),
+  ]);
 
   const live = dedupeOffers([
     ...sampath,
@@ -1556,7 +2337,11 @@ export async function getTodaysCardOffers(
     ...dfcc,
     ...peoples,
     ...ntb,
+    ...ntbAmex,
+    ...ndb,
     ...visa,
+    ...boc,
+    ...amana,
   ]);
   const todaysLive = filterTodaysOffers(live, now);
   const todaysSeed = filterTodaysOffers(seed.offers, now);
@@ -1578,8 +2363,8 @@ export async function getTodaysCardOffers(
     asOf,
     isSeed: false,
     methodologyNote: usedSeedGaps
-      ? "Mixed live/seed supermarket card days: live rows from Sampath JSON, HNB Venus JSON, Visa LK VMORC perks JSON, ComBank rewards HTML, Pan Asia arr_offers JS (after Sucuri cookie), DFCC supermarket hub HTML/RSC, People's Bank supermarket offer-card HTML, and NTB Mastercard promotions/hub HTML. Missing merchant/weekday slots filled from curated seed (per-offer isSeed). Weekday cadence parsed from offer copy when present; otherwise validTo gates inclusion. Lankawa is not affiliated with the banks or merchants — confirm at checkout and on the bank site."
-      : "Public indicative supermarket card promotions from Sampath JSON, HNB Venus JSON, Visa LK VMORC perks JSON (Glomark/supermarket merchantName filter), ComBank rewards HTML, Pan Asia arr_offers JS (after Sucuri cookie), DFCC supermarket hub HTML/RSC, People's Bank supermarket offer-card HTML, and NTB Mastercard promotions/hub HTML. Weekday cadence parsed from offer copy when present; otherwise validTo gates inclusion. Lankawa is not affiliated with the banks or merchants — confirm at checkout and on the bank site.",
+      ? "Mixed live/seed supermarket card days: live rows from Sampath JSON, HNB Venus JSON, Visa LK VMORC perks JSON, ComBank rewards HTML, Pan Asia arr_offers JS (after Sucuri cookie), DFCC supermarket hub HTML/RSC, People's Bank supermarket offer-card HTML, NTB Mastercard promotions/hub HTML, NTB Amex americanexpress.lk supermarket hub/detail HTML (browser UA; WAF → seed), NDB /cards/card-offers supermarket HTML, BOC card-offers HTML (browser UA; WAF → seed), and Amana debit Glomark data-ics HTML. Missing merchant/weekday slots filled from curated seed (per-offer isSeed). Weekday cadence parsed from offer copy when present; otherwise validTo gates inclusion. Lankawa is not affiliated with the banks or merchants — confirm at checkout and on the bank site."
+      : "Public indicative supermarket card promotions from Sampath JSON, HNB Venus JSON, Visa LK VMORC perks JSON (Glomark/supermarket merchantName filter), ComBank rewards HTML, Pan Asia arr_offers JS (after Sucuri cookie), DFCC supermarket hub HTML/RSC, People's Bank supermarket offer-card HTML, NTB Mastercard promotions/hub HTML, NTB Amex americanexpress.lk supermarket hub/detail HTML (browser UA; WAF → seed), NDB /cards/card-offers supermarket HTML, BOC card-offers HTML (browser UA; WAF → seed), and Amana debit Glomark data-ics HTML. Weekday cadence parsed from offer copy when present; otherwise validTo gates inclusion. Lankawa is not affiliated with the banks or merchants — confirm at checkout and on the bank site.",
     offers,
   };
 }

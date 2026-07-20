@@ -1,6 +1,6 @@
 # Arpico / Softlogic / Abans / Singer — household promotions & EMI (Lankawa)
 
-**Status:** Research (medium thoroughness), Jul 2026  
+**Status:** Research (medium thoroughness), Jul 2026 · **Loop 8 shipped:** Singer thin chip (`singer-emi.ts`) on `/economy` household  
 **Product rule:** Public marketing / storefront surfaces only. No reverse-engineering of authenticated loyalty apps (Softlogic ONE OTP, Singer loyalty balance login, Abans account). Server-side fetch + provenance; never claim live when empty/stale/404.
 
 **Sister docs:** [`RETAIL_LOYALTY_APIS_RESEARCH.md`](./RETAIL_LOYALTY_APIS_RESEARCH.md) (Glomark / Softlogic ONE), [`COMBANK_OFFERS_RESEARCH.md`](./COMBANK_OFFERS_RESEARCH.md), [`AMANA_PABC_SDB_OFFERS_RESEARCH.md`](./AMANA_PABC_SDB_OFFERS_RESEARCH.md) (0% IPP merchant blocks), [`NTB_SC_HSBC_OFFERS_RESEARCH.md`](./NTB_SC_HSBC_OFFERS_RESEARCH.md), [`CARD_OFFER_AGGREGATORS_RESEARCH.md`](./CARD_OFFER_AGGREGATORS_RESEARCH.md).
@@ -97,6 +97,10 @@ HNB and peers publish “0% at Softlogic Stores / Softlogic MAX / mysoftlogic.lk
 | P1 | `/deal-page` HTML as “on sale” seed list of IDs |
 | Skip | Softlogic ONE portal; holdings site |
 
+### Loop 8 decision — Softlogic per-SKU **skipped**
+
+Softlogic EMI is strong in research, but wiring it needs a sitemap/deal-page ID crawl plus one `variation-detail/{id}` call **per SKU**. That is too heavy for an optional thin household chip beside Singer’s single `json-get-emi` sample. **Park Softlogic** until a dedicated appliances ingest loop; do not half-wire one hardcoded Softlogic SKU as if it were a catalog.
+
 ---
 
 ## 2. Singer Sri Lanka — singersl.com
@@ -144,6 +148,12 @@ PDP wires these via `check_emi_offers()` / `load_emi_details()` (jQuery GET). Al
 | P1 | Link out to `/added-services/easy-payment` and HP pages for hire-purchase (non-card) |
 | P2 | Offer facet IDs on `/products?offers=` change over time — don’t hardcode without refresh |
 
+### Loop 8 — shipped thin chip
+
+Adapter: `src/lib/integrations/singer-emi.ts` + `src/data/singer-emi-seed.json`.  
+UI: `HouseholdEmiStrip` on `/economy` under household tariffs (`#household-emi`).  
+Probe (2026-07-20): `json-get-emi?product_id=7884&product_price=53699` → 200, 8 banks; capped `json-get-single-emi` for tenors. Seed + `isSeed` honesty when Imperva/timeout. Not grocery — separate from supermarket card days.
+
 ---
 
 ## 3. Abans — BuyAbans.com (+ BigDeals)
@@ -181,6 +191,10 @@ ComBank×Abans POS/EPP partnership is **acquiring infrastructure** (enterprise A
 | P1 | Ingest Abans/BuyAbans rows from **bank IPP/ESP HTML** (Amex index already lists them) |
 | P2 | Opportunistic scrape of live BuyAbans campaign pages when HTTP 200 and non-empty; treat sitemap as stale hints |
 | Skip | Expecting `/api/offers` or Magento REST |
+
+### Loop 8 — **parked**
+
+No public merchant EMI JSON. Do not scrape BuyAbans campaign HTML for this chip. Revisit via bank IPP (Amex/Seylan/Sampath) in a later loop.
 
 ---
 
@@ -226,6 +240,10 @@ Richard Pieris Finance (`services_financial.php`) is leasing/loans — not a car
 | P1 | Paginate `product/special` for a **grocery specials** chip (alongside FoodLK); parse `data-price` / `data-special` |
 | P1 | Arpico Furniture EMI via **bank** installment pages |
 | Skip | Corporate arpico.com as offer source; OpenCart admin API |
+
+### Loop 8 — **parked**
+
+My Arpico `product/special` is grocery/FMCG, not white-goods EMI. Furniture 0% lives on bank pages. Park both for this household EMI strip; do not conflate with Singer.
 
 ---
 

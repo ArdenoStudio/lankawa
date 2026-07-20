@@ -12,6 +12,7 @@ import {
 } from "@/components/EconomyCards";
 import { DataSaverGate } from "@/components/DataSaverGate";
 import { DemandMgmtClustersStrip } from "@/components/DemandMgmtClustersStrip";
+import { HouseholdEmiStrip } from "@/components/HouseholdEmiStrip";
 import { HouseholdEnergySection } from "@/components/HouseholdEnergySection";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
 import { LpgDistrictFilter } from "@/components/LpgDistrictFilter";
@@ -19,6 +20,7 @@ import { MacroObservationsStrip } from "@/components/MacroObservationsStrip";
 import { MarketsPressStrip } from "@/components/MarketsPressStrip";
 import { NcpiInflationCard } from "@/components/NcpiInflationCard";
 import { NwsdbWaterBillCard } from "@/components/NwsdbWaterBillCard";
+import { PaymentsBulletinStrip } from "@/components/PaymentsBulletinStrip";
 import { PucslGenerationMixSpark } from "@/components/PucslGenerationMixSpark";
 import { PucslTariffCard } from "@/components/PucslTariffCard";
 import { PulseCard } from "@/components/PulseCard";
@@ -113,6 +115,8 @@ export default async function EconomyPage({
       <InlineExplainerBanner slug="fx-rates" />
 
       <TreasuryYieldStrip locale={locale} />
+
+      <PaymentsBulletinStrip locale={locale} />
 
       <MacroObservationsStrip locale={locale} />
 
@@ -398,6 +402,7 @@ export default async function EconomyPage({
             }}
           />
         </div>
+        <HouseholdEmiStrip />
       </section>
 
       <div className="space-y-4">
@@ -422,10 +427,12 @@ export default async function EconomyPage({
             asOf: t("remittanceBoard.asOf"),
             source: t("remittanceBoard.source"),
             honesty: t("remittanceBoard.honesty"),
+            metricsLabel: t("remittanceBoard.metricsLabel"),
+            tableLabel: t("remittanceBoard.tableLabel"),
           }}
         />
         <RemittanceCalculator rates={latestFxRate} />
-        <SupermarketCardDays />
+        <SupermarketCardDays compact={false} limit={8} />
       </div>
 
       <CseMarketCard

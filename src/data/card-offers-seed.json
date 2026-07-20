@@ -327,6 +327,138 @@
       "sourceUrl": "https://www.visa.com.lk/en_lk/visa-offers-and-perks/offer/177830",
       "asOf": "2026-07-20",
       "isSeed": true
+    },
+    {
+      "id": "seed-boc-keells-thu",
+      "bank": "Bank of Ceylon",
+      "merchant": "Keells",
+      "title": "25% off on Fresh Vegetables, Fruits, Seafood & Meat for BOC Credit Cardholders On Thursdays from 02nd to 30th July 2026",
+      "discountLabel": "25% OFF",
+      "validTo": "2026-07-30",
+      "weekdayHint": "thursday",
+      "sourceUrl": "https://www.boc.lk/personal-banking/card-offers/supermarkets/keells/product",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-boc-cargills-wed",
+      "bank": "Bank of Ceylon",
+      "merchant": "Cargills Food City",
+      "title": "25% off on Fresh Vegetables, Fruits & Seafood for BOC Credit Cardholders On Wednesdays (01st - 29th July 2026)",
+      "discountLabel": "25% OFF",
+      "validTo": "2026-07-29",
+      "weekdayHint": "wednesday",
+      "sourceUrl": "https://www.boc.lk/personal-banking/card-offers/supermarkets/cargills-food-city/product",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-boc-cargills-sun",
+      "bank": "Bank of Ceylon",
+      "merchant": "Cargills Food City",
+      "title": "25% off on Fresh Vegetables, Fruits & Seafood for BOC Credit Cardholders On Sundays (01st - 29th July 2026)",
+      "discountLabel": "25% OFF",
+      "validTo": "2026-07-29",
+      "weekdayHint": "sunday",
+      "sourceUrl": "https://www.boc.lk/personal-banking/card-offers/supermarkets/cargills-food-city/product",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-boc-laugfs-fri",
+      "bank": "Bank of Ceylon",
+      "merchant": "LAUGFS Supermarkets",
+      "title": "10% off the Total Bill for BOC Credit Cardholders On Fridays from 03rd to 31st July 2026",
+      "discountLabel": "10% OFF",
+      "validTo": "2026-07-31",
+      "weekdayHint": "friday",
+      "sourceUrl": "https://www.boc.lk/personal-banking/card-offers/supermarkets/laugfs-supermarket/product",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-boc-glomark",
+      "bank": "Bank of Ceylon",
+      "merchant": "Glomark",
+      "title": "25% off the Total Bill for BOC Credit Cards and 15% off for Debit Cards On 12th & 26th July 2026 | In-Stores & Online",
+      "discountLabel": "25% OFF",
+      "validTo": "2026-07-26",
+      "weekdayHint": null,
+      "sourceUrl": "https://www.boc.lk/personal-banking/card-offers/supermarkets/softlogic-glomark/product",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-amana-glomark-wed",
+      "bank": "Amana Bank",
+      "merchant": "Glomark",
+      "title": "15% Off on the Total Bill (Min.Bill Value – 7,500/- Maximum Discount – 4,000/-) for Amana Bank Debit Card Holders. Every Wednesday",
+      "discountLabel": "15% Off",
+      "validTo": "2026-08-26",
+      "weekdayHint": "wednesday",
+      "sourceUrl": "https://www.amanabank.lk/personal/services/visa-debit-card/offers/supermarket.html",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-ntb-amex-keells-sun",
+      "bank": "Nations Trust Bank Amex",
+      "merchant": "Keells",
+      "title": "Enjoy 25% savings with your Nations Trust Bank American Express Credit Card. Valid every Sunday till 31st July 2026",
+      "discountLabel": "25% savings",
+      "validTo": "2026-07-31",
+      "weekdayHint": "sunday",
+      "sourceUrl": "https://www.americanexpress.lk/en/offers/supermarket-offers/keells-20",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-ntb-amex-cargills-wed",
+      "bank": "Nations Trust Bank Amex",
+      "merchant": "Cargills Food City",
+      "title": "Enjoy 30% savings with your Nations Trust Bank American Express Credit Card. Valid every Wednesday till 31st July 2026",
+      "discountLabel": "30% savings",
+      "validTo": "2026-07-31",
+      "weekdayHint": "wednesday",
+      "sourceUrl": "https://www.americanexpress.lk/en/offers/supermarket-offers/cargills-food-city",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-ntb-amex-cargills-online-thu",
+      "bank": "Nations Trust Bank Amex",
+      "merchant": "Cargills Online",
+      "title": "Enjoy 15% savings with your Nations Trust Bank American Express Credit Card. Valid on every Thursday till 31st July 2026",
+      "discountLabel": "15% savings",
+      "validTo": "2026-07-31",
+      "weekdayHint": "thursday",
+      "sourceUrl": "https://www.americanexpress.lk/en/offers/supermarket-offers/cargills-online-2",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-ndb-glomark-fresh",
+      "bank": "NDB Bank",
+      "merchant": "Glomark",
+      "title": "25% Savings on Fresh Vegetables, Fruit, Fish & Meat — Softlogic Glomark — 15th & 29th July 2026",
+      "discountLabel": "25% Savings",
+      "validTo": "2026-07-29",
+      "weekdayHint": null,
+      "sourceUrl": "https://www.ndbbank.com/cards/card-offers/offer-details/104",
+      "asOf": "2026-07-20",
+      "isSeed": true
+    },
+    {
+      "id": "seed-ndb-glomark-total",
+      "bank": "NDB Bank",
+      "merchant": "Glomark",
+      "title": "20% Savings on Total Bill — Softlogic Glomark — 12th & 26th July 2026",
+      "discountLabel": "20% Savings",
+      "validTo": "2026-07-26",
+      "weekdayHint": null,
+      "sourceUrl": "https://www.ndbbank.com/cards/card-offers/offer-details/106",
+      "asOf": "2026-07-20",
+      "isSeed": true
     }
   ]
 }

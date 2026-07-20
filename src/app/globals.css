@@ -277,6 +277,52 @@ html:lang(ta) body {
   }
 }
 
+@keyframes lk-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes lk-underline-in {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Strip enter motions — card days + remittance boards */
+.lk-motion-fade-up {
+  animation: lk-fade-up 0.45s ease-out both;
+}
+
+.lk-motion-slide-in {
+  animation: lk-slide-in 0.4s ease-out both;
+}
+
+.lk-motion-underline {
+  position: relative;
+}
+
+.lk-motion-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.2em;
+  width: 2.5rem;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.45);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: lk-underline-in 0.5s ease-out 0.15s both;
+}
+
 :focus:not(:focus-visible) {
   outline: none;
 }
@@ -318,8 +364,15 @@ html:lang(ta) body {
   }
 
   .animate-\[lk-fade-up_0\.45s_ease-out\],
-  .animate-\[lk-fade-up_0\.4s_ease-out_both\] {
+  .animate-\[lk-fade-up_0\.4s_ease-out_both\],
+  .lk-motion-fade-up,
+  .lk-motion-slide-in {
     animation: none !important;
+  }
+
+  .lk-motion-underline::after {
+    animation: none !important;
+    transform: scaleX(1);
   }
 }
 

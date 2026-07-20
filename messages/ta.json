@@ -96,7 +96,8 @@
     "morningDeltaCardDays": "சூப்பர் மார்க்கெட் கார்டு",
     "morningDeltaCardDaysNone": "இன்று இல்லை",
     "morningDeltaCardDaysCount": "இன்று {count}",
-    "morningDeltaCardDaysValue": "{count} · {merchant} {discount}"
+    "morningDeltaCardDaysValue": "{count} · {merchant} {discount}",
+    "morningDeltaCardDaysSeed": "{value} · seed"
   },
   "modules": {
     "districts": {
@@ -832,7 +833,9 @@
       "coverage": "{live} live · {seed} seed",
       "asOf": "As of {date}",
       "source": "Source provenance",
-      "honesty": "Public indicative only. Lankawa is not affiliated with these banks. Fees, corridors, and same-day TT products differ. Not CBSL official rates."
+      "honesty": "Public indicative only. Lankawa is not affiliated with these banks. Fees, corridors, and same-day TT products differ. Not CBSL official rates.",
+      "metricsLabel": "சிறந்த TT வாங்கல் மற்றும் விற்பனை",
+      "tableLabel": "வங்கி TT பரிமாற்ற விகிதங்கள்"
     },
     "fxAnomaly": "Unusual day-over-day move",
     "fxAnomalyQuiet": "Within recent MAD band",
@@ -845,6 +848,24 @@
       "tbill364": "364-நாள் T-bill",
       "asOf": "{date} அன்று",
       "seed": "Seed — நேரடி CBSL scrape அல்ல"
+    },
+    "paymentsBulletin": {
+      "title": "டிஜிட்டல் கட்டண pulse",
+      "subtitle": "CBSL Payments Bulletin-இலிருந்து CEFTS / JustPay / LANKAQR — {period}.",
+      "ceftsVolume": "CEFTS அளவு (காலாண்டு)",
+      "ceftsValue": "Rs. {value} bn மதிப்பு",
+      "justpayVolume": "JustPay அளவு (காலாண்டு)",
+      "justpayValue": "Rs. {value} bn மதிப்பு",
+      "lankaqrVolume": "LANKAQR உள்நாட்டு அளவு",
+      "lankaqrValue": "Rs. {value} bn மதிப்பு",
+      "lankaqrMerchants": "LANKAQR வணிகர்கள் (கால இறுதி)",
+      "merchantsNote": "பதிவு sticker — மாதாந்திர செயலில் பயன்பாடு அல்ல",
+      "unitMillion": "M txns",
+      "unitThousand": "k txns",
+      "pdfLink": "Bulletin PDF",
+      "asOf": "Bulletin வெளியீடு {date} · காலம் {period}",
+      "seed": "காலாண்டு seed — நேரடி scrape அல்ல",
+      "honesty": "PDF extract மட்டும். LankaPay marketing counters-ஐ விட CBSL அட்டவணைகளுக்கு முன்னுரிமை. Payment-rails dashboard அல்ல."
     },
     "marketsPress": {
       "title": "ஊடகத்தில் சந்தைகள்",
@@ -2059,6 +2080,9 @@
   "cardOffers": {
     "title": "இன்றைய சூப்பர்மார்க்கெட் அட்டை நாட்கள்",
     "subtitle": "முக்கிய சூப்பர்மார்க்கெட் சங்கிலிகளில் பொது வங்கி அட்டை தள்ளுபடிகள் — இன்றைக்கு வடிகட்டப்பட்டவை.",
+    "compactTitle": "சூப்பர்மார்க்கெட் அட்டை நாட்கள்",
+    "compactSubtitle": "இன்றைய முதன்மை பொது வங்கி தள்ளுபடிகள்.",
+    "seeAll": "அனைத்தையும் காண்",
     "seed": "Seed",
     "live": "Live",
     "bankSeed": "seed",
@@ -2082,5 +2106,21 @@
     "asOf": "{date} அன்று",
     "source": "மூல ஆதாரம்",
     "honesty": "குறிப்பான CEB Care பொது வரைபட எண்ணிக்கைகள் — cebcare.ceb.lk இல் உறுதிப்படுத்துங்கள். நேரடி மின்வெட்டு எச்சரிக்கை அல்ல."
+  },
+  "householdEmi": {
+    "title": "வீட்டு EMI (Singer)",
+    "subtitle": "மாதிரி Singer சாதனத்தில் பல-வங்கி தவணைகள் — சூப்பர்மார்க்கெட் அட்டை நாட்கள் அல்ல.",
+    "seed": "Seed",
+    "live": "Live",
+    "sample": "மாதிரி: {label} · ரூ. {price}",
+    "tenors": "{months} மாதங்கள்",
+    "callConvert": "call-and-convert",
+    "monthlyFrom": "ரூ. {amount}/மாதம் முதல்",
+    "summary": "{banks} வங்கிகள் · {callConvert} call-and-convert · இயல்பு {defaults} மா",
+    "empty": "இப்போது Singer EMI வங்கிகள் இல்லை.",
+    "asOf": "{date} அன்று",
+    "source": "மூல ஆதாரம்",
+    "singerLink": "Singer வங்கி சலுகைகள்",
+    "honesty": "ஒரு மாதிரி SKU விலைக்கான குறிப்பான பொது Singer EMI — வாங்குவதற்கு முன் singersl.com இல் உறுதிப்படுத்துங்கள். Softlogic per-SKU EMI crawl தவிர்க்கப்பட்டது (மிகவும் கனமானது). Abans/Arpico merchant EMI parked. Singer அல்லது வங்கிகளுடன் இணைக்கப்படவில்லை."
   }
 }

@@ -1,13 +1,19 @@
 import assert from "node:assert/strict";
-import {getRemittanceTtSeedSnapshot,
+import {
+  getRemittanceTtSeedSnapshot,
+  parseBocUsdTt,
   parseCombankUsdTt,
+  parseDfccUsdTt,
   parseHnbUsdTt,
   parseNdbUsdTt,
   parseNsbUsdTt,
   parsePeoplesUsdTt,
   parseSampathUsdTt,
   parseSeylanUsdTt,
-  parseUsdLkrBand, pickBestBuy, pickBestSell } from "./remittance-banks";
+  parseUsdLkrBand,
+  pickBestBuy,
+  pickBestSell,
+} from "./remittance-banks";
 
 const COMBANK_FIXTURE = [
   {
@@ -105,6 +111,78 @@ const NSB_HTML_FIXTURE = `
 </table>
 `;
 
+const BOC_HTML_FIXTURE = `
+<table>
+  <thead>
+    <tr>
+      <th colspan="2">Currency</th>
+      <th colspan="2">Drafts</th>
+      <th colspan="2">Telegraphic/PFCA/ BFCA Transfers</th>
+    </tr>
+    <tr>
+      <th>Currency</th>
+      <th>Buying Rate</th>
+      <th>Selling Rate</th>
+      <th>Buying Rate</th>
+      <th>Selling Rate</th>
+      <th>Buying Rate</th>
+      <th>Selling Rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="text-left country">
+        <img src="https://example.com/aud.png" alt="AUSTRALIAN DOLLAR flag">
+        AUD
+      </td>
+      <td>227.7515</td>
+      <td>241.6723</td>
+      <td>224.9929</td>
+      <td>241.6723</td>
+      <td>228.1759</td>
+      <td>241.6723</td>
+    </tr>
+    <tr>
+      <td class="text-left country">
+        <img src="https://example.com/usd.png" alt="US DOLLAR flag">
+        USD
+      </td>
+      <td>331.8000</td>
+      <td>340.8000</td>
+      <td>331.4000</td>
+      <td>340.8000</td>
+      <td>331.8000</td>
+      <td>340.8000</td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+const DFCC_HTML_FIXTURE = `
+<table>
+  <thead>
+    <tr>
+      <th>Currency Type</th>
+      <th>DD Buying</th>
+      <th>Currency Note Encashment</th>
+      <th>TT Buying</th>
+      <th>DD / TT Selling</th>
+      <th>Currency Note Selling</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="https://flagcdn.com/24x18/us.png" alt="USD"/>USD</td>
+      <td>330.25</td>
+      <td>330.25</td>
+      <td>331.5</td>
+      <td>341</td>
+      <td>342.25</td>
+    </tr>
+  </tbody>
+</table>
+`;
+
 const SIMPLE_USD_HTML_FIXTURE = `
 <table>
   <tr><th>Currency</th><th>Buying</th><th>Selling</th></tr>
@@ -147,11 +225,31 @@ assert.ok(nsb);
 assert.equal(nsb.buyLkr, 332.25);
 assert.equal(nsb.sellLkr, 340.25);
 
+const boc = parseBocUsdTt(BOC_HTML_FIXTURE);
+assert.ok(boc);
+assert.equal(boc.buyLkr, 331.8);
+assert.equal(boc.sellLkr, 340.8);
+
+const dfcc = parseDfccUsdTt(DFCC_HTML_FIXTURE);
+assert.ok(dfcc);
+assert.equal(dfcc.buyLkr, 331.5);
+assert.equal(dfcc.sellLkr, 341);
+
 // Must take TT (last pair), not currency notes (first pair).
 const peoplesViaGeneric = parseUsdLkrBand(PEOPLES_HTML_FIXTURE);
 assert.ok(peoplesViaGeneric);
 assert.equal(peoplesViaGeneric.buyLkr, 332.0001);
 assert.equal(peoplesViaGeneric.sellLkr, 340.3509);
+
+const bocViaGeneric = parseUsdLkrBand(BOC_HTML_FIXTURE);
+assert.ok(bocViaGeneric);
+assert.equal(bocViaGeneric.buyLkr, 331.8);
+assert.equal(bocViaGeneric.sellLkr, 340.8);
+
+const dfccViaGeneric = parseUsdLkrBand(DFCC_HTML_FIXTURE);
+assert.ok(dfccViaGeneric);
+assert.equal(dfccViaGeneric.buyLkr, 331.5);
+assert.equal(dfccViaGeneric.sellLkr, 341);
 
 const simpleBand = parseUsdLkrBand(SIMPLE_USD_HTML_FIXTURE);
 assert.ok(simpleBand);
@@ -165,13 +263,16 @@ assert.equal(parseSampathUsdTt({ success: true, data: [] }), null);
 assert.equal(parsePeoplesUsdTt("<p>no rates here</p>"), null);
 assert.equal(parseNdbUsdTt("<p>no rates here</p>"), null);
 assert.equal(parseNsbUsdTt("<p>no rates here</p>"), null);
+assert.equal(parseBocUsdTt("<p>no rates here</p>"), null);
+assert.equal(parseBocUsdTt(BOC_HTML_FIXTURE.replace("US DOLLAR", "AUSTRALIAN DOLLAR").replace(">USD<", ">AUD<")), null);
+assert.equal(parseDfccUsdTt("<p>no rates here</p>"), null);
 assert.equal(parseUsdLkrBand("<p>no rates here</p>"), null);
 
 const seed = getRemittanceTtSeedSnapshot();
 assert.equal(seed.isSeed, true);
 assert.equal(seed.liveCount, 0);
 assert.equal(seed.seedCount, seed.banks.length);
-assert.ok(seed.banks.length >= 7);
+assert.ok(seed.banks.length >= 9);
 assert.ok(seed.banks.every((bank) => bank.isSeed));
 assert.ok(seed.banks.some((bank) => bank.id === "commercial"));
 assert.ok(seed.banks.some((bank) => bank.id === "hnb"));
@@ -180,6 +281,8 @@ assert.ok(seed.banks.some((bank) => bank.id === "sampath"));
 assert.ok(seed.banks.some((bank) => bank.id === "peoples"));
 assert.ok(seed.banks.some((bank) => bank.id === "ndb"));
 assert.ok(seed.banks.some((bank) => bank.id === "nsb"));
+assert.ok(seed.banks.some((bank) => bank.id === "boc"));
+assert.ok(seed.banks.some((bank) => bank.id === "dfcc"));
 
 console.log("remittance-banks.test.ts: ok");
 
