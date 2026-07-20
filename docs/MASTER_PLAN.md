@@ -156,8 +156,8 @@ CSE, property, vehicles, food stay on depth pages (`/economy`, `/property`, …)
 
 | ID | Work | Notes |
 |----|------|-------|
-| E1 | RSS broaden | SI/TA outlets + existing EN |
-| E2 | Embed + cluster | pgvector; tune threshold ~0.85 |
+| E1 | RSS broaden | SI/TA outlets + existing EN — **sequenced in `docs/NEWS_RSS_MASTER_PLAN.md` (NR-0…NR-6)** |
+| E2 | Embed + cluster | Jaccard now; pgvector only after durable store (NR-6.3) |
 | E3 | Trilingual AI brief | Claude; hourly cache; hard daily cap; degrade to previous brief |
 | E4 | Brief quality gate | Human-readable or don’t ship |
 | E5 | Cricket card | Free API evaluation; home only on match days |
@@ -229,10 +229,13 @@ F*               composite, launch, optional Vega
 | Doc | Role |
 |-----|------|
 | `docs/MASTER_PLAN.md` | This file — sequencing + gates |
+| `docs/NEWS_RSS_MASTER_PLAN.md` | News/RSS phases NR-0…NR-6 (expand platform Phase E) |
+| `docs/NEWS_RSS_BACKLOG.md` | Flat inventory N01–N75 |
 | `docs/ROADMAP.md` | Historical phases + Phase 9 backlog |
 | `docs/INTEGRATIONS.md` | Partner adapter status |
 | `docs/ARCHITECTURE.md` | Layer diagram + freshness contract |
 | `docs/BRAND.md` | Visual identity (authoritative for UI redo) |
 | `docs/DEPLOYMENT.md` | Env, cron, Supabase |
 
-When this plan and `ROADMAP.md` disagree, **this file wins** until ROADMAP is updated.
+When this plan and `ROADMAP.md` disagree, **this file wins** until ROADMAP is updated.  
+When news backlog waves and `NEWS_RSS_MASTER_PLAN.md` disagree, **the news master plan wins**.

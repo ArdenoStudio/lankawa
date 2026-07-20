@@ -134,13 +134,16 @@ Verified working RSS from environment probes (HTTP 200 + `<item>`/`<entry>` coun
 
 ## Recommended ship waves
 
+Superseded for sequencing by `docs/NEWS_RSS_MASTER_PLAN.md`. Rough map:
+
 ```
-Wave N-A (feeds):     N01, N03, N05, N19, N20, N58, N59
-Wave N-B (parser):    N21, N22, N24, N25, N28, N29, N30
-Wave N-C (surfaces):  N31, N32, N33, N36, N40, N42, N44
-Wave N-D (retention): N49, N55, N56, N64, N38, N39
-Wave N-E (civic RSS): N71, N72, N73, N75
-Wave N-F (later):     N16–N18 park, N47 pgvector, N12 BBC filter
+Wave N-A → NR-0   feeds / canary / docs
+Wave N-B → NR-1   parser + durable store + cron
+Wave N-C → NR-2   /news + clusters + topics
+(+ routing) → NR-3 district / pins / deep-links
+Wave N-D → NR-4   delta brief / HTML email / archive
+Wave N-E → NR-5   civic RSS modules
+Wave N-F → NR-6   quality / pgvector later
 ```
 
 ---
