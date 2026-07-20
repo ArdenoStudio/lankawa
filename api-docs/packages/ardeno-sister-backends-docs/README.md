@@ -45,6 +45,7 @@ python scripts/build_site.py
 
 ## Clients
 
+- Python: [`python/`](./python/) — `ardeno-sister-backends-docs-unofficial` (`pip install -e .`)
 - TypeScript: [`typescript/`](./typescript/) — `@cookie-cat21/ardeno-sister-backends-docs-client`
 - JavaScript (ESM, no build): [`javascript/`](./javascript/) — `client.mjs`
 

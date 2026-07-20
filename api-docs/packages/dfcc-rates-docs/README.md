@@ -44,6 +44,7 @@ python scripts/build_site.py
 
 ## Clients
 
+- Python: [`python/`](./python/) — `dfcc-rates-docs-unofficial` (`pip install -e .`)
 - TypeScript: [`typescript/`](./typescript/) — `@cookie-cat21/dfcc-rates-docs-client`
 - JavaScript (ESM, no build): [`javascript/`](./javascript/) — `client.mjs`
 

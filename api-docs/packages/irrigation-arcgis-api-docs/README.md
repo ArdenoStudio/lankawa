@@ -45,6 +45,7 @@ python scripts/build_site.py
 
 ## Clients
 
+- Python: [`python/`](./python/) — `irrigation-arcgis-api-docs-unofficial` (`pip install -e .`)
 - TypeScript: [`typescript/`](./typescript/) — `@cookie-cat21/irrigation-arcgis-api-docs-client`
 - JavaScript (ESM, no build): [`javascript/`](./javascript/) — `client.mjs`
 

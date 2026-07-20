@@ -130,6 +130,12 @@ export default async function DevelopersPage({
           >
             {t("tsClientsNavLink")}
           </Link>
+          <Link
+            href="/developers/api-catalog/py-clients"
+            className="text-sm text-teal-300 hover:text-teal-200"
+          >
+            {t("pyClientsNavLink")}
+          </Link>
         </div>
       </section>
     </div>

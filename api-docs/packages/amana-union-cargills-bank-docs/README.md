@@ -22,5 +22,6 @@ python scripts/build_site.py
 
 ## Clients
 
+- Python: [`python/`](./python/) — `amana-union-cargills-bank-docs-unofficial` (`pip install -e .`)
 - TypeScript: [`typescript/`](./typescript/) — `@cookie-cat21/amana-union-cargills-bank-docs-client`
 - JavaScript (ESM, no build): [`javascript/`](./javascript/) — `client.mjs`

@@ -44,6 +44,7 @@ python scripts/build_site.py
 
 ## Clients
 
+- Python: [`python/`](./python/) — `metdept-cap-api-docs-unofficial` (`pip install -e .`)
 - TypeScript: [`typescript/`](./typescript/) — `@cookie-cat21/metdept-cap-api-docs-client`
 - JavaScript (ESM, no build): [`javascript/`](./javascript/) — `client.mjs`
 

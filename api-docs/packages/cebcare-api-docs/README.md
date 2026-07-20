@@ -44,6 +44,7 @@ python scripts/build_site.py
 
 ## Clients
 
+- Python: [`python/`](./python/) — `cebcare-api-docs-unofficial` (`pip install -e .`)
 - TypeScript: [`typescript/`](./typescript/) — `@cookie-cat21/cebcare-api-docs-client`
 - JavaScript (ESM, no build): [`javascript/`](./javascript/) — `client.mjs`
 

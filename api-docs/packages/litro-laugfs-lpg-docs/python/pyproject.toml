@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "litro-laugfs-lpg-docs-unofficial"
+version = "0.1.0"
+description = "Minimal unofficial HTTP helpers for Litro + LAUGFS LPG price pages (educational)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/Cookie-Cat21/litro-laugfs-lpg-docs"
+
+[tool.setuptools]
+packages = ["litro_laugfs_lpg_docs"]

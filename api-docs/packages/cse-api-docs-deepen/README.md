@@ -45,6 +45,7 @@ python scripts/build_site.py
 
 ## Clients
 
+- Python: [`python/`](./python/) — `cse-api-docs-deepen-unofficial` (`pip install -e .`)
 - TypeScript: [`typescript/`](./typescript/) — `@cookie-cat21/cse-api-docs-deepen-client`
 - JavaScript (ESM, no build): [`javascript/`](./javascript/) — `client.mjs`
 

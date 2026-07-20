@@ -55,7 +55,7 @@ You are extracting **unofficial Sri Lanka API documentation packages** from the 
 [ ] docs/ETHICS.md present
 [ ] docs/PAGINATION.md if any endpoint has pagination.lab: true
 [ ] examples/curl.md with real curl against public URLs
-[ ] python/ thin helper (optional requests wrapper) OR python/README stub
+[ ] python/ polished helper (from staging) — `pip install -e .` + `python smoke.py`; keep setup.py/pyproject.toml
 [ ] typescript/ client (from staging) — `npm install && npm run typecheck`; keep README + smoke
 [ ] javascript/ client (from staging) — zero-build `client.mjs`; `node examples/smoke.mjs`
 [ ] scripts/probe.py works locally

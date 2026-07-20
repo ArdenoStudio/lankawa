@@ -23,5 +23,6 @@ python scripts/build_site.py
 
 ## Clients
 
+- Python: [`python/`](./python/) — `mypromo-park-docs-unofficial` (`pip install -e .`)
 - TypeScript: [`typescript/`](./typescript/) — `@cookie-cat21/mypromo-park-docs-client`
 - JavaScript (ESM, no build): [`javascript/`](./javascript/) — `client.mjs`

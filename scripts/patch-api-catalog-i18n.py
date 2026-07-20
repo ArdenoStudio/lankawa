@@ -100,6 +100,28 @@ NEW = {
         "const client = new CombankApiDocsClient({ defaultDelayMs: 1000 });\n"
         "const fx = await client.exchangeRates();"
     ),
+    "pyClientsTitle": "Python clients",
+    "pyClientsSubtitle": (
+        "Polished installable unofficial helpers for every Tier A/B staging package — "
+        "cse-api-docs style (setuptools, context manager, smoke.py, stdlib urllib)."
+    ),
+    "pyClientsBanner": (
+        "Not affiliated with upstream operators. Default 1s delay. "
+        "Parked endpoints raise RuntimeError. See api-docs/PYTHON_CLIENTS.md."
+    ),
+    "pyClientsNavLink": "Open Python clients index",
+    "pyClientsStats": "{count} packages with Python clients",
+    "pyClientsColPackage": "Package",
+    "pyClientsColPip": "pip name",
+    "pyClientsColModule": "Module",
+    "pyClientsColClass": "Class",
+    "pyClientsColMethods": "Methods",
+    "pyClientsExample": (
+        "from combank_api_docs import CombankApiDocsClient\n"
+        "with CombankApiDocsClient(default_delay_seconds=1.0) as client:\n"
+        "    fx = client.exchange_rates()\n"
+        "    print(fx)"
+    ),
 }
 
 

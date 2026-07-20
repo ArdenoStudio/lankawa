@@ -23,5 +23,6 @@ python scripts/build_site.py
 
 ## Clients
 
+- Python: [`python/`](./python/) — `gold-retail-rates-docs-unofficial` (`pip install -e .`)
 - TypeScript: [`typescript/`](./typescript/) — `@cookie-cat21/gold-retail-rates-docs-client`
 - JavaScript (ESM, no build): [`javascript/`](./javascript/) — `client.mjs`

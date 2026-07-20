@@ -23,5 +23,6 @@ python scripts/build_site.py
 
 ## Clients
 
+- Python: [`python/`](./python/) — `openaq-lk-docs-unofficial` (`pip install -e .`)
 - TypeScript: [`typescript/`](./typescript/) — `@cookie-cat21/openaq-lk-docs-client`
 - JavaScript (ESM, no build): [`javascript/`](./javascript/) — `client.mjs`
