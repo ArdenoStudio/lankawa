@@ -118,5 +118,30 @@ class ScHsbcOffersParkDocsClient:
         """
         raise RuntimeError("Parked endpoint: hsbc_retail_parked (sc-hsbc-offers-park-docs)")
 
+# --- extras: models / pagination / shard ---
+from .models import PageResult, FdDepositQuote, CardOffer
+from .pagination import LAB_ENDPOINTS, iter_lab_endpoint, iter_pages
+from .shard import (
+    plan_shards,
+    shard_groups,
+    shard_offsets,
+    shard_page_numbers,
+    shard_range,
+    shard_slice,
+)
 
-__all__ = ["ScHsbcOffersParkDocsClient"]
+__all__ = [
+    "ScHsbcOffersParkDocsClient",
+    "PageResult",
+    "FdDepositQuote",
+    "CardOffer",
+    "LAB_ENDPOINTS",
+    "iter_lab_endpoint",
+    "iter_pages",
+    "plan_shards",
+    "shard_groups",
+    "shard_offsets",
+    "shard_page_numbers",
+    "shard_range",
+    "shard_slice",
+]

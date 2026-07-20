@@ -111,5 +111,29 @@ class MypromoParkDocsClient:
         """
         raise RuntimeError("Parked endpoint: mypromo_parked (mypromo-park-docs)")
 
+# --- extras: models / pagination / shard ---
+from .models import PageResult, CardOffer
+from .pagination import LAB_ENDPOINTS, iter_lab_endpoint, iter_pages
+from .shard import (
+    plan_shards,
+    shard_groups,
+    shard_offsets,
+    shard_page_numbers,
+    shard_range,
+    shard_slice,
+)
 
-__all__ = ["MypromoParkDocsClient"]
+__all__ = [
+    "MypromoParkDocsClient",
+    "PageResult",
+    "CardOffer",
+    "LAB_ENDPOINTS",
+    "iter_lab_endpoint",
+    "iter_pages",
+    "plan_shards",
+    "shard_groups",
+    "shard_offsets",
+    "shard_page_numbers",
+    "shard_range",
+    "shard_slice",
+]

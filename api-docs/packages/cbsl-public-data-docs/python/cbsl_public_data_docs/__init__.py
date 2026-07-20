@@ -158,5 +158,31 @@ class CbslPublicDataDocsClient:
         payload: Any = None
         return self._request_json(url, method='GET', **kwargs)
 
+# --- extras: models / pagination / shard ---
+from .models import PageResult, FxTtQuote, FdDepositQuote, MacroCbsl
+from .pagination import LAB_ENDPOINTS, iter_lab_endpoint, iter_pages
+from .shard import (
+    plan_shards,
+    shard_groups,
+    shard_offsets,
+    shard_page_numbers,
+    shard_range,
+    shard_slice,
+)
 
-__all__ = ["CbslPublicDataDocsClient"]
+__all__ = [
+    "CbslPublicDataDocsClient",
+    "PageResult",
+    "FxTtQuote",
+    "FdDepositQuote",
+    "MacroCbsl",
+    "LAB_ENDPOINTS",
+    "iter_lab_endpoint",
+    "iter_pages",
+    "plan_shards",
+    "shard_groups",
+    "shard_offsets",
+    "shard_page_numbers",
+    "shard_range",
+    "shard_slice",
+]

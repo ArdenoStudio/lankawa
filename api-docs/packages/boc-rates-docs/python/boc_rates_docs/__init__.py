@@ -120,5 +120,30 @@ class BocRatesDocsClient:
         """
         raise RuntimeError("Parked endpoint: interest_rates_fd_json_parked (boc-rates-docs)")
 
+# --- extras: models / pagination / shard ---
+from .models import PageResult, FxTtQuote, FdDepositQuote
+from .pagination import LAB_ENDPOINTS, iter_lab_endpoint, iter_pages
+from .shard import (
+    plan_shards,
+    shard_groups,
+    shard_offsets,
+    shard_page_numbers,
+    shard_range,
+    shard_slice,
+)
 
-__all__ = ["BocRatesDocsClient"]
+__all__ = [
+    "BocRatesDocsClient",
+    "PageResult",
+    "FxTtQuote",
+    "FdDepositQuote",
+    "LAB_ENDPOINTS",
+    "iter_lab_endpoint",
+    "iter_pages",
+    "plan_shards",
+    "shard_groups",
+    "shard_offsets",
+    "shard_page_numbers",
+    "shard_range",
+    "shard_slice",
+]

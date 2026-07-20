@@ -49,6 +49,12 @@ export default async function ApiCatalogPage({
         >
           {t("pyClientsNavLink")}
         </Link>
+        <Link
+          href="/developers/api-catalog/client-extras"
+          className="text-teal-300 hover:text-teal-200"
+        >
+          {t("clientExtrasNavLink")}
+        </Link>
         <a
           href="https://github.com/ArdenoStudio/lankawa/tree/main/api-docs"
           className="text-teal-300 hover:text-teal-200"

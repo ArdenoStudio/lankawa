@@ -37,6 +37,7 @@ const MODULE_PATHS = [
   "developers/api-catalog/field-coverage",
   "developers/api-catalog/ts-clients",
   "developers/api-catalog/py-clients",
+  "developers/api-catalog/client-extras",
   "embed",
   "assistant",
   "ardeno",

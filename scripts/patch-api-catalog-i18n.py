@@ -122,6 +122,27 @@ NEW = {
         "    fx = client.exchange_rates()\n"
         "    print(fx)"
     ),
+    "clientExtrasTitle": "Client extras",
+    "clientExtrasSubtitle": (
+        "Typed models, pagination iterators, and shard helpers — shipped for "
+        "every package in Python, TypeScript, and JavaScript."
+    ),
+    "clientExtrasBanner": (
+        "See api-docs/CLIENT_EXTRAS.md and each package docs/CLIENT_EXTRAS.md. "
+        "Regenerate with scripts/scaffold-client-extras.py."
+    ),
+    "clientExtrasNavLink": "Open client extras",
+    "clientExtrasStats": "{count} packages · {labs} with pagination lab endpoints",
+    "clientExtrasColPackage": "Package",
+    "clientExtrasColModels": "Typed models",
+    "clientExtrasColLabs": "Lab endpoints",
+    "clientExtrasExample": (
+        "from hnb_venus_api_docs import HnbVenusApiDocsClient, iter_lab_endpoint, shard_groups\n"
+        "print(shard_groups(0, 4))\n"
+        "with HnbVenusApiDocsClient() as client:\n"
+        "    for page in iter_lab_endpoint(client, 'get_all_web_card_promos', max_pages=2):\n"
+        "        print(page.page, len(page.items))"
+    ),
 }
 
 

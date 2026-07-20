@@ -149,5 +149,29 @@ class CseApiDocsDeepenClient:
         payload = {"symbol": "JKH.N0000"} if body is None else body
         return self._request_json(url, method="POST", json_body=payload, **kwargs)
 
+# --- extras: models / pagination / shard ---
+from .models import PageResult, CseQuote
+from .pagination import LAB_ENDPOINTS, iter_lab_endpoint, iter_pages
+from .shard import (
+    plan_shards,
+    shard_groups,
+    shard_offsets,
+    shard_page_numbers,
+    shard_range,
+    shard_slice,
+)
 
-__all__ = ["CseApiDocsDeepenClient"]
+__all__ = [
+    "CseApiDocsDeepenClient",
+    "PageResult",
+    "CseQuote",
+    "LAB_ENDPOINTS",
+    "iter_lab_endpoint",
+    "iter_pages",
+    "plan_shards",
+    "shard_groups",
+    "shard_offsets",
+    "shard_page_numbers",
+    "shard_range",
+    "shard_slice",
+]

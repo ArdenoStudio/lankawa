@@ -114,5 +114,29 @@ class VisaLkPerksApiDocsClient:
         payload["pageRequest"] = {"index": index, "limit": limit}
         return self._request_json(url, method="POST", json_body=payload, **kwargs)
 
+# --- extras: models / pagination / shard ---
+from .models import PageResult, CardOffer
+from .pagination import LAB_ENDPOINTS, iter_lab_endpoint, iter_pages
+from .shard import (
+    plan_shards,
+    shard_groups,
+    shard_offsets,
+    shard_page_numbers,
+    shard_range,
+    shard_slice,
+)
 
-__all__ = ["VisaLkPerksApiDocsClient"]
+__all__ = [
+    "VisaLkPerksApiDocsClient",
+    "PageResult",
+    "CardOffer",
+    "LAB_ENDPOINTS",
+    "iter_lab_endpoint",
+    "iter_pages",
+    "plan_shards",
+    "shard_groups",
+    "shard_offsets",
+    "shard_page_numbers",
+    "shard_range",
+    "shard_slice",
+]

@@ -58,6 +58,7 @@ You are extracting **unofficial Sri Lanka API documentation packages** from the 
 [ ] python/ polished helper (from staging) — `pip install -e .` + `python smoke.py`; keep setup.py/pyproject.toml
 [ ] typescript/ client (from staging) — `npm install && npm run typecheck`; keep README + smoke
 [ ] javascript/ client (from staging) — zero-build `client.mjs`; `node examples/smoke.mjs`
+[ ] Client extras: `models` + `pagination` iterator + `shard` helper (Python/TS/JS) — see docs/CLIENT_EXTRAS.md
 [ ] scripts/probe.py works locally
 [ ] scripts/build_site.py writes site/index.html
 [ ] .github/workflows/probe.yml + pages.yml
