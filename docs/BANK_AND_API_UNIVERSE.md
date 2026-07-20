@@ -17,8 +17,11 @@ This doc is the **single index** for bank rates, remittance, card days, CBSL ser
 | CBSL FX + gold scrapes | **Shipped** — `cbsl.ts` |
 | CBSL payments bulletin | **Shipped** — quarterly seed strip |
 | Singer EMI chip | **Shipped** — Softlogic per-SKU **parked** |
-| Bank FD / deposit board | **Researched** — JSON schemas ready; adapters **not yet** |
-| CBSL OPR / AWPR / T-bill live | **Ship next** (no public JSON; HTML/Excel/eResearch) |
+| Bank FD / deposit board | **Shipped** — ComBank/Sampath/Seylan/HNB JSON → `BankDepositRatesBoard` |
+| CBSL OPR (+ corridor seed) | **Shipped** — `cbsl-policy-rates.ts` / `PolicyRatesStrip` |
+| CSE dedicated movers | **Shipped** — `topGainers` / `topLooses` → `CseMoversStrip` |
+| Open-Meteo Colombo AQI | **Shipped** — fallback in `aqi.ts` + home strip |
+| CBSL AWPR / T-bill eResearch live | **Next** (HTML/Excel; no public JSON) |
 | FoodLK cleaned data plane | **Parked live** — OpenAPI up, hub/basket **500** → WFP fallback |
 
 ---
