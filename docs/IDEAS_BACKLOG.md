@@ -48,6 +48,10 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 - Data Saver mode: header toggle persists `lankawa_data_saver`, skips cricket visually, caps home news at 5 headlines, and avoids loading heavy map bundles where possible.
 - Share morning check: home Today section now shares FX, fuel, weather, and power via Web Share API or copies plain text for WhatsApp/manual sharing.
 
+## Platform features (50+)
+
+See **`docs/PLATFORM_FEATURES_MASTER_PLAN.md`** (phases PF-0…PF-6) and inventory **`docs/PLATFORM_FEATURES_50.md`** (**P01–P65**): economy, disaster, atlas, household, health, civic, retention, news slice, trust/ops — not news-only.
+
 ## News / RSS (exhaustive)
 
 See **`docs/NEWS_RSS_MASTER_PLAN.md`** (phases NR-0…NR-6) and inventory **`docs/NEWS_RSS_BACKLOG.md`** (N01–N75). Strategy: **RSS only**, no paid scrape APIs.

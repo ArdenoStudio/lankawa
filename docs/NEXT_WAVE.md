@@ -26,6 +26,8 @@ Still parked: Year-2 satellite ETL (see `docs/DATA_EXPANSION_RESEARCH.md`), prot
 
 Data expansion wave shipped: FIRMS/GDACS pins, Open-Meteo UV/rain, CSE sectors/most-active/foreign, bank remittance TT seed, FX MAD anomaly + flood rate-of-rise pins, NDVI district seed. See `docs/DATA_EXPANSION_RESEARCH.md`.
 
+**Next product sequencing:** `docs/PLATFORM_FEATURES_MASTER_PLAN.md` (PF-0 personal morning → money → hazard → news foundation). Inventory: `docs/PLATFORM_FEATURES_50.md`.
+
 ---
 
 ## 1. Coconut Index / COL honesty UI
