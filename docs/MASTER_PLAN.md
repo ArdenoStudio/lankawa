@@ -229,6 +229,8 @@ F*               composite, launch, optional Vega
 | Doc | Role |
 |-----|------|
 | `docs/MASTER_PLAN.md` | This file — sequencing + gates |
+| `docs/PLATFORM_FEATURES_MASTER_PLAN.md` | Whole-product feature phases PF-0…PF-6 |
+| `docs/PLATFORM_FEATURES_50.md` | Inventory P01–P65 (economy→ops, + news slice) |
 | `docs/NEWS_RSS_MASTER_PLAN.md` | News/RSS phases NR-0…NR-6 (expand platform Phase E) |
 | `docs/NEWS_RSS_BACKLOG.md` | Flat inventory N01–N75 |
 | `docs/ROADMAP.md` | Historical phases + Phase 9 backlog |
