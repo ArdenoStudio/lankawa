@@ -92,7 +92,11 @@
     "disclaimer": "Aggregated from public sources. Not an official government publication.",
     "morningDeltaUv": "Colombo UV max",
     "morningDeltaRain7d": "Colombo 7d rain",
-    "morningDeltaWeatherAsOf": "forecast as of {date}"
+    "morningDeltaWeatherAsOf": "forecast as of {date}",
+    "morningDeltaCardDays": "Supermarket cards",
+    "morningDeltaCardDaysNone": "None today",
+    "morningDeltaCardDaysCount": "{count} today",
+    "morningDeltaCardDaysValue": "{count} · {merchant} {discount}"
   },
   "a11y": {
     "skipToContent": "Skip to main content"
@@ -609,6 +613,24 @@
       "honesty": "Complements local river gauges — not an official DMC flood warning.",
       "asOf": "Checked {date}"
     },
+    "irrigation": {
+      "title": "Irrigation river gauges",
+      "subtitle": "Latest public Irrigation Department ArcGIS readings for major river stations.",
+      "seed": "Seed snapshot",
+      "empty": "No gauge readings available right now.",
+      "honesty": "Civic republish of Irrigation ArcGIS — not an official DMC flood warning.",
+      "asOf": "As of {date}",
+      "source": "Source provenance",
+      "dashboard": "Irrigation ArcGIS dashboard",
+      "stations": "stations",
+      "elevated": "{count} elevated",
+      "level": "Water level",
+      "rain": "Rainfall",
+      "normal": "Normal",
+      "alert": "Alert",
+      "warning": "Warning",
+      "danger": "Danger"
+    },
     "mapMode_gfm": "Flood extent pins",
     "mapLegendGfm": "White pins mark seed GFM / flood-extent attention points — pins only, not mosaics.",
     "mapGfmHonesty": "{count} seed pins as of {date}. Not a DMC inundation map."
@@ -672,8 +694,10 @@
     },
     "remittance": {
       "title": "Remittance calculator",
-      "subtitle": "Convert using the latest CBSL USD/LKR buy and sell rates shown above.",
-      "asOf": "As of {date}",
+      "subtitle": "Convert using the latest CBSL USD/LKR buy and sell rates shown above — not the bank TT board.",
+      "asOf": "CBSL as of {date}",
+      "cbslLive": "CBSL live band",
+      "fallback": "Cached CBSL band — live fetch unavailable.",
       "usdToLkrLabel": "USD amount",
       "usdAmount": "USD amount to convert to LKR",
       "lkrEstimate": "Indicative LKR",
@@ -711,6 +735,10 @@
       "highLow": "Session high / low",
       "notices": "Exchange notices",
       "noNotices": "No exchange notices available",
+      "announcementsTitle": "CSE notices",
+      "announcementsSubtitle": "Halt banners and recent approved disclosures from the public CSE board.",
+      "announcementsSeed": "Seed",
+      "announcementsHonesty": "Live when GET /notifications or approvedAnnouncement responds; otherwise a short seed strip. Not investment advice.",
       "sectorsSkipped": "Sectors skipped in Data Saver"
     },
     "debt": {
@@ -725,7 +753,7 @@
       "methodology": "Primary figures from Central Bank reports. Historical only — not post-restructuring live debt. Not an official CBSL dashboard."
     },
     "householdTitle": "Household numbers",
-    "householdSubtitle": "Official inflation and domestic electricity tariffs — the two figures people argue about at the kitchen table.",
+    "householdSubtitle": "Official inflation, domestic electricity tariffs, and NWSDB water bill bands — kitchen-table utility numbers.",
     "ncpi": {
       "title": "NCPI inflation",
       "subtitle": "National Consumer Price Index from the Department of Census and Statistics — monthly official series, not Lankawa COL.",
@@ -757,6 +785,27 @@
       "decision": "PUCSL domestic tariff",
       "none": "—"
     },
+    "waterTariff": {
+      "title": "Water bill (NWSDB domestic)",
+      "subtitle": "Gazette water tariff slabs for domestic and Samurdhi/tenement connections — indicative monthly estimate with VAT.",
+      "effective": "Effective from",
+      "slab": "Block",
+      "usage": "LKR/m³",
+      "service": "Service LKR/mo",
+      "unitsLabel": "Monthly units (m³)",
+      "estimateTitle": "Indicative domestic bill estimate",
+      "usageTotal": "Usage charge",
+      "serviceTotal": "Service charge",
+      "vatTotal": "VAT (18%)",
+      "billTotal": "Indicative total",
+      "honesty": "Indicative only — progressive m³ slabs, monthly service charge for the consumption band, and 18% VAT on usage+service. Assumes a 30-day billing period for Domestic (Category 10). Not your NWSDB bill; sewerage, arrears, and other charges are excluded. Verify against the official Bill Calculator and your meter reading.",
+      "source": "Source provenance",
+      "decision": "NWSDB current water tariff",
+      "calculator": "Official Bill Calculator",
+      "liveMatch": "Live BillCalculator totals match seed for these units",
+      "liveMiss": "Live BillCalculator total",
+      "seedMode": "Estimate from gazette seed slabs"
+    },
     "worldPump": {
       "title": "Regional pump compare",
       "subtitle": "Sri Lanka petrol 92 vs curated South/Southeast Asia retail peers (USD/L).",
@@ -775,11 +824,16 @@
       "spread": "Spread",
       "bestBuy": "Best buy for senders",
       "bestSell": "Best sell for receivers",
+      "best": "Best",
       "seed": "Full seed board — all live bank FX fetches failed.",
+      "live": "Live",
+      "mixed": "Mixed",
       "bankSeed": "seed",
+      "bankLive": "live",
+      "coverage": "{live} live · {seed} seed",
       "asOf": "As of {date}",
       "source": "Source provenance",
-      "honesty": "Indicative only. Bank fees, corridors, and same-day TT products differ. Not CBSL official rates."
+      "honesty": "Public indicative only. Lankawa is not affiliated with these banks. Fees, corridors, and same-day TT products differ. Not CBSL official rates."
     },
     "fxAnomaly": "Unusual day-over-day move",
     "fxAnomalyQuiet": "Within recent MAD band",
@@ -1043,6 +1097,8 @@
     "ncpiDescription": "Latest NCPI headline YoY/MoM, core, food/non-food splits, and recent monthly series from DCS.",
     "tariffsSummary": "PUCSL domestic tariffs",
     "tariffsDescription": "Residential electricity energy and fixed charges by consumption block with effective date.",
+    "waterBillSummary": "NWSDB water bill estimate",
+    "waterBillDescription": "Domestic/Samurdhi water tariff slabs with seed estimate and optional live BillCalculator totals.",
     "exportLandChangeSummary": "Export land change",
     "exportLandChangeDescription": "Download district greenery and built-up indices as JSON or CSV.",
     "exportForeignDebtSummary": "Export foreign debt composition",
@@ -1456,7 +1512,7 @@
     "disclaimerSpar": "FoodLK and WFP HDX were unavailable. Staple prices are from a single SPAR2U retail catalog page. District meal bands remain Lankawa seed. Not HARTI or NCPI.",
     "disclaimerSeed": "Showing seed fallback data — FoodLK, WFP HDX, SPAR2U, and Life Platform food endpoints were unavailable. Figures are representative, not live market quotes.",
     "bannerLife": "FoodLK is temporarily unreachable. Staple and basket figures come from the Ariva Life Platform food adapter — representative estimates, not live FoodLK scrapes.",
-    "bannerWfp": "Not this morning's prices — WFP HDX publishes with lag. FoodLK is down; staples come from the WFP HDX Sri Lanka CSV (direct). HARTI PDF ingest is still planned via FoodLK.",
+    "bannerWfp": "Lagged WFP HDX market averages — not same-day supermarket shelves. FoodLK cleaned hub/staples were unavailable; staples come from the WFP HDX Sri Lanka CSV (direct). HARTI and CBSL price-report PDF ingest remain needed on FoodLK for fresher civic food.",
     "corpusAsOfLoud": "Market prices as of {monthYear}",
     "staleStaple": "Stale quote",
     "bannerSpar": "FoodLK and WFP HDX were unavailable. Showing SPAR2U retail shelf staples (one catalog page). HARTI PDF ingest is still planned via FoodLK.",
@@ -1894,7 +1950,9 @@
     "pin_news_cluster": "News cluster",
     "help_news_cluster": "Fire when a headline cluster spans 3 or more outlets",
     "pin_tender_closing": "Tenders closing soon",
-    "help_tender_closing": "Fire when e-GP tenders close within 7 days"
+    "help_tender_closing": "Fire when e-GP tenders close within 7 days",
+    "pin_card_day": "Supermarket card day",
+    "help_card_day": "Fire when at least one supermarket card offer is active today (live or seed)"
   },
   "weekLedger": {
     "title": "Week ledger",
@@ -1952,7 +2010,9 @@
     "savedLabel": "Saved symbols",
     "empty": "No symbols pinned yet — tap below.",
     "remove": "Remove from watchlist",
-    "privacy": "Saved in this browser only. Hidden when Data Saver is on."
+    "privacy": "Saved in this browser only. Hidden when Data Saver is on.",
+    "loadingQuote": "Loading…",
+    "seedQuote": "seed"
   },
   "webPush": {
     "title": "Alert push (opt-in)",
@@ -1982,6 +2042,17 @@
     "validTo": "Valid through {date}",
     "asOf": "As of {date}",
     "source": "Source provenance",
-    "honesty": "Indicative public bank offers — confirm at checkout and on the bank site. Not affiliated with the banks or merchants."
+    "honesty": "Public indicative bank offers — confirm at checkout and on the bank site. Lankawa is not affiliated with the banks or merchants."
+  },
+  "demandMgmtClusters": {
+    "title": "Demand management clusters",
+    "subtitle": "CEB Care load-shed groups A–Y — cluster and customer counts.",
+    "seed": "Seed",
+    "live": "Live",
+    "totals": "{groups} groups · {clusters} clusters · ~{customers} customers",
+    "groupTitle": "Group {group}: {clusters} clusters, {customers} customers",
+    "asOf": "As of {date}",
+    "source": "Source provenance",
+    "honesty": "Indicative CEB Care public map counts — confirm on cebcare.ceb.lk. Not a live outage alert."
   }
 }

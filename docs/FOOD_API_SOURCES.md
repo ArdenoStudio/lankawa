@@ -4,18 +4,33 @@ Catalog of Food Platform / FoodLK upstream sources — style inspired by [Cookie
 
 Primary sister repo: [SuvenSeo/Food-Platform](https://github.com/SuvenSeo/Food-Platform) (`docs/DATA_SOURCES.md`).
 
+## Product rule
+
+**SPAR / Keells / Cargills (and Glomark) retail ingestion stays in FoodLK.** Lankawa does **not** chase supermarket guest JSON, Shopify catalogs, or loyalty APIs as a FoodLK replacement path for civic food.
+
+Lankawa only consumes FoodLK **cleaned** surfaces:
+
+- `GET /hub/summary` — coverage counts (offers, market quotes, sources)
+- `GET /basket/estimate?preset=essentials` — staples / essentials basket rows
+
+…then falls through the bypass chain below. **Retail APIs are not chased in Lankawa.**
+
+**Fresh civic food** (same-day market bands) still needs **HARTI daily PDF** and **CBSL daily price-report PDF** ingest on FoodLK. Until those land, WFP HDX is a **lagged** public series — not “this morning” shelf prices.
+
 ## Architecture (Lankawa)
 
 ```
-FoodLK API  ──(200 + real metrics)──►  provenance: live / food_platform_api
+FoodLK cleaned API  ──(200 + real metrics)──►  provenance: live / food_platform_api
+  /hub/summary + /basket/estimate?preset=essentials
      │
-     │  HTTP 500 / empty / no metrics
+     │  HTTP 500 / empty / zero coverage / no priced staples
      ▼
 WFP HDX CSV (direct)  ──────────────►  provenance: wfp_hdx
-     │
+     │  (lagged markets — not live supermarket)
      │  fetch/parse fail
      ▼
 SPAR2U products.json (1 page)  ─────►  provenance: spar2u / spar2u_retail
+     │  (optional thin bypass only; not a retail-API expansion)
      │  (429 / fail → skip)
      ▼
 Life /life/overview food domain  ───►  provenance: life_federation
@@ -24,22 +39,24 @@ Life /life/overview food domain  ───►  provenance: life_federation
 food-seed.json  ────────────────────►  provenance: seed
 ```
 
-**Rule:** Prefer FoodLK sister first. While FoodLK public `/api/v1/*` returns 500s, Lankawa **bypasses** with a direct WFP HDX CSV adapter (`src/lib/integrations/food-direct.ts`), then an optional SPAR2U retail page (`src/lib/integrations/food-spar.ts`). HARTI PDF ingest remains planned on FoodLK; Lankawa does not claim HARTI live yet.
+**Call order:** FoodLK (real metrics only) → WFP → SPAR → Life → seed.
+
+**Rule:** Prefer FoodLK cleaned hub/staples first. On 500/empty, fail **cleanly to WFP** without labeling live supermarket. Do not add Keells/Cargills direct scrapers in this repo. HARTI/CBSL PDF ingest remains planned on FoodLK for fresh civic food; Lankawa does not claim HARTI live yet.
 
 Env: `FOOD_API_BASE` (default `https://food-platform-backend.fly.dev/api/v1`).
 
 ---
 
-## Retail (grocery) — ingested by FoodLK
+## Retail (grocery) — ingested by FoodLK only
 
 | Source | URL / endpoint | API? | FoodLK status | Lankawa call path |
 |--------|----------------|------|---------------|-------------------|
-| **SPAR2U** | `https://spar2u.lk/products.json` (paginated `limit`/`page`) | Public JSON catalog | Active in FoodLK | **Direct optional bypass** `food-spar.ts` → `sourceId: spar2u_retail` after WFP fails (1 page, `limit=250`; 429 skips) |
-| **Keells** | Guest JSON via `https://zebraliveback.keellssuper.com/1.0` (`Login/GuestLogin` → `WebV2/GetInitialDataCollection`) (+ HTML fallback) | Guest session JSON (CF-gated) | Active in FoodLK | Via FoodLK / Life federation — see [`RETAIL_LOYALTY_APIS_RESEARCH.md`](./RETAIL_LOYALTY_APIS_RESEARCH.md) |
-| **Cargills** | `POST /Web/GetDynamicSection/` (+ browser `GetMenuCategoryItemsPagingV3/`) | Dynamic section JSON | Active in FoodLK | Via FoodLK / Life federation; optional future direct `GetDynamicSection` bypass |
-| **Glomark** | Category HTML on `glomark.lk`; per-SKU `GET /product-page/variation-detail/{id}` | HTML + per-SKU JSON | Active in FoodLK (HTML) | Via FoodLK only; variation-detail noted for SKU watchlist |
+| **SPAR2U** | `https://spar2u.lk/products.json` (paginated `limit`/`page`) | Public JSON catalog | Active in FoodLK | **Not chased as FoodLK substitute.** Optional one-page bypass `food-spar.ts` only after FoodLK + WFP fail |
+| **Keells** | Guest JSON via `zebraliveback.keellssuper.com` | Guest session JSON (CF-gated) | Active in FoodLK | **FoodLK only** — never direct from Lankawa |
+| **Cargills** | `POST /Web/GetDynamicSection/` (+ browser paging) | Dynamic section JSON | Active in FoodLK | **FoodLK only** — never direct from Lankawa |
+| **Glomark** | Category HTML + per-SKU `variation-detail/{id}` | HTML + per-SKU JSON | Active in FoodLK | **FoodLK only** |
 
-Loyalty apps (Keells Nexus, Cargills Rewards, SPAR Rewards, Softlogic ONE) have **no public offer/points APIs**. Card supermarket-day promos: [`COMBANK_OFFERS_RESEARCH.md`](./COMBANK_OFFERS_RESEARCH.md).
+Loyalty apps (Keells Nexus, Cargills Rewards, SPAR Rewards, Softlogic ONE) have **no public offer/points APIs**. Card supermarket-day promos (bank HTML/JSON) are a separate household strip — not shelf-price ingest: [`COMBANK_OFFERS_RESEARCH.md`](./COMBANK_OFFERS_RESEARCH.md).
 
 ---
 
@@ -47,9 +64,9 @@ Loyalty apps (Keells Nexus, Cargills Rewards, SPAR Rewards, Softlogic ONE) have 
 
 | Source | URL / endpoint | API? | Notes | Lankawa call path |
 |--------|----------------|------|-------|-------------------|
-| **WFP HDX** | [Dataset](https://data.humdata.org/dataset/wfp-food-prices-for-sri-lanka) · CSV `…/download/wfp_food_prices_lka.csv` | Public CSV (HDX). Suffix without `_lka` → S3 `NoSuchKey`. | Strongest historical retail/wholesale series | **Direct** `food-direct.ts` → `sourceId: wfp_hdx` when FoodLK fails |
-| **HARTI** | Index `https://www.harti.gov.lk/daily-price.php` · daily English PDF under `/assets/pdf/food_price/daily/eng/…` | PDF parse | Multi-market veg/fruit | Planned via FoodLK — **not** live in Lankawa yet |
-| **CBSL price report** | Index `https://www.cbsl.gov.lk/en/statistics/economic-indicators/price-report` · PDF under `/sites/default/files/cbslweb_documents/…` | PDF parse | Selected commodities | FoodLK only; Lankawa treasury yields stay seed (separate path) |
+| **WFP HDX** | [Dataset](https://data.humdata.org/dataset/wfp-food-prices-for-sri-lanka) · CSV `…/download/wfp_food_prices_lka.csv` | Public CSV (HDX). Suffix without `_lka` → S3 `NoSuchKey`. | Strongest historical retail/wholesale series; **publishes with lag** | **Direct** `food-direct.ts` → `sourceId: wfp_hdx` when FoodLK fails — never presented as same-day supermarket |
+| **HARTI** | Index `https://www.harti.gov.lk/daily-price.php` · daily English PDF under `/assets/pdf/food_price/daily/eng/…` | PDF parse | Multi-market veg/fruit — **still needed for fresh civic food** | Planned via FoodLK — **not** live in Lankawa yet |
+| **CBSL price report** | Index `https://www.cbsl.gov.lk/en/statistics/economic-indicators/price-report` · PDF under `/sites/default/files/cbslweb_documents/…` | PDF parse | Selected commodities — **still needed for fresh civic food** | FoodLK only; Lankawa treasury yields stay seed (separate path) |
 | **DOA SHEP** | `https://infohub.doa.gov.lk/wp-admin/admin-ajax.php?action=get_veg_data&item=…` | WordPress AJAX JSON | **Currently 404** / unstable | Do not call from Lankawa until FoodLK marks healthy |
 | **DCS weekly** | `https://www.statistics.gov.lk/InflationAndPrices/StaticalInformation/RetailPrices` | PDF/table discovery | Colombo open-market retail | FoodLK sync only |
 | **Fisheries** | `https://www.fisheries.gov.lk/web/index.php/en/statistics/weekly-fish-prices` | Weekly Excel/PDF | Wholesale + selected retail fish | FoodLK sync only |
@@ -57,17 +74,19 @@ Loyalty apps (Keells Nexus, Cargills Rewards, SPAR Rewards, Softlogic ONE) have 
 
 ---
 
-## FoodLK public API (sister)
+## FoodLK public API (sister) — what Lankawa calls
 
 Base: `{FOOD_API_BASE}` → typically `https://food-platform-backend.fly.dev/api/v1`
 
 | Endpoint | Role | Lankawa |
 |----------|------|---------|
-| `GET /stats/summary` | `offers_count`, `sources_count`, … | Tried first; live only if counts/metrics > 0 |
-| `GET /categories/summary` | Per-category retail/market medians | Same |
-| `GET /home/summary` | Cheapest offers + market quotes | Same |
+| `GET /hub/summary` | Nested `coverage`: `offers_count`, `market_quotes_count`, … | **Preferred** cleaned surface; live only if counts > 0 |
+| `GET /basket/estimate?preset=essentials` | Essentials staples + `summary.total_lkr` | **Preferred** staples surface; live only if priced items / total > 0 |
+| `GET /stats/summary` | Flat offer/source counts | Legacy fallback inside FoodLK path |
+| `GET /categories/summary` | Per-category retail/market medians | Legacy fallback |
+| `GET /home/summary` | Cheapest offers + market quotes | Legacy fallback |
 
-As of mid-2026 integration checks these often return **HTTP 500**. Empty or error-shaped 200s must **not** be labeled `live`.
+As of mid-2026 integration checks these often return **HTTP 500**. Empty or error-shaped 200s must **not** be labeled `live`. Fail cleanly to WFP without implying live supermarket shelves.
 
 Life federation fallback: `GET {LIFE_API_BASE}/life/overview` food domain.
 
@@ -78,4 +97,5 @@ Life federation fallback: `GET {LIFE_API_BASE}/life/overview` food domain.
 - Server-side fetches only; descriptive UA (`LankawaBot/1.0`)
 - No cart/checkout automation
 - Respect robots/terms; stop on owner request
-- Always show provenance: FoodLK live · WFP HDX · SPAR2U · Life · seed
+- Always show provenance: FoodLK live · WFP HDX (lagged) · SPAR2U · Life · seed
+- Do not chase Keells/Cargills/SPAR retail APIs from Lankawa for FoodLK recovery

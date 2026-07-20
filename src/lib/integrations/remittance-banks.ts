@@ -22,6 +22,10 @@ export interface RemittanceTtSnapshot {
   bestSell: RemittanceBankQuote;
   /** True only when every bank fetch failed (full seed board). */
   isSeed: boolean;
+  /** Count of banks that returned a live parse (not seed). */
+  liveCount: number;
+  /** Count of banks filled from seed. */
+  seedCount: number;
 }
 
 const FETCH_TIMEOUT_MS = 6_000;
@@ -44,6 +48,7 @@ type BankSource =
       kind: "html";
       url: string;
       note: string;
+      parse: (html: string) => UsdBand | null;
     };
 
 function isUsdBand(buyLkr: number, sellLkr: number): boolean {
@@ -157,28 +162,139 @@ export function parseSampathUsdTt(payload: unknown): UsdBand | null {
   return bandFromPair(usd.TTBUY, usd.TTSEL);
 }
 
-/** HTML scrape helper for People's / NDB exchange-rate pages. */
-export function parseUsdLkrBand(html: string): UsdBand | null {
-  const usdBlock = html.match(
-    /USD[\s\S]{0,240}?(\d{2,3}(?:\.\d{1,4})?)[\s\S]{0,80}?(\d{2,3}(?:\.\d{1,4})?)/i,
+/** Numbers from `<td>` / plain cells inside a table row snippet. */
+function numbersFromRowHtml(rowHtml: string): number[] {
+  const fromTd = [
+    ...rowHtml.matchAll(/<td[^>]*>\s*([0-9]{2,3}(?:\.[0-9]{1,4})?)\s*<\/td>/gi),
+  ].map((m) => Number.parseFloat(m[1]));
+  if (fromTd.length >= 2) {
+    return fromTd.filter((n) => Number.isFinite(n));
+  }
+  return [...rowHtml.matchAll(/\b([0-9]{2,3}(?:\.[0-9]{1,4})?)\b/g)]
+    .map((m) => Number.parseFloat(m[1]))
+    .filter((n) => Number.isFinite(n));
+}
+
+/**
+ * Locate a USD / US Dollar table row. Prefer currency-name forms used on
+ * People's / NSB pages (literal "USD" often only appears in meta or a code cell).
+ */
+function findUsdRateRow(html: string): string | null {
+  const patterns = [
+    /(?:United\s+States\s+Dollar|US\s+Dollars?)(?:\s*\(\s*USD\s*\))?[\s\S]{0,1200}?<\/tr>/i,
+    /<td[^>]*>\s*USD\s*<\/td>[\s\S]{0,900}?<\/tr>/i,
+    /(?:>|\b)USD(?:<|\b)[\s\S]{0,240}?(?:\d{2,3}(?:\.\d{1,4})?)[\s\S]{0,400}?<\/tr>/i,
+  ];
+  for (const pattern of patterns) {
+    const match = html.match(pattern);
+    if (match) {
+      return match[0];
+    }
+  }
+  return null;
+}
+
+/**
+ * People's Bank exchange-rates table: Currency | TC's Drafts | Telegraphic Transfers
+ * (buy/sell each). TT is the last pair.
+ */
+export function parsePeoplesUsdTt(html: string): UsdBand | null {
+  const row = html.match(
+    /US\s+Dollars[\s\S]{0,900}?<\/tr>/i,
   );
-  if (!usdBlock) {
+  if (!row) {
     return null;
   }
+  const nums = numbersFromRowHtml(row[0]);
+  if (nums.length >= 6) {
+    return bandFromPair(nums[4], nums[5]);
+  }
+  if (nums.length >= 2) {
+    return bandFromPair(nums[nums.length - 2], nums[nums.length - 1]);
+  }
+  return null;
+}
 
-  const a = Number.parseFloat(usdBlock[1]);
-  const b = Number.parseFloat(usdBlock[2]);
-  if (!Number.isFinite(a) || !Number.isFinite(b)) {
+/**
+ * NDB `rates/exchange-rates`: Currency | DD | TT (buy/sell each).
+ * TT is the last pair after the USD code cell.
+ */
+export function parseNdbUsdTt(html: string): UsdBand | null {
+  const row = html.match(
+    /(?:US\s+Dollar|United\s+States\s+Dollar)[\s\S]{0,200}?USD[\s\S]{0,700}?<\/tr>/i,
+  );
+  if (!row) {
     return null;
   }
+  const nums = numbersFromRowHtml(row[0]);
+  if (nums.length >= 6) {
+    return bandFromPair(nums[4], nums[5]);
+  }
+  if (nums.length >= 2) {
+    return bandFromPair(nums[nums.length - 2], nums[nums.length - 1]);
+  }
+  return null;
+}
 
-  const buyLkr = Math.min(a, b);
-  const sellLkr = Math.max(a, b);
-  if (!isUsdBand(buyLkr, sellLkr)) {
+/**
+ * NSB `rates-tarriffs/nsb-exchange-rates`: Telegraphic Transfers | Currency.
+ * TT buying/selling are the first pair.
+ */
+export function parseNsbUsdTt(html: string): UsdBand | null {
+  const row = html.match(
+    /United\s+States\s+Dollar\s*\(\s*USD\s*\)[\s\S]{0,700}?<\/tr>/i,
+  );
+  if (!row) {
     return null;
   }
+  const nums = numbersFromRowHtml(row[0]);
+  if (nums.length >= 2) {
+    return bandFromPair(nums[0], nums[1]);
+  }
+  return null;
+}
 
-  return { buyLkr, sellLkr };
+/**
+ * Generic HTML scrape helper — prefers TT when a 6-column People's/NDB-style
+ * row is present; otherwise first buy/sell pair in the USD row.
+ */
+export function parseUsdLkrBand(html: string): UsdBand | null {
+  const peoples = parsePeoplesUsdTt(html);
+  if (peoples) {
+    return peoples;
+  }
+  const ndb = parseNdbUsdTt(html);
+  if (ndb) {
+    return ndb;
+  }
+  const nsb = parseNsbUsdTt(html);
+  if (nsb) {
+    return nsb;
+  }
+
+  const row = findUsdRateRow(html);
+  if (!row) {
+    const usdBlock = html.match(
+      /USD[\s\S]{0,240}?(\d{2,3}(?:\.\d{1,4})?)[\s\S]{0,80}?(\d{2,3}(?:\.\d{1,4})?)/i,
+    );
+    if (!usdBlock) {
+      return null;
+    }
+    const a = Number.parseFloat(usdBlock[1]);
+    const b = Number.parseFloat(usdBlock[2]);
+    const buyLkr = Math.min(a, b);
+    const sellLkr = Math.max(a, b);
+    return isUsdBand(buyLkr, sellLkr) ? { buyLkr, sellLkr } : null;
+  }
+
+  const nums = numbersFromRowHtml(row);
+  if (nums.length >= 6) {
+    return bandFromPair(nums[4], nums[5]);
+  }
+  if (nums.length >= 2) {
+    return bandFromPair(nums[0], nums[1]);
+  }
+  return null;
 }
 
 const BANK_SOURCES: readonly BankSource[] = [
@@ -219,14 +335,24 @@ const BANK_SOURCES: readonly BankSource[] = [
     name: "People's Bank",
     kind: "html",
     url: "https://www.peoplesbank.lk/exchange-rates/",
-    note: "TT / exchange-rate page scrape (indicative)",
+    note: "TT columns from peoplesbank.lk rate table",
+    parse: parsePeoplesUsdTt,
   },
   {
     id: "ndb",
     name: "NDB Bank",
     kind: "html",
     url: "https://www.ndbbank.com/rates/exchange-rates",
-    note: "TT / exchange-rate page scrape (indicative)",
+    note: "TT columns from ndbbank.com rate table",
+    parse: parseNdbUsdTt,
+  },
+  {
+    id: "nsb",
+    name: "National Savings Bank",
+    kind: "html",
+    url: "https://www.nsb.lk/rates-tarriffs/nsb-exchange-rates/",
+    note: "TT columns from nsb.lk exchange-rates page",
+    parse: parseNsbUsdTt,
   },
 ] as const;
 
@@ -264,6 +390,8 @@ function buildSeedSnapshot(): RemittanceTtSnapshot {
     bestBuy,
     bestSell,
     isSeed: true,
+    liveCount: 0,
+    seedCount: banks.length,
   };
 }
 
@@ -331,7 +459,7 @@ async function fetchBankQuote(
 
   try {
     const html = await response.text();
-    const band = parseUsdLkrBand(html);
+    const band = bank.parse(html);
     if (!band) {
       return null;
     }
@@ -350,8 +478,11 @@ async function fetchBankQuote(
 
 /**
  * Attempts live bank TT USD/LKR bands (JSON APIs where available, HTML scrape
- * for People's / NDB) with a short timeout. Per-bank seed fill on failure;
+ * for People's / NDB / NSB) with a short timeout. Per-bank seed fill on failure;
  * board isSeed only when every bank fails.
+ *
+ * BOC's `POST /api/exchange-rates` returns 500 without a stable public body, so
+ * it is not wired. Prefer banks with parseable TT numbers only.
  */
 export async function fetchRemittanceTtSnapshot(): Promise<RemittanceTtSnapshot> {
   const results = await Promise.all(BANK_SOURCES.map(fetchBankQuote));
@@ -375,6 +506,7 @@ export async function fetchRemittanceTtSnapshot(): Promise<RemittanceTtSnapshot>
   }
 
   const liveCount = banks.filter((bank) => !bank.isSeed).length;
+  const seedCount = banks.filter((bank) => bank.isSeed).length;
   const allLive = liveCount === BANK_SOURCES.length;
   const bestBuy = [...banks].sort((a, b) => b.buyLkr - a.buyLkr)[0];
   const bestSell = [...banks].sort((a, b) => a.sellLkr - b.sellLkr)[0];
@@ -386,13 +518,15 @@ export async function fetchRemittanceTtSnapshot(): Promise<RemittanceTtSnapshot>
       : "Bank TT remittance board (partial live)",
     asOf: new Date().toISOString().slice(0, 10),
     methodologyNote: allLive
-      ? "Indicative USD/LKR TT bands from bank JSON FX APIs (Commercial, HNB, Seylan, Sampath) plus People's/NDB public rate-page scrapes. Not CBSL official rates; fees and corridor products differ."
-      : "Mixed live/seed board: JSON FX APIs and HTML scrapes where available; failed banks use curated seed rows (per-bank isSeed). Not CBSL official rates.",
+      ? "Public indicative USD/LKR TT bands from bank JSON FX APIs (Commercial, HNB, Seylan, Sampath) plus People's/NDB/NSB public rate-page scrapes. Lankawa is not affiliated with these banks. Not CBSL official rates; fees and corridor products differ."
+      : "Mixed live/seed board: JSON FX APIs and HTML scrapes where available; failed banks use curated seed rows (per-bank isSeed). Lankawa is not affiliated with these banks. Public indicative only — not CBSL official rates.",
     corridor: remittanceData.corridor,
     banks,
     bestBuy,
     bestSell,
     isSeed: false,
+    liveCount,
+    seedCount,
   };
 }
 

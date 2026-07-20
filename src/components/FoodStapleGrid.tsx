@@ -37,7 +37,7 @@ export function FoodStapleGrid({
                   </p>
                 ) : null}
                 {isStale ? (
-                  <p className="rounded-md border border-amber-300/40 bg-amber-400/10 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-amber-100">
+                  <p className="rounded-md border border-amber-300/50 bg-amber-400/15 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-amber-50">
                     {t("staleStaple")}
                   </p>
                 ) : null}
@@ -46,7 +46,7 @@ export function FoodStapleGrid({
             <p className="font-medium text-white">{item.name}</p>
             <p
               className={`mt-2 text-2xl font-semibold ${
-                isStale ? "text-amber-100" : isCoconut ? "text-white" : "text-teal-200"
+                isStale ? "text-amber-50" : "text-white"
               }`}
             >
               LKR {item.priceLkr.toLocaleString()}
@@ -58,7 +58,7 @@ export function FoodStapleGrid({
             {item.note ? (
               <p
                 className={`mt-2 text-xs leading-snug ${
-                  isStale ? "text-amber-100/80" : "text-slate-400"
+                  isStale ? "text-amber-50/85" : "text-slate-400"
                 }`}
               >
                 {item.note}

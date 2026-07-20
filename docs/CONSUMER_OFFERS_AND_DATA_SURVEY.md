@@ -13,7 +13,7 @@ Detailed bank/sector notes live in sibling docs listed in §5.
 |------|--------|
 | Bank remittance TT | ComBank/HNB/Seylan/Sampath JSON FX + People's/NDB HTML (+ seed) |
 | Food / retail prices | FoodLK → WFP → SPAR → Life |
-| Card / wallet / telecom / loyalty offers | **None** |
+| Card / wallet / telecom / loyalty offers | **Supermarket card-days live** (`card-offers.ts`): Sampath JSON + HNB Venus + **Visa LK perks JSON (Glomark/supermarket `merchantName` filter)** + ComBank HTML + DFCC `/cards/supermarkets-credit` HTML/RSC + Pan Asia `arr_offers` (Sucuri cookie; may seed-fallback when WAF re-challenges) + People's/NTB HTML; seed includes PABC/DFCC + Visa Glomark Thu |
 
 ---
 
@@ -25,7 +25,7 @@ Detailed bank/sector notes live in sibling docs listed in §5.
 |------|---------|-------|--------------------|
 | **HNB** | `venus.hnb.lk/api/get_all_web_card_promos` (+ detail/search) | **JSON** ~841 promos | Filter Lifestyle/Shopping/Dining |
 | **Sampath** | `sampath.lk/api/card-promotions?category=super_markets` | **JSON** ~97 offers | **P0** day-of-week Keells/Cargills/SPAR/Glomark/LAUGFS |
-| **Visa LK** | `POST visa.com.lk/offers/api/portal/portal/perks/` | **JSON** ~300 VMORC offers | Some Glomark/dining; network-wide |
+| **Visa LK** | `POST visa.com.lk/offers/api/portal/portal/perks/` | **JSON** ~600+ VMORC offers | **Shipped (Glomark/supermarket slice):** `siteId=www_visa_com_lk` + `perkTypeRequests` + `merchantName in […]`; empty body → 400. Seed Visa Glomark Thu if live empty |
 | **Standard Chartered** | `/lk/data/tgl/offers.json` | **JSON** ~28 | Weak grocery (hotels/IPP); dates often expired |
 | **Pan Asia** | Inline `arr_offers` JS on card-offers page | JS array | Keells Wed / Glomark Thu / Cargills / LAUGFS |
 | **DFCC** | Next.js RSC CMS fields on card-offers | Embedded JSON | Typed discount + ISO dates |
@@ -71,7 +71,8 @@ Detailed bank/sector notes live in sibling docs listed in §5.
 **Ship:** “Today’s supermarket card days” — 1–3 bullets next to `/food` or `/cost-of-living`.
 
 ```
-Cron → Sampath JSON + HNB Venus JSON + ComBank HTML (P1)
+Cron → Sampath JSON + HNB Venus JSON + Visa LK perks JSON (supermarket merchants)
+     + ComBank/Pan Asia/DFCC/People's/NTB HTML (P1)
      → filter category=supermarket + weekday match
      → {bank, merchant, discount, minBill, validTo, sourceUrl}
      → seed fallback
@@ -103,7 +104,7 @@ Cron → Sampath JSON + HNB Venus JSON + ComBank HTML (P1)
 | Find | Why |
 |------|-----|
 | **Irrigation Dept ArcGIS gauges** | Live river levels — better than stale lk-flood-api tip |
-| **CEB `GetDemandMgmtClusters`** | Geo outage clusters + customer counts |
+| **CEB `GetDemandMgmtClusters`** | Geo outage clusters + customer counts — **shipped** on `/economy` household energy (`demand-mgmt-clusters.ts`, seed fallback). See [`INTEGRATIONS.md`](./INTEGRATIONS.md) |
 | **NWSDB `BillCalculator` JSON** | Live water tariff slabs |
 | **CSE** `GICSSectorSummery`, `companyInfoSummery`, GET notifications | Watchlist quotes + real notices ([CSE_API_DOCS.md](./CSE_API_DOCS.md)) |
 | **CBSL Payments Bulletin** (quarterly PDF) | Cards/CEFTS/LANKAQR macro strip |
@@ -150,6 +151,7 @@ Cron → Sampath JSON + HNB Venus JSON + ComBank HTML (P1)
 | [LANKAPAY_JUSTPAY_LANKAQR_RESEARCH.md](./LANKAPAY_JUSTPAY_LANKAQR_RESEARCH.md) | LankaPay |
 | [ASSESSMENT_TAX_RATES_RESEARCH.md](./ASSESSMENT_TAX_RATES_RESEARCH.md) | LG rates |
 | [IMMIGRATION_PASSPORT_QUEUE_RESEARCH.md](./IMMIGRATION_PASSPORT_QUEUE_RESEARCH.md) | Passport |
+| [CEB_DEMAND_MGMT_CLUSTERS.md](./CEB_DEMAND_MGMT_CLUSTERS.md) | CEB Care GetDemandMgmtClusters (shipped) |
 
 ---
 
@@ -157,7 +159,7 @@ Cron → Sampath JSON + HNB Venus JSON + ComBank HTML (P1)
 
 ```
 1 Remittance JSON: ComBank + HNB + Seylan + Sampath switch + NDB URL fix
-2 Supermarket card-days: Sampath JSON + HNB Venus + ComBank HTML
+2 Supermarket card-days: Sampath + HNB + Visa LK Glomark slice + ComBank/Pan Asia/DFCC/People's/NTB HTML — **shipping**
 3 Disaster: Irrigation ArcGIS gauges + CEB demand clusters
 4 Household: NWSDB water bill calculator
 5 CSE deepen: companyInfoSummery + GET notifications + GICSSectorSummery

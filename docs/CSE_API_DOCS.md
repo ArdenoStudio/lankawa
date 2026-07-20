@@ -20,7 +20,8 @@ Related: [`DATA_EXPANSION_RESEARCH.md`](./DATA_EXPANSION_RESEARCH.md) · [`STOCK
 | Session aggregates | `POST /marketSummery`, `POST /dailyMarketSummery` | — |
 | Sectors (GICS UI) | `POST /allSectors` | Unused: `GICSSectorSummery`, `marketIndices`, `listAllSectors`, range helpers |
 | Market status | `POST /marketStatus` → `status` string | Documented status vocabulary; WS `/topic/status` not used |
-| Notices | Tries `POST` paths that **fail** for live notices | Prefer `GET /notifications` + `POST /approvedAnnouncement` |
+| Notices | `GET /notifications` + `POST /approvedAnnouncement` (seed fallback) | Optional per-symbol `getAnnouncementByCompany` for watchlist |
+| Quotes | `POST /companyInfoSummery` (form `symbol`) via `/api/v1/cse/quotes` | — |
 
 ---
 
@@ -244,9 +245,10 @@ curl -sS "${H[@]}" -X POST -H 'Content-Type: application/x-www-form-urlencoded' 
 
 ## Highest-ROI next steps for Lankawa
 
-1. **Fix notices ingest** — `GET /notifications` (parse `content`) and/or `POST /approvedAnnouncement` (parse `approvedAnnouncements`; title ≈ `announcementCategory` + `company`). Drop dead `marketAnnouncements` probe.
-2. **Optional GICS deepen** — join `GICSSectorSummery` onto existing sector rows for PER/PBV/DY + traded/listed counts (one extra POST).
-3. **Optional ASPI range** — `POST /sectorHighLow?sectorId=1` if `aspiData` high/low sparse.
-4. **Do not** add COVID / buy-in / new-listings dumps to the economy card — keep the strip short (halt notices + recent approved disclosures).
+1. ~~**Fix notices ingest**~~ — wired: `GET /notifications` (`content`) + `POST /approvedAnnouncement` (`approvedAnnouncements`); economy strip below CSE card; seed fallback.
+2. ~~**Per-symbol quotes**~~ — wired: `POST /companyInfoSummery` via `/api/v1/cse/quotes` for the home watchlist.
+3. **Optional GICS deepen** — join `GICSSectorSummery` onto existing sector rows for PER/PBV/DY + traded/listed counts (one extra POST).
+4. **Optional ASPI range** — `POST /sectorHighLow?sectorId=1` if `aspiData` high/low sparse.
+5. **Do not** add COVID / buy-in / new-listings dumps to the economy card — keep the strip short (halt notices + recent approved disclosures).
 
 Cite Cookie-Cat docs as a **catalog**, not an SLA. Keep polite delays (≥300 ms between probes); descriptive UA; no auth/account automation.

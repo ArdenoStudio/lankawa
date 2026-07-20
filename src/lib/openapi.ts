@@ -34,7 +34,29 @@ export const openApiSpec = {
       get: {
         summary: "Colombo Stock Exchange snapshot",
         responses: {
-          "200": { description: "ASPI/S&P SL20, movers, and market summary" },
+          "200": {
+            description:
+              "ASPI/S&P SL20, movers, market summary, and exchange notices",
+          },
+        },
+      },
+    },
+    "/cse/quotes": {
+      get: {
+        summary: "CSE per-symbol quotes (companyInfoSummery)",
+        parameters: [
+          {
+            name: "symbols",
+            in: "query",
+            required: false,
+            schema: { type: "string" },
+            description: "Comma-separated CSE symbols, e.g. JKH.N0000,COMB.N0000",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Quotes from companyInfoSummery with seed fallback",
+          },
         },
       },
     },
@@ -225,6 +247,17 @@ export const openApiSpec = {
           "200": {
             description:
               "Residential energy and fixed charges by consumption block with effective date",
+          },
+        },
+      },
+    },
+    "/economy/water-bill": {
+      get: {
+        summary: "NWSDB water bill estimate",
+        responses: {
+          "200": {
+            description:
+              "Domestic/Samurdhi water tariff slabs with seed estimate and optional live BillCalculator totals",
           },
         },
       },
@@ -636,6 +669,13 @@ export const apiEndpoints = [
     summaryKey: "tariffsSummary" as const,
     descriptionKey: "tariffsDescription" as const,
     example: `{ "effectiveFrom": "2025-06-12", "tracks": [{ "id": "above_60", "slabs": [...] }], "provenancePath": "/sources/pucsl_tariff" }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/economy/water-bill?units=20",
+    summaryKey: "waterBillSummary" as const,
+    descriptionKey: "waterBillDescription" as const,
+    example: `{ "seedEstimate": { "totalLkr": 2537 }, "liveAvailable": true, "provenancePath": "/sources/nwsdb_tariff" }`,
   },
   {
     method: "GET",

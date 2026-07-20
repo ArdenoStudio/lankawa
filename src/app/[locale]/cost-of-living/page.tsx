@@ -3,6 +3,7 @@ import { CoconutIndexSpark } from "@/components/CoconutIndexSpark";
 import { ColBasketMovers } from "@/components/ColBasketMovers";
 import { ColDistrictChoropleth } from "@/components/ColDistrictChoropleth";
 import { CostOfLivingTable } from "@/components/CostOfLivingTable";
+import { SupermarketCardDays } from "@/components/SupermarketCardDays";
 import { Link } from "@/i18n/navigation";
 import { getColBasketMovers } from "@/lib/col-movers";
 import { getCostOfLivingData } from "@/lib/cost-of-living";
@@ -145,6 +146,8 @@ export default async function CostOfLivingPage({
           </div>
         </section>
       ) : null}
+
+      <SupermarketCardDays />
 
       <CoconutIndexSpark
         labels={{

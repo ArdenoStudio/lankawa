@@ -92,7 +92,11 @@
     "depthLearn": "මගපෙන්වීම්",
     "morningDeltaUv": "Colombo UV max",
     "morningDeltaRain7d": "Colombo 7d rain",
-    "morningDeltaWeatherAsOf": "forecast as of {date}"
+    "morningDeltaWeatherAsOf": "forecast as of {date}",
+    "morningDeltaCardDays": "Supermarket cards",
+    "morningDeltaCardDaysNone": "None today",
+    "morningDeltaCardDaysCount": "{count} today",
+    "morningDeltaCardDaysValue": "{count} · {merchant} {discount}"
   },
   "modules": {
     "districts": {
@@ -602,7 +606,25 @@
     },
     "mapMode_gfm": "Flood extent pins",
     "mapLegendGfm": "White pins mark seed GFM / flood-extent attention points — pins only, not mosaics.",
-    "mapGfmHonesty": "{count} seed pins as of {date}. Not a DMC inundation map."
+    "mapGfmHonesty": "{count} seed pins as of {date}. Not a DMC inundation map.",
+    "irrigation": {
+      "title": "Irrigation river gauges",
+      "subtitle": "Latest public Irrigation Department ArcGIS readings for major river stations.",
+      "seed": "Seed snapshot",
+      "empty": "No gauge readings available right now.",
+      "honesty": "Civic republish of Irrigation ArcGIS — not an official DMC flood warning.",
+      "asOf": "As of {date}",
+      "source": "Source provenance",
+      "dashboard": "Irrigation ArcGIS dashboard",
+      "stations": "stations",
+      "elevated": "{count} elevated",
+      "level": "Water level",
+      "rain": "Rainfall",
+      "normal": "Normal",
+      "alert": "Alert",
+      "warning": "Warning",
+      "danger": "Danger"
+    }
   },
   "homeHazard": {
     "eyebrow": "Home district attention",
@@ -652,8 +674,10 @@
     },
     "remittance": {
       "title": "Remittance calculator",
-      "subtitle": "ඉහත පෙන්වන නවතම CBSL USD/LKR buy සහ sell rates භාවිතා කර convert කරන්න.",
-      "asOf": "{date} වන විට",
+      "subtitle": "ඉහත පෙන්වන නවතම CBSL USD/LKR buy සහ sell rates භාවිතා කර convert කරන්න — bank TT board නොවේ.",
+      "asOf": "CBSL {date} වන විට",
+      "cbslLive": "CBSL live band",
+      "fallback": "Cached CBSL band — live fetch නොමැත.",
       "usdToLkrLabel": "USD ප්‍රමාණය",
       "usdAmount": "LKR වෙත convert කරන USD ප්‍රමාණය",
       "lkrEstimate": "Indicative LKR",
@@ -691,7 +715,11 @@
       "highLow": "Session high / low",
       "notices": "Exchange notices",
       "noNotices": "No exchange notices available",
-      "sectorsSkipped": "Data Saver නිසා අංශ මඟ හැරිණි"
+      "sectorsSkipped": "Data Saver නිසා අංශ මඟ හැරිණි",
+      "announcementsTitle": "CSE දැන්වීම්",
+      "announcementsSubtitle": "Halt banners සහ approved disclosures — CSE පොදු පුවරුවෙන්.",
+      "announcementsSeed": "Seed",
+      "announcementsHonesty": "GET /notifications හෝ approvedAnnouncement ලැබෙන විට සජීවී; නැතිනම් කෙටි seed strip. ආයෝජන උපදෙස් නොවේ."
     },
     "debt": {
       "title": "විදේශ ණය සංයුතිය",
@@ -705,7 +733,7 @@
       "methodology": "ප්‍රාථමික අගයන් CBSL වාර්තා වලින්. ඓතිහාසික පමණි — live ණය dashboard නොවේ."
     },
     "householdTitle": "ගෘහස්ථ අංක",
-    "householdSubtitle": "නිල උද්ධමනය සහ ගෘහස්ථ විදුලි ගාස්තු.",
+    "householdSubtitle": "නිල උද්ධමනය, ගෘහස්ථ විදුලි ගාස්තු සහ NWSDB ජල බිල් පරාස.",
     "ncpi": {
       "title": "NCPI උද්ධමනය",
       "subtitle": "National Consumer Price Index from the Department of Census and Statistics — monthly official series, not Lankawa COL.",
@@ -737,6 +765,27 @@
       "decision": "PUCSL ගෘහස්ථ ගාස්තු",
       "none": "—"
     },
+    "waterTariff": {
+      "title": "ජල බිල් (NWSDB ගෘහස්ථ)",
+      "subtitle": "ගෘහස්ථ සහ සමෘද්ධි/කුටි උද්‍යාන සම්බන්ධතා සඳහා ගැසට් ජල ගාස්තු — VAT සහිත ඇඟවුම් මාසික ඇස්තමේන්තුව.",
+      "effective": "බලපැවැත්වෙන දිනය",
+      "slab": "කොටස",
+      "usage": "LKR/m³",
+      "service": "සේවා LKR/මාස",
+      "unitsLabel": "මාසික ඒකක (m³)",
+      "estimateTitle": "ඇඟවුම් ගෘහස්ථ බිල් ඇස්තමේන්තුව",
+      "usageTotal": "භාවිත ගාස්තුව",
+      "serviceTotal": "සේවා ගාස්තුව",
+      "vatTotal": "VAT (18%)",
+      "billTotal": "ඇඟවුම් එකතුව",
+      "honesty": "Indicative only — progressive m³ slabs, monthly service charge for the consumption band, and 18% VAT on usage+service. Assumes a 30-day billing period for Domestic (Category 10). Not your NWSDB bill; sewerage, arrears, and other charges are excluded. Verify against the official Bill Calculator and your meter reading.",
+      "source": "මූලාශ්‍රය",
+      "decision": "NWSDB වත්මන් ජල ගාස්තු",
+      "calculator": "නිල Bill Calculator",
+      "liveMatch": "මෙම ඒකක සඳහා live BillCalculator එකතු seed සමඟ ගැලපේ",
+      "liveMiss": "Live BillCalculator එකතුව",
+      "seedMode": "ගැසට් seed කොටස් මගින් ඇස්තමේන්තුව"
+    },
     "worldPump": {
       "title": "Regional pump compare",
       "subtitle": "Sri Lanka petrol 92 vs curated South/Southeast Asia retail peers (USD/L).",
@@ -755,11 +804,16 @@
       "spread": "Spread",
       "bestBuy": "Best buy for senders",
       "bestSell": "Best sell for receivers",
+      "best": "Best",
       "seed": "Full seed board — සියලු live bank FX fetch අසාර්ථකයි.",
+      "live": "Live",
+      "mixed": "Mixed",
       "bankSeed": "seed",
+      "bankLive": "live",
+      "coverage": "{live} live · {seed} seed",
       "asOf": "As of {date}",
       "source": "Source provenance",
-      "honesty": "Indicative only. Bank fees, corridors, and same-day TT products differ. Not CBSL official rates."
+      "honesty": "Public indicative only. Lankawa is not affiliated with these banks. Fees, corridors, and same-day TT products differ. Not CBSL official rates."
     },
     "fxAnomaly": "Unusual day-over-day move",
     "fxAnomalyQuiet": "Within recent MAD band",
@@ -1052,6 +1106,8 @@
     "ncpiDescription": "Latest NCPI headline YoY/MoM, core, food/non-food splits, and recent monthly series from DCS.",
     "tariffsSummary": "PUCSL domestic tariffs",
     "tariffsDescription": "Residential electricity energy and fixed charges by consumption block with effective date.",
+    "waterBillSummary": "NWSDB water bill estimate",
+    "waterBillDescription": "Domestic/Samurdhi water tariff slabs with seed estimate and optional live BillCalculator totals.",
     "export_landChange": "Land change indices",
     "export_foreignDebt": "Foreign debt composition",
     "landslideSummary": "Landslide early warning",
@@ -1894,7 +1950,9 @@
     "pin_news_cluster": "News cluster",
     "help_news_cluster": "Fire when a headline cluster spans 3 or more outlets",
     "pin_tender_closing": "ළඟදී වැසෙන tenders",
-    "help_tender_closing": "දින 7 තුළ e-GP tenders වැසෙන විට"
+    "help_tender_closing": "දින 7 තුළ e-GP tenders වැසෙන විට",
+    "pin_card_day": "Supermarket card day",
+    "help_card_day": "Fire when at least one supermarket card offer is active today (live or seed)"
   },
   "weekLedger": {
     "title": "සති ලෙජර්",
@@ -1952,7 +2010,9 @@
     "savedLabel": "සුරකින ලද සංකේත",
     "empty": "තවම සංකේත නැත — පහතින් තෝරන්න.",
     "remove": "ලැයිස්තුවෙන් ඉවත් කරන්න",
-    "privacy": "මෙම බ්‍රවුසරයේ පමණි. Data Saver ක්‍රියාත්මක විට සැඟවේ."
+    "privacy": "මෙම බ්‍රවුසරයේ පමණි. Data Saver ක්‍රියාත්මක විට සැඟවේ.",
+    "loadingQuote": "පූරණය වෙමින්…",
+    "seedQuote": "seed"
   },
   "webPush": {
     "title": "Alert push (opt-in)",
@@ -1983,5 +2043,16 @@
     "asOf": "{date} වන විට",
     "source": "මූලාශ්‍ර සාක්ෂි",
     "honesty": "ප්‍රසිද්ධ බැංකු දීමනා — ගෙවීමේදී සහ බැංකු වෙබ් අඩවියේ තහවුරු කරන්න. බැංකු හෝ වෙළෙන්දන් සමඟ අනුබද්ධ නොවේ."
+  },
+  "demandMgmtClusters": {
+    "title": "ඉල්ලුම් කළමනාකරණ ක්ලස්ටර්",
+    "subtitle": "CEB Care load-shed කණ්ඩායම් A–Y — ක්ලස්ටර් සහ පාරිභෝගික ගණන්.",
+    "seed": "Seed",
+    "live": "Live",
+    "totals": "කණ්ඩායම් {groups} · ක්ලස්ටර් {clusters} · ~{customers} පාරිභෝගිකයන්",
+    "groupTitle": "කණ්ඩායම {group}: ක්ලස්ටර් {clusters}, පාරිභෝගිකයන් {customers}",
+    "asOf": "{date} වන විට",
+    "source": "මූලාශ්‍ර සාක්ෂි",
+    "honesty": "Indicative CEB Care ප්‍රසිද්ධ සිතියම් ගණන් — cebcare.ceb.lk හි තහවුරු කරන්න. සජීවී කප්පාදු ඇඟවීමක් නොවේ."
   }
 }

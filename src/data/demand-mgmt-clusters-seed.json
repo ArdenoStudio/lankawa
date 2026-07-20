@@ -1,0 +1,158 @@
+{
+  "sourceId": "ceb_demand_mgmt_clusters",
+  "sourceName": "CEB Care \u2014 Demand management clusters",
+  "asOf": "2026-07-20",
+  "methodologyNote": "Curated seed snapshot of CEB Care GetDemandMgmtClusters group summaries (A\u2013Y). Used when the live Incognito API is unavailable. Customer counts are indicative \u2014 confirm on cebcare.ceb.lk.",
+  "groups": [
+    {
+      "groupId": "A",
+      "clusterCount": 17,
+      "customerCount": 352325,
+      "generatedTime": "2026-07-20T10:35:33.2171271+05:30"
+    },
+    {
+      "groupId": "B",
+      "clusterCount": 13,
+      "customerCount": 291603,
+      "generatedTime": "2026-07-20T10:35:36.6839171+05:30"
+    },
+    {
+      "groupId": "C",
+      "clusterCount": 17,
+      "customerCount": 355555,
+      "generatedTime": "2026-07-20T10:36:13.61927+05:30"
+    },
+    {
+      "groupId": "D",
+      "clusterCount": 17,
+      "customerCount": 355538,
+      "generatedTime": "2026-07-20T10:36:18.6218424+05:30"
+    },
+    {
+      "groupId": "E",
+      "clusterCount": 16,
+      "customerCount": 338512,
+      "generatedTime": "2026-07-20T10:36:23.7986086+05:30"
+    },
+    {
+      "groupId": "F",
+      "clusterCount": 16,
+      "customerCount": 334832,
+      "generatedTime": "2026-07-20T10:36:29.3515719+05:30"
+    },
+    {
+      "groupId": "G",
+      "clusterCount": 10,
+      "customerCount": 211930,
+      "generatedTime": "2026-07-20T10:36:34.101567+05:30"
+    },
+    {
+      "groupId": "H",
+      "clusterCount": 12,
+      "customerCount": 240552,
+      "generatedTime": "2026-07-20T10:36:47.5787087+05:30"
+    },
+    {
+      "groupId": "I",
+      "clusterCount": 16,
+      "customerCount": 331136,
+      "generatedTime": "2026-07-20T10:36:50.5826765+05:30"
+    },
+    {
+      "groupId": "J",
+      "clusterCount": 12,
+      "customerCount": 241920,
+      "generatedTime": "2026-07-20T10:36:56.9527003+05:30"
+    },
+    {
+      "groupId": "K",
+      "clusterCount": 15,
+      "customerCount": 313350,
+      "generatedTime": "2026-07-20T10:37:02.2992223+05:30"
+    },
+    {
+      "groupId": "L",
+      "clusterCount": 12,
+      "customerCount": 250284,
+      "generatedTime": "2026-07-20T10:37:09.1850936+05:30"
+    },
+    {
+      "groupId": "M",
+      "clusterCount": 10,
+      "customerCount": 233780,
+      "generatedTime": "2026-07-20T10:37:15.7857975+05:30"
+    },
+    {
+      "groupId": "N",
+      "clusterCount": 8,
+      "customerCount": 183744,
+      "generatedTime": "2026-07-20T10:37:20.6859555+05:30"
+    },
+    {
+      "groupId": "O",
+      "clusterCount": 13,
+      "customerCount": 275509,
+      "generatedTime": "2026-07-20T10:37:24.0154571+05:30"
+    },
+    {
+      "groupId": "P",
+      "clusterCount": 20,
+      "customerCount": 416420,
+      "generatedTime": "2026-07-20T10:37:29.0025188+05:30"
+    },
+    {
+      "groupId": "Q",
+      "clusterCount": 14,
+      "customerCount": 290374,
+      "generatedTime": "2026-07-20T10:37:36.4324299+05:30"
+    },
+    {
+      "groupId": "R",
+      "clusterCount": 13,
+      "customerCount": 263861,
+      "generatedTime": "2026-07-20T10:37:41.7796133+05:30"
+    },
+    {
+      "groupId": "S",
+      "clusterCount": 16,
+      "customerCount": 324496,
+      "generatedTime": "2026-07-20T10:37:45.5376742+05:30"
+    },
+    {
+      "groupId": "T",
+      "clusterCount": 12,
+      "customerCount": 250728,
+      "generatedTime": "2026-07-20T10:37:51.3400259+05:30"
+    },
+    {
+      "groupId": "U",
+      "clusterCount": 24,
+      "customerCount": 501144,
+      "generatedTime": "2026-07-20T10:37:57.8661337+05:30"
+    },
+    {
+      "groupId": "V",
+      "clusterCount": 17,
+      "customerCount": 353481,
+      "generatedTime": "2026-07-20T10:38:03.2357588+05:30"
+    },
+    {
+      "groupId": "W",
+      "clusterCount": 18,
+      "customerCount": 380520,
+      "generatedTime": "2026-07-20T10:38:08.0396313+05:30"
+    },
+    {
+      "groupId": "X",
+      "clusterCount": 15,
+      "customerCount": 370140,
+      "generatedTime": "2026-07-20T10:38:14.7865694+05:30"
+    },
+    {
+      "groupId": "Y",
+      "clusterCount": 14,
+      "customerCount": 288008,
+      "generatedTime": "2026-07-20T10:38:19.9374142+05:30"
+    }
+  ]
+}

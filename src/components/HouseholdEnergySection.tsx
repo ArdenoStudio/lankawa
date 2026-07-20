@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { Link } from "@/i18n/navigation";
 import type { LpgPriceSnapshot } from "@/lib/integrations/lpg";
@@ -9,6 +10,7 @@ export function HouseholdEnergySection({
   lpg,
   locale,
   labels,
+  clustersStrip,
 }: {
   fuel: Array<{
     id: string;
@@ -31,6 +33,8 @@ export function HouseholdEnergySection({
     emptyFuel: string;
     emptyLpg: string;
   };
+  /** Optional CEB demand-management clusters strip (live + seed). */
+  clustersStrip?: ReactNode;
 }) {
   const colomboLpg = lpg.prices
     .filter(
@@ -133,6 +137,8 @@ export function HouseholdEnergySection({
           </Link>
         </article>
       </div>
+
+      {clustersStrip}
     </section>
   );
 }

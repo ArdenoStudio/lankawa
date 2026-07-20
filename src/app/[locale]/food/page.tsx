@@ -42,7 +42,7 @@ export default async function FoodPage({
           {t("asOf", { date: snapshot.asOf })} ·{" "}
           <Link
             href={getSourceProvenancePath(snapshot.sourceId)}
-            className="text-teal-300 hover:text-teal-200"
+            className="text-white underline decoration-white/30 hover:decoration-white"
           >
             {snapshot.sourceName}
           </Link>
@@ -101,7 +101,7 @@ export default async function FoodPage({
           <dd className="mt-2">
             <Link
               href="/cost-of-living"
-              className="text-teal-300 hover:text-teal-200"
+              className="text-white underline decoration-white/30 hover:decoration-white"
             >
               {t("costOfLivingCta")} →
             </Link>

@@ -28,8 +28,22 @@ export interface CseIndex {
 }
 
 export interface CseNotice {
+  id?: string;
   title: string;
   publishedAt: string;
+  kind?: "notification" | "announcement";
+  company?: string | null;
+}
+
+export interface CseCompanyQuote {
+  symbol: string;
+  name: string;
+  price: number;
+  change: number | null;
+  changePct: number | null;
+  marketCap: number | null;
+  previousClose: number | null;
+  isFallback: boolean;
 }
 
 export interface CseMover {
@@ -85,6 +99,8 @@ export interface CseSnapshot {
   mostActive: CseActiveTrade[];
   foreignDomestic: CseForeignDomestic | null;
   notices: CseNotice[];
+  /** True when the notices strip is seed (live GET/POST notices missed). */
+  noticesIsFallback: boolean;
   asOf: string;
   tier: FreshnessTier;
   isFallback: boolean;
@@ -110,16 +126,36 @@ interface CseIndexResponse {
 }
 
 interface CseNoticeRow {
+  id?: string | number;
   title?: string;
+  body?: string;
   subject?: string;
   headline?: string;
   name?: string;
+  status?: string;
+  company?: string;
+  symbol?: string;
+  announcementCategory?: string;
+  announcementId?: number;
   publishedAt?: string | number;
   publishedDate?: string | number;
   date?: string | number;
   createdDate?: string | number;
   announcementDate?: string | number;
+  dateOfAnnouncement?: string;
   time?: string | number;
+}
+
+interface CseCompanyInfoResponse {
+  reqSymbolInfo?: {
+    symbol?: string;
+    name?: string;
+    lastTradedPrice?: number;
+    change?: number;
+    changePercentage?: number;
+    marketCap?: number;
+    previousClose?: number;
+  };
 }
 
 interface CseMarketStatusResponse {
@@ -305,19 +341,90 @@ const SEED_SNAPSHOT: Omit<CseSnapshot, "tier" | "isFallback"> = {
   },
   notices: [
     {
-      title: "Market holiday notice — Vesak Poya (seed)",
+      id: "seed-halt",
+      title: "Trading halt lifted — sample issuer (seed)",
       publishedAt: "2026-07-15T04:00:00.000Z",
+      kind: "announcement",
+      company: "Sample Issuer PLC",
     },
     {
-      title: "Circular: revised trading lot size for selected securities (seed)",
+      id: "seed-auction",
+      title:
+        "Opening Market Auction Call extended — trading to resume (seed)",
       publishedAt: "2026-07-10T09:00:00.000Z",
+      kind: "notification",
+      company: null,
     },
     {
-      title: "Listing announcement — additional ordinary shares (seed)",
+      id: "seed-circular",
+      title: "Circular: revised trading lot size for selected securities (seed)",
       publishedAt: "2026-07-08T06:30:00.000Z",
+      kind: "announcement",
+      company: null,
     },
   ],
+  noticesIsFallback: true,
   asOf: SEED_AS_OF,
+};
+
+const SEED_COMPANY_QUOTES: Record<
+  string,
+  Omit<CseCompanyQuote, "isFallback">
+> = {
+  "JKH.N0000": {
+    symbol: "JKH.N0000",
+    name: "JOHN KEELLS HOLDINGS PLC",
+    price: 24.5,
+    change: 1.2,
+    changePct: 5.15,
+    marketCap: null,
+    previousClose: 23.3,
+  },
+  "COMB.N0000": {
+    symbol: "COMB.N0000",
+    name: "COMMERCIAL BANK OF CEYLON PLC",
+    price: 142.0,
+    change: 4.5,
+    changePct: 3.27,
+    marketCap: null,
+    previousClose: 137.5,
+  },
+  "HNB.N0000": {
+    symbol: "HNB.N0000",
+    name: "HATTON NATIONAL BANK PLC",
+    price: 198.75,
+    change: 5.25,
+    changePct: 2.71,
+    marketCap: null,
+    previousClose: 193.5,
+  },
+  "CTC.N0000": {
+    symbol: "CTC.N0000",
+    name: "CEYLON TOBACCO COMPANY PLC",
+    price: 1_025.0,
+    change: -18.5,
+    changePct: -1.77,
+    marketCap: null,
+    previousClose: 1_043.5,
+  },
+  "DIAL.N0000": {
+    symbol: "DIAL.N0000",
+    name: "DIALOG AXIATA PLC",
+    price: 12.4,
+    change: -0.2,
+    changePct: -1.59,
+    marketCap: null,
+    previousClose: 12.6,
+  },
+  "LOLC.N0000": {
+    symbol: "LOLC.N0000",
+    name: "LOLC HOLDINGS PLC",
+    price: 620.0,
+    change: -8.0,
+    changePct: -1.27,
+    marketCap: null,
+    previousClose: 628.0,
+  },
 };
 
 function finiteNumber(value: unknown): number | null {
@@ -335,19 +442,21 @@ function msToIso(ms: unknown, fallback: string): string {
   return Number.isNaN(date.getTime()) ? fallback : date.toISOString();
 }
 
-async function postCseJson<T>(path: string): Promise<T | null> {
+async function cseFetch<T>(
+  path: string,
+  init: RequestInit,
+): Promise<T | null> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
   try {
     const response = await fetch(`${CSE_API_BASE}${path}`, {
-      method: "POST",
+      ...init,
       signal: controller.signal,
       headers: {
         ...CSE_HEADERS,
-        "Content-Type": "application/json",
+        ...(init.headers ?? {}),
       },
-      body: "{}",
       next: { revalidate: 300 },
     });
 
@@ -361,6 +470,29 @@ async function postCseJson<T>(path: string): Promise<T | null> {
   } finally {
     clearTimeout(timeout);
   }
+}
+
+async function getCseJson<T>(path: string): Promise<T | null> {
+  return cseFetch<T>(path, { method: "GET" });
+}
+
+async function postCseJson<T>(path: string): Promise<T | null> {
+  return cseFetch<T>(path, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: "{}",
+  });
+}
+
+async function postCseForm<T>(
+  path: string,
+  fields: Record<string, string>,
+): Promise<T | null> {
+  return cseFetch<T>(path, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(fields).toString(),
+  });
 }
 
 function parseHighLow(raw: CseIndexResponse): {
@@ -414,6 +546,7 @@ function noticePublishedAt(row: CseNoticeRow, fallback: string): string {
     row.publishedDate ??
     row.announcementDate ??
     row.createdDate ??
+    row.dateOfAnnouncement ??
     row.date ??
     row.time;
 
@@ -430,43 +563,230 @@ function noticePublishedAt(row: CseNoticeRow, fallback: string): string {
   return fallback;
 }
 
-function parseNotices(raw: unknown, fallbackAsOf: string): CseNotice[] {
-  const rows: CseNoticeRow[] = (() => {
-    if (Array.isArray(raw)) {
-      return raw as CseNoticeRow[];
-    }
-    if (raw && typeof raw === "object") {
-      const record = raw as Record<string, unknown>;
-      for (const key of [
-        "notifications",
-        "notices",
-        "announcements",
-        "data",
-        "reqNotifications",
-        "reqAnnouncement",
-      ]) {
-        if (Array.isArray(record[key])) {
-          return record[key] as CseNoticeRow[];
-        }
+function truncateNoticeText(value: string, max = 140): string {
+  const trimmed = value.trim().replace(/\s+/g, " ");
+  if (trimmed.length <= max) {
+    return trimmed;
+  }
+  return `${trimmed.slice(0, max - 1).trimEnd()}…`;
+}
+
+function isGenericNoticeTitle(title: string): boolean {
+  return /^(notice|system maintenance notice|market closed|market halt)$/i.test(
+    title.trim(),
+  );
+}
+
+function noticeTitle(row: CseNoticeRow): string | null {
+  const category =
+    typeof row.announcementCategory === "string"
+      ? row.announcementCategory.trim()
+      : "";
+  const company =
+    typeof row.company === "string" ? row.company.trim() : "";
+  if (category && company) {
+    return `${category} — ${company}`;
+  }
+  if (category) {
+    return category;
+  }
+
+  const titleCandidate =
+    typeof row.title === "string"
+      ? row.title.trim()
+      : typeof row.subject === "string"
+        ? row.subject.trim()
+        : typeof row.headline === "string"
+          ? row.headline.trim()
+          : typeof row.name === "string"
+            ? row.name.trim()
+            : "";
+  const body =
+    typeof row.body === "string" ? row.body.trim() : "";
+
+  if (body && (!titleCandidate || isGenericNoticeTitle(titleCandidate))) {
+    return truncateNoticeText(body);
+  }
+  if (titleCandidate) {
+    return titleCandidate;
+  }
+  if (body) {
+    return truncateNoticeText(body);
+  }
+  return null;
+}
+
+function noticeKind(
+  row: CseNoticeRow,
+  sourceKey: string | null,
+): CseNotice["kind"] {
+  if (sourceKey === "content" || sourceKey === "notifications") {
+    return "notification";
+  }
+  if (
+    sourceKey === "approvedAnnouncements" ||
+    typeof row.announcementCategory === "string" ||
+    typeof row.announcementId === "number"
+  ) {
+    return "announcement";
+  }
+  return undefined;
+}
+
+function extractNoticeRows(raw: unknown): {
+  rows: CseNoticeRow[];
+  sourceKey: string | null;
+} {
+  if (Array.isArray(raw)) {
+    return { rows: raw as CseNoticeRow[], sourceKey: null };
+  }
+  if (raw && typeof raw === "object") {
+    const record = raw as Record<string, unknown>;
+    for (const key of [
+      "content",
+      "approvedAnnouncements",
+      "notifications",
+      "notices",
+      "announcements",
+      "data",
+      "reqNotifications",
+      "reqAnnouncement",
+      "reqCompanyAnnouncement",
+      "infoAnnouncement",
+    ]) {
+      if (Array.isArray(record[key])) {
+        return { rows: record[key] as CseNoticeRow[], sourceKey: key };
       }
     }
-    return [];
-  })();
+  }
+  return { rows: [], sourceKey: null };
+}
+
+function dedupeNotices(notices: CseNotice[]): CseNotice[] {
+  const seen = new Set<string>();
+  const out: CseNotice[] = [];
+  for (const notice of notices) {
+    const key = `${notice.title.toLowerCase()}|${notice.publishedAt}`;
+    if (seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    out.push(notice);
+  }
+  return out;
+}
+
+/** Parse CSE notification / announcement payloads into a short strip. */
+export function parseCseNotices(
+  raw: unknown,
+  fallbackAsOf: string,
+): CseNotice[] {
+  const { rows, sourceKey } = extractNoticeRows(raw);
 
   return rows
     .map((row): CseNotice | null => {
-      const titleCandidate =
-        row.title ?? row.subject ?? row.headline ?? row.name;
-      if (typeof titleCandidate !== "string" || !titleCandidate.trim()) {
+      const title = noticeTitle(row);
+      if (!title) {
         return null;
       }
+      const id =
+        row.id != null
+          ? String(row.id)
+          : row.announcementId != null
+            ? String(row.announcementId)
+            : undefined;
+      const company =
+        typeof row.company === "string" && row.company.trim()
+          ? row.company.trim()
+          : null;
       return {
-        title: titleCandidate.trim(),
+        id,
+        title,
         publishedAt: noticePublishedAt(row, fallbackAsOf),
+        kind: noticeKind(row, sourceKey),
+        company,
       };
     })
     .filter((notice): notice is CseNotice => notice != null)
     .slice(0, 8);
+}
+
+export function parseCseCompanyInfo(raw: unknown): CseCompanyQuote | null {
+  if (!raw || typeof raw !== "object") {
+    return null;
+  }
+  const info = (raw as CseCompanyInfoResponse).reqSymbolInfo;
+  if (!info || typeof info.symbol !== "string" || !info.symbol.trim()) {
+    return null;
+  }
+  const price = finiteNumber(info.lastTradedPrice);
+  if (price == null) {
+    return null;
+  }
+  return {
+    symbol: info.symbol.trim().toUpperCase(),
+    name:
+      typeof info.name === "string" && info.name.trim()
+        ? info.name.trim()
+        : info.symbol.trim().toUpperCase(),
+    price,
+    change: finiteNumber(info.change),
+    changePct: finiteNumber(info.changePercentage),
+    marketCap: finiteNumber(info.marketCap),
+    previousClose: finiteNumber(info.previousClose),
+    isFallback: false,
+  };
+}
+
+function seedCompanyQuote(symbol: string): CseCompanyQuote {
+  const normalized = symbol.trim().toUpperCase();
+  const seed = SEED_COMPANY_QUOTES[normalized];
+  if (seed) {
+    return { ...seed, isFallback: true };
+  }
+  return {
+    symbol: normalized,
+    name: normalized,
+    price: 0,
+    change: null,
+    changePct: null,
+    marketCap: null,
+    previousClose: null,
+    isFallback: true,
+  };
+}
+
+export async function fetchCseCompanyQuote(
+  symbol: string,
+): Promise<CseCompanyQuote> {
+  const normalized = symbol.trim().toUpperCase();
+  if (!normalized) {
+    return seedCompanyQuote("UNKNOWN");
+  }
+
+  const raw = await postCseForm<CseCompanyInfoResponse>(
+    "/companyInfoSummery",
+    { symbol: normalized },
+  );
+  const parsed = parseCseCompanyInfo(raw);
+  if (parsed) {
+    return parsed;
+  }
+  return seedCompanyQuote(normalized);
+}
+
+export async function fetchCseCompanyQuotes(
+  symbols: string[],
+): Promise<CseCompanyQuote[]> {
+  const unique = [
+    ...new Set(
+      symbols
+        .map((symbol) => symbol.trim().toUpperCase())
+        .filter((symbol) => symbol.length > 0),
+    ),
+  ].slice(0, 8);
+
+  return Promise.all(unique.map((symbol) => fetchCseCompanyQuote(symbol)));
 }
 
 function parseMover(row: CseTradeSummaryRow): CseMover | null {
@@ -581,7 +901,7 @@ function buildSnapshotFromLive(parts: {
   sectors: CseSectorRow[] | null;
   mostActive: CseActiveRow[] | null;
   dailyMarket: CseDailyMarketRow[] | null;
-  notices: unknown;
+  notices: CseNotice[];
 }): CseSnapshot | null {
   const aspi = parseIndex(parts.aspi, {
     code: "ASPI",
@@ -610,7 +930,6 @@ function buildSnapshotFromLive(parts: {
   const foreignDomestic =
     parseForeignDomestic(parts.dailyMarket, aspi.observedAt) ??
     SEED_SNAPSHOT.foreignDomestic;
-  const notices = parseNotices(parts.notices, aspi.observedAt);
 
   const asOf = [aspi.observedAt, snp.observedAt, summaryObservedAt]
     .sort()
@@ -640,43 +959,40 @@ function buildSnapshotFromLive(parts: {
     sectors: sectors.length > 0 ? sectors : SEED_SNAPSHOT.sectors,
     mostActive: mostActive.length > 0 ? mostActive : SEED_SNAPSHOT.mostActive,
     foreignDomestic,
-    notices: notices.length > 0 ? notices : SEED_SNAPSHOT.notices,
+    notices:
+      parts.notices.length > 0 ? parts.notices : SEED_SNAPSHOT.notices,
+    noticesIsFallback: parts.notices.length === 0,
     asOf,
     tier: computeFreshnessTier(asOf, CSE_CADENCE_MINUTES),
     isFallback: false,
   };
 }
 
-function buildFallbackSnapshot(): CseSnapshot {
+function buildFallbackSnapshot(notices?: CseNotice[]): CseSnapshot {
+  const hasLiveNotices = Boolean(notices && notices.length > 0);
   return {
     ...SEED_SNAPSHOT,
+    notices: hasLiveNotices ? notices! : SEED_SNAPSHOT.notices,
+    noticesIsFallback: !hasLiveNotices,
     tier: "stale",
     isFallback: true,
   };
 }
 
-async function fetchCseNotices(): Promise<unknown> {
-  const paths = [
-    "/notifications",
-    "/announcements",
-    "/marketAnnouncements",
-    "/news",
-  ];
-  for (const path of paths) {
-    const raw = await postCseJson<unknown>(path);
-    if (raw == null) {
-      continue;
-    }
-    const parsed = parseNotices(raw, SEED_AS_OF);
-    if (parsed.length > 0) {
-      return raw;
-    }
-    // Keep a non-empty payload even if shape is unexpected — parse later.
-    if (typeof raw === "object") {
-      return raw;
-    }
-  }
-  return null;
+/**
+ * Live notices: GET `/notifications` (halt/auction banners) then
+ * POST `/approvedAnnouncement` (corporate disclosures). Seed if both miss.
+ */
+async function fetchCseNotices(fallbackAsOf: string): Promise<CseNotice[]> {
+  const [notificationsRaw, approvedRaw] = await Promise.all([
+    getCseJson<unknown>("/notifications"),
+    postCseJson<unknown>("/approvedAnnouncement"),
+  ]);
+
+  const fromNotifications = parseCseNotices(notificationsRaw, fallbackAsOf);
+  const fromApproved = parseCseNotices(approvedRaw, fallbackAsOf);
+
+  return dedupeNotices([...fromNotifications, ...fromApproved]).slice(0, 8);
 }
 
 export async function buildCseSnapshot(): Promise<CseSnapshot> {
@@ -708,7 +1024,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
       }
       return raw as CseDailyMarketRow[];
     }),
-    fetchCseNotices(),
+    fetchCseNotices(SEED_AS_OF),
   ]);
 
   const live = buildSnapshotFromLive({
@@ -723,7 +1039,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     notices,
   });
 
-  return live ?? buildFallbackSnapshot();
+  return live ?? buildFallbackSnapshot(notices);
 }
 
 export async function buildCsePulseMetric(checkedAt: string): Promise<PulseMetric> {

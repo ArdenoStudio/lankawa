@@ -41,7 +41,7 @@ export function FoodDistrictTable({
                 <td className="px-4 py-3">
                   <Link
                     href={`/districts/${row.slug}`}
-                    className="font-medium text-teal-200 hover:text-teal-100"
+                    className="font-medium text-white underline decoration-white/30 hover:decoration-white"
                   >
                     {label}
                   </Link>
@@ -56,9 +56,9 @@ export function FoodDistrictTable({
                   {row.restaurantIndex}
                 </td>
                 <td className="px-4 py-3">
-                  <div className="h-2 w-32 overflow-hidden rounded-full bg-slate-800">
+                  <div className="h-2 w-32 overflow-hidden rounded-full bg-white/10">
                     <div
-                      className="h-full rounded-full bg-teal-400"
+                      className="h-full rounded-full bg-white/70"
                       style={{
                         width: `${(row.monthlyBasketLkr / maxBasket) * 100}%`,
                       }}

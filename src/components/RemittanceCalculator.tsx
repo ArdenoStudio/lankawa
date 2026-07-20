@@ -52,9 +52,20 @@ export function RemittanceCalculator({ rates }: { rates: FxRateBand }) {
             {t("subtitle")}
           </p>
         </div>
-        <p className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">
-          {t("asOf", { date: rates.date })}
-        </p>
+        <div className="flex flex-col items-end gap-1.5 text-right">
+          <p className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">
+            {t("asOf", { date: rates.date })}
+          </p>
+          <p
+            className={
+              rates.isFallback
+                ? "text-xs text-amber-200/80"
+                : "text-xs text-slate-500"
+            }
+          >
+            {rates.isFallback ? t("fallback") : t("cbslLive")}
+          </p>
+        </div>
       </div>
 
       <div className="mt-5 grid gap-4 md:grid-cols-2">

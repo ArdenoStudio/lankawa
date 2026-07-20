@@ -8,6 +8,7 @@ import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { GlofasBasinPanel } from "@/components/GlofasBasinPanel";
 import { HazardPinsPanel } from "@/components/HazardPinsPanel";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
+import { IrrigationGaugesPanel } from "@/components/IrrigationGaugesPanel";
 import { LandslidePanel } from "@/components/LandslidePanel";
 import { MetDeptWarningsPanel } from "@/components/MetDeptWarningsPanel";
 import { Link } from "@/i18n/navigation";
@@ -16,6 +17,7 @@ import { fetchEarthquakeSnapshot } from "@/lib/integrations/earthquake";
 import { fetchFirmsSnapshot } from "@/lib/integrations/firms";
 import { fetchGdacsSnapshot } from "@/lib/integrations/gdacs";
 import { fetchGlofasBasinSnapshot } from "@/lib/integrations/glofas";
+import { fetchIrrigationGaugesSnapshot } from "@/lib/integrations/irrigation-gauges";
 import { fetchLandslideSnapshot } from "@/lib/integrations/landslide";
 import { fetchLECOOutages } from "@/lib/integrations/leco";
 import { fetchMetDeptWarnings } from "@/lib/integrations/metdept";
@@ -42,6 +44,7 @@ export default async function DisasterPage({
     firms,
     gdacs,
     glofas,
+    irrigationGauges,
   ] = await Promise.all([
     buildPulseSnapshot(),
     fetchPowerStatus(),
@@ -52,6 +55,7 @@ export default async function DisasterPage({
     fetchFirmsSnapshot(),
     fetchGdacsSnapshot(),
     fetchGlofasBasinSnapshot(),
+    fetchIrrigationGaugesSnapshot(),
   ]);
 
   const cycloneWatch = buildCycloneWatch(gdacs);
@@ -250,6 +254,29 @@ export default async function DisasterPage({
       </section>
 
       <InlineExplainerBanner slug="flood-levels" />
+
+      <IrrigationGaugesPanel
+        snapshot={irrigationGauges}
+        locale={locale}
+        labels={{
+          title: t("irrigation.title"),
+          subtitle: t("irrigation.subtitle"),
+          seed: t("irrigation.seed"),
+          empty: t("irrigation.empty"),
+          honesty: t("irrigation.honesty"),
+          asOf: t("irrigation.asOf"),
+          source: t("irrigation.source"),
+          dashboard: t("irrigation.dashboard"),
+          stations: t("irrigation.stations"),
+          elevated: t("irrigation.elevated"),
+          level: t("irrigation.level"),
+          rain: t("irrigation.rain"),
+          normal: t("irrigation.normal"),
+          alert: t("irrigation.alert"),
+          warning: t("irrigation.warning"),
+          danger: t("irrigation.danger"),
+        }}
+      />
 
       <LandslidePanel
         snapshot={landslides}
