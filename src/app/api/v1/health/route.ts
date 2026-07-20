@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
-import { buildHealthSnapshot } from "@/lib/pulse";
+import { buildCatalogHealthSnapshot } from "@/lib/catalog-health";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 export async function GET() {
-  const sources = await buildHealthSnapshot();
+  const sources = await buildCatalogHealthSnapshot();
   return NextResponse.json({
     generatedAt: new Date().toISOString(),
     sources,

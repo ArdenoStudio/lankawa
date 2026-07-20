@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
+import { buildCatalogHealthSnapshot } from "@/lib/catalog-health";
 import { isDatabaseConfigured, isDatabaseConnected } from "@/lib/db";
-import { buildHealthSnapshot } from "@/lib/pulse";
 import { packageJsonVersion } from "@/lib/version";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 export async function GET() {
   const generatedAt = new Date().toISOString();
@@ -14,7 +15,7 @@ export async function GET() {
     dbConnected = await isDatabaseConnected();
   }
 
-  const sources = await buildHealthSnapshot();
+  const sources = await buildCatalogHealthSnapshot();
   const tierCounts = sources.reduce(
     (acc, source) => {
       acc[source.tier] = (acc[source.tier] ?? 0) + 1;
@@ -45,6 +46,13 @@ export async function GET() {
       down: downCount,
       unknown: unknownCount,
       allFresh: sourcesHealthy,
+      rows: sources.map((source) => ({
+        id: source.id,
+        tier: source.tier,
+        lastCheckedAt: source.lastCheckedAt,
+        lastSuccessAt: source.lastSuccessAt,
+        error: source.error,
+      })),
     },
     ingest: {
       cronPath: "/api/cron/ingest",
