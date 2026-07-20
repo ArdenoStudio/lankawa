@@ -50,7 +50,7 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 
 ## News / RSS (exhaustive)
 
-See **`docs/NEWS_RSS_BACKLOG.md`** — **75** concrete additions (N01–N75): more feeds (Island, LBO, Biz Ada, DMC…), parser fields, `/news` page, clusters, district news, alert pins, brief archive, civic RSS, ops/canaries. Strategy: **RSS only**, no paid scrape APIs.
+See **`docs/NEWS_RSS_MASTER_PLAN.md`** (phases NR-0…NR-6) and inventory **`docs/NEWS_RSS_BACKLOG.md`** (N01–N75). Strategy: **RSS only**, no paid scrape APIs.
 
 ## Explicitly defer
 

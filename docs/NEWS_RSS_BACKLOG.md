@@ -2,7 +2,8 @@
 
 **Strategy (locked):** Stay on **RSS/Atom**, not paid scrape APIs (RapidAPI / World News API). Outlets almost never ship official APIs; RSS is the free, attributable path.  
 **Status:** Research backlog (Jul 2026). Items are *not* shipped unless marked ✅ elsewhere.  
-**Rule:** Sisters stay data backends; Lankawa remains the umbrella UI. No iframe mosaics of news sites.
+**Rule:** Sisters stay data backends; Lankawa remains the umbrella UI. No iframe mosaics of news sites.  
+**Sequencing:** See **`docs/NEWS_RSS_MASTER_PLAN.md`** (phases NR-0…NR-6). This file is the inventory; the master plan wins on order and gates.
 
 ---
 
