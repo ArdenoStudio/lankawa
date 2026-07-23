@@ -24,15 +24,15 @@ export async function SiteFooter() {
   const t = await getTranslations("footer");
 
   return (
-    <footer className="mt-auto border-t border-white/10 bg-slate-950/50">
+    <footer className="mt-auto border-t border-white/10 bg-black/60">
       <div className="lk-brand-stripe" aria-hidden="true" />
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-3 lg:col-span-1">
             <Logo variant="wordmark" />
             <BrandTagline short />
-            <p className="text-xs text-slate-600">
-              {t("version", { version: "0.1.0" })}
+            <p className="text-xs text-neutral-600">
+              {t("version", { version: "0.8.0" })}
             </p>
           </div>
 
