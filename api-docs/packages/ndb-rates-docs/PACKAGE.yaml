@@ -1,0 +1,10 @@
+slug: ndb-rates-docs
+tier: B
+title: NDB Rates
+host: https://www.ndbbank.com
+category: banks
+status: ready
+summary: exchange-rates + deposit interest HTML + card offers.
+source_docs:
+- docs/BANK_API_DEEP_DIVE_BOC_PEOPLES_NDB_DFCC_PABC.md
+extract_to: Cookie-Cat21/ndb-rates-docs

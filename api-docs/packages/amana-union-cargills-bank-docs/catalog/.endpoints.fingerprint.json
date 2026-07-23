@@ -1,0 +1,37 @@
+{
+  "sha256": "677eeab87d01975ba8fc782dfdbe6b2ed90a764e1fcbe79c2429a5109501888b",
+  "endpoint_count": 3,
+  "endpoints": {
+    "amana_rates": {
+      "id": "amana_rates",
+      "method": "GET",
+      "path": "amanabank.lk/rates/",
+      "url": "https://www.amanabank.lk/rates/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Amana rates pages (Islamic products).",
+      "pagination": null
+    },
+    "cargills_bank_rates": {
+      "id": "cargills_bank_rates",
+      "method": "GET",
+      "path": "cargillsbank.com/rates-and-tariffs/",
+      "url": "https://www.cargillsbank.com/rates-and-tariffs/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Cargills Bank rates & tariffs.",
+      "pagination": null
+    },
+    "union_bank_offers": {
+      "id": "union_bank_offers",
+      "method": "GET",
+      "path": "unionb.com/.../offers",
+      "url": "https://www.unionb.com/personal/cards/offers",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Union Bank card offers HTML.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

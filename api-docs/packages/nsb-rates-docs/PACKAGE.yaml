@@ -1,0 +1,10 @@
+slug: nsb-rates-docs
+tier: B
+title: NSB Rates Pages
+host: https://www.nsb.lk
+category: banks
+status: ready
+summary: HTML deposit + FX TT under rates-tarriffs typo paths.
+source_docs:
+- docs/BANK_API_DEEP_DIVE_SAMPATH_SEYLAN_NSB.md
+extract_to: Cookie-Cat21/nsb-rates-docs

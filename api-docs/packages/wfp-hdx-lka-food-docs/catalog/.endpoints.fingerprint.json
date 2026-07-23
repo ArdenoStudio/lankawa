@@ -1,0 +1,21 @@
+{
+  "sha256": "fcb199007f565990dd4961f5b99307e9ccefa5fdb0b7d9070e9af0cb19c71542",
+  "endpoint_count": 1,
+  "endpoints": {
+    "wfp_food_prices_lka_csv": {
+      "id": "wfp_food_prices_lka_csv",
+      "method": "GET",
+      "path": "/download/wfp_food_prices_lka.csv",
+      "url": "https://data.humdata.org/dataset/0298c598-d312-4771-b564-f4ac4d831f05/resource/3638f0d6-9969-48cf-a919-1d879d037ec6/download/wfp_food_prices_lka.csv",
+      "status": "live",
+      "access": "csv_download",
+      "summary": "Full LKA CSV (~34k rows).",
+      "pagination": {
+        "style": "full_download",
+        "notes": "No server pagination \u2014 client chunk/filter",
+        "lab": true
+      }
+    }
+  },
+  "updated": "2026-07-20"
+}

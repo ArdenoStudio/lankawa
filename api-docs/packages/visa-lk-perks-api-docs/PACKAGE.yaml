@@ -1,0 +1,10 @@
+slug: visa-lk-perks-api-docs
+tier: A
+title: Visa LK Perks API
+host: https://www.visa.com.lk
+category: cards
+status: ready
+summary: "VMORC portal perks POST \u2014 supermarket/Glomark slice."
+source_docs:
+- docs/BANK_API_DEEP_DIVE_VISA_SC_FDRATES.md
+extract_to: Cookie-Cat21/visa-lk-perks-api-docs

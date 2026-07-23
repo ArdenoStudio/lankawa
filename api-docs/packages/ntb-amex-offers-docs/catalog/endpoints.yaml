@@ -1,0 +1,21 @@
+title: NTB Mastercard + Amex Offers
+host: multi
+tier: B
+category: cards
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/NTB_SC_HSBC_OFFERS_RESEARCH.md
+endpoints:
+- id: ntb_promotions_hub
+  method: GET
+  url: https://www.ntb.lk/personal/cards/promotions
+  path: /personal/cards/promotions
+  summary: NTB card promotions hub HTML.
+  access: html_scrape
+- id: amex_supermarket_offers
+  method: GET
+  url: https://www.americanexpress.lk/en-lk/benefits/consumer/supermarket-offers/
+  path: /benefits/consumer/supermarket-offers/
+  summary: Amex LK supermarket offers HTML.
+  access: html_scrape

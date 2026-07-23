@@ -1,0 +1,16 @@
+title: lk-flood-api (nuuuwan)
+host: https://nuuuwan.github.io
+tier: A
+category: disaster
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/WEATHER_DISASTER_APIS_RESEARCH.md
+- docs/EXISTING_APIS_UNUSED_ENDPOINTS.md
+endpoints:
+- id: flood_latest
+  method: GET
+  url: https://raw.githubusercontent.com/nuuuwan/lk_flood/data/lk_flood.json
+  path: /lk_flood.json
+  summary: Flood station levels JSON used by Lankawa flood adapter.
+  access: json_api

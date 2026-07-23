@@ -1,0 +1,10 @@
+slug: harti-cbsl-food-pdf-docs
+tier: B
+title: HARTI + CBSL Food Price PDFs
+host: multi
+category: food
+status: ready
+summary: "Daily/weekly PDF indexes \u2014 civic fresh food (not supermarket JSON)."
+source_docs:
+- docs/HARTI_CBSL_FOOD_PDF.md
+extract_to: Cookie-Cat21/harti-cbsl-food-pdf-docs

@@ -1,0 +1,11 @@
+slug: foodlk-api-docs
+tier: A
+title: FoodLK / Food Platform API
+host: https://food-platform-backend.fly.dev
+category: food
+status: ready
+summary: OpenAPI 41 paths; honest 500 vs live matrix.
+source_docs:
+- docs/FOODLK_OPENAPI_EXHAUST.md
+- docs/FOOD_API_SOURCES.md
+extract_to: Cookie-Cat21/foodlk-api-docs

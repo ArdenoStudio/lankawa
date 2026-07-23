@@ -1,0 +1,52 @@
+title: CSE (cse.lk) API — deepen pack
+host: https://www.cse.lk/api
+tier: A
+category: markets
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/CSE_API_DOCS.md
+- docs/CSE_UNUSED_ENDPOINTS_PROBE.md
+endpoints:
+- id: top_gainers
+  method: POST
+  url: https://www.cse.lk/api/topGainers
+  path: /topGainers
+  body_json: {}
+  summary: Dedicated top gainers board.
+  access: json_api
+- id: top_looses
+  method: POST
+  url: https://www.cse.lk/api/topLooses
+  path: /topLooses
+  body_json: {}
+  summary: Dedicated top losers (CSE spelling).
+  access: json_api
+- id: sector_52_week
+  method: POST
+  url: https://www.cse.lk/api/52WeekSectors
+  path: /52WeekSectors
+  body_json: {}
+  summary: 52-week / YTD sector ranges.
+  access: json_api
+- id: trade_summary
+  method: POST
+  url: https://www.cse.lk/api/tradeSummary
+  path: /tradeSummary
+  body_json: {}
+  summary: Full board — primary poller; client-side page in lab.
+  pagination:
+    style: client_slice
+    params:
+      offset: client
+      limit: client
+    lab: true
+  access: json_api
+- id: get_announcement_by_company
+  method: POST
+  url: https://www.cse.lk/api/getAnnouncementByCompany
+  path: /getAnnouncementByCompany
+  body_json:
+    symbol: JKH.N0000
+  summary: Company announcements by symbol.
+  access: json_api

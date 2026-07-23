@@ -1,0 +1,33 @@
+title: Commercial Bank API
+host: https://www.combank.lk
+tier: A
+category: banks
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/BANK_API_DEEP_DIVE_COMBANK.md
+- docs/BANK_FD_API_SCHEMAS.md
+endpoints:
+- id: exchange_rates
+  method: GET
+  url: https://www.combank.lk/api/exchange-rates
+  path: /api/exchange-rates
+  summary: Multi-currency TT/DD rates JSON (USD TT buy/sell).
+  pagination: null
+  access: json_api
+- id: interest_rates_fd
+  method: GET
+  url: https://www.combank.lk/api/interest-rates-fd
+  path: /api/interest-rates-fd
+  summary: 'FD ladder array: paidIn, period (months), rate.'
+  pagination: null
+  access: json_api
+- id: rewards_promotions_html
+  method: GET
+  url: https://www.combank.lk/rewards-promotions
+  path: /rewards-promotions
+  summary: HTML rewards list (~72); supermarket DOW scrape.
+  pagination:
+    style: html-list
+    notes: Full page list, not cursor pages
+  access: html_scrape

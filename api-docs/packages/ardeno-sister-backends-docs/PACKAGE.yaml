@@ -1,0 +1,11 @@
+slug: ardeno-sister-backends-docs
+tier: B
+title: Ardeno Sister Backends
+host: multi
+category: platform
+status: ready
+summary: Life / Property / Vehicle / FoodLK Fly backends Lankawa consumes.
+source_docs:
+- docs/INTEGRATIONS.md
+- docs/FOODLK_OPENAPI_EXHAUST.md
+extract_to: Cookie-Cat21/ardeno-sister-backends-docs

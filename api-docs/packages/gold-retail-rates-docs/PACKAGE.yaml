@@ -1,0 +1,11 @@
+slug: gold-retail-rates-docs
+tier: B
+title: Gold retail rates research pack
+host: multi
+category: macro
+status: ready
+summary: Gold retail rates research pack
+source_docs:
+- docs/GOLD_RETAIL_RATES_RESEARCH.md
+- docs/CBSL_RATES_API_DEEP_DIVE.md
+extract_to: Cookie-Cat21/gold-retail-rates-docs

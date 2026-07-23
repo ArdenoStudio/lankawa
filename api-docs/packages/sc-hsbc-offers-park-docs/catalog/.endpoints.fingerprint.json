@@ -1,0 +1,27 @@
+{
+  "sha256": "3188d5ecdcbae61560e9fb826aeaf57aecb4a410e26822539972b59c267b5bff",
+  "endpoint_count": 2,
+  "endpoints": {
+    "hsbc_retail_parked": {
+      "id": "hsbc_retail_parked",
+      "method": "GET",
+      "path": "/",
+      "url": "https://www.hsbc.lk/",
+      "status": "parked",
+      "access": "parked",
+      "summary": "PARK \u2014 HSBC LK retail sold to NTB; offer URLs dead.",
+      "pagination": null
+    },
+    "sc_tgl_offers_json_parked": {
+      "id": "sc_tgl_offers_json_parked",
+      "method": "GET",
+      "path": "/lk/offers.json",
+      "url": "https://www.sc.com/lk/offers.json",
+      "status": "parked",
+      "access": "parked",
+      "summary": "PARK \u2014 TGL offers.json mostly expired on probe.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

@@ -101,6 +101,61 @@ export default async function DevelopersPage({
           {t("openApiLink")}
         </Link>
       </section>
+
+      <section className="rounded-2xl border border-white/10 bg-white/5 p-5">
+        <h2 className="text-lg font-semibold text-white">{t("catalogNavTitle")}</h2>
+        <p className="mt-2 text-slate-300">{t("catalogNavBody")}</p>
+        <div className="mt-4 flex flex-wrap gap-4">
+          <Link
+            href="/developers/api-catalog"
+            className="text-sm text-teal-300 hover:text-teal-200"
+          >
+            {t("catalogNavLink")}
+          </Link>
+          <Link
+            href="/developers/api-catalog/pagination-lab"
+            className="text-sm text-teal-300 hover:text-teal-200"
+          >
+            {t("catalogLabLink")}
+          </Link>
+          <Link
+            href="/developers/api-catalog/field-coverage"
+            className="text-sm text-teal-300 hover:text-teal-200"
+          >
+            {t("coverageNavLink")}
+          </Link>
+          <Link
+            href="/developers/api-catalog/ts-clients"
+            className="text-sm text-teal-300 hover:text-teal-200"
+          >
+            {t("tsClientsNavLink")}
+          </Link>
+          <Link
+            href="/developers/api-catalog/py-clients"
+            className="text-sm text-teal-300 hover:text-teal-200"
+          >
+            {t("pyClientsNavLink")}
+          </Link>
+          <Link
+            href="/developers/api-catalog/client-extras"
+            className="text-sm text-teal-300 hover:text-teal-200"
+          >
+            {t("clientExtrasNavLink")}
+          </Link>
+          <Link
+            href="/developers/api-catalog/html-vs-api"
+            className="text-sm text-teal-300 hover:text-teal-200"
+          >
+            {t("htmlVsApiNavLink")}
+          </Link>
+          <Link
+            href="/developers/api-catalog/changelog"
+            className="text-sm text-teal-300 hover:text-teal-200"
+          >
+            {t("catalogChangelogNavLink")}
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

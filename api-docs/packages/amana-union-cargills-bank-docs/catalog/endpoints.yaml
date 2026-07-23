@@ -1,0 +1,27 @@
+title: Amana / Union / Cargills Bank rates & offers
+host: multi
+tier: B
+category: banks
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/BANK_API_DEEP_DIVE_NTB_AMANA_UNION_CARGILLS.md
+endpoints:
+- id: amana_rates
+  method: GET
+  url: https://www.amanabank.lk/rates/
+  path: amanabank.lk/rates/
+  summary: Amana rates pages (Islamic products).
+  access: html_scrape
+- id: union_bank_offers
+  method: GET
+  url: https://www.unionb.com/personal/cards/offers
+  path: unionb.com/.../offers
+  summary: Union Bank card offers HTML.
+  access: html_scrape
+- id: cargills_bank_rates
+  method: GET
+  url: https://www.cargillsbank.com/rates-and-tariffs/
+  path: cargillsbank.com/rates-and-tariffs/
+  summary: Cargills Bank rates & tariffs.
+  access: html_scrape

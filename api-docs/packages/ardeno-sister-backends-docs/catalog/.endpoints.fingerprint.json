@@ -1,0 +1,37 @@
+{
+  "sha256": "62a353e9d5db0c6accb512207918e531a8d31f510f88781cf644c4088eec1537",
+  "endpoint_count": 3,
+  "endpoints": {
+    "foodlk_openapi": {
+      "id": "foodlk_openapi",
+      "method": "GET",
+      "path": "food-platform-backend.fly.dev/openapi.json",
+      "url": "https://food-platform-backend.fly.dev/openapi.json",
+      "status": "live",
+      "access": "json_api",
+      "summary": "FoodLK OpenAPI.",
+      "pagination": null
+    },
+    "life_health": {
+      "id": "life_health",
+      "method": "GET",
+      "path": "life-platform-api.fly.dev/health",
+      "url": "https://life-platform-api.fly.dev/health",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Life platform health (host may vary).",
+      "pagination": null
+    },
+    "octane_prices": {
+      "id": "octane_prices",
+      "method": "GET",
+      "path": "octane-api.fly.dev/v1/prices/latest",
+      "url": "https://octane-api.fly.dev/v1/prices/latest",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Octane latest prices.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

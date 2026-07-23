@@ -1,0 +1,17 @@
+title: MyPromo.lk (park — ToS)
+host: https://mypromo.lk
+tier: B
+category: cards
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/BANK_AND_API_UNIVERSE.md
+- docs/CONSUMER_OFFERS_AND_DATA_SURVEY.md
+endpoints:
+- id: mypromo_parked
+  method: GET
+  url: https://mypromo.lk/
+  path: /
+  summary: PARK — ToS bans scrape; prefer bank first-party.
+  status: parked
+  access: parked

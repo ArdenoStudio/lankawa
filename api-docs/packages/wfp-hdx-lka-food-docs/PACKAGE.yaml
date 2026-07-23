@@ -1,0 +1,10 @@
+slug: wfp-hdx-lka-food-docs
+tier: A
+title: WFP HDX Sri Lanka Food Prices
+host: https://data.humdata.org
+category: food
+status: ready
+summary: wfp_food_prices_lka.csv schema, lag, commodity mapping.
+source_docs:
+- docs/FOOD_API_SOURCES.md
+extract_to: Cookie-Cat21/wfp-hdx-lka-food-docs

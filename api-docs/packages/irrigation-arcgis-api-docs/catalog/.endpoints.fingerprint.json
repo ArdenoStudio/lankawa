@@ -1,0 +1,37 @@
+{
+  "sha256": "f7fdb6b151e4cbb6c173b897b2ef7265523e072e8a850c3a7a493c69ab03c4a2",
+  "endpoint_count": 2,
+  "endpoints": {
+    "gauges_2_view_query": {
+      "id": "gauges_2_view_query",
+      "method": "GET",
+      "path": "/gauges_2_view/FeatureServer/0/query",
+      "url": "https://services3.arcgis.com/J7ZFXmR8rSmQ3FGf/arcgis/rest/services/gauges_2_view/FeatureServer/0/query?where=1%3D1&outFields=*&orderByFields=EditDate%20DESC&resultRecordCount=50&f=json",
+      "status": "live",
+      "access": "arcgis_api",
+      "summary": "Latest river gauge readings.",
+      "pagination": {
+        "style": "arcgis",
+        "params": {
+          "resultOffset": "offset",
+          "resultRecordCount": "page size"
+        },
+        "lab": true
+      }
+    },
+    "rainfall_24hr": {
+      "id": "rainfall_24hr",
+      "method": "GET",
+      "path": "/24hr_rainfall/FeatureServer/0/query",
+      "url": "https://services3.arcgis.com/J7ZFXmR8rSmQ3FGf/arcgis/rest/services/24hr_rainfall/FeatureServer/0/query?where=1%3D1&outFields=*&resultRecordCount=50&f=json",
+      "status": "live",
+      "access": "arcgis_api",
+      "summary": "24-hour rainfall FeatureServer.",
+      "pagination": {
+        "style": "arcgis",
+        "lab": true
+      }
+    }
+  },
+  "updated": "2026-07-20"
+}

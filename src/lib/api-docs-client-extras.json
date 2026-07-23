@@ -1,0 +1,523 @@
+{
+  "version": 1,
+  "packages": [
+    {
+      "slug": "amana-union-cargills-bank-docs",
+      "domains": [
+        "fx_tt",
+        "fd_deposits",
+        "card_offers"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FxTtQuote",
+        "FdDepositQuote",
+        "CardOffer"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "ardeno-sister-backends-docs",
+      "domains": [
+        "food_prices",
+        "fuel_energy",
+        "platform_misc"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FoodPrice",
+        "FuelEnergy",
+        "PlatformMisc"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "boc-rates-docs",
+      "domains": [
+        "fx_tt",
+        "fd_deposits"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FxTtQuote",
+        "FdDepositQuote"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "cbsl-public-data-docs",
+      "domains": [
+        "fx_tt",
+        "fd_deposits",
+        "macro_cbsl"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FxTtQuote",
+        "FdDepositQuote",
+        "MacroCbsl"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "cebcare-api-docs",
+      "domains": [
+        "utilities"
+      ],
+      "labEndpoints": [
+        "get_demand_mgmt_clusters"
+      ],
+      "models": [
+        "UtilityReading"
+      ],
+      "hasPaginationLab": true
+    },
+    {
+      "slug": "combank-api-docs",
+      "domains": [
+        "fx_tt",
+        "fd_deposits",
+        "card_offers"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FxTtQuote",
+        "FdDepositQuote",
+        "CardOffer"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "cse-api-docs-deepen",
+      "domains": [
+        "markets_cse"
+      ],
+      "labEndpoints": [
+        "trade_summary"
+      ],
+      "models": [
+        "CseQuote"
+      ],
+      "hasPaginationLab": true
+    },
+    {
+      "slug": "dfcc-rates-docs",
+      "domains": [
+        "fx_tt",
+        "fd_deposits",
+        "card_offers"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FxTtQuote",
+        "FdDepositQuote",
+        "CardOffer"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "foodlk-api-docs",
+      "domains": [
+        "food_prices",
+        "platform_misc"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FoodPrice",
+        "PlatformMisc"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "gdacs-firms-docs",
+      "domains": [
+        "weather_aqi"
+      ],
+      "labEndpoints": [
+        "firms_csv_lk"
+      ],
+      "models": [
+        "WeatherAqi"
+      ],
+      "hasPaginationLab": true
+    },
+    {
+      "slug": "gold-retail-rates-docs",
+      "domains": [
+        "macro_cbsl"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "MacroCbsl"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "harti-cbsl-food-pdf-docs",
+      "domains": [
+        "food_prices"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FoodPrice"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "hnb-venus-api-docs",
+      "domains": [
+        "fx_tt",
+        "fd_deposits",
+        "card_offers"
+      ],
+      "labEndpoints": [
+        "get_all_web_card_promos",
+        "get_all_web_card_promos_debit"
+      ],
+      "models": [
+        "FxTtQuote",
+        "FdDepositQuote",
+        "CardOffer"
+      ],
+      "hasPaginationLab": true
+    },
+    {
+      "slug": "irrigation-arcgis-api-docs",
+      "domains": [
+        "utilities"
+      ],
+      "labEndpoints": [
+        "gauges_2_view_query",
+        "rainfall_24hr"
+      ],
+      "models": [
+        "UtilityReading"
+      ],
+      "hasPaginationLab": true
+    },
+    {
+      "slug": "leco-outages-docs",
+      "domains": [
+        "utilities"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "UtilityReading"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "litro-laugfs-lpg-docs",
+      "domains": [
+        "fuel_energy"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FuelEnergy"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "lk-flood-api-docs",
+      "domains": [
+        "utilities"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "UtilityReading"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "metdept-cap-api-docs",
+      "domains": [
+        "weather_aqi"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "WeatherAqi"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "mypromo-park-docs",
+      "domains": [
+        "card_offers"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "CardOffer"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "ndb-rates-docs",
+      "domains": [
+        "fx_tt",
+        "fd_deposits",
+        "card_offers"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FxTtQuote",
+        "FdDepositQuote",
+        "CardOffer"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "nsb-rates-docs",
+      "domains": [
+        "fx_tt",
+        "fd_deposits"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FxTtQuote",
+        "FdDepositQuote"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "ntb-amex-offers-docs",
+      "domains": [
+        "card_offers"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "CardOffer"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "nwsdb-bill-api-docs",
+      "domains": [
+        "utilities"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "UtilityReading"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "octane-fuel-api-docs",
+      "domains": [
+        "fuel_energy"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FuelEnergy"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "open-meteo-lk-docs",
+      "domains": [
+        "weather_aqi"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "WeatherAqi"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "openaq-lk-docs",
+      "domains": [
+        "weather_aqi"
+      ],
+      "labEndpoints": [
+        "locations_lk"
+      ],
+      "models": [
+        "WeatherAqi"
+      ],
+      "hasPaginationLab": true
+    },
+    {
+      "slug": "pabc-card-offers-docs",
+      "domains": [
+        "fx_tt",
+        "fd_deposits",
+        "card_offers"
+      ],
+      "labEndpoints": [
+        "card_offers_js"
+      ],
+      "models": [
+        "FxTtQuote",
+        "FdDepositQuote",
+        "CardOffer"
+      ],
+      "hasPaginationLab": true
+    },
+    {
+      "slug": "peoples-bank-rates-docs",
+      "domains": [
+        "fx_tt",
+        "fd_deposits",
+        "card_offers"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FxTtQuote",
+        "FdDepositQuote",
+        "CardOffer"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "promise-lk-tenders-docs",
+      "domains": [
+        "platform_misc"
+      ],
+      "labEndpoints": [
+        "procurements_list"
+      ],
+      "models": [
+        "PlatformMisc"
+      ],
+      "hasPaginationLab": true
+    },
+    {
+      "slug": "sampath-api-docs",
+      "domains": [
+        "fx_tt",
+        "fd_deposits",
+        "card_offers"
+      ],
+      "labEndpoints": [
+        "card_promotions_super_markets"
+      ],
+      "models": [
+        "FxTtQuote",
+        "FdDepositQuote",
+        "CardOffer"
+      ],
+      "hasPaginationLab": true
+    },
+    {
+      "slug": "sc-hsbc-offers-park-docs",
+      "domains": [
+        "fd_deposits",
+        "card_offers"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FdDepositQuote",
+        "CardOffer"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "sdb-rates-docs",
+      "domains": [
+        "fx_tt",
+        "fd_deposits"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FxTtQuote",
+        "FdDepositQuote"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "seylan-api-docs",
+      "domains": [
+        "fx_tt",
+        "fd_deposits"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FxTtQuote",
+        "FdDepositQuote"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "singer-emi-api-docs",
+      "domains": [
+        "fuel_energy"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FuelEnergy"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "sl-bank-card-offers-docs",
+      "domains": [
+        "card_offers"
+      ],
+      "labEndpoints": [
+        "pack_overview"
+      ],
+      "models": [
+        "CardOffer"
+      ],
+      "hasPaginationLab": true
+    },
+    {
+      "slug": "sl-bank-fd-rates-docs",
+      "domains": [
+        "fd_deposits"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FdDepositQuote"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "sl-bank-remittance-tt-docs",
+      "domains": [
+        "fx_tt"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FxTtQuote"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "softlogic-emi-park-docs",
+      "domains": [
+        "fuel_energy"
+      ],
+      "labEndpoints": [],
+      "models": [
+        "FuelEnergy"
+      ],
+      "hasPaginationLab": false
+    },
+    {
+      "slug": "visa-lk-perks-api-docs",
+      "domains": [
+        "card_offers"
+      ],
+      "labEndpoints": [
+        "portal_perks"
+      ],
+      "models": [
+        "CardOffer"
+      ],
+      "hasPaginationLab": true
+    },
+    {
+      "slug": "wfp-hdx-lka-food-docs",
+      "domains": [
+        "food_prices"
+      ],
+      "labEndpoints": [
+        "wfp_food_prices_lka_csv"
+      ],
+      "models": [
+        "FoodPrice"
+      ],
+      "hasPaginationLab": true
+    }
+  ]
+}

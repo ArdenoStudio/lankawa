@@ -1,0 +1,17 @@
+title: SL Bank Fixed Deposit Rates
+host: multi
+tier: B
+category: banks
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/BANK_FD_API_SCHEMAS.md
+- docs/BANK_AND_API_UNIVERSE.md
+endpoints:
+- id: pack_overview
+  method: GET
+  url: https://www.combank.lk/api/interest-rates-fd
+  path: (multi-host pack)
+  summary: 'Aggregator: ComBank/Sampath/Seylan/HNB FD JSON → unified ladder.'
+  pagination: null
+  access: json_api

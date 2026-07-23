@@ -1,0 +1,20 @@
+title: SL Bank Supermarket Card Offers
+host: multi
+tier: B
+category: cards
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/CONSUMER_OFFERS_AND_DATA_SURVEY.md
+endpoints:
+- id: pack_overview
+  method: GET
+  url: https://www.sampath.lk/api/card-promotions?category=super_markets&page_number=1&size=20
+  path: (multi-host pack)
+  summary: 'Aggregator pack: Sampath + HNB Venus + ComBank HTML + peers → supermarket
+    DOW.'
+  pagination:
+    style: multi_host
+    lab: true
+    notes: See sibling bank packages for per-host pagination
+  access: hybrid

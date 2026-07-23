@@ -1,0 +1,27 @@
+{
+  "sha256": "1982af64644cd2034e5f012fa531e02bc2b2de617de714ace0531cb34a79655d",
+  "endpoint_count": 2,
+  "endpoints": {
+    "bill_calculator": {
+      "id": "bill_calculator",
+      "method": "POST",
+      "path": "/api_nwsdb/bill/BillCalculator",
+      "url": "https://ebis.waterboard.lk/api_nwsdb/bill/BillCalculator",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Domestic bill estimate.",
+      "pagination": null
+    },
+    "get_tariff_adjustment": {
+      "id": "get_tariff_adjustment",
+      "method": "GET",
+      "path": "/api_nwsdb/bill/getTariffAdjustment",
+      "url": "https://ebis.waterboard.lk/api_nwsdb/bill/getTariffAdjustment",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Tariff adjustment metadata.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

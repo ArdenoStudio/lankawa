@@ -1,0 +1,10 @@
+slug: promise-lk-tenders-docs
+tier: B
+title: Promise.lk tenders
+host: https://promise.lk
+category: platform
+status: ready
+summary: Promise.lk tenders
+source_docs:
+- docs/INTEGRATIONS.md
+extract_to: Cookie-Cat21/promise-lk-tenders-docs

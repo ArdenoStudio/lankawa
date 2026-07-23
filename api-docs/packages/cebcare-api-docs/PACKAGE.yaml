@@ -1,0 +1,10 @@
+slug: cebcare-api-docs
+tier: A
+title: CEB Care API
+host: https://cebcare.ceb.lk
+category: utilities
+status: ready
+summary: DemandMgmtSchedule + GetDemandMgmtClusters antiforgery flow.
+source_docs:
+- docs/CEB_DEMAND_MGMT_CLUSTERS.md
+extract_to: Cookie-Cat21/cebcare-api-docs

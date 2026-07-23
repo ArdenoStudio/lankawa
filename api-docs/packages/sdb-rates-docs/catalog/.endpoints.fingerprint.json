@@ -1,0 +1,17 @@
+{
+  "sha256": "94082773f54410a67fa492b743f5b4b510d2e3d4e4eb684a8a7da5e926fa11c4",
+  "endpoint_count": 1,
+  "endpoints": {
+    "rates_page": {
+      "id": "rates_page",
+      "method": "GET",
+      "path": "/rates/",
+      "url": "https://www.sdb.lk/rates/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "SDB rates HTML surfaces.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

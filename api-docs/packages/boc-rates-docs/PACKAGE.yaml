@@ -1,0 +1,10 @@
+slug: boc-rates-docs
+tier: B
+title: Bank of Ceylon Rates
+host: https://www.boc.lk
+category: banks
+status: ready
+summary: rates-tariff HTML FX/FD; park stale FD JSON API.
+source_docs:
+- docs/BANK_API_DEEP_DIVE_BOC_PEOPLES_NDB_DFCC_PABC.md
+extract_to: Cookie-Cat21/boc-rates-docs
