@@ -278,6 +278,7 @@ async function llmAnswer(
     body: JSON.stringify({
       model: process.env.OPENAI_MODEL ?? "gpt-4o-mini",
       temperature: 0.1,
+      max_tokens: 800,
       messages: [
         {
           role: "system",

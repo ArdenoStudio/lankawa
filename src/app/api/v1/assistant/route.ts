@@ -19,6 +19,12 @@ export async function POST(request: NextRequest) {
   if (!question) {
     return NextResponse.json({ error: "question is required" }, { status: 400 });
   }
+  if (question.length > 1000) {
+    return NextResponse.json(
+      { error: "question must be at most 1000 characters" },
+      { status: 400 },
+    );
+  }
 
   const districtSlug = body.districtSlug?.trim() || null;
   if (districtSlug && !getDistrict(districtSlug)) {

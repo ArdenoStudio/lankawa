@@ -25,6 +25,14 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 | LAUGFS/Litro LPG scrape + seed fallback | Household energy | D partial ✅ |
 | Met Dept WARNING/ADVISORY card | Disaster | ✅ |
 | Coconut Index flow/root UI | COL honesty | F1 |
+| WM-pattern: tenders/environment live vs seed copy | Trust | ✅ |
+| WM-pattern: Met∩flood district intersection | Alert precision | ✅ |
+| WM-pattern: disaster multi-toggle + GFM pins | Map IA | ✅ |
+| WM-pattern: shareable multi-layer URL views | Journalist deep links | Planned |
+| WM-pattern: citizen\|markets\|ops presets | Persona packs | Planned |
+| WM-pattern: Cmd+K district fly-to | Atlas power-user | Planned |
+| Lanka Stress Index (composite) | One morning number | Planned |
+| Regional PMTiles + bootstrap tiers | Perf / 4G | Planned |
 
 ## High-value backlog
 
@@ -41,12 +49,14 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 - NCPI monthly + PUCSL tariff blocks ✅
 - Remittance calculator for diaspora ✅
 - Village WhatsApp share cards + Data Saver mode ✅ (morning check + district share cards + Data Saver)
+- World Monitor **patterns only** (no AGPL fork): see `docs/WORLD_MONITOR_ADAPTATION.md` — shareable views, personas, Cmd+K, Stress Index, PMTiles
 
 ## Recently shipped / partial
 
 - Household LPG card: `/economy` now probes public Litro/LAUGFS price-list pages and shows a clearly labeled July 2026 seed snapshot if scraping fails.
 - Data Saver mode: header toggle persists `lankawa_data_saver`, skips cricket visually, caps home news at 5 headlines, and avoids loading heavy map bundles where possible.
 - Share morning check: home Today section now shares FX, fuel, weather, and power via Web Share API or copies plain text for WhatsApp/manual sharing.
+- Honesty: tenders + environment live/seed copy; Met∩flood district intersection; webhook docs softened (HMAC ready, delivery not enabled). See `docs/WORLD_MONITOR_ADAPTATION.md`.
 
 ## Platform features (50+)
 

@@ -1,1 +1,1 @@
-export const packageJsonVersion = "0.7.0";
+export const packageJsonVersion = "0.8.0";

@@ -8,6 +8,7 @@ import {
   SL_NEWS_FEEDS,
 } from "@/lib/integrations/news";
 import { clusterHeadlines } from "@/lib/integrations/news-cluster";
+import { safeHttpUrl } from "@/lib/safe-url";
 
 function sourceLabel(
   sourceId: string,
@@ -156,26 +157,41 @@ export default async function NewsPage({
           {(standaloneHeadlines.length > 0
             ? standaloneHeadlines
             : pulse.headlines
-          ).map((headline, index) => (
-            <li key={`${headline.url}-${index}`}>
-              <a
-                href={headline.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 transition hover:border-white/25 hover:bg-white/[0.05]"
-              >
-                <p className="text-sm font-medium text-white group-hover:text-slate-100">
-                  {headline.title}
-                </p>
-                <p className="mt-1 text-xs text-slate-500">
-                  {sourceLabel(headline.source, sourceLabels)}
-                  {headline.publishedAt
-                    ? ` · ${new Date(headline.publishedAt).toLocaleString(locale)}`
-                    : null}
-                </p>
-              </a>
-            </li>
-          ))}
+          ).map((headline, index) => {
+            const href = safeHttpUrl(headline.url);
+            const meta = (
+              <p className="mt-1 text-xs text-slate-500">
+                {sourceLabel(headline.source, sourceLabels)}
+                {headline.publishedAt
+                  ? ` · ${new Date(headline.publishedAt).toLocaleString(locale)}`
+                  : null}
+              </p>
+            );
+            return (
+              <li key={`${headline.url}-${index}`}>
+                {href ? (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 transition hover:border-white/25 hover:bg-white/[0.05]"
+                  >
+                    <p className="text-sm font-medium text-white group-hover:text-slate-100">
+                      {headline.title}
+                    </p>
+                    {meta}
+                  </a>
+                ) : (
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                    <p className="text-sm font-medium text-white">
+                      {headline.title}
+                    </p>
+                    {meta}
+                  </div>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </section>
 

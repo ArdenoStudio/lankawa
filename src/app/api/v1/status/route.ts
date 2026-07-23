@@ -30,11 +30,13 @@ export async function GET() {
   const unknownCount = tierCounts.unknown ?? 0;
 
   const sourcesHealthy = downCount === 0 && unknownCount === 0;
+  const status =
+    (dbConfigured && !dbConnected) || downCount > 0 ? "degraded" : "ok";
 
   return NextResponse.json({
     version: packageJsonVersion,
     generatedAt,
-    status: dbConfigured && !dbConnected ? "degraded" : "ok",
+    status,
     database: {
       configured: dbConfigured,
       connected: dbConnected,

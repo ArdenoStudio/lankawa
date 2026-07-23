@@ -940,6 +940,7 @@ export function getSource(id: string): SourceDefinition | undefined {
 const PROVENANCE_ALIASES: Record<string, string> = {
   open_meteo_flood_seed: "open_meteo_flood",
   open_meteo_marine_seed: "open_meteo_marine",
+  public_services_seed: "public_services_stub",
 };
 
 export function getSourceProvenancePath(id: string): string {

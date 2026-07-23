@@ -61,6 +61,10 @@ Lankawa (Next.js)  →  server-side adapters  →  partner APIs / scrapers / DB
 - No new layer until existing live layers stay green.
 - Do not maintain `lanka-monitor` as a parallel product.
 
+### World Monitor patterns (without forking)
+
+World Monitor–style **patterns** (layer catalog, multi-toggle maps, shareable URL state, freshness/status honesty) may be adapted as original Lankawa code. **Do not fork or vendor AGPL World Monitor source.** See `docs/WORLD_MONITOR_ADAPTATION.md` for what shipped this wave, high-value next adaptations, and license constraints.
+
 ---
 
 ## 2. UI redo principles

@@ -289,6 +289,17 @@ export const openApiSpec = {
         },
       },
     },
+    "/economy/world-pump": {
+      get: {
+        summary: "World pump / regional fuel price compare",
+        responses: {
+          "200": {
+            description:
+              "Regional pump price context for Sri Lanka fuel honesty comparisons (seed-backed when live scrape unavailable)",
+          },
+        },
+      },
+    },
     "/disaster/landslide": {
       get: {
         summary: "Landslide early-warning snapshot",
@@ -317,6 +328,45 @@ export const openApiSpec = {
           "200": { description: "Subscription accepted (confirm via email when mailer configured)" },
           "400": { description: "Invalid email" },
           "503": { description: "Database not configured" },
+        },
+      },
+    },
+    "/subscribe/confirm": {
+      get: {
+        summary: "Confirm morning brief subscription",
+        parameters: [
+          {
+            name: "token",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+          },
+          {
+            name: "locale",
+            in: "query",
+            schema: { type: "string", enum: ["en", "si", "ta"] },
+          },
+        ],
+        responses: {
+          "302": { description: "Redirect to locale home with brief=confirmed" },
+          "400": { description: "Missing or invalid token" },
+        },
+      },
+    },
+    "/subscribe/unsubscribe": {
+      get: {
+        summary: "Unsubscribe from morning brief",
+        parameters: [
+          {
+            name: "token",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+          },
+        ],
+        responses: {
+          "200": { description: "Unsubscribed" },
+          "400": { description: "Missing or invalid token" },
         },
       },
     },
@@ -758,7 +808,7 @@ export const apiEndpoints = [
     path: "/api/v1/status",
     summaryKey: "platformStatusSummary" as const,
     descriptionKey: "platformStatusDescription" as const,
-    example: `{ "version": "0.6.0", "database": { "configured": true, "connected": true }, "sources": { "fresh": 3 } }`,
+    example: `{ "version": "0.8.0", "database": { "configured": true, "connected": true }, "sources": { "fresh": 3 } }`,
   },
   {
     method: "GET",

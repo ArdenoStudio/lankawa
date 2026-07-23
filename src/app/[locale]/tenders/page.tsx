@@ -17,6 +17,7 @@ export default async function TendersPage({
   const t = await getTranslations("tenders");
   const tBudget = await getTranslations("budget");
   const snapshot = await getTendersData();
+  const isSeed = snapshot.sourceId.includes("_seed");
   const initialStatus =
     status === "open" || status === "closing_soon" || status === "closed"
       ? status
@@ -36,9 +37,14 @@ export default async function TendersPage({
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-semibold text-white">{t("title")}</h1>
-        <p className="mt-2 max-w-2xl text-slate-400">{t("subtitle")}</p>
+        <p className="mt-2 max-w-2xl text-slate-400">
+          {isSeed ? t("subtitle") : t("subtitleLive")}
+        </p>
         <p className="mt-2 text-sm text-slate-500">
-          {t("asOf", { date: snapshot.asOf })} ·{" "}
+          {isSeed
+            ? t("asOf", { date: snapshot.asOf })
+            : t("asOfLive", { date: snapshot.asOf })}{" "}
+          ·{" "}
           <Link
             href={getSourceProvenancePath(snapshot.sourceId)}
             className="text-teal-300 hover:text-teal-200"
@@ -56,7 +62,9 @@ export default async function TendersPage({
         notices={snapshot.notices}
       />
 
-      <p className="text-sm text-slate-500">{t("disclaimer")}</p>
+      <p className="text-sm text-slate-500">
+        {isSeed ? t("disclaimer") : t("disclaimerLive")}
+      </p>
     </div>
   );
 }

@@ -13,6 +13,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ ok: false, error: result.error }, { status: 400 });
   }
 
-  const locale = request.nextUrl.searchParams.get("locale") ?? "en";
+  const rawLocale = request.nextUrl.searchParams.get("locale") ?? "en";
+  const locale =
+    rawLocale === "en" || rawLocale === "si" || rawLocale === "ta"
+      ? rawLocale
+      : "en";
   return NextResponse.redirect(new URL(`/${locale}?brief=confirmed`, request.url));
 }

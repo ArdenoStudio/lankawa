@@ -1,10 +1,12 @@
 import assert from "node:assert/strict";
 import {
   ALERT_PIN_IDS,
+  computeMetFloodAttention,
   evaluateAlertPins,
   floodIsElevated,
   isAlertPinId,
   powerNeedsAttention,
+  resolveDistrictSlugs,
   type AlertSignalContext,
 } from "./alert-pins";
 import { isInFuelRevisionWindow } from "./fuel-revision-window";
@@ -229,5 +231,61 @@ assert.deepEqual(
   subset.map((item) => item.id),
   ["power", "news_cluster"],
 );
+
+assert.deepEqual(resolveDistrictSlugs(["Colombo", "gampaha", "Unknown"]), [
+  "colombo",
+  "gampaha",
+]);
+
+const metFloodOverlap = computeMetFloodAttention({
+  metWarning: true,
+  metDetail: "Amber advisory",
+  metDistricts: ["Colombo", "Gampaha"],
+  floodElevated: true,
+  floodDetail: "ALERT: 2",
+  floodRising: false,
+  floodRisingDetail: null,
+  floodDistricts: ["colombo", "ratnapura"],
+});
+assert.equal(metFloodOverlap.metFloodAttention, true);
+assert.match(metFloodOverlap.metFloodDetail ?? "", /overlap colombo/);
+
+const metFloodDisjoint = computeMetFloodAttention({
+  metWarning: true,
+  metDetail: "Amber advisory",
+  metDistricts: ["Jaffna"],
+  floodElevated: true,
+  floodDetail: "ALERT: 1",
+  floodRising: false,
+  floodRisingDetail: null,
+  floodDistricts: ["colombo"],
+});
+assert.equal(metFloodDisjoint.metFloodAttention, false);
+assert.equal(metFloodDisjoint.metFloodDetail, null);
+
+const metFloodCoarseFallback = computeMetFloodAttention({
+  metWarning: true,
+  metDetail: "Amber advisory",
+  metDistricts: [],
+  floodElevated: true,
+  floodDetail: "ALERT: 2",
+  floodRising: true,
+  floodRisingDetail: "Kelani rising 6.2 cm/h",
+  floodDistricts: [],
+});
+assert.equal(metFloodCoarseFallback.metFloodAttention, true);
+assert.match(metFloodCoarseFallback.metFloodDetail ?? "", /Kelani rising/);
+
+const metFloodQuiet = computeMetFloodAttention({
+  metWarning: true,
+  metDetail: "Amber",
+  metDistricts: ["colombo"],
+  floodElevated: false,
+  floodDetail: null,
+  floodRising: false,
+  floodRisingDetail: null,
+  floodDistricts: ["colombo"],
+});
+assert.equal(metFloodQuiet.metFloodAttention, false);
 
 console.log("alert pins test passed");

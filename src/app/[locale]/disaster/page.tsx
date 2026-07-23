@@ -1,7 +1,8 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CycloneWatchCard } from "@/components/CycloneWatchCard";
 import { DataSaverGate } from "@/components/DataSaverGate";
-import { DisasterRiskMap } from "@/components/DisasterRiskMap";
+import { DataSaverMapFallback } from "@/components/DataSaverMapFallback";
+import { DisasterRiskMapLazy } from "@/components/DisasterRiskMapLazy";
 import { DmcBulletinStrip } from "@/components/DmcBulletinStrip";
 import { EarthquakePanel } from "@/components/EarthquakePanel";
 import { FreshnessBadge } from "@/components/FreshnessBadge";
@@ -13,6 +14,10 @@ import { LandslidePanel } from "@/components/LandslidePanel";
 import { MetDeptWarningsPanel } from "@/components/MetDeptWarningsPanel";
 import { Link } from "@/i18n/navigation";
 import { buildCycloneWatch } from "@/lib/cyclone-watch";
+import {
+  parseDisasterMapLayers,
+  parseDisasterMapPreset,
+} from "@/lib/disaster-map-layers";
 import { fetchEarthquakeSnapshot } from "@/lib/integrations/earthquake";
 import { fetchFirmsSnapshot } from "@/lib/integrations/firms";
 import { fetchGdacsSnapshot } from "@/lib/integrations/gdacs";
@@ -28,10 +33,13 @@ import { getSourceProvenancePath } from "@/lib/sources";
 
 export default async function DisasterPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ layers?: string; preset?: string }>;
 }) {
   const { locale } = await params;
+  const query = await searchParams;
   setRequestLocale(locale);
   const t = await getTranslations("disaster");
   const [
@@ -63,6 +71,9 @@ export default async function DisasterPage({
     ...power.affectedAreas,
     ...leco.affectedAreas,
   ]);
+  const initialLayers =
+    parseDisasterMapPreset(query.preset) ??
+    parseDisasterMapLayers(query.layers);
 
   return (
     <div className="space-y-6">
@@ -87,6 +98,18 @@ export default async function DisasterPage({
           source: t("cyclone.source"),
         }}
       />
+
+      <DataSaverGate fallback={<DataSaverMapFallback height={380} />}>
+        <DisasterRiskMapLazy
+          flood={snapshot.flood}
+          landslideDistricts={landslides.districts}
+          firmsPins={firms.fires}
+          gdacsEvents={gdacs.events}
+          irrigationGauges={irrigationGauges.gauges}
+          initialLayers={initialLayers}
+          locale={locale}
+        />
+      </DataSaverGate>
 
       <GlofasBasinPanel
         snapshot={glofas}
@@ -302,13 +325,6 @@ export default async function DisasterPage({
           noneActiveSeed: t("landslideNoneActiveSeed"),
         }}
       />
-
-      <DataSaverGate>
-        <DisasterRiskMap
-          flood={snapshot.flood}
-          landslideDistricts={landslides.districts}
-        />
-      </DataSaverGate>
 
       <MetDeptWarningsPanel
         snapshot={metWarnings}

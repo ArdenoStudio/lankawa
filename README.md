@@ -38,7 +38,9 @@ See **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** for connecting the GitHub repo 
 
 Copy `.env.example` to `.env.local` for local overrides.
 
-## API (v0.6)
+## API (v0.8)
+
+Full catalog: `/api/v1/openapi.json` and `/developers`.
 
 | Endpoint | Description |
 |----------|-------------|
@@ -46,11 +48,17 @@ Copy `.env.example` to `.env.local` for local overrides.
 | `GET /api/v1/health` | Source freshness registry |
 | `GET /api/v1/pulse` | Live pulse snapshot |
 | `GET /api/v1/pulse/history` | Pulse history (30 days, requires DB) |
+| `GET /api/v1/news` | News pulse / headlines |
+| `GET /api/v1/cse` | CSE market snapshot |
+| `GET /api/v1/disaster/landslide` | Landslide advisories |
+| `GET /api/v1/brief` | Morning civic brief |
+| `GET /api/v1/food` | Staple food prices |
+| `GET /api/v1/economy/ncpi` | NCPI inflation series |
 | `POST /api/v1/assistant` | Civic assistant Q&A |
 | `GET /api/v1/districts` | All 25 districts |
 | `GET /api/v1/openapi.json` | OpenAPI 3.1 spec |
 
-Public API routes are rate-limited to 60 req/min per IP.
+Public API routes are rate-limited to 60 req/min per IP. See OpenAPI for the full list.
 
 ## Principles
 

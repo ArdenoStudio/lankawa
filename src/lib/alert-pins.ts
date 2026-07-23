@@ -1,3 +1,5 @@
+import { DISTRICTS } from "@/lib/districts";
+
 export const ALERT_PIN_IDS = [
   "fx_move",
   "flood",
@@ -267,6 +269,105 @@ export function floodIsElevated(
     .map((level) => `${level.alertLevel}: ${level.count}`)
     .join(" · ");
   return { elevated: true, detail };
+}
+
+function normalizeDistrictToken(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+/** Resolve Met advisory district names (or slugs) to Lankawa district slugs. */
+export function resolveDistrictSlugs(values: string[]): string[] {
+  const slugs = new Set<string>();
+
+  for (const value of values) {
+    const trimmed = value.trim();
+    if (!trimmed) {
+      continue;
+    }
+    const asSlug = trimmed.toLowerCase().replace(/\s+/g, "-");
+    if (DISTRICTS.some((district) => district.slug === asSlug)) {
+      slugs.add(asSlug);
+      continue;
+    }
+    const normalized = ` ${normalizeDistrictToken(trimmed)} `;
+    for (const district of DISTRICTS) {
+      const names = [
+        district.name,
+        district.capital,
+        district.slug.replace(/-/g, " "),
+        district.nameSi,
+        district.nameTa,
+      ];
+      if (
+        names.some((name) =>
+          normalized.includes(` ${normalizeDistrictToken(name)} `),
+        )
+      ) {
+        slugs.add(district.slug);
+        break;
+      }
+    }
+  }
+
+  return [...slugs].sort((a, b) => a.localeCompare(b));
+}
+
+/**
+ * Met∩flood compound signal. When both Met warning districts and elevated/rising
+ * flood station districts are available, require a non-empty intersection.
+ * If either side lacks district geo, falls back to coarse Met AND flood.
+ * Return shape stays `{ metFloodAttention, metFloodDetail }`.
+ */
+export function computeMetFloodAttention(input: {
+  metWarning: boolean;
+  metDetail: string | null;
+  metDistricts: string[];
+  floodElevated: boolean;
+  floodDetail: string | null;
+  floodRising: boolean;
+  floodRisingDetail: string | null;
+  floodDistricts: string[];
+}): { metFloodAttention: boolean; metFloodDetail: string | null } {
+  const floodSide = input.floodElevated || input.floodRising;
+  if (!input.metWarning || !floodSide) {
+    return { metFloodAttention: false, metFloodDetail: null };
+  }
+
+  const metSlugs = resolveDistrictSlugs(input.metDistricts);
+  const floodSlugs = resolveDistrictSlugs(input.floodDistricts);
+  const bothHaveDistricts = metSlugs.length > 0 && floodSlugs.length > 0;
+
+  if (bothHaveDistricts) {
+    const floodSet = new Set(floodSlugs);
+    const intersection = metSlugs.filter((slug) => floodSet.has(slug));
+    if (intersection.length === 0) {
+      return { metFloodAttention: false, metFloodDetail: null };
+    }
+
+    const floodPart = input.floodRising
+      ? input.floodRisingDetail
+      : input.floodDetail;
+    const metFloodDetail =
+      [
+        input.metDetail,
+        floodPart,
+        `overlap ${intersection.slice(0, 3).join(", ")}`,
+      ]
+        .filter(Boolean)
+        .join(" · ") || null;
+
+    return { metFloodAttention: true, metFloodDetail };
+  }
+
+  const metFloodDetail =
+    [input.metDetail, input.floodRising ? input.floodRisingDetail : input.floodDetail]
+      .filter(Boolean)
+      .join(" · ") || null;
+
+  return { metFloodAttention: true, metFloodDetail };
 }
 
 export function powerNeedsAttention(value: string | undefined): boolean {

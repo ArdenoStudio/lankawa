@@ -1,6 +1,7 @@
-import { floodIsElevated, powerNeedsAttention } from "@/lib/alert-pins";
+import { computeMetFloodAttention, floodIsElevated, powerNeedsAttention } from "@/lib/alert-pins";
 import type { AlertSignalContext } from "@/lib/alert-pins";
 import { getFxSeries } from "@/lib/economy";
+import { getDistrictForFloodStation } from "@/lib/flood-districts";
 import { computeFxAnomaly } from "@/lib/fx-anomaly";
 import { detectFloodRateOfRise } from "@/lib/flood-rise";
 import { getFuelHistorySeries, getFuelRevisionSteps } from "@/lib/fuel";
@@ -91,6 +92,7 @@ export async function buildAlertSignalContext(
 
   let metWarning = false;
   let metDetail: string | null = null;
+  let metDistricts: string[] = [];
 
   try {
     const met = await fetchMetDeptWarnings();
@@ -104,10 +106,12 @@ export async function buildAlertSignalContext(
         .slice(0, 2)
         .map((warning) => warning.warningLabel ?? warning.name)
         .join(" · ");
+      metDistricts = active.flatMap((warning) => warning.districts);
     }
   } catch {
     metWarning = false;
     metDetail = null;
+    metDistricts = [];
   }
 
   let landslideAttention = false;
@@ -275,13 +279,41 @@ export async function buildAlertSignalContext(
     }
   }
 
-  const metFloodAttention =
-    metWarning && (flood.elevated || floodRise.rising);
-  const metFloodDetail = metFloodAttention
-    ? [metDetail, floodRise.rising ? floodRise.detail : flood.detail]
-        .filter(Boolean)
-        .join(" · ") || null
-    : null;
+  const floodDistricts = [
+    ...new Set(
+      snapshot.flood
+        .filter((level) => {
+          const key = level.alertLevel.toUpperCase();
+          return (
+            level.count > 0 &&
+            key !== "NORMAL" &&
+            key !== "NONE" &&
+            key !== "UNKNOWN" &&
+            key !== "NO ALERT"
+          );
+        })
+        .flatMap((level) => level.stations)
+        .map((station) => getDistrictForFloodStation(station))
+        .filter((slug): slug is string => Boolean(slug)),
+    ),
+  ];
+  if (floodRise.rising && floodRise.stationName) {
+    const riseDistrict = getDistrictForFloodStation(floodRise.stationName);
+    if (riseDistrict && !floodDistricts.includes(riseDistrict)) {
+      floodDistricts.push(riseDistrict);
+    }
+  }
+
+  const { metFloodAttention, metFloodDetail } = computeMetFloodAttention({
+    metWarning,
+    metDetail,
+    metDistricts,
+    floodElevated: flood.elevated,
+    floodDetail: flood.detail,
+    floodRising: floodRise.rising,
+    floodRisingDetail: floodRise.detail,
+    floodDistricts,
+  });
 
   return {
     fxAbsDeltaLkr,
