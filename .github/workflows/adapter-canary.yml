@@ -72,11 +72,12 @@ jobs:
           set -euo pipefail
           status=$(curl -sfS --retry 2 --retry-delay 5 --max-time 60 \
             "$DEPLOY_URL/api/v1/status")
-          echo "$status" | jq -e '.status == "ok"' > /dev/null
+          # ok = healthy; degraded = some non-critical sources down (still serving)
+          echo "$status" | jq -e '.status == "ok" or .status == "degraded"' > /dev/null
           if [ "$(echo "$status" | jq -r '.database.configured')" = "true" ]; then
             echo "$status" | jq -e '.database.connected == true' > /dev/null
           fi
-          echo "$status" | jq '{version, status, database, sources}'
+          echo "$status" | jq '{version, status, database, sources: {total: .sources.total, fresh: .sources.fresh, down: .sources.down}}'
 
       - name: Assert critical adapter health
         run: |

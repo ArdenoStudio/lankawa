@@ -22,6 +22,8 @@ npm run check:prod-drift
 
 Expected: all local OpenAPI paths present on production; smoke routes (`/en/news`, `/api/v1/news/clusters`, `/embed/widget.js`, …) return 2xx.
 
+**Agent note (Jul 2026):** Pushing `main` alone does **not** update [lankawa.vercel.app](https://lankawa.vercel.app) until Git is connected **or** repository secrets `VERCEL_TOKEN` + `VERCEL_ORG_ID` + `VERCEL_PROJECT_ID` are set. The `Deploy Vercel` workflow currently skips with a warning when those secrets are empty.
+
 ### Backup: GitHub Actions deploy (optional)
 
 If you cannot use Vercel Git integration, set these **GitHub repository secrets** and use `.github/workflows/deploy-vercel.yml`:
