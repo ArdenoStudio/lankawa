@@ -113,7 +113,7 @@ Without Supabase REST vars, pulse persistence and ingest audit are skipped; live
 |------|----------------|---------|
 | `/api/cron/ingest` | `0 6 * * *` | Daily pulse ingest |
 | `/api/cron/brief-email` | `15 0 * * *` | Morning brief email (confirmed subscribers) |
-| `/api/cron/canary` | `*/30 * * * *` | Critical-source canary health check |
+| `/api/cron/canary` | `45 6 * * *` | Critical-source canary (daily on Vercel Hobby; every 30m via `.github/workflows/adapter-canary.yml`) |
 
 Cron auth is **fail-closed**: missing `CRON_SECRET` or a mismatched `Authorization` header returns **401**. Vercel must send `Authorization: Bearer <CRON_SECRET>`. Configure the secret in Vercel env; Vercel Cron automatically attaches it when `CRON_SECRET` is present.
 
