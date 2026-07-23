@@ -212,7 +212,7 @@ export function SiteHeader() {
   return (
     <header
       className={clsx(
-        "sticky top-0 z-40 border-b bg-slate-950/80 backdrop-blur-md transition-shadow duration-300",
+        "sticky top-0 z-40 border-b bg-black/80 backdrop-blur-md transition-shadow duration-300",
         scrolled
           ? "border-white/15 shadow-[0_8px_28px_rgba(0,0,0,0.45)]"
           : "border-white/10",
