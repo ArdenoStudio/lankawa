@@ -10,7 +10,8 @@ import type {
 
 const OPENAQ_SOURCE_ID = "openaq_lk";
 const OPENAQ_SOURCE_NAME = "OpenAQ Sri Lanka PM2.5";
-const OPENAQ_COUNTRY_ID = 184;
+/** OpenAQ v3 country id for Sri Lanka (LK) — must match catalog-health probe. */
+const OPENAQ_COUNTRY_ID = 207;
 const OPENAQ_PM25_PARAMETER_ID = 2;
 const OPENAQ_TIMEOUT_MS = 8_000;
 const OPENAQ_REVALIDATE_SECONDS = 3600;

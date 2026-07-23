@@ -126,15 +126,28 @@ export function CivicAssistant() {
               <p className="whitespace-pre-wrap text-sm">{message.content}</p>
               {message.citations && message.citations.length > 0 ? (
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {message.citations.map((citation) => (
-                    <Link
-                      key={citation.path}
-                      href={citation.path}
-                      className="text-xs text-white underline decoration-white/30 hover:decoration-white"
-                    >
-                      {citation.label}
-                    </Link>
-                  ))}
+                  {message.citations.map((citation) =>
+                    citation.path.startsWith("http://") ||
+                    citation.path.startsWith("https://") ? (
+                      <a
+                        key={citation.path}
+                        href={citation.path}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-xs text-white underline decoration-white/30 hover:decoration-white"
+                      >
+                        {citation.label}
+                      </a>
+                    ) : (
+                      <Link
+                        key={citation.path}
+                        href={citation.path}
+                        className="text-xs text-white underline decoration-white/30 hover:decoration-white"
+                      >
+                        {citation.label}
+                      </Link>
+                    ),
+                  )}
                 </div>
               ) : null}
               {message.mode ? (

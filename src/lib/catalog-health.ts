@@ -550,7 +550,7 @@ async function checkWithIntegration(
 }
 
 function isCuratedSeed(source: SourceDefinition): boolean {
-  if (source.adapter === "seed") return true;
+  if (source.adapter === "seed" || source.adapter === "computed") return true;
   if (source.url.startsWith("internal://")) {
     // Internal modules are served from Lankawa itself.
     return true;
@@ -594,6 +594,12 @@ function probeUrlFor(source: SourceDefinition): string | null {
       return "https://api.worldbank.org/v2/country/LKA/indicator/NY.GDP.MKTP.KD.ZG?format=json&per_page=1&mrnev=1";
     case "coingecko_btc_lkr":
       return "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=lkr";
+    case "wikipedia_lk":
+      return "https://en.wikipedia.org/api/rest_v1/page/summary/Colombo_District";
+    case "nominatim_osm":
+      return "https://nominatim.openstreetmap.org/reverse?lat=6.9271&lon=79.8612&format=json";
+    case "lk_public_holidays":
+      return null; // curated CBSL seed — no live poller
     case "openaq_lk":
       return "https://api.openaq.org/v3/locations?countries_id=207&limit=1";
     case "cse_lk":

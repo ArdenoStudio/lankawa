@@ -8,8 +8,10 @@ import { CricketCard } from "@/components/CricketCard";
 import { CseWatchlistChip } from "@/components/CseWatchlistChip";
 import { DataSaverGate } from "@/components/DataSaverGate";
 import { DistrictMorningPack } from "@/components/DistrictMorningPack";
+import { HolidayTodayStrip } from "@/components/HolidayTodayStrip";
 import { HomeDistrictPin } from "@/components/HomeDistrictPin";
 import { HomeHazardToast } from "@/components/HomeHazardToast";
+import { LankaStressCard } from "@/components/LankaStressCard";
 import { MorningBrief } from "@/components/MorningBrief";
 import { MorningDeltaStrip } from "@/components/MorningDeltaStrip";
 import { NewsPulse } from "@/components/NewsPulse";
@@ -22,9 +24,11 @@ import { SourceHealthBar } from "@/components/SourceHealthBar";
 import { WeekLedger } from "@/components/WeekLedger";
 import { Link } from "@/i18n/navigation";
 import { buildAlertSignalContext } from "@/lib/alert-context";
-import { getAllDistrictMorningPacks } from "@/lib/district-morning";
+import { buildDistrictMorningPacks } from "@/lib/district-morning";
+import { floodAttentionByDistrict } from "@/lib/flood-districts";
 import { fetchFirmsSnapshot } from "@/lib/integrations/firms";
 import { fetchLandslideSnapshot } from "@/lib/integrations/landslide";
+import { buildLankaStressIndex } from "@/lib/lanka-stress";
 import { buildPulseSnapshot, getTodayPulseMetrics } from "@/lib/pulse";
 
 export async function generateMetadata({
@@ -60,13 +64,16 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("home");
-  const [snapshot, firms, landslides] = await Promise.all([
+  const [snapshot, firms, landslides, morningPacks] = await Promise.all([
     buildPulseSnapshot(),
     fetchFirmsSnapshot(),
     fetchLandslideSnapshot(),
+    buildDistrictMorningPacks(),
   ]);
-  const alertContext = await buildAlertSignalContext(snapshot);
-  const morningPacks = getAllDistrictMorningPacks();
+  const [alertContext, stressIndex] = await Promise.all([
+    buildAlertSignalContext(snapshot),
+    buildLankaStressIndex(snapshot),
+  ]);
   const todayMetrics = getTodayPulseMetrics(snapshot.metrics);
   const shareMetrics = todayMetrics
     .filter((metric) =>
@@ -96,6 +103,9 @@ export default async function HomePage({
     slug: row.slug,
     tier: row.tier,
   }));
+  const floodElevatedDistricts = [
+    ...floodAttentionByDistrict(snapshot.flood).keys(),
+  ];
 
   return (
     <div className="space-y-10 md:space-y-14">
@@ -108,6 +118,7 @@ export default async function HomePage({
         locale={locale}
         fires={hazardFires}
         landslides={hazardLandslides}
+        floodElevatedDistricts={floodElevatedDistricts}
       />
       <WeekLedger />
       <AlertPins context={alertContext} />
@@ -135,8 +146,11 @@ export default async function HomePage({
           ))}
         </div>
         <MorningDeltaStrip />
+        <HolidayTodayStrip />
         <ColomboAirQualityStrip />
       </section>
+
+      <LankaStressCard index={stressIndex} />
 
       <DataSaverGate hideUntilHydrated>
         <CricketCard />

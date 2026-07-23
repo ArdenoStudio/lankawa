@@ -17,7 +17,7 @@ export interface SourceDefinition {
   /** Server-side fetch endpoint — never exposed as a clickable UI link. */
   url: string;
   cadenceMinutes: number;
-  adapter: "api" | "scrape" | "partner" | "seed";
+  adapter: "api" | "scrape" | "partner" | "seed" | "computed";
   description: string;
   methodology: string;
   metrics: string[];

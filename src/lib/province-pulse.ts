@@ -1,12 +1,14 @@
 import { getDistrictForFloodStation } from "./flood-districts";
-import { getEnvironmentForDistrict } from "./environment";
-import { getDengueDistrictStats } from "./health";
+import { getEnvironmentData } from "./environment";
+import { getDengueData } from "./health";
 import { fetchLatestFloodLevels } from "./integrations/flood";
 
 export interface ProvincePulseSummary {
   dengueCases: number;
+  dengueIsSeed: boolean;
   averageAqi: number | null;
   aqiDistrictCount: number;
+  aqiIsSeed: boolean;
   floodElevatedCount: number | null;
 }
 
@@ -15,18 +17,31 @@ function isElevatedAlert(status: string | undefined): boolean {
   return key !== "" && key !== "NORMAL" && key !== "UNKNOWN" && key !== "NONE";
 }
 
+function sourceIdIsSeed(sourceId: string): boolean {
+  return sourceId.toLowerCase().includes("seed");
+}
+
 export async function getProvincePulse(
   districtSlugs: string[],
 ): Promise<ProvincePulseSummary> {
   const slugSet = new Set(districtSlugs);
 
+  const [dengue, environment] = await Promise.all([
+    getDengueData(),
+    getEnvironmentData(),
+  ]);
+
   let dengueCases = 0;
   for (const slug of districtSlugs) {
-    dengueCases += getDengueDistrictStats(slug)?.cases ?? 0;
+    dengueCases +=
+      dengue.districts.find((district) => district.slug === slug)?.cases ?? 0;
   }
 
   const aqiValues = districtSlugs
-    .map((slug) => getEnvironmentForDistrict(slug)?.aqi)
+    .map(
+      (slug) =>
+        environment.districts.find((district) => district.slug === slug)?.aqi,
+    )
     .filter((value): value is number => value != null);
 
   const averageAqi =
@@ -53,8 +68,10 @@ export async function getProvincePulse(
 
   return {
     dengueCases,
+    dengueIsSeed: sourceIdIsSeed(dengue.sourceId),
     averageAqi,
     aqiDistrictCount: aqiValues.length,
+    aqiIsSeed: sourceIdIsSeed(environment.sourceId),
     floodElevatedCount,
   };
 }

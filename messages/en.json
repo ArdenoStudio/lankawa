@@ -108,7 +108,14 @@
     "aqiStripNo2": "NO₂",
     "aqiStripO3": "O₃",
     "aqiStripDust": "Dust",
-    "aqiStripHonesty": "Open-Meteo model grid near Colombo — not a DMC/CEA station reading. Units μg/m³ except AQI."
+    "aqiStripHonesty": "Open-Meteo model grid near Colombo — not a DMC/CEA station reading. Units μg/m³ except AQI.",
+    "holidayStripLabel": "Public holiday today",
+    "holidayStripTitle": "Public holiday",
+    "holidayStripDate": "{date}",
+    "holidayStripSource": "CBSL holidays provenance",
+    "holidayTagPublic": "Public",
+    "holidayTagBank": "Bank",
+    "holidayTagMercantile": "Mercantile"
   },
   "a11y": {
     "skipToContent": "Skip to main content"
@@ -426,7 +433,9 @@
     "pulseAqi": "Average AQI",
     "pulseAqiValue": "{value} · {count} districts",
     "pulseFlood": "Flood stations elevated",
-    "pulseFloodUnavailable": "Unavailable"
+    "pulseFloodUnavailable": "Unavailable",
+    "pulseSeed": "seed",
+    "pulseLive": "live"
   },
   "elections": {
     "eyebrow": "Electoral intelligence",
@@ -636,6 +645,10 @@
     "gdacsReport": "GDACS report",
     "firmsSource": "NASA FIRMS provenance",
     "gdacsSource": "GDACS provenance",
+    "pinPlaceLoading": "Looking up place…",
+    "pinPlaceUnavailable": "place unavailable",
+    "pinPlaceClear": "Clear",
+    "pinPlaceExpandHint": "tap for place",
     "cyclone": {
       "title": "Cyclone watch (JTWC / GDACS)",
       "subtitle": "Tropical cyclone events in the Indian Ocean / South Asia window.",
@@ -681,6 +694,7 @@
     "eyebrow": "Home district attention",
     "title": "Hazard signal near {district}",
     "landslide": "Landslide overlay: {tier}",
+    "flood": "Elevated flood station attention in this district",
     "fires": "{count, plural, one {# nearby FIRMS fire pin} other {# nearby FIRMS fire pins}}",
     "honesty": "Not an official evacuation order. FIRMS pins are satellite detections; landslide tiers are a civic overlay.",
     "openDisaster": "Open disaster hub",
@@ -1145,7 +1159,8 @@
       "api": "API integration",
       "scrape": "Scheduled scrape",
       "partner": "Partner feed",
-      "seed": "Seed snapshot"
+      "seed": "Seed snapshot",
+      "computed": "Adapter computed"
     }
   },
   "developers": {
@@ -1160,6 +1175,8 @@
     "healthDescription": "Freshness tiers and last-checked timestamps for every registered data source.",
     "pulseSummary": "Live pulse",
     "pulseDescription": "Current exchange rates, fuel prices, flood station counts, and related metrics.",
+    "stressSummary": "Lanka Stress Index",
+    "stressDescription": "Composite 0–100 civic stress score from FX, flood, power, Met, landslide, and dengue signals — not an official government index.",
     "districtsSummary": "District list",
     "districtsDescription": "All 25 Sri Lankan districts with population, area, and province metadata.",
     "districtSummary": "District detail",
@@ -1231,6 +1248,10 @@
     "marketFxDescription": "Unofficial community market mid USD→LKR from fawazahmed0 currency-api; null when upstream fails.",
     "worldBankSummary": "World Bank WDI — Sri Lanka",
     "worldBankDescription": "GDP growth, CPI inflation, and population for LKA from World Bank WDI; null when all indicators fail.",
+    "holidaysSummary": "Sri Lanka public holidays",
+    "holidaysDescription": "CBSL curated bank/public holidays seed (optional year query). 2026 seed from Gazette Extraordinary 2438/22.",
+    "geocodeReverseSummary": "Reverse geocode",
+    "geocodeReverseDescription": "Nominatim reverse label for a single lat/lon pin. Hard-limited to 10 requests/minute.",
     "tariffsSummary": "PUCSL domestic tariffs",
     "tariffsDescription": "Residential electricity energy and fixed charges by consumption block with effective date.",
     "waterBillSummary": "NWSDB water bill estimate",
@@ -1391,6 +1412,33 @@
     "error": "Could not share. Try copying from the page.",
     "footer": "Source: Lankawa — not an official government publication."
   },
+  "stress": {
+    "eyebrow": "Morning composite",
+    "title": "Lanka Stress Index",
+    "subtitle": "Available pulse signals scored into one civic number.",
+    "tierCalm": "Calm",
+    "tierWatch": "Watch",
+    "tierElevated": "Elevated",
+    "tierSevere": "Severe",
+    "componentFx": "FX anomaly",
+    "componentFlood": "Flood stations elevated",
+    "componentPower": "Power interruptions",
+    "componentMet": "Met Dept warning",
+    "componentLandslide": "Landslide districts",
+    "componentDengue": "Dengue high-risk districts",
+    "methodologyTitle": "Methodology",
+    "honesty": "Composite civic stress — not an official government index",
+    "partial": "Some inputs were unavailable — score is partial.",
+    "unavailable": "n/a",
+    "source": "Source provenance",
+    "asOf": "As of {date}"
+  },
+  "persona": {
+    "label": "View",
+    "citizen": "Citizen",
+    "markets": "Markets",
+    "ops": "Ops"
+  },
   "districtMorning": {
     "title": "District morning pack",
     "demoNote": "Demo pack for {district} — pin a home district above for yours.",
@@ -1404,7 +1452,9 @@
     "colAboveNational": "+{value} vs national",
     "colBelowNational": "−{value} vs national",
     "landDelta": "Greenery Δ",
-    "openDistrict": "Open district page"
+    "openDistrict": "Open district page",
+    "seed": "seed",
+    "live": "live"
   },
   "transport": {
     "title": "Transport Directory",

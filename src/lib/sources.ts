@@ -110,6 +110,45 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["geocode_hits"],
   },
   {
+    id: "lk_public_holidays",
+    name: "Sri Lanka public / bank holidays (CBSL seed)",
+    category: "civic",
+    url: "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2026",
+    cadenceMinutes: 525600,
+    adapter: "seed",
+    description:
+      "Curated 2026 CBSL bank and public holidays (Gazette Extraordinary 2438/22) — no Calendarific key.",
+    methodology:
+      "Static seed from the official CBSL 2026 bank-holidays page. Vesak and May Day share 2026-05-01 as one combined entry. Exposed via getHolidaySnapshot / isPublicHolidayToday (Asia/Colombo). Not a live gazette poller.",
+    metrics: ["public_holiday_today"],
+  },
+  {
+    id: "wikipedia_lk",
+    name: "Wikipedia — Sri Lanka district summaries",
+    category: "civic",
+    url: "https://en.wikipedia.org/api/rest_v1/page/summary/",
+    cadenceMinutes: 1440,
+    adapter: "api",
+    description:
+      "English Wikipedia REST summary extracts for Sri Lanka administrative districts.",
+    methodology:
+      "Maps district slug → `{Name} District`, fetches REST summary with LankawaBot UA (8s timeout, revalidate 86400). Appends at most one sentence to assistant district answers with Wikipedia + Lankawa citations. Null on failure — never invents extracts.",
+    metrics: ["wikipedia_district_extract"],
+  },
+  {
+    id: "nominatim_osm",
+    name: "Nominatim (OpenStreetMap) reverse geocode",
+    category: "civic",
+    url: "https://nominatim.openstreetmap.org/reverse",
+    cadenceMinutes: 10080,
+    adapter: "api",
+    description:
+      "On-demand reverse geocode for a single disaster map pin — not bulk labeling.",
+    methodology:
+      "Client PinPlaceLabel fetches `/api/v1/geocode/reverse` once per expanded pin. Server calls Nominatim with LankawaBot UA + contact email, 8s timeout. Hard rate limit 10/min. Sync formatApproxPlace always available without network. Never reverse-geocodes entire pin lists.",
+    metrics: ["reverse_geocode_label"],
+  },
+  {
     id: "coingecko_btc_lkr",
     name: "CoinGecko — BTC/LKR",
     category: "economy",
@@ -981,6 +1020,19 @@ export const SOURCES: SourceDefinition[] = [
     methodology:
       "Lankawa checks cricketdata/CricAPI current and upcoming match endpoints when `CRICKETDATA_API_KEY` or `CRICAPI_API_KEY` is configured. Only matches involving Sri Lanka that are live or scheduled for today in Sri Lanka time are surfaced; if no real match is found, the home card does not render.",
     metrics: ["cricket_match"],
+  },
+  {
+    id: "lanka_stress_index",
+    name: "Lanka Stress Index",
+    category: "civic",
+    url: "internal://stress",
+    cadenceMinutes: 15,
+    adapter: "computed",
+    description:
+      "Composite 0–100 civic stress score from available pulse signals — not an official government index.",
+    methodology:
+      "Computed in `lanka-stress.ts` from FX anomaly (MAD-z), elevated flood station count, CEB power status, Met Dept warnings, landslide watch/warning districts, and optional dengue high-risk districts. Each component is 0–weight; sum capped at 100. Missing inputs score 0 and set isPartial. Surfaced on home via LankaStressCard and `GET /api/v1/stress`.",
+    metrics: ["lanka_stress_score", "lanka_stress_tier"],
   },
 ];
 

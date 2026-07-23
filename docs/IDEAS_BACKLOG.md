@@ -29,9 +29,9 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 | WM-pattern: Met∩flood district intersection | Alert precision | ✅ |
 | WM-pattern: disaster multi-toggle + GFM pins | Map IA | ✅ |
 | WM-pattern: shareable multi-layer URL views | Journalist deep links | Planned |
-| WM-pattern: citizen\|markets\|ops presets | Persona packs | Planned |
+| WM-pattern: citizen\|markets\|ops presets | Persona packs on `/explore?view=` | ✅ |
 | WM-pattern: Cmd+K district fly-to | Atlas power-user | Planned |
-| Lanka Stress Index (composite) | One morning number | Planned |
+| Lanka Stress Index (composite) | One morning number + `/api/v1/stress` | ✅ |
 | Regional PMTiles + bootstrap tiers | Perf / 4G | Planned |
 | Public-apis: market FX + World Bank LKA + Open-Meteo geocode (+ CoinGecko chip) | Economy honesty + assistant places | ✅ |
 
@@ -59,6 +59,9 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 - Share morning check: home Today section now shares FX, fuel, weather, and power via Web Share API or copies plain text for WhatsApp/manual sharing.
 - Honesty: tenders + environment live/seed copy; Met∩flood district intersection; webhook docs softened (HMAC ready, delivery not enabled). See `docs/WORLD_MONITOR_ADAPTATION.md`.
 - Public-apis research shipped: fawazahmed0 market mid USD/LKR, World Bank WDI LKA strip, Open-Meteo geocoding for assistant district resolve, optional CoinGecko BTC/LKR. Catalog notes in `docs/PUBLIC_APIS.md`.
+- District morning pack + province pulse: live dengue/AQI wiring with seed/live labels; OpenAQ country id aligned to `207`.
+- Home hazard toast: flood elevated districts (alongside landslide + FIRMS).
+- Lanka Stress Index + explore personas (`citizen` / `markets` / `ops`) shipped — see `docs/WORLD_MONITOR_ADAPTATION.md`.
 
 ## Platform features (50+)
 

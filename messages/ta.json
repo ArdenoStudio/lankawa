@@ -108,7 +108,14 @@
     "aqiStripNo2": "NO₂",
     "aqiStripO3": "O₃",
     "aqiStripDust": "Dust",
-    "aqiStripHonesty": "Open-Meteo model grid near Colombo — not a DMC/CEA station reading. Units μg/m³ except AQI."
+    "aqiStripHonesty": "Open-Meteo model grid near Colombo — not a DMC/CEA station reading. Units μg/m³ except AQI.",
+    "holidayStripLabel": "இன்று அரசு விடுமுறை",
+    "holidayStripTitle": "அரசு விடுமுறை",
+    "holidayStripDate": "{date}",
+    "holidayStripSource": "CBSL விடுமுறை மூலம்",
+    "holidayTagPublic": "பொது",
+    "holidayTagBank": "வங்கி",
+    "holidayTagMercantile": "வணிக"
   },
   "modules": {
     "districts": {
@@ -417,7 +424,9 @@
     "pulseAqi": "சராசரி AQI",
     "pulseAqiValue": "{value} · {count} மாவட்டங்கள்",
     "pulseFlood": "Elevated flood stations",
-    "pulseFloodUnavailable": "கிடைக்கவில்லை"
+    "pulseFloodUnavailable": "கிடைக்கவில்லை",
+    "pulseSeed": "seed",
+    "pulseLive": "live"
   },
   "elections": {
     "eyebrow": "தேர்தல் நுண்ணறிவு",
@@ -627,6 +636,10 @@
     "gdacsReport": "GDACS report",
     "firmsSource": "NASA FIRMS provenance",
     "gdacsSource": "GDACS provenance",
+    "pinPlaceLoading": "இடம் தேடப்படுகிறது…",
+    "pinPlaceUnavailable": "இடம் கிடைக்கவில்லை",
+    "pinPlaceClear": "அழி",
+    "pinPlaceExpandHint": "இடத்திற்கு தட்டவும்",
     "cyclone": {
       "title": "Cyclone watch (JTWC / GDACS)",
       "subtitle": "Tropical cyclone events in the Indian Ocean / South Asia window.",
@@ -1127,7 +1140,8 @@
       "api": "API ஒருங்கிணைப்பு",
       "scrape": "திட்டமிட்ட scrape",
       "partner": "கூட்டாளர் feed",
-      "seed": "Seed snapshot"
+      "seed": "Seed snapshot",
+      "computed": "Adapter computed"
     }
   },
   "developers": {
@@ -1142,6 +1156,8 @@
     "healthDescription": "பதிவு செய்யப்பட்ட அனைத்து தரவு மூலங்களுக்கும் புதுமை tier மற்றும் கடைசி சோதனை timestamps.",
     "pulseSummary": "நேரடி நிலை",
     "pulseDescription": "தற்போதைய நாணய விகிதங்கள், எரிபொருள் விலைகள், வெள்ள நிலைய எண்ணிக்கைகள் மற்றும் தொடர்புடைய அளவீடுகள்.",
+    "stressSummary": "Lanka Stress Index",
+    "stressDescription": "FX, flood, power, Met, landslide மற்றும் dengue சமிக்ஞைகளிலிருந்து 0–100 civic stress — அதிகாரப்பூர்வ அரசு குறியீடு அல்ல.",
     "districtsSummary": "மாவட்ட பட்டியல்",
     "districtsDescription": "மக்கள்தொகை, பரப்பளவு, மாகாண metadata உடன் 25 இலங்கை மாவட்டங்கள்.",
     "districtSummary": "மாவட்ட விவரம்",
@@ -1231,6 +1247,10 @@
     "marketFxDescription": "fawazahmed0 currency-api அதிகாரப்பூர்வமற்ற சந்தை நடு USD→LKR; upstream தோல்வியில் null.",
     "worldBankSummary": "உலக வங்கி WDI — இலங்கை",
     "worldBankDescription": "LKA-க்கான GDP வளர்ச்சி, CPI பணவீக்கம், மற்றும் மக்கள் தொகை; அனைத்தும் தோல்வியில் null.",
+    "holidaysSummary": "இலங்கை அரசு விடுமுறைகள்",
+    "holidaysDescription": "CBSL வங்கி/பொது விடுமுறை seed (விருப்ப year query). 2026 Gazette Extraordinary 2438/22.",
+    "geocodeReverseSummary": "Reverse geocode",
+    "geocodeReverseDescription": "ஒரு lat/lon pin-க்கு Nominatim reverse லேபிள். நிமிடத்திற்கு 10 கோரிக்கைகள் வரை.",
     "tariffsSummary": "PUCSL domestic tariffs",
     "tariffsDescription": "Residential electricity energy and fixed charges by consumption block with effective date.",
     "waterBillSummary": "NWSDB water bill estimate",
@@ -1373,6 +1393,33 @@
     "error": "Share செய்ய முடியவில்லை. Page-இல் இருந்து copy செய்யுங்கள்.",
     "footer": "மூலம்: Lankawa — அதிகாரப்பூர்வ அரசு வெளியீடு அல்ல."
   },
+  "stress": {
+    "eyebrow": "காலை composite",
+    "title": "Lanka Stress Index",
+    "subtitle": "கிடைக்கும் pulse சமிக்ஞைகள் ஒரே civic எண்ணாக.",
+    "tierCalm": "அமைதி",
+    "tierWatch": "கவனிப்பு",
+    "tierElevated": "உயர்ந்த",
+    "tierSevere": "கடுமையான",
+    "componentFx": "FX anomaly",
+    "componentFlood": "Flood stations elevated",
+    "componentPower": "மின் தடைகள்",
+    "componentMet": "Met Dept எச்சரிக்கை",
+    "componentLandslide": "நிலச்சரிவு மாவட்டங்கள்",
+    "componentDengue": "டெங்கு high-risk மாவட்டங்கள்",
+    "methodologyTitle": "முறைமை",
+    "honesty": "Composite civic stress — அதிகாரப்பூர்வ அரசு குறியீடு அல்ல",
+    "partial": "சில உள்ளீடுகள் கிடைக்கவில்லை — மதிப்பெண் பகுதி.",
+    "unavailable": "n/a",
+    "source": "மூல provenance",
+    "asOf": "{date} நிலவரப்படி"
+  },
+  "persona": {
+    "label": "பார்வை",
+    "citizen": "குடிமகன்",
+    "markets": "சந்தைகள்",
+    "ops": "Ops"
+  },
   "districtMorning": {
     "title": "மாவட்ட காலை pack",
     "demoNote": "{district} demo pack — உங்கள் மாவட்டத்தை மேலே pin செய்யுங்கள்.",
@@ -1386,7 +1433,9 @@
     "colAboveNational": "தேசியத்தை விட +{value}",
     "colBelowNational": "தேசியத்தை விட −{value}",
     "landDelta": "பசுமை Δ",
-    "openDistrict": "மாவட்டப் பக்கத்தைத் திற"
+    "openDistrict": "மாவட்டப் பக்கத்தைத் திற",
+    "seed": "seed",
+    "live": "live"
   },
   "transport": {
     "title": "Transport Directory",
@@ -2147,6 +2196,7 @@
     "eyebrow": "Home district attention",
     "title": "{district} அருகே hazard signal",
     "landslide": "Landslide overlay: {tier}",
+    "flood": "இந்த மாவட்டத்தில் elevated flood station கவனம்",
     "fires": "{count, plural, one {# nearby FIRMS fire pin} other {# nearby FIRMS fire pins}}",
     "honesty": "அதிகாரப்பூர்வ evacuation order அல்ல. FIRMS pins satellite detections; landslide tiers civic overlay.",
     "openDisaster": "பேரிடர் மையத்தைத் திற",

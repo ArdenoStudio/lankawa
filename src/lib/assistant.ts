@@ -1,6 +1,10 @@
 import { getCostOfLivingForDistrict } from "./cost-of-living";
 import { DISTRICTS, getDistrict } from "./districts";
 import { searchSriLankaPlaces } from "./integrations/geocode";
+import {
+  fetchDistrictWikipediaSummary,
+  firstSentenceFromExtract,
+} from "./integrations/wikipedia";
 import { buildPulseSnapshot } from "./pulse";
 import { getPresidentialElection2024 } from "./elections";
 import { getPublicServicesCatalog, getPublicServicesForDistrict } from "./services";
@@ -8,6 +12,7 @@ import type { PulseSnapshot } from "./types";
 
 export interface AssistantCitation {
   label: string;
+  /** Internal path (`/districts/...`) or absolute Wikipedia URL. */
   path: string;
 }
 
@@ -100,7 +105,7 @@ export async function resolveDistrictSlugAsync(
   return null;
 }
 
-function scopedDistrictAnswer(slug: string): AssistantAnswer {
+async function scopedDistrictAnswer(slug: string): Promise<AssistantAnswer> {
   const district = getDistrict(slug);
   if (!district) {
     return {
@@ -117,18 +122,35 @@ function scopedDistrictAnswer(slug: string): AssistantAnswer {
     ? ` COL index ${col.index} (food basket ~LKR ${col.foodBasketLkr.toLocaleString()}).`
     : "";
 
+  let wikiLine = "";
+  const citations: AssistantCitation[] = [
+    { label: `${district.name} profile`, path: `/districts/${district.slug}` },
+    { label: "Cost of living", path: "/cost-of-living" },
+  ];
+
+  try {
+    const wiki = await fetchDistrictWikipediaSummary(slug);
+    const sentence = wiki ? firstSentenceFromExtract(wiki.extract) : null;
+    if (wiki && sentence) {
+      wikiLine = ` ${sentence}`;
+      citations.push({ label: "Wikipedia", path: wiki.url });
+    }
+  } catch {
+    // Wikipedia is optional enrichment — never invent an extract.
+  }
+
   return {
-    answer: `${district.name} (${district.province}) — population ${district.population.toLocaleString()}, capital ${district.capital}, area ${district.areaSqKm.toLocaleString()} km². ${services.length} public facilities listed.${colLine}`.trim(),
-    citations: [
-      { label: `${district.name} profile`, path: `/districts/${district.slug}` },
-      { label: "Cost of living", path: "/cost-of-living" },
-    ],
+    answer: `${district.name} (${district.province}) — population ${district.population.toLocaleString()}, capital ${district.capital}, area ${district.areaSqKm.toLocaleString()} km². ${services.length} public facilities listed.${colLine}${wikiLine}`.trim(),
+    citations,
     mode: "rule",
     districtSlug: slug,
   };
 }
 
-function ruleBasedAnswer(query: string, ctx: LankawaContext): AssistantAnswer | null {
+async function ruleBasedAnswer(
+  query: string,
+  ctx: LankawaContext,
+): Promise<AssistantAnswer | null> {
   const q = query.toLowerCase().trim();
   const scopedSlug = resolveDistrictSlug(query, ctx.scopedDistrictSlug);
 
@@ -386,7 +408,7 @@ export async function answerQuestion(
     scopedSlug && scopedSlug !== ctx.scopedDistrictSlug
       ? { ...ctx, scopedDistrictSlug: scopedSlug }
       : ctx;
-  const ruleAnswer = ruleBasedAnswer(trimmed, scopedCtx);
+  const ruleAnswer = await ruleBasedAnswer(trimmed, scopedCtx);
   if (ruleAnswer) {
     return ruleAnswer;
   }

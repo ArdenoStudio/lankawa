@@ -40,10 +40,13 @@ export function HomeHazardToast({
   locale,
   fires,
   landslides,
+  floodElevatedDistricts = [],
 }: {
   locale: string;
   fires: HomeHazardFirePin[];
   landslides: HomeHazardLandslideRow[];
+  /** District slugs with elevated (non-NORMAL) flood station attention. */
+  floodElevatedDistricts?: string[];
 }) {
   const t = useTranslations("homeHazard");
   const [slug] = useState<string | null>(() => {
@@ -78,6 +81,8 @@ export function HomeHazardToast({
         row.slug === slug && (row.tier === "watch" || row.tier === "warning"),
     );
 
+    const floodElevated = floodElevatedDistricts.includes(slug);
+
     const coords = DISTRICT_COORDS[slug];
     const nearbyFires = coords
       ? fires.filter(
@@ -89,16 +94,17 @@ export function HomeHazardToast({
         )
       : [];
 
-    if (!landslide && nearbyFires.length === 0) {
+    if (!landslide && nearbyFires.length === 0 && !floodElevated) {
       return null;
     }
 
     return {
       district,
       landslideTier: landslide?.tier ?? null,
+      floodElevated,
       fireCount: nearbyFires.length,
     };
-  }, [slug, fires, landslides]);
+  }, [slug, fires, landslides, floodElevatedDistricts]);
 
   if (!attention || dismissed) {
     return null;
@@ -133,6 +139,7 @@ export function HomeHazardToast({
                 })}
               </li>
             ) : null}
+            {attention.floodElevated ? <li>{t("flood")}</li> : null}
             {attention.fireCount > 0 ? (
               <li>{t("fires", { count: attention.fireCount })}</li>
             ) : null}

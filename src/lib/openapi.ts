@@ -89,6 +89,17 @@ export const openApiSpec = {
         responses: { "200": { description: "Pulse snapshot" } },
       },
     },
+    "/stress": {
+      get: {
+        summary: "Lanka Stress Index",
+        responses: {
+          "200": {
+            description:
+              "Composite 0–100 civic stress score with components, tier, methodology, and isPartial honesty",
+          },
+        },
+      },
+    },
     "/districts": {
       get: {
         summary: "List all districts",
@@ -258,6 +269,56 @@ export const openApiSpec = {
           "200": {
             description:
               "GDP growth, CPI inflation, and population for LKA from World Bank WDI; null when all indicators fail",
+          },
+        },
+      },
+    },
+    "/holidays": {
+      get: {
+        summary: "Sri Lanka public / bank holidays",
+        parameters: [
+          {
+            name: "year",
+            in: "query",
+            required: false,
+            schema: { type: "integer", example: 2026 },
+            description: "Calendar year (seed currently covers 2026)",
+          },
+        ],
+        responses: {
+          "200": {
+            description:
+              "CBSL curated holiday seed snapshot; null snapshot when year is unavailable",
+          },
+        },
+      },
+    },
+    "/geocode/reverse": {
+      get: {
+        summary: "Reverse geocode a single pin",
+        parameters: [
+          {
+            name: "lat",
+            in: "query",
+            required: true,
+            schema: { type: "number" },
+            description: "Latitude",
+          },
+          {
+            name: "lon",
+            in: "query",
+            required: true,
+            schema: { type: "number" },
+            description: "Longitude",
+          },
+        ],
+        responses: {
+          "200": {
+            description:
+              "Nominatim display name for one lat/lon; approx coords always included",
+          },
+          "429": {
+            description: "Rate limit exceeded (10/min geocode bucket)",
           },
         },
       },
@@ -561,6 +622,13 @@ export const apiEndpoints = [
   },
   {
     method: "GET",
+    path: "/api/v1/stress",
+    summaryKey: "stressSummary" as const,
+    descriptionKey: "stressDescription" as const,
+    example: `{ "score": 28, "tier": "watch", "components": [...], "isPartial": false, "methodology": [...] }`,
+  },
+  {
+    method: "GET",
     path: "/api/v1/districts",
     summaryKey: "districtsSummary" as const,
     descriptionKey: "districtsDescription" as const,
@@ -775,6 +843,20 @@ export const apiEndpoints = [
     summaryKey: "worldBankSummary" as const,
     descriptionKey: "worldBankDescription" as const,
     example: `{ "country": "LKA", "indicators": [{ "id": "gdp_growth", "value": 5.0, "year": "2024" }], "provenancePath": "/sources/world_bank_lka" }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/holidays",
+    summaryKey: "holidaysSummary" as const,
+    descriptionKey: "holidaysDescription" as const,
+    example: `{ "snapshot": { "year": 2026, "holidays": [{ "date": "2026-02-04", "nameEn": "Independence Day" }] }, "provenancePath": "/sources/lk_public_holidays" }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/geocode/reverse?lat=6.93&lon=79.85",
+    summaryKey: "geocodeReverseSummary" as const,
+    descriptionKey: "geocodeReverseDescription" as const,
+    example: `{ "approx": "6.93, 79.85", "place": { "displayName": "Fort, Colombo, …" }, "provenancePath": "/sources/nominatim_osm" }`,
   },
   {
     method: "GET",

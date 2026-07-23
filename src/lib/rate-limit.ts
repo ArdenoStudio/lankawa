@@ -1,12 +1,18 @@
 const WINDOW_MS = 60_000;
 
-export type RateBucket = "default" | "export" | "subscribe" | "assistant";
+export type RateBucket =
+  | "default"
+  | "export"
+  | "subscribe"
+  | "assistant"
+  | "geocode";
 
 const BUCKET_LIMITS: Record<RateBucket, number> = {
   default: 60,
   export: 20,
   subscribe: 10,
   assistant: 20,
+  geocode: 10,
 };
 
 interface RateLimitEntry {
@@ -35,6 +41,9 @@ export interface RateLimitResult {
 export function resolveRateBucket(pathname: string): RateBucket {
   if (pathname.startsWith("/api/v1/export")) {
     return "export";
+  }
+  if (pathname.startsWith("/api/v1/geocode")) {
+    return "geocode";
   }
   if (
     pathname.startsWith("/api/v1/subscribe") ||

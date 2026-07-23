@@ -108,7 +108,14 @@
     "aqiStripNo2": "NO₂",
     "aqiStripO3": "O₃",
     "aqiStripDust": "Dust",
-    "aqiStripHonesty": "Open-Meteo model grid near Colombo — not a DMC/CEA station reading. Units μg/m³ except AQI."
+    "aqiStripHonesty": "Open-Meteo model grid near Colombo — not a DMC/CEA station reading. Units μg/m³ except AQI.",
+    "holidayStripLabel": "අද රජයේ නිවාඩුව",
+    "holidayStripTitle": "රජයේ නිවාඩුව",
+    "holidayStripDate": "{date}",
+    "holidayStripSource": "CBSL නිවාඩු මූලාශ්‍රය",
+    "holidayTagPublic": "පොදු",
+    "holidayTagBank": "බැංකු",
+    "holidayTagMercantile": "වෙළඳ"
   },
   "modules": {
     "districts": {
@@ -417,7 +424,9 @@
     "pulseAqi": "සාමාන්‍ය AQI",
     "pulseAqiValue": "{value} · දිස්ත්‍රික් {count}",
     "pulseFlood": "Elevated flood stations",
-    "pulseFloodUnavailable": "නොමැත"
+    "pulseFloodUnavailable": "නොමැත",
+    "pulseSeed": "seed",
+    "pulseLive": "live"
   },
   "elections": {
     "eyebrow": "මැතිවරණ බුද්ධිය",
@@ -609,6 +618,10 @@
     "gdacsReport": "GDACS report",
     "firmsSource": "NASA FIRMS provenance",
     "gdacsSource": "GDACS provenance",
+    "pinPlaceLoading": "ස්ථානය සොයමින්…",
+    "pinPlaceUnavailable": "ස්ථානය නොමැත",
+    "pinPlaceClear": "ඉවත් කරන්න",
+    "pinPlaceExpandHint": "ස්ථානයට තට්ටු කරන්න",
     "cebCardTitle": "CEB (national)",
     "lecoCardTitle": "LECO (Western)",
     "lecoStatusLabel": "Western / coastal LECO තත්ත්වය",
@@ -672,6 +685,7 @@
     "eyebrow": "Home district attention",
     "title": "{district} අසල hazard signal",
     "landslide": "Landslide overlay: {tier}",
+    "flood": "මෙම දිස්ත්‍රික්කයේ elevated flood station අවධානය",
     "fires": "{count, plural, one {# nearby FIRMS fire pin} other {# nearby FIRMS fire pins}}",
     "honesty": "නිල evacuation order නොවේ. FIRMS pins satellite detections; landslide tiers civic overlay.",
     "openDisaster": "විපත් කේන්ද්‍රය විවෘත කරන්න",
@@ -1136,7 +1150,8 @@
       "api": "API ඒකාබද්ධතාව",
       "scrape": "කාලසටහන් scrape",
       "partner": "හවුල්කරු feed",
-      "seed": "Seed snapshot"
+      "seed": "Seed snapshot",
+      "computed": "Adapter computed"
     }
   },
   "developers": {
@@ -1151,6 +1166,8 @@
     "healthDescription": "සියලු ලියාපදිංචි දත්ත මූලාශ්‍ර සඳහා නැවුම් බව tier සහ අවසන් පරීක්ෂා timestamps.",
     "pulseSummary": "සජීවී නාඩි",
     "pulseDescription": "වත්මන් විනිමය අනුපාත, ඉන්ධන මිල, ගංවතුර මධ්‍යස්ථාන ගණන් සහ සබැඳි මිනුම්.",
+    "stressSummary": "Lanka Stress Index",
+    "stressDescription": "FX, flood, power, Met, landslide සහ dengue සංඥාවලින් 0–100 civic stress — නිල රාජ්‍ය දර්ශකයක් නොවේ.",
     "districtsSummary": "දිස්ත්‍රික් ලැයිස්තුව",
     "districtsDescription": "ජනගහනය, ප්‍රදේශය සහ පළාත metadata සහිත ශ්‍රී ලංකාවේ දිස්ත්‍රික් 25.",
     "districtSummary": "දිස්ත්‍රික් විස්තර",
@@ -1240,6 +1257,10 @@
     "marketFxDescription": "fawazahmed0 currency-api නිල නොවන වෙළඳපොළ මැද USD→LKR; upstream අසාර්ථක වූ විට null.",
     "worldBankSummary": "ලෝක බැංකු WDI — ශ්‍රී ලංකාව",
     "worldBankDescription": "LKA සඳහා GDP වර්ධනය, CPI උද්ධමනය, සහ ජනගහනය; සියල්ල අසාර්ථක වූ විට null.",
+    "holidaysSummary": "ශ්‍රී ලංකා රජයේ නිවාඩු",
+    "holidaysDescription": "CBSL බැංකු/පොදු නිවාඩු seed (විකල්ප year query). 2026 Gazette Extraordinary 2438/22.",
+    "geocodeReverseSummary": "Reverse geocode",
+    "geocodeReverseDescription": "තනි lat/lon pin සඳහා Nominatim reverse ලේබලය. විනාඩියකට ඉල්ලීම් 10කට සීමා.",
     "tariffsSummary": "PUCSL domestic tariffs",
     "tariffsDescription": "Residential electricity energy and fixed charges by consumption block with effective date.",
     "waterBillSummary": "NWSDB water bill estimate",
@@ -1382,6 +1403,33 @@
     "error": "Share කළ නොහැක. Page එකෙන් copy කරන්න.",
     "footer": "මූලාශ්‍රය: Lankawa — නිල රාජ්‍ය ප්‍රකාශනයක් නොවේ."
   },
+  "stress": {
+    "eyebrow": "උදෑසන composite",
+    "title": "Lanka Stress Index",
+    "subtitle": "ලබා ගත හැකි pulse සංඥා එක civic අංකයකට.",
+    "tierCalm": "සන්සුන්",
+    "tierWatch": "අවධානය",
+    "tierElevated": "ඉහළ",
+    "tierSevere": "දරුණු",
+    "componentFx": "FX anomaly",
+    "componentFlood": "Flood stations elevated",
+    "componentPower": "විදුලි බාධා",
+    "componentMet": "Met Dept අනතුරු ඇඟවීම",
+    "componentLandslide": "නායයෑම් දිස්ත්‍රික්",
+    "componentDengue": "දෙංගු high-risk දිස්ත්‍රික්",
+    "methodologyTitle": "ක්‍රමවේදය",
+    "honesty": "Composite civic stress — නිල රාජ්‍ය දර්ශකයක් නොවේ",
+    "partial": "සමහර ආදාන නොමැත — ලකුණු අර්ධ වේ.",
+    "unavailable": "n/a",
+    "source": "මූලාශ්‍ර provenance",
+    "asOf": "{date} වන විට"
+  },
+  "persona": {
+    "label": "දසුන",
+    "citizen": "පුරවැසි",
+    "markets": "වෙළඳපොළ",
+    "ops": "Ops"
+  },
   "districtMorning": {
     "title": "දිස්ත්‍රික් උදෑසන pack",
     "demoNote": "{district} සඳහා demo pack — ඔබේ දිස්ත්‍රික්කය ඉහත pin කරන්න.",
@@ -1395,7 +1443,9 @@
     "colAboveNational": "ජාතිකයට වඩා +{value}",
     "colBelowNational": "ජාතිකයට වඩා −{value}",
     "landDelta": "හරිත Δ",
-    "openDistrict": "දිස්ත්‍රික් පිටුව විවෘත කරන්න"
+    "openDistrict": "දිස්ත්‍රික් පිටුව විවෘත කරන්න",
+    "seed": "seed",
+    "live": "live"
   },
   "transport": {
     "title": "Transport Directory",

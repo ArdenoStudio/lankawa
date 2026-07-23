@@ -9,6 +9,7 @@ assert.equal(resolveRateBucket("/api/v1/pulse"), "default");
 assert.equal(resolveRateBucket("/api/v1/export/fuel-history"), "export");
 assert.equal(resolveRateBucket("/api/v1/subscribe"), "subscribe");
 assert.equal(resolveRateBucket("/api/v1/assistant"), "assistant");
+assert.equal(resolveRateBucket("/api/v1/geocode/reverse"), "geocode");
 
 const key = `test-${Date.now()}-${Math.random()}`;
 const first = checkRateLimit(key, "subscribe");

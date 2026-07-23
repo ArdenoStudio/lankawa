@@ -138,19 +138,29 @@ export default async function ProvinceDetailPage({
         <dl className="mt-4 grid gap-4 sm:grid-cols-3">
           <div>
             <dt className="text-xs text-slate-500">{t("pulseDengue")}</dt>
-            <dd className="mt-1 text-xl font-semibold text-white">
-              {pulse.dengueCases.toLocaleString(locale)}
+            <dd className="mt-1 flex items-baseline gap-2 text-xl font-semibold text-white">
+              <span>{pulse.dengueCases.toLocaleString(locale)}</span>
+              <span className="text-[10px] font-medium uppercase tracking-wide text-slate-500">
+                {pulse.dengueIsSeed ? t("pulseSeed") : t("pulseLive")}
+              </span>
             </dd>
           </div>
           <div>
             <dt className="text-xs text-slate-500">{t("pulseAqi")}</dt>
-            <dd className="mt-1 text-xl font-semibold text-white">
-              {pulse.averageAqi != null
-                ? t("pulseAqiValue", {
-                    value: pulse.averageAqi,
-                    count: pulse.aqiDistrictCount,
-                  })
-                : "—"}
+            <dd className="mt-1 flex items-baseline gap-2 text-xl font-semibold text-white">
+              <span>
+                {pulse.averageAqi != null
+                  ? t("pulseAqiValue", {
+                      value: pulse.averageAqi,
+                      count: pulse.aqiDistrictCount,
+                    })
+                  : "—"}
+              </span>
+              {pulse.averageAqi != null ? (
+                <span className="text-[10px] font-medium uppercase tracking-wide text-slate-500">
+                  {pulse.aqiIsSeed ? t("pulseSeed") : t("pulseLive")}
+                </span>
+              ) : null}
             </dd>
           </div>
           <div>

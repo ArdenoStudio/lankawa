@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useTranslations } from "next-intl";
+import { PinPlaceLabel } from "@/components/PinPlaceLabel";
 import { useRouter } from "@/i18n/navigation";
 import {
   DISASTER_MAP_LAYER_IDS,
@@ -21,6 +22,7 @@ import {
   floodExtentPinsAsGeoJson,
   getFloodExtentPinsSnapshot,
 } from "@/lib/flood-extent-pins";
+import { formatApproxPlace } from "@/lib/integrations/nominatim";
 import type { FirePin } from "@/lib/integrations/firms";
 import type { GdacsEvent } from "@/lib/integrations/gdacs";
 import type { IrrigationGaugeReading } from "@/lib/integrations/irrigation-gauges";
@@ -180,6 +182,16 @@ export function DisasterRiskMap({
   const [layers, setLayers] = useState<DisasterMapLayerId[]>(initialLayers);
   const [mapReady, setMapReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [focusPin, setFocusPin] = useState<{
+    lat: number;
+    lon: number;
+    label: string;
+  } | null>(null);
+  const setFocusPinRef = useRef(setFocusPin);
+
+  useEffect(() => {
+    setFocusPinRef.current = setFocusPin;
+  }, []);
 
   const landslideBySlug = useMemo(() => {
     const map = new Map<string, LandslideDistrictStatus>();
@@ -464,6 +476,61 @@ export function DisasterRiskMap({
           }
         });
 
+        map.on("click", "firms-pins-circle", (event) => {
+          const feature = event.features?.[0];
+          const coords = feature?.geometry;
+          if (
+            coords &&
+            coords.type === "Point" &&
+            Array.isArray(coords.coordinates)
+          ) {
+            const [lon, lat] = coords.coordinates as [number, number];
+            if (Number.isFinite(lat) && Number.isFinite(lon)) {
+              setFocusPinRef.current({
+                lat,
+                lon,
+                label: `FIRMS ${formatApproxPlace(lat, lon)}`,
+              });
+            }
+          }
+        });
+
+        map.on("click", "gdacs-pins-circle", (event) => {
+          const feature = event.features?.[0];
+          const name =
+            typeof feature?.properties?.name === "string"
+              ? feature.properties.name
+              : "GDACS";
+          const coords = feature?.geometry;
+          if (
+            coords &&
+            coords.type === "Point" &&
+            Array.isArray(coords.coordinates)
+          ) {
+            const [lon, lat] = coords.coordinates as [number, number];
+            if (Number.isFinite(lat) && Number.isFinite(lon)) {
+              setFocusPinRef.current({
+                lat,
+                lon,
+                label: name,
+              });
+            }
+          }
+        });
+
+        map.on("mouseenter", "firms-pins-circle", () => {
+          map.getCanvas().style.cursor = "pointer";
+        });
+        map.on("mouseleave", "firms-pins-circle", () => {
+          map.getCanvas().style.cursor = "";
+        });
+        map.on("mouseenter", "gdacs-pins-circle", () => {
+          map.getCanvas().style.cursor = "pointer";
+        });
+        map.on("mouseleave", "gdacs-pins-circle", () => {
+          map.getCanvas().style.cursor = "";
+        });
+
         map.on("load", () => {
           if (!cancelled) {
             setMapReady(true);
@@ -689,6 +756,31 @@ export function DisasterRiskMap({
           style={{ height }}
         />
       )}
+
+      {focusPin ? (
+        <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm">
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <div>
+              <p className="font-medium text-white">{focusPin.label}</p>
+              <div className="mt-1">
+                <PinPlaceLabel
+                  key={`${focusPin.lat}-${focusPin.lon}`}
+                  lat={focusPin.lat}
+                  lon={focusPin.lon}
+                  active
+                />
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setFocusPin(null)}
+              className="text-xs text-slate-400 hover:text-white"
+            >
+              {t("pinPlaceClear")}
+            </button>
+          </div>
+        </div>
+      ) : null}
 
       <p className="text-xs text-neutral-500">{t("mapLegendMulti")}</p>
       {layerOn.gfm ? (

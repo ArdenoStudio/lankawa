@@ -46,6 +46,7 @@ export default async function SourceDetailPage({
     scrape: t("adapters.scrape"),
     partner: t("adapters.partner"),
     seed: t("adapters.seed"),
+    computed: t("adapters.computed"),
   };
 
   return (

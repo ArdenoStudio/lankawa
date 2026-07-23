@@ -82,14 +82,26 @@ export function DistrictMorningPack({
       <dl className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <dt className="text-xs text-neutral-500">{t("dengue")}</dt>
-          <dd className="mt-1 text-lg font-semibold text-white">
-            {pack.dengue != null ? pack.dengue.toLocaleString(locale) : "—"}
+          <dd className="mt-1 flex items-baseline gap-2 text-lg font-semibold text-white">
+            <span>
+              {pack.dengue != null ? pack.dengue.toLocaleString(locale) : "—"}
+            </span>
+            {pack.dengue != null ? (
+              <span className="text-[10px] font-medium uppercase tracking-wide text-neutral-500">
+                {pack.dengueIsSeed ? t("seed") : t("live")}
+              </span>
+            ) : null}
           </dd>
         </div>
         <div>
           <dt className="text-xs text-neutral-500">{t("aqi")}</dt>
-          <dd className="mt-1 text-lg font-semibold text-white">
-            {pack.aqi != null ? pack.aqi : "—"}
+          <dd className="mt-1 flex items-baseline gap-2 text-lg font-semibold text-white">
+            <span>{pack.aqi != null ? pack.aqi : "—"}</span>
+            {pack.aqi != null ? (
+              <span className="text-[10px] font-medium uppercase tracking-wide text-neutral-500">
+                {pack.aqiIsSeed ? t("seed") : t("live")}
+              </span>
+            ) : null}
           </dd>
         </div>
         <div>
@@ -100,10 +112,17 @@ export function DistrictMorningPack({
         </div>
         <div>
           <dt className="text-xs text-neutral-500">{t("landDelta")}</dt>
-          <dd className="mt-1 text-lg font-semibold text-white">
-            {pack.landDelta != null
-              ? `${pack.landDelta > 0 ? "+" : ""}${pack.landDelta}`
-              : "—"}
+          <dd className="mt-1 flex items-baseline gap-2 text-lg font-semibold text-white">
+            <span>
+              {pack.landDelta != null
+                ? `${pack.landDelta > 0 ? "+" : ""}${pack.landDelta}`
+                : "—"}
+            </span>
+            {pack.landDelta != null ? (
+              <span className="text-[10px] font-medium uppercase tracking-wide text-neutral-500">
+                {pack.landIsSeed ? t("seed") : t("live")}
+              </span>
+            ) : null}
           </dd>
         </div>
       </dl>

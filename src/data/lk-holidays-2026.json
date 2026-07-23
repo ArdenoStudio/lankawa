@@ -1,0 +1,183 @@
+{
+  "year": 2026,
+  "source": "CBSL Bank Holidays 2026 / Gazette Extraordinary 2438/22",
+  "sourceUrl": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2026",
+  "asOf": "2025-05-27",
+  "holidays": [
+    {
+      "date": "2026-01-03",
+      "nameEn": "Duruthu Full Moon Poya Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-01-15",
+      "nameEn": "Tamil Thai Pongal Day",
+      "public": true,
+      "bank": true,
+      "mercantile": true
+    },
+    {
+      "date": "2026-02-01",
+      "nameEn": "Navam Full Moon Poya Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-02-04",
+      "nameEn": "Independence Day",
+      "public": true,
+      "bank": true,
+      "mercantile": true
+    },
+    {
+      "date": "2026-02-15",
+      "nameEn": "Mahasivarathri Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-03-02",
+      "nameEn": "Medin Full Moon Poya Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-03-21",
+      "nameEn": "Id-Ul-Fitre (Ramazan Festival Day)",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-04-01",
+      "nameEn": "Bak Full Moon Poya Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-04-03",
+      "nameEn": "Good Friday",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-04-13",
+      "nameEn": "Day prior to Sinhala & Tamil New Year Day",
+      "public": true,
+      "bank": true,
+      "mercantile": true
+    },
+    {
+      "date": "2026-04-14",
+      "nameEn": "Sinhala & Tamil New Year Day",
+      "public": true,
+      "bank": true,
+      "mercantile": true
+    },
+    {
+      "date": "2026-05-01",
+      "nameEn": "Vesak Full Moon Poya Day / May Day",
+      "public": true,
+      "bank": true,
+      "mercantile": true
+    },
+    {
+      "date": "2026-05-02",
+      "nameEn": "Day following Vesak Full Moon Poya Day",
+      "public": true,
+      "bank": true,
+      "mercantile": true
+    },
+    {
+      "date": "2026-05-28",
+      "nameEn": "Id-Ul-Allah (Hadji Festival Day)",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-05-30",
+      "nameEn": "Adhi Poson Full Moon Poya Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-06-29",
+      "nameEn": "Poson Full Moon Poya Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-07-29",
+      "nameEn": "Esala Full Moon Poya Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-08-26",
+      "nameEn": "Milad-Un-Nabi (Holy Prophet's Birthday)",
+      "public": true,
+      "bank": true,
+      "mercantile": true
+    },
+    {
+      "date": "2026-08-27",
+      "nameEn": "Nikini Full Moon Poya Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-09-26",
+      "nameEn": "Binara Full Moon Poya Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-10-25",
+      "nameEn": "Vap Full Moon Poya Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-11-08",
+      "nameEn": "Deepawali Festival Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-11-24",
+      "nameEn": "Ill Full Moon Poya Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-12-23",
+      "nameEn": "Unduwap Full Moon Poya Day",
+      "public": true,
+      "bank": true,
+      "mercantile": false
+    },
+    {
+      "date": "2026-12-25",
+      "nameEn": "Christmas Day",
+      "public": true,
+      "bank": true,
+      "mercantile": true
+    }
+  ]
+}

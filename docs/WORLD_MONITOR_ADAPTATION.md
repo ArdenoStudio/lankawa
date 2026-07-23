@@ -59,7 +59,7 @@ These are Lankawa-native implementations inspired by WM-class products — **not
 | **Layer registry mindset** | `src/lib/sources.ts` + `/sources/[id]` | Every metric traces to a registered source; provenance aliases (e.g. `public_services_seed` → `public_services_stub`) |
 | **Multi-toggle map modes** | `DisasterRiskMap` flood / landslide / GFM | Local mode toggle; monochrome fills — not a WM layer stack |
 | **URL / filter state** | Tenders, district feeds, compare | Query params for district/q/status; deepen toward shareable multi-layer views later |
-| **Presets (lightweight)** | Home district pin, alert pins, CSE watchlist | Device-local personalization — not WM persona packs yet |
+| **Presets (lightweight)** | Home district pin, alert pins, CSE watchlist, **`?view=` personas on `/explore`** | Device-local personalization — `PersonaSwitch` + `lankawa_view_persona`; citizen/markets/ops module order nudges |
 | **Flood choropleth + pin overlays** | Disaster map + `flood-extent-pins` | Pins/seed GeoJSON; never claim DMC inundation mosaics |
 | **Freshness / status honesty** | `/status`, badges, tenders + environment live/seed copy | Live copy only when `sourceId` is live (e.g. `egp_procurement`, `openaq_lk`) |
 | **Cron fail-closed** | Ingest + adapters | Prefer seed/empty + explicit label over fabricating “all clear” |
@@ -79,14 +79,19 @@ Prioritize only after live layers stay green (`MASTER_PLAN` non-goal).
 
 | Idea | Why | Sketch |
 |------|-----|--------|
-| **Variants / personas** `citizen` \| `markets` \| `ops` | Same data, different default layer packs | Query `?view=citizen` or localStorage preset; never a separate AGPL UI |
 | **Bootstrap tiers** | Faster morning cold load | Tier-0: FX/fuel/weather/power; Tier-1: news/CSE; Tier-2: maps |
 | **Shareable views** | Journalist / WhatsApp deep links | Encode selected map mode + district + pins in URL; document schema |
 | **Cmd+K district fly-to** | Power-user atlas | Command palette → district slug → map flyTo + morning pack |
-| **Lanka Stress Index** | One morning number | Composite of FX anomaly, flood/Met∩flood, power, dengue spike — with methodology page + seed honesty |
 | **Regional PMTiles** | Faster maps offline/4G | Host Sri Lanka district/province PMTiles on CDN; keep GeoJSON fallback |
 
-Each item must remain **Lankawa-licensed**, trilingual, and provenance-first.
+### Shipped this wave (patterns)
+
+| Idea | Where |
+|------|-------|
+| **Variants / personas** `citizen` \| `markets` \| `ops` | `src/lib/view-persona.ts` + `PersonaSwitch` on `/explore?view=` — localStorage `lankawa_view_persona`; reorders explore module sections only (not a full home rebuild) |
+| **Lanka Stress Index** | `src/lib/lanka-stress.ts`, `GET /api/v1/stress`, `LankaStressCard` on home — composite with methodology + isPartial honesty; source `lanka_stress_index` (adapter computed) |
+
+Each remaining item must stay **Lankawa-licensed**, trilingual, and provenance-first.
 
 ---
 

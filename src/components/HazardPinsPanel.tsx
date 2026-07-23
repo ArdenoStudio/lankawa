@@ -1,7 +1,52 @@
+"use client";
+
+import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { FreshnessBadge } from "@/components/FreshnessBadge";
+import { PinPlaceLabel } from "@/components/PinPlaceLabel";
 import { Link } from "@/i18n/navigation";
+import { formatApproxPlace } from "@/lib/integrations/nominatim";
 import type { FirmsSnapshot } from "@/lib/integrations/firms";
 import type { GdacsSnapshot } from "@/lib/integrations/gdacs";
+
+function ExpandableCoords({
+  id,
+  lat,
+  lon,
+  expandedId,
+  onToggle,
+  hint,
+}: {
+  id: string;
+  lat: number;
+  lon: number;
+  expandedId: string | null;
+  onToggle: (id: string) => void;
+  hint: string;
+}) {
+  const open = expandedId === id;
+  return (
+    <button
+      type="button"
+      onClick={() => onToggle(id)}
+      className="w-full text-left"
+      aria-expanded={open}
+    >
+      <p className="font-medium text-white">
+        {open ? (
+          <PinPlaceLabel key={`${id}-place`} lat={lat} lon={lon} active />
+        ) : (
+          formatApproxPlace(lat, lon)
+        )}
+      </p>
+      {!open ? (
+        <p className="text-[10px] text-slate-600">
+          {lat.toFixed(3)}, {lon.toFixed(3)} · {hint}
+        </p>
+      ) : null}
+    </button>
+  );
+}
 
 export function HazardPinsPanel({
   firms,
@@ -31,6 +76,13 @@ export function HazardPinsPanel({
     gdacsSource: string;
   };
 }) {
+  const t = useTranslations("disaster");
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  function toggle(id: string) {
+    setExpandedId((current) => (current === id ? null : id));
+  }
+
   return (
     <section className="space-y-4">
       <div>
@@ -77,10 +129,15 @@ export function HazardPinsPanel({
                     key={fire.id}
                     className="rounded-xl border border-white/5 bg-black/15 px-3 py-2 text-sm"
                   >
-                    <p className="font-medium text-white">
-                      {fire.latitude.toFixed(3)}, {fire.longitude.toFixed(3)}
-                    </p>
-                    <p className="text-xs text-slate-500">
+                    <ExpandableCoords
+                      id={`fire:${fire.id}`}
+                      lat={fire.latitude}
+                      lon={fire.longitude}
+                      expandedId={expandedId}
+                      onToggle={toggle}
+                      hint={t("pinPlaceExpandHint")}
+                    />
+                    <p className="mt-1 text-xs text-slate-500">
                       {new Date(fire.acqDate).toLocaleString(locale)}
                       {fire.brightness != null
                         ? ` · ${labels.brightness} ${fire.brightness.toFixed(0)}`
@@ -131,6 +188,19 @@ export function HazardPinsPanel({
                       {event.alertLevel}
                     </span>
                   </div>
+                  {Number.isFinite(event.latitude) &&
+                  Number.isFinite(event.longitude) ? (
+                    <div className="mt-1">
+                      <ExpandableCoords
+                        id={`gdacs:${event.id}`}
+                        lat={event.latitude}
+                        lon={event.longitude}
+                        expandedId={expandedId}
+                        onToggle={toggle}
+                        hint={t("pinPlaceExpandHint")}
+                      />
+                    </div>
+                  ) : null}
                   <p className="mt-1 text-xs text-slate-500">
                     {labels.eventType}: {event.eventType}
                     {event.country
