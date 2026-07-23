@@ -18,6 +18,7 @@ import { HouseholdEnergySection } from "@/components/HouseholdEnergySection";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";
 import { LpgDistrictFilter } from "@/components/LpgDistrictFilter";
 import { MacroObservationsStrip } from "@/components/MacroObservationsStrip";
+import { MarketFxCompareCard } from "@/components/MarketFxCompareCard";
 import { MarketsPressStrip } from "@/components/MarketsPressStrip";
 import { NcpiInflationCard } from "@/components/NcpiInflationCard";
 import { NwsdbWaterBillCard } from "@/components/NwsdbWaterBillCard";
@@ -27,10 +28,12 @@ import { PucslGenerationMixSpark } from "@/components/PucslGenerationMixSpark";
 import { PucslTariffCard } from "@/components/PucslTariffCard";
 import { PulseCard } from "@/components/PulseCard";
 import { BankDepositRatesBoard } from "@/components/BankDepositRatesBoard";
+import { CryptoCorridorChip } from "@/components/CryptoCorridorChip";
 import { RemittanceBoard } from "@/components/RemittanceBoard";
 import { RemittanceCalculator } from "@/components/RemittanceCalculator";
 import { SupermarketCardDays } from "@/components/SupermarketCardDays";
 import { TreasuryYieldStrip } from "@/components/TreasuryYieldStrip";
+import { WorldBankMacroStrip } from "@/components/WorldBankMacroStrip";
 import { WorldPumpCompare } from "@/components/WorldPumpCompare";
 import { Link } from "@/i18n/navigation";
 import { getEconomyMacroSnapshot, getFxSeries, getLatestFxRate } from "@/lib/economy";
@@ -127,7 +130,18 @@ export default async function EconomyPage({
 
       <MacroObservationsStrip locale={locale} />
 
+      <WorldBankMacroStrip locale={locale} />
+
       <PolicyRatesStrip locale={locale} />
+
+      <MarketFxCompareCard
+        locale={locale}
+        cbslSell={
+          usdMetric
+            ? Number(usdMetric.value)
+            : (latestFxRate?.sellRate ?? null)
+        }
+      />
 
       <DataSaverGate hideUntilHydrated>
         <CricketCard variant="economy" />
@@ -440,6 +454,7 @@ export default async function EconomyPage({
             tableLabel: t("remittanceBoard.tableLabel"),
           }}
         />
+        <CryptoCorridorChip locale={locale} />
         <BankDepositRatesBoard
           snapshot={depositRates}
           labels={{

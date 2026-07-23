@@ -972,6 +972,37 @@
       "seed": "Full seed — plrates.php unavailable",
       "corridorSeed": "Corridor from policy Excel tip",
       "honesty": "Since 27 Nov 2024 CBSL sets a single OPR; SDFR/SLFR are a published corridor only. Not deposit or lending advice."
+    },
+    "marketFx": {
+      "title": "Market mid USD/LKR",
+      "subtitle": "Community mid rate — CBSL buy/sell remains the official band.",
+      "mid": "Market mid",
+      "asOf": "As of {date}",
+      "vsCbsl": "Vs CBSL sell",
+      "honesty": "Unofficial market mid from fawazahmed0 currency-api — not CBSL.",
+      "provenance": "Source",
+      "unavailable": "Market FX temporarily unavailable."
+    },
+    "worldBank": {
+      "title": "World Bank macro",
+      "subtitle": "WDI GDP growth, CPI, and population for Sri Lanka.",
+      "gdp": "GDP growth",
+      "cpi": "Inflation (CPI)",
+      "population": "Population",
+      "asOf": "Fetched {date}",
+      "vintage": "Series years {years}",
+      "honesty": "World Bank WDI — not CBSL official; complements seed macro.",
+      "seed": "Seed",
+      "provenance": "Source",
+      "unavailable": "World Bank indicators temporarily unavailable."
+    },
+    "cryptoCorridor": {
+      "title": "BTC → LKR corridor",
+      "subtitle": "Indicative CoinGecko mid — remittance context only.",
+      "btcLkr": "1 BTC ≈",
+      "asOf": "As of {date}",
+      "honesty": "Not a remittance product, not CBSL, not investment advice.",
+      "provenance": "Source"
     }
   },
   "search": {
@@ -1196,6 +1227,10 @@
     "debtDescription": "Commercial vs concessionary external debt share series (2004–2020), normalized for Lankawa.",
     "ncpiSummary": "NCPI inflation",
     "ncpiDescription": "Latest NCPI headline YoY/MoM, core, food/non-food splits, and recent monthly series from DCS.",
+    "marketFxSummary": "Market mid USD/LKR",
+    "marketFxDescription": "Unofficial community market mid USD→LKR from fawazahmed0 currency-api; null when upstream fails.",
+    "worldBankSummary": "World Bank WDI — Sri Lanka",
+    "worldBankDescription": "GDP growth, CPI inflation, and population for LKA from World Bank WDI; null when all indicators fail.",
     "tariffsSummary": "PUCSL domestic tariffs",
     "tariffsDescription": "Residential electricity energy and fixed charges by consumption block with effective date.",
     "waterBillSummary": "NWSDB water bill estimate",

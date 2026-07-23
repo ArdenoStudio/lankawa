@@ -240,6 +240,28 @@ export const openApiSpec = {
         },
       },
     },
+    "/economy/market-fx": {
+      get: {
+        summary: "Market mid USD/LKR (fawazahmed0)",
+        responses: {
+          "200": {
+            description:
+              "Unofficial community market mid USD→LKR from fawazahmed0 currency-api; null when upstream fails",
+          },
+        },
+      },
+    },
+    "/economy/world-bank": {
+      get: {
+        summary: "World Bank WDI — Sri Lanka macro",
+        responses: {
+          "200": {
+            description:
+              "GDP growth, CPI inflation, and population for LKA from World Bank WDI; null when all indicators fail",
+          },
+        },
+      },
+    },
     "/economy/tariffs": {
       get: {
         summary: "PUCSL domestic electricity tariffs",
@@ -739,6 +761,20 @@ export const apiEndpoints = [
     summaryKey: "ncpiSummary" as const,
     descriptionKey: "ncpiDescription" as const,
     example: `{ "periodLabel": "March 2026", "latest": { "yoyPct": 2.4, "momPct": 0.7 }, "provenancePath": "/sources/dcs_ncpi" }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/economy/market-fx",
+    summaryKey: "marketFxSummary" as const,
+    descriptionKey: "marketFxDescription" as const,
+    example: `{ "usdLkr": 336.63, "asOf": "2026-07-22T12:00:00.000Z", "sourceId": "market_fx_fawaz", "provenancePath": "/sources/market_fx_fawaz" }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/economy/world-bank",
+    summaryKey: "worldBankSummary" as const,
+    descriptionKey: "worldBankDescription" as const,
+    example: `{ "country": "LKA", "indicators": [{ "id": "gdp_growth", "value": 5.0, "year": "2024" }], "provenancePath": "/sources/world_bank_lka" }`,
   },
   {
     method: "GET",

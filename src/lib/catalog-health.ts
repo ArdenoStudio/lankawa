@@ -586,6 +586,14 @@ function probeUrlFor(source: SourceDefinition): string | null {
       return "https://marine-api.open-meteo.com/v1/marine?latitude=6.9&longitude=79.8&current=wave_height";
     case "open_meteo_air_quality":
       return "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=6.9271&longitude=79.8612&current=us_aqi";
+    case "open_meteo_geocoding":
+      return "https://geocoding-api.open-meteo.com/v1/search?name=Colombo&count=1&language=en&format=json&countryCode=LK";
+    case "market_fx_fawaz":
+      return "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json";
+    case "world_bank_lka":
+      return "https://api.worldbank.org/v2/country/LKA/indicator/NY.GDP.MKTP.KD.ZG?format=json&per_page=1&mrnev=1";
+    case "coingecko_btc_lkr":
+      return "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=lkr";
     case "openaq_lk":
       return "https://api.openaq.org/v3/locations?countries_id=207&limit=1";
     case "cse_lk":

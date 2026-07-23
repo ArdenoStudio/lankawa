@@ -1,5 +1,6 @@
 import { getCostOfLivingForDistrict } from "./cost-of-living";
 import { DISTRICTS, getDistrict } from "./districts";
+import { searchSriLankaPlaces } from "./integrations/geocode";
 import { buildPulseSnapshot } from "./pulse";
 import { getPresidentialElection2024 } from "./elections";
 import { getPublicServicesCatalog, getPublicServicesForDistrict } from "./services";
@@ -69,6 +70,32 @@ export function resolveDistrictSlug(
     ) {
       return district.slug;
     }
+  }
+  return null;
+}
+
+/**
+ * Sync match first; if none, try Open-Meteo geocoding (LK only) and map to a district.
+ * Empty / failed geocode returns null — never invents a district.
+ */
+export async function resolveDistrictSlugAsync(
+  query: string,
+  preferredSlug?: string | null,
+): Promise<string | null> {
+  const sync = resolveDistrictSlug(query, preferredSlug);
+  if (sync) {
+    return sync;
+  }
+
+  try {
+    const hits = await searchSriLankaPlaces(query);
+    for (const hit of hits) {
+      if (hit.districtSlug && getDistrict(hit.districtSlug)) {
+        return hit.districtSlug;
+      }
+    }
+  } catch {
+    // Geocode is optional — stay silent on failure.
   }
   return null;
 }
@@ -338,12 +365,33 @@ export async function answerQuestion(
   }
 
   const ctx = await buildContext(options);
-  const ruleAnswer = ruleBasedAnswer(trimmed, ctx);
+  const syncSlug = resolveDistrictSlug(trimmed, ctx.scopedDistrictSlug);
+  let scopedSlug = syncSlug ?? ctx.scopedDistrictSlug;
+
+  // Geocode only when sync missed and the question looks place-scoped —
+  // avoids an Open-Meteo round-trip on every FX/fuel/election query.
+  if (
+    !syncSlug &&
+    /district|population|province|flood|about|near|in |at |col|cost of living|hospital|school|police|tell me|ගම|මාවත|மாவட்டம்/i.test(
+      trimmed,
+    )
+  ) {
+    const geoSlug = await resolveDistrictSlugAsync(trimmed, null);
+    if (geoSlug) {
+      scopedSlug = geoSlug;
+    }
+  }
+
+  const scopedCtx: LankawaContext =
+    scopedSlug && scopedSlug !== ctx.scopedDistrictSlug
+      ? { ...ctx, scopedDistrictSlug: scopedSlug }
+      : ctx;
+  const ruleAnswer = ruleBasedAnswer(trimmed, scopedCtx);
   if (ruleAnswer) {
     return ruleAnswer;
   }
 
-  const llm = await llmAnswer(trimmed, ctx);
+  const llm = await llmAnswer(trimmed, scopedCtx);
   if (llm) {
     return llm;
   }
@@ -353,6 +401,6 @@ export async function answerQuestion(
       "I couldn't find a matching answer in Lankawa data. Try asking about USD/LKR rates, fuel prices, a district name, elections, floods, or public services. You can also pass districtSlug to scope answers.",
     citations: [{ label: "Browse districts", path: "/districts" }],
     mode: "rule",
-    districtSlug: ctx.scopedDistrictSlug,
+    districtSlug: scopedCtx.scopedDistrictSlug,
   };
 }

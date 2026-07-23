@@ -247,3 +247,13 @@ Reference endpoints (from Chime probe, Jul 2026): `aspiData`, `snpData`, `tradeS
 - Signed change webhooks (P62): HMAC-SHA256 helper in `src/lib/webhook-hmac.ts`; partner docs on `/developers` state helper is ready and outbound delivery is not enabled yet; set `LANKAWA_WEBHOOK_SECRET` only once a delivery endpoint is wired ✅
 - Widget SDK snippet (P63): documented drop-in script on `/developers` (iframe remains preferred until npm package) ✅
 - NDVI weekly cron path (P40): `lankawa_land_pulse` seed → observations via `buildNdviObservationRows` ✅
+- Public-apis pass (Jul 2026): market FX (`market_fx_fawaz`), World Bank LKA WDI (`world_bank_lka`), Open-Meteo geocoding + assistant async district resolve, optional CoinGecko BTC/LKR chip — see `docs/PUBLIC_APIS.md` ✅
+
+## Public free-API adapters (non-partner)
+
+| Feed | Adapter | Surface |
+|------|---------|---------|
+| fawazahmed0 currency-api | `market-fx.ts` | `/economy` MarketFxCompareCard + `/api/v1/economy/market-fx` |
+| World Bank WDI (LKA) | `world-bank.ts` | `/economy` WorldBankMacroStrip + `/api/v1/economy/world-bank` |
+| Open-Meteo Geocoding | `geocode.ts` | `resolveDistrictSlugAsync` in assistant |
+| CoinGecko BTC/LKR | `coingecko.ts` | Optional CryptoCorridorChip near remittance |

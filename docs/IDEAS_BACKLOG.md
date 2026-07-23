@@ -33,6 +33,7 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 | WM-pattern: Cmd+K district fly-to | Atlas power-user | Planned |
 | Lanka Stress Index (composite) | One morning number | Planned |
 | Regional PMTiles + bootstrap tiers | Perf / 4G | Planned |
+| Public-apis: market FX + World Bank LKA + Open-Meteo geocode (+ CoinGecko chip) | Economy honesty + assistant places | ✅ |
 
 ## High-value backlog
 
@@ -57,6 +58,7 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 - Data Saver mode: header toggle persists `lankawa_data_saver`, skips cricket visually, caps home news at 5 headlines, and avoids loading heavy map bundles where possible.
 - Share morning check: home Today section now shares FX, fuel, weather, and power via Web Share API or copies plain text for WhatsApp/manual sharing.
 - Honesty: tenders + environment live/seed copy; Met∩flood district intersection; webhook docs softened (HMAC ready, delivery not enabled). See `docs/WORLD_MONITOR_ADAPTATION.md`.
+- Public-apis research shipped: fawazahmed0 market mid USD/LKR, World Bank WDI LKA strip, Open-Meteo geocoding for assistant district resolve, optional CoinGecko BTC/LKR. Catalog notes in `docs/PUBLIC_APIS.md`.
 
 ## Platform features (50+)
 

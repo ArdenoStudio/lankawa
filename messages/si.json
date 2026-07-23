@@ -963,6 +963,37 @@
       "seed": "සම්පූර්ණ seed — plrates.php නොමැත",
       "corridorSeed": "Corridor policy Excel tip වෙතින්",
       "honesty": "2024 නොවැ 27 සිට CBSL තනි OPR භාවිතා කරයි; SDFR/SLFR corridor පමණි. තැන්පතු හෝ ණය උපදෙස් නොවේ."
+    },
+    "marketFx": {
+      "title": "වෙළඳපොළ මැද USD/LKR",
+      "subtitle": "ප්‍රජා මැද අනුපාතය — CBSL මිලදී/විකුණුම් නිල පරාසයයි.",
+      "mid": "වෙළඳපොළ මැද",
+      "asOf": "{date} වන විට",
+      "vsCbsl": "CBSL විකුණුමට සාපේක්ෂව",
+      "honesty": "fawazahmed0 currency-api නිල නොවන වෙළඳපොළ මැද — CBSL නොවේ.",
+      "provenance": "මූලාශ්‍රය",
+      "unavailable": "වෙළඳපොළ FX තාවකාලිකව නොමැත."
+    },
+    "worldBank": {
+      "title": "ලෝක බැංකු මැක්‍රෝ",
+      "subtitle": "ශ්‍රී ලංකාව සඳහා WDI GDP වර්ධනය, CPI, සහ ජනගහනය.",
+      "gdp": "GDP වර්ධනය",
+      "cpi": "උද්ධමනය (CPI)",
+      "population": "ජනගහනය",
+      "asOf": "ලබාගත් {date}",
+      "vintage": "ශ්‍රේණි වර්ෂ {years}",
+      "honesty": "ලෝක බැංකු WDI — CBSL නිල නොවේ; seed මැක්‍රෝ සමග අතිරේකයි.",
+      "seed": "Seed",
+      "provenance": "මූලාශ්‍රය",
+      "unavailable": "ලෝක බැංකු දර්ශක තාවකාලිකව නොමැත."
+    },
+    "cryptoCorridor": {
+      "title": "BTC → LKR කොරිඩෝව",
+      "subtitle": "CoinGecko අනුමාන මැද — මුදල් යැවීම් සන්දර්භය පමණි.",
+      "btcLkr": "1 BTC ≈",
+      "asOf": "{date} වන විට",
+      "honesty": "මුදල් යැවීම් නිෂ්පාදනයක් නොවේ, CBSL නොවේ, ආයෝජන උපදෙස් නොවේ.",
+      "provenance": "මූලාශ්‍රය"
     }
   },
   "search": {
@@ -1205,6 +1236,10 @@
     "exportForeignDebtDescription": "Download commercial vs concessionary debt share series as JSON or CSV.",
     "ncpiSummary": "NCPI inflation",
     "ncpiDescription": "Latest NCPI headline YoY/MoM, core, food/non-food splits, and recent monthly series from DCS.",
+    "marketFxSummary": "වෙළඳපොළ මැද USD/LKR",
+    "marketFxDescription": "fawazahmed0 currency-api නිල නොවන වෙළඳපොළ මැද USD→LKR; upstream අසාර්ථක වූ විට null.",
+    "worldBankSummary": "ලෝක බැංකු WDI — ශ්‍රී ලංකාව",
+    "worldBankDescription": "LKA සඳහා GDP වර්ධනය, CPI උද්ධමනය, සහ ජනගහනය; සියල්ල අසාර්ථක වූ විට null.",
     "tariffsSummary": "PUCSL domestic tariffs",
     "tariffsDescription": "Residential electricity energy and fixed charges by consumption block with effective date.",
     "waterBillSummary": "NWSDB water bill estimate",

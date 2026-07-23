@@ -954,6 +954,37 @@
       "seed": "முழு seed — plrates.php கிடைக்கவில்லை",
       "corridorSeed": "Corridor policy Excel tip-இலிருந்து",
       "honesty": "2024 நவ 27 முதல் CBSL ஒரே OPR பயன்படுத்துகிறது; SDFR/SLFR corridor மட்டும். வைப்பு அல்லது கடன் ஆலோசனை அல்ல."
+    },
+    "marketFx": {
+      "title": "சந்தை நடு USD/LKR",
+      "subtitle": "சமூக நடு விகிதம் — CBSL வாங்கு/விற்பனை அதிகாரப்பூர்வ பட்டை.",
+      "mid": "சந்தை நடு",
+      "asOf": "{date} அன்று",
+      "vsCbsl": "CBSL விற்பனைக்கு எதிரே",
+      "honesty": "fawazahmed0 currency-api அதிகாரப்பூர்வமற்ற சந்தை நடு — CBSL அல்ல.",
+      "provenance": "மூலம்",
+      "unavailable": "சந்தை FX தற்காலிகமாக கிடைக்கவில்லை."
+    },
+    "worldBank": {
+      "title": "உலக வங்கி மேக்ரோ",
+      "subtitle": "இலங்கைக்கான WDI GDP வளர்ச்சி, CPI, மற்றும் மக்கள் தொகை.",
+      "gdp": "GDP வளர்ச்சி",
+      "cpi": "பணவீக்கம் (CPI)",
+      "population": "மக்கள் தொகை",
+      "asOf": "பெறப்பட்டது {date}",
+      "vintage": "தொடர் ஆண்டுகள் {years}",
+      "honesty": "உலக வங்கி WDI — CBSL அதிகாரப்பூர்வமல்ல; seed மேக்ரோவை நிரப்புகிறது.",
+      "seed": "Seed",
+      "provenance": "மூலம்",
+      "unavailable": "உலக வங்கி குறிகாட்டிகள் தற்காலிகமாக கிடைக்கவில்லை."
+    },
+    "cryptoCorridor": {
+      "title": "BTC → LKR தாழ்வாரம்",
+      "subtitle": "CoinGecko அறிகுறி நடு — பணஅனுப்பல் சூழல் மட்டும்.",
+      "btcLkr": "1 BTC ≈",
+      "asOf": "{date} அன்று",
+      "honesty": "பணஅனுப்பல் தயாரிப்பு அல்ல, CBSL அல்ல, முதலீட்டு ஆலோசனை அல்ல.",
+      "provenance": "மூலம்"
     }
   },
   "search": {
@@ -1196,6 +1227,10 @@
     "exportForeignDebtDescription": "Download commercial vs concessionary debt share series as JSON or CSV.",
     "ncpiSummary": "NCPI inflation",
     "ncpiDescription": "Latest NCPI headline YoY/MoM, core, food/non-food splits, and recent monthly series from DCS.",
+    "marketFxSummary": "சந்தை நடு USD/LKR",
+    "marketFxDescription": "fawazahmed0 currency-api அதிகாரப்பூர்வமற்ற சந்தை நடு USD→LKR; upstream தோல்வியில் null.",
+    "worldBankSummary": "உலக வங்கி WDI — இலங்கை",
+    "worldBankDescription": "LKA-க்கான GDP வளர்ச்சி, CPI பணவீக்கம், மற்றும் மக்கள் தொகை; அனைத்தும் தோல்வியில் null.",
     "tariffsSummary": "PUCSL domestic tariffs",
     "tariffsDescription": "Residential electricity energy and fixed charges by consumption block with effective date.",
     "waterBillSummary": "NWSDB water bill estimate",

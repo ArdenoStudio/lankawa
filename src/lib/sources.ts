@@ -71,6 +71,58 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["usd_lkr"],
   },
   {
+    id: "market_fx_fawaz",
+    name: "Market FX (fawazahmed0 currency-api)",
+    category: "economy",
+    url: "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json",
+    cadenceMinutes: 1440,
+    adapter: "api",
+    description:
+      "Community market mid USD→LKR rate from the public fawazahmed0 currency-api CDN (jsDelivr + Pages.dev mirror).",
+    methodology:
+      "Lankawa fetches `usd.min.json` with LankawaBot UA and a 10s timeout, preferring the jsDelivr CDN then the Pages.dev mirror. Parses `date` + `usd.lkr` only — never invents a rate. Shown beside CBSL as unofficial market context; CBSL remains the official buy/sell band. Cadence ~daily.",
+    metrics: ["usd_lkr_market_mid"],
+  },
+  {
+    id: "world_bank_lka",
+    name: "World Bank WDI — Sri Lanka",
+    category: "economy",
+    url: "https://api.worldbank.org/v2/country/LKA/indicator",
+    cadenceMinutes: 10080,
+    adapter: "api",
+    description:
+      "World Development Indicators for Sri Lanka: GDP growth, CPI inflation, and population.",
+    methodology:
+      "Parallel GETs with `mrnev=1` for NY.GDP.MKTP.KD.ZG, FP.CPI.TOTL.ZG, and SP.POP.TOTL (25s timeout each, LankawaBot UA). Returns null if zero indicators succeed — no curated fake tip. Complements CBSL seed macro; not CBSL official. Weekly cadence.",
+    metrics: ["wb_gdp_growth", "wb_cpi", "wb_population"],
+  },
+  {
+    id: "open_meteo_geocoding",
+    name: "Open-Meteo Geocoding",
+    category: "civic",
+    url: "https://geocoding-api.open-meteo.com/v1/search",
+    cadenceMinutes: 10080,
+    adapter: "api",
+    description:
+      "Sri Lanka place search (Open-Meteo geocoding) mapped to Lankawa district slugs.",
+    methodology:
+      "Queries Open-Meteo geocoding with `countryCode=LK`, count=5. Maps admin2/name onto DISTRICTS / districtSlugFromName. Used by the civic assistant when sync district name match fails. Empty array on failure — never invents coordinates.",
+    metrics: ["geocode_hits"],
+  },
+  {
+    id: "coingecko_btc_lkr",
+    name: "CoinGecko — BTC/LKR",
+    category: "economy",
+    url: "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=lkr",
+    cadenceMinutes: 60,
+    adapter: "api",
+    description:
+      "Indicative Bitcoin price in Sri Lankan rupees for remittance corridor context.",
+    methodology:
+      "Optional CoinGecko simple/price fetch (no API key, 10s timeout, LankawaBot UA). Returns null on failure. Not a remittance product, not CBSL, not investment advice — chip only beside the remittance board.",
+    metrics: ["btc_lkr"],
+  },
+  {
     id: "cbsl_gold",
     name: "Central Bank of Sri Lanka — Daily Gold Rates",
     category: "economy",
