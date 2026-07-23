@@ -365,6 +365,7 @@ html:lang(ta) body {
 
   .animate-\[lk-fade-up_0\.45s_ease-out\],
   .animate-\[lk-fade-up_0\.4s_ease-out_both\],
+  .animate-\[lk-fade-up_0\.55s_ease-out\],
   .lk-motion-fade-up,
   .lk-motion-slide-in {
     animation: none !important;
@@ -379,24 +380,50 @@ html:lang(ta) body {
 /* ── Brand utility classes ── */
 
 .lk-card {
-  border-radius: 1rem;
+  border-radius: 1.125rem;
   border: 1px solid var(--lk-border);
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(8px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(10px);
 }
 
 .lk-card-hover {
-  border-radius: 1rem;
+  border-radius: 1.125rem;
   border: 1px solid var(--lk-border);
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(8px);
-  transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(10px);
+  transition:
+    border-color 0.22s ease,
+    background-color 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 .lk-card-hover:hover {
-  border-color: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.32);
   background: rgba(255, 255, 255, 0.06);
-  box-shadow: none;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.lk-card-interactive {
+  transition:
+    border-color 0.22s ease,
+    background 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.lk-card-interactive:hover {
+  border-color: rgba(255, 255, 255, 0.32);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.03) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.lk-card-interactive:active {
+  transform: translateY(0);
 }
 
 .lk-btn-primary {
@@ -478,11 +505,40 @@ html:lang(ta) body {
 
 .hero-surface {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 55%),
-    #000000;
-  background-image:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 55%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M30 0l15 15-15 15L15 15zM0 30l15 15-15 15v-30zm60 0v30L45 45l15-15zM30 60L15 45l15-15 15 15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    radial-gradient(ellipse 80% 55% at 70% 25%, rgba(255, 255, 255, 0.09), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 15% 85%, rgba(255, 255, 255, 0.04), transparent 50%),
+    linear-gradient(165deg, #0c0c0c 0%, #000000 48%, #050505 100%);
+  isolation: isolate;
+}
+
+.lk-hero-pulse {
+  transform-origin: center;
+  animation: lk-hero-ring 2.8s ease-out infinite;
+}
+
+@keyframes lk-hero-ring {
+  0% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lk-hero-pulse {
+    animation: none !important;
+  }
+
+  .lk-card-interactive:hover {
+    transform: none;
+  }
 }
 
 a {

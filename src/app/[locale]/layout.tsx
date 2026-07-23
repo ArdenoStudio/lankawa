@@ -106,7 +106,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className="h-full">
       <body
-        className={`${calSans.variable} ${inter.variable} ${notoSinhala.variable} ${notoTamil.variable} min-h-full bg-slate-950 font-sans text-slate-100 antialiased`}
+        className={`${calSans.variable} ${inter.variable} ${notoSinhala.variable} ${notoTamil.variable} min-h-full bg-black font-sans text-neutral-100 antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
           <DataSaverProvider>
@@ -119,7 +119,7 @@ export default async function LocaleLayout({
             <main
               id="main-content"
               tabIndex={-1}
-              className="mx-auto flex min-h-[calc(100vh-8rem)] w-full max-w-6xl flex-1 flex-col px-4 py-8 md:py-10"
+              className="mx-auto flex min-h-[calc(100vh-8rem)] w-full max-w-6xl flex-1 flex-col px-4 py-8 md:py-12"
             >
               {children}
             </main>

@@ -7,6 +7,7 @@ import { ColomboAirQualityStrip } from "@/components/ColomboAirQualityStrip";
 import { CricketCard } from "@/components/CricketCard";
 import { CseWatchlistChip } from "@/components/CseWatchlistChip";
 import { DataSaverGate } from "@/components/DataSaverGate";
+import { DepthRail } from "@/components/DepthRail";
 import { DistrictMorningPack } from "@/components/DistrictMorningPack";
 import { HolidayTodayStrip } from "@/components/HolidayTodayStrip";
 import { HomeDistrictPin } from "@/components/HomeDistrictPin";
@@ -22,7 +23,6 @@ import { RetentionBeacon } from "@/components/RetentionBeacon";
 import { ShareMorningCheck } from "@/components/ShareMorningCheck";
 import { SourceHealthBar } from "@/components/SourceHealthBar";
 import { WeekLedger } from "@/components/WeekLedger";
-import { Link } from "@/i18n/navigation";
 import { buildAlertSignalContext } from "@/lib/alert-context";
 import { buildDistrictMorningPacks } from "@/lib/district-morning";
 import { floodAttentionByDistrict } from "@/lib/flood-districts";
@@ -108,7 +108,7 @@ export default async function HomePage({
   ];
 
   return (
-    <div className="space-y-10 md:space-y-14">
+    <div className="space-y-12 md:space-y-16">
       <RetentionBeacon locale={locale} />
       <HeroSection />
       <OfflineMorningShell />
@@ -124,13 +124,16 @@ export default async function HomePage({
       <AlertPins context={alertContext} />
       <WebPushOptIn />
 
-      <section className="space-y-5" id="today">
+      <section className="space-y-6" id="today">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h2 className="font-display text-2xl font-semibold text-white">
+          <div className="space-y-2">
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-white md:text-3xl">
               {t("pulseTitle")}
             </h2>
-            <p className="mt-2 text-slate-400">{t("pulseSubtitle")}</p>
+            <div className="lk-brand-stripe w-12" aria-hidden="true" />
+            <p className="max-w-xl text-sm leading-relaxed text-neutral-400 md:text-base">
+              {t("pulseSubtitle")}
+            </p>
           </div>
           <ShareMorningCheck metrics={shareMetrics} />
         </div>
@@ -138,10 +141,14 @@ export default async function HomePage({
           {todayMetrics.map((metric, index) => (
             <div
               key={metric.id}
-              className="animate-[lk-fade-up_0.4s_ease-out_both]"
+              className={
+                index === 0
+                  ? "animate-[lk-fade-up_0.4s_ease-out_both] sm:col-span-2 lg:col-span-1"
+                  : "animate-[lk-fade-up_0.4s_ease-out_both]"
+              }
               style={{ animationDelay: `${index * 45}ms` }}
             >
-              <PulseCard metric={metric} />
+              <PulseCard metric={metric} featured={index === 0} />
             </div>
           ))}
         </div>
@@ -163,36 +170,7 @@ export default async function HomePage({
 
       <NewsPulse headlineLimit={5} />
 
-      <section className="space-y-3 border-t border-white/10 pt-8">
-        <div>
-          <h2 className="font-display text-xl font-semibold text-white">
-            {t("depthTitle")}
-          </h2>
-          <p className="mt-2 max-w-xl text-sm text-slate-400">
-            {t("depthSubtitle")}
-          </p>
-        </div>
-        <nav
-          aria-label={t("depthTitle")}
-          className="flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium"
-        >
-          <Link href="/districts" className="text-teal-300 hover:text-teal-200">
-            {t("depthDistricts")}
-          </Link>
-          <Link href="/economy" className="text-teal-300 hover:text-teal-200">
-            {t("depthEconomy")}
-          </Link>
-          <Link href="/disaster" className="text-teal-300 hover:text-teal-200">
-            {t("depthDisaster")}
-          </Link>
-          <Link href="/explore" className="text-teal-300 hover:text-teal-200">
-            {t("depthExplore")}
-          </Link>
-          <Link href="/learn" className="text-teal-300 hover:text-teal-200">
-            {t("depthLearn")}
-          </Link>
-        </nav>
-      </section>
+      <DepthRail />
 
       <SourceHealthBar sources={snapshot.sources} />
     </div>

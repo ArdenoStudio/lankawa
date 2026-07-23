@@ -116,8 +116,8 @@ function NavLink({
       onClick={onNavigate}
       className={`rounded-full px-3 py-1.5 text-sm transition ${
         active
-          ? "bg-teal-500/20 text-teal-200"
-          : "text-slate-300 hover:bg-white/5 hover:text-white"
+          ? "bg-white text-black"
+          : "text-neutral-300 hover:bg-white/5 hover:text-white"
       } ${className ?? ""}`}
     >
       {label}
@@ -153,8 +153,8 @@ function MoreDropdown({ pathname }: { pathname: string }) {
         onClick={() => setOpen((value) => !value)}
         className={`inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm transition ${
           moreActive || open
-            ? "bg-teal-500/20 text-teal-200"
-            : "text-slate-300 hover:bg-white/5 hover:text-white"
+            ? "bg-white/15 text-white"
+            : "text-neutral-300 hover:bg-white/5 hover:text-white"
         }`}
       >
         {t("more")}
@@ -171,7 +171,7 @@ function MoreDropdown({ pathname }: { pathname: string }) {
       </button>
 
       {open ? (
-        <div className="absolute right-0 top-full z-50 mt-2 w-56 rounded-2xl border border-white/10 bg-slate-950/95 p-2 shadow-xl backdrop-blur">
+        <div className="absolute right-0 top-full z-50 mt-2 w-56 rounded-2xl border border-white/12 bg-black/95 p-2 shadow-[0_20px_50px_rgba(0,0,0,0.55)] backdrop-blur-md">
           {moreLinks.map((link) => (
             <Link
               key={link.href}
@@ -179,8 +179,8 @@ function MoreDropdown({ pathname }: { pathname: string }) {
               onClick={() => setOpen(false)}
               className={`block rounded-xl px-3 py-2 text-sm transition ${
                 isActive(pathname, link.href)
-                  ? "bg-teal-500/15 text-teal-100"
-                  : "text-slate-300 hover:bg-white/5 hover:text-white"
+                  ? "bg-white text-black"
+                  : "text-neutral-300 hover:bg-white/5 hover:text-white"
               }`}
             >
               {t(link.key)}
@@ -214,7 +214,7 @@ export function SiteHeader() {
       className={clsx(
         "sticky top-0 z-40 border-b bg-slate-950/80 backdrop-blur-md transition-shadow duration-300",
         scrolled
-          ? "border-[var(--lk-teal)]/20 shadow-[0_4px_24px_rgba(13,148,136,0.08)]"
+          ? "border-white/15 shadow-[0_8px_28px_rgba(0,0,0,0.45)]"
           : "border-white/10",
       )}
     >
