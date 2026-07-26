@@ -33,6 +33,8 @@ export function NcpiInflationCard({
 }) {
   const { latest, series } = snapshot;
   const chartId = "ncpi-yoy-chart";
+  const isLiveCcpi = snapshot.sourceId === "dcs_ccpi_macro";
+  const freshnessTier = isLiveCcpi ? "fresh" : "stale";
 
   return (
     <article className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:col-span-2 lg:col-span-3">
@@ -40,7 +42,7 @@ export function NcpiInflationCard({
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h3 className="text-lg font-semibold text-white">{labels.title}</h3>
-            <FreshnessBadge tier="stale" />
+            <FreshnessBadge tier={freshnessTier} />
           </div>
           <p className="mt-1 max-w-2xl text-sm text-slate-400">
             {labels.subtitle}
@@ -76,26 +78,28 @@ export function NcpiInflationCard({
         </div>
       </div>
 
-      <dl className="mt-3 grid gap-2 text-xs text-slate-400 sm:grid-cols-3">
-        <div>
-          <dt className="text-slate-500">{labels.core}</dt>
-          <dd className="mt-0.5 font-medium text-white">
-            {latest.coreYoyPct.toFixed(1)}%
-          </dd>
-        </div>
-        <div>
-          <dt className="text-slate-500">{labels.food}</dt>
-          <dd className="mt-0.5 font-medium text-white">
-            {latest.foodYoyPct.toFixed(1)}%
-          </dd>
-        </div>
-        <div>
-          <dt className="text-slate-500">{labels.nonFood}</dt>
-          <dd className="mt-0.5 font-medium text-white">
-            {latest.nonFoodYoyPct.toFixed(1)}%
-          </dd>
-        </div>
-      </dl>
+      {!isLiveCcpi ? (
+        <dl className="mt-3 grid gap-2 text-xs text-slate-400 sm:grid-cols-3">
+          <div>
+            <dt className="text-slate-500">{labels.core}</dt>
+            <dd className="mt-0.5 font-medium text-white">
+              {latest.coreYoyPct.toFixed(1)}%
+            </dd>
+          </div>
+          <div>
+            <dt className="text-slate-500">{labels.food}</dt>
+            <dd className="mt-0.5 font-medium text-white">
+              {latest.foodYoyPct.toFixed(1)}%
+            </dd>
+          </div>
+          <div>
+            <dt className="text-slate-500">{labels.nonFood}</dt>
+            <dd className="mt-0.5 font-medium text-white">
+              {latest.nonFoodYoyPct.toFixed(1)}%
+            </dd>
+          </div>
+        </dl>
+      ) : null}
 
       <div className="mt-4 overflow-x-auto">
         <MonoLineChart

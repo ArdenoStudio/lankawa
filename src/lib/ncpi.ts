@@ -1,4 +1,5 @@
 import ncpiData from "@/data/ncpi-seed.json";
+import { fetchMacroCcpiSnapshot } from "@/lib/integrations/macro-publisher";
 
 export interface NcpiSeriesPoint {
   period: string;
@@ -43,4 +44,13 @@ export function getNcpiSnapshot(): NcpiSnapshot {
     latest: seed.latest,
     series: seed.series,
   };
+}
+
+/**
+ * Prefer live DCS CCPI mirror (macro-publisher) over curated NCPI seed.
+ * Callers must label CCPI vs NCPI via snapshot.sourceId / methodologyNote.
+ */
+export async function getInflationSnapshot(): Promise<NcpiSnapshot> {
+  const liveCcpi = await fetchMacroCcpiSnapshot();
+  return liveCcpi ?? getNcpiSnapshot();
 }

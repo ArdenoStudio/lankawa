@@ -1,6 +1,10 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { computeFreshnessTier } from "@/lib/freshness";
+import {
+  fetchEsanaHeadlines,
+  isEsanaNewsEnabled,
+} from "@/lib/integrations/news-esana";
 import { getSourceProvenancePath } from "@/lib/sources";
 import type { FreshnessTier, PulseMetric, SourceHealth } from "@/lib/types";
 
@@ -440,6 +444,28 @@ async function fetchLiveNewsPulse(): Promise<NewsPulse> {
       fetchedAt,
       error: reason instanceof Error ? reason.message : "Feed fetch failed",
     });
+  }
+
+  // Optional unofficial Helakuru Esana — off unless NEWS_ESANA_ENABLED=true.
+  if (isEsanaNewsEnabled()) {
+    const esana = await fetchEsanaHeadlines();
+    feedHealth.push({
+      feedId: "helakuru_esana",
+      name: "Helakuru Esana (unofficial)",
+      status: esana.error ? "error" : "success",
+      itemCount: esana.headlines.length,
+      fetchedAt,
+      error: esana.error,
+    });
+    for (const headline of esana.headlines) {
+      const normalizedTitle = normalizeHeadlineTitle(headline.title);
+      const dedupeKey = normalizedTitle || headline.url;
+      if (seen.has(dedupeKey)) {
+        continue;
+      }
+      seen.add(dedupeKey);
+      headlines.push(headline);
+    }
   }
 
   headlines.sort(

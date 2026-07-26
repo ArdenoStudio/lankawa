@@ -130,9 +130,9 @@ Document the factor in provenance copy so we do not imply CBSL publishes karat t
 ## Recommended ship order
 
 ```
-1  Derive 22K + 24K per pawn (and per gram) from live CBSL oz on /economy
+1  Derive 22K + 24K per pawn (and per gram) from live CBSL oz on /economy  ✅ shipped (gold-pawn.ts)
    — secondary lines under existing gold card; keep troy oz as official figure
-2  Provenance note: “Derived from CBSL troy oz; shops add margins”
+2  Provenance note: “Derived from CBSL troy oz; shops add margins”  ✅
 3  Optional P1: 2–3 gold-buyer indicative sell quotes (cashgold.lk-class HTML)
    — remittance-banks honesty pattern; seed fallback if scrape fails
 4  Skip named jeweller boards until a brand publishes a fresh first-party daily rate

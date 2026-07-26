@@ -1,9 +1,9 @@
 import { jsonWithCache } from "@/lib/api-cache";
-import { getNcpiSnapshot } from "@/lib/ncpi";
+import { getInflationSnapshot } from "@/lib/ncpi";
 import { getSourceProvenancePath } from "@/lib/sources";
 
 export async function GET(request: Request) {
-  const snapshot = getNcpiSnapshot();
+  const snapshot = await getInflationSnapshot();
 
   return jsonWithCache(
     {
@@ -11,6 +11,6 @@ export async function GET(request: Request) {
       ...snapshot,
       provenancePath: getSourceProvenancePath(snapshot.sourceId),
     },
-    { maxAge: 86400, staleWhileRevalidate: 604800, request },
+    { maxAge: 21_600, staleWhileRevalidate: 86_400, request },
   );
 }

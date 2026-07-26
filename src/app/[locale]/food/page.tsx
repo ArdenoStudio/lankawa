@@ -34,7 +34,9 @@ export default async function FoodPage({
   const wfpMonthYear = formatMarketMonthYear(wfpAsOfSource, locale);
   const staleStapleCount = snapshot.staleStapleCount ?? 0;
   const offersLabel =
-    provenance === "wfp_hdx" || provenance === "spar2u"
+    provenance === "wfp_hdx" ||
+    provenance === "spar2u" ||
+    provenance === "cbsl_price_monitor"
       ? t("stapleQuotesMatched")
       : t("retailOffers");
 
@@ -54,17 +56,24 @@ export default async function FoodPage({
           {" · "}
           {provenance === "live"
             ? t("provenanceLive")
-            : provenance === "wfp_hdx"
-              ? t("provenanceWfp")
-              : provenance === "spar2u"
-                ? t("provenanceSpar")
-                : provenance === "life_federation"
-                  ? t("provenanceLife")
-                  : t("provenanceSeed")}
+            : provenance === "cbsl_price_monitor"
+              ? t("provenanceCbslMonitor")
+              : provenance === "wfp_hdx"
+                ? t("provenanceWfp")
+                : provenance === "spar2u"
+                  ? t("provenanceSpar")
+                  : provenance === "life_federation"
+                    ? t("provenanceLife")
+                    : t("provenanceSeed")}
         </p>
         {provenance === "life_federation" ? (
           <p className="mt-3 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-sm text-slate-200">
             {t("bannerLife")}
+          </p>
+        ) : null}
+        {provenance === "cbsl_price_monitor" ? (
+          <p className="mt-3 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-sm text-slate-200">
+            {t("bannerCbslMonitor")}
           </p>
         ) : null}
         {provenance === "wfp_hdx" ? (
@@ -103,14 +112,17 @@ export default async function FoodPage({
           <dd className="mt-2 text-3xl font-semibold text-white">
             LKR {snapshot.essentialsBasketLkr.toLocaleString()}
           </dd>
-          {provenance === "wfp_hdx" && staleStapleCount > 0 ? (
+          {(provenance === "wfp_hdx" || provenance === "cbsl_price_monitor") &&
+          staleStapleCount > 0 ? (
             <p className="mt-2 text-xs text-slate-500">{t("basketExcludesStale")}</p>
           ) : null}
         </div>
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
           <dt className="text-sm text-slate-500">{offersLabel}</dt>
           <dd className="mt-2 text-3xl font-semibold text-white">
-            {(provenance === "wfp_hdx" || provenance === "spar2u"
+            {(provenance === "wfp_hdx" ||
+            provenance === "spar2u" ||
+            provenance === "cbsl_price_monitor"
               ? snapshot.marketQuotes
               : snapshot.retailOffers
             ).toLocaleString()}
@@ -149,11 +161,13 @@ export default async function FoodPage({
           ? t("disclaimerSeed")
           : provenance === "life_federation"
             ? t("disclaimerLife")
-            : provenance === "wfp_hdx"
-              ? t("disclaimerWfp")
-              : provenance === "spar2u"
-                ? t("disclaimerSpar")
-                : t("disclaimer")}
+            : provenance === "cbsl_price_monitor"
+              ? t("disclaimerCbslMonitor")
+              : provenance === "wfp_hdx"
+                ? t("disclaimerWfp")
+                : provenance === "spar2u"
+                  ? t("disclaimerSpar")
+                  : t("disclaimer")}
       </p>
     </div>
   );

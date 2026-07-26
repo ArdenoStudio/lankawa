@@ -718,7 +718,12 @@
       "title": "දෛනික රන් මිල",
       "unit": "Troy ounce එකකට",
       "asOf": "{date} වන විට",
-      "provenance": "මූලාශ්‍රය"
+      "provenance": "මූලාශ්‍රය",
+      "pawn22k": "22K / pawn (8g)",
+      "pawn24k": "24K / pawn (8g)",
+      "gram22k": "22K / ග්‍රෑම්",
+      "gram24k": "24K / ග්‍රෑම්",
+      "derivedNote": "Pawn/ග්‍රෑම් අගයන් CBSL troy oz මත පදනම් — වෙළඳසැල් margins එකතු කරයි."
     },
     "lpg": {
       "eyebrow": "ගෘහස්ථ LPG",
@@ -811,7 +816,10 @@
       "period": "Period",
       "honesty": "Monthly official series with a period label. Not live inflation. Not the Lankawa cost-of-living composite.",
       "source": "මූලාශ්‍රය",
-      "release": "DCS නිකුතුව"
+      "release": "DCS නිකුතුව",
+      "ccpiTitle": "CCPI උද්ධමනය (කොළඹ)",
+      "ccpiSubtitle": "DCS Colombo CCPI — macro-publisher mirror. NCPI national නොවේ; Lankawa COL නොවේ.",
+      "ccpiHonesty": "නවතම DCS CCPI මුදාහැරීමේ index / YoY / MoM. Food/core විස්තර නොමැති විට එය ලබා නොදේ."
     },
     "tariff": {
       "title": "විදුලි ගාස්තු (ගෘහස්ථ)",
@@ -1521,7 +1529,8 @@
     },
     "choroplethTitle": "District index map",
     "choroplethSubtitle": "Monochrome table-map of the COL composite by district (brighter = higher index).",
-    "choroplethHonesty": "Simple SVG choropleth from the composite index — not an official NCPI map."
+    "choroplethHonesty": "Simple SVG choropleth from the composite index — not an official NCPI map.",
+    "honestyValueCbslMonitor": "CBSL price-monitor JSON"
   },
   "environment": {
     "title": "Environment & Air Quality",
@@ -1725,7 +1734,13 @@
     "hartiBodySeed": "FoodLK, WFP HDX, SPAR2U, සහ Life food endpoints unavailable. Seed essentials. HARTI wholesale ingest planned.",
     "hartiHonesty": "Not official HARTI or NCPI. Labels stay seed-honest until a HARTI adapter lands.",
     "hartiHonestyWfp": "WFP/HDX market quotes — HARTI හෝ NCPI නොවේ. District meal bands seed until FoodLK recovers.",
-    "hartiHonestySpar": "SPAR2U retail shelf prices (one page) — HARTI හෝ NCPI නොවේ. District meal bands seed until FoodLK recovers."
+    "hartiHonestySpar": "SPAR2U retail shelf prices (one page) — HARTI හෝ NCPI නොවේ. District meal bands seed until FoodLK recovers.",
+    "provenanceCbslMonitor": "CBSL price-monitor JSON",
+    "bannerCbslMonitor": "FoodLK නොමැත — lanka-price-monitor හරහා CBSL Daily Price Report staples පෙන්වයි (සුපිරි වෙළඳසැල් නොවේ).",
+    "disclaimerCbslMonitor": "CBSL Daily Price Report — lanka-price-monitor JSON. FoodLK නොවේ. දිස්ත්‍රික් meal bands seed විය හැක.",
+    "hartiTitleCbslMonitor": "CBSL දෛනික වෙළඳපොළ (තාවකාලික)",
+    "hartiBodyCbslMonitor": "FoodLK නොමැති විට CBSL Daily Price Report JSON මතින් staples.",
+    "hartiHonestyCbslMonitor": "නිල CBSL PDF හි තෙවන පාර්ශ්ව republish. FoodLK හොඳින් ක්‍රියා කරන විට එයට ප්‍රමුඛත්වය."
   },
   "ardeno": {
     "eyebrow": "Sister platforms",

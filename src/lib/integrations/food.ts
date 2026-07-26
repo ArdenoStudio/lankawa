@@ -1,5 +1,6 @@
 import { getFoodSnapshot } from "@/lib/food";
 import { fetchWfpFoodDirect } from "@/lib/integrations/food-direct";
+import { fetchCbslPriceMonitorFood } from "@/lib/integrations/food-price-monitor";
 import { fetchSpar2uRetail } from "@/lib/integrations/food-spar";
 import type {
   FoodDistrictMealCost,
@@ -17,6 +18,7 @@ const FETCH_TIMEOUT_MS = 8000;
 
 export type FoodProvenance =
   | "live"
+  | "cbsl_price_monitor"
   | "wfp_hdx"
   | "spar2u"
   | "life_federation"
@@ -388,13 +390,33 @@ async function fetchLifeFood(): Promise<FoodFetchResult | null> {
 }
 
 /**
- * Call order: FoodLK (real metrics only) → WFP → SPAR → Life → seed.
- * FoodLK 500/empty fails cleanly to WFP — never implies live supermarket.
+ * Call order: FoodLK → CBSL price-monitor JSON → WFP → SPAR → Life → seed.
+ * FoodLK 500/empty fails cleanly — never implies live supermarket.
  */
 export async function fetchFoodSnapshot(): Promise<FoodFetchResult | null> {
   const foodLk = await fetchFoodLkLive();
   if (foodLk) {
     return foodLk;
+  }
+
+  const priceMonitor = await fetchCbslPriceMonitorFood();
+  if (priceMonitor) {
+    const seed = getFoodSnapshot();
+    return {
+      ...seed,
+      provenance: "cbsl_price_monitor",
+      sourceId: priceMonitor.sourceId,
+      sourceName: priceMonitor.sourceName,
+      asOf: priceMonitor.asOf,
+      corpusAsOf: priceMonitor.corpusAsOf,
+      staleStapleCount: priceMonitor.staleStapleCount,
+      essentialsBasketLkr: priceMonitor.essentialsBasketLkr,
+      retailOffers: priceMonitor.retailOffers,
+      marketQuotes: priceMonitor.marketQuotes,
+      stapleItems: priceMonitor.stapleItems,
+      districts: seed.districts,
+      mixedSeedDistricts: true,
+    };
   }
 
   const wfp = await fetchWfpFoodDirect();

@@ -2,10 +2,13 @@
  * HARTI / CBSL civic food-price surfaces (PDF indexes only).
  *
  * Probed 2026-07-20: HTML tables are Date/Medium/Download lists — no commodity
- * price cells. Prices live inside dated PDFs. FoodLK already parses both;
- * Lankawa must not claim live HARTI/CBSL until FoodLK market sync feeds the API.
+ * price cells. Prices live inside dated PDFs. FoodLK already parses both.
  *
- * See docs/HARTI_CBSL_FOOD_PDF.md.
+ * Interim fallthrough (Jul 2026): lanka-price-monitor republishes CBSL Daily
+ * Price Report as JSON — see `food-price-monitor.ts` (wired after FoodLK fails).
+ * This stub remains a no-op PDF-index adapter so we never invent HTML prices.
+ *
+ * See docs/HARTI_CBSL_FOOD_PDF.md and docs/EXTERNAL_REPOS_ASSESSMENT.md.
  */
 
 /** HARTI daily English PDF catalog (not a price API). */
@@ -24,8 +27,9 @@ export const CBSL_PRICE_REPORT_INDEX_URL =
  */
 export const HARTI_CBSL_SEED_NOTE =
   "HARTI and CBSL publish daily/weekly food-price PDFs (civic markets). " +
-  "Index HTML has no price tables. Lankawa does not parse those PDFs; " +
-  "use FoodLK market sync when healthy. Until then, staples stay WFP/SPAR/Life/seed — not HARTI or CBSL.";
+  "Index HTML has no price tables. Lankawa does not parse those PDFs in-process; " +
+  "prefer FoodLK market sync when healthy, else lanka-price-monitor CBSL JSON " +
+  "(`cbsl_price_monitor`), then WFP/SPAR/Life/seed.";
 
 /**
  * Intentional no-op: no trivial HTML price table to scrape.

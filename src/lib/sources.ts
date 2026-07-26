@@ -171,8 +171,12 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Official CBSL daily gold price in Sri Lankan rupees per troy ounce.",
     methodology:
-      "Lankawa queries the public CBSL daily gold-rate form for XAU/LKR rows over a short recent window and shows only parsed official rows. If CBSL does not publish a current gold row or the endpoint is unavailable, the economy page omits the gold card.",
-    metrics: ["gold_lkr_troy_ounce"],
+      "Lankawa queries the public CBSL daily gold-rate form for XAU/LKR rows over a short recent window and shows only parsed official rows. Household 24K/22K per gram and per pawn (8g) are derived from the troy-oz figure (÷31.1034768 g; ×0.916 for 22K) — shops add margins. If CBSL does not publish a current gold row or the endpoint is unavailable, the economy page omits the gold card.",
+    metrics: [
+      "gold_lkr_troy_ounce",
+      "gold_22k_pawn_lkr",
+      "gold_24k_pawn_lkr",
+    ],
   },
   {
     id: "lpg_cylinder_prices",
@@ -269,8 +273,47 @@ export const SOURCES: SourceDefinition[] = [
     description:
       "Official National Consumer Price Index (Base 2021=100) headline and core inflation.",
     methodology:
-      "Curated from DCS monthly NCPI news releases (YoY, MoM, index, food/non-food). Cadence is monthly — never presented as a live inflation feed. Distinct from Lankawa COL composite.",
+      "Curated from DCS monthly NCPI news releases (YoY, MoM, index, food/non-food). Cadence is monthly — never presented as a live inflation feed. Distinct from Lankawa COL composite. Used when the live CCPI macro-publisher mirror is unavailable.",
     metrics: ["ncpi_index", "ncpi_yoy", "ncpi_mom", "ncpi_core_yoy"],
+  },
+  {
+    id: "dcs_ccpi_macro",
+    name: "DCS CCPI (macro-publisher mirror)",
+    category: "economy",
+    url: "https://github.com/Gajarthan/sri-lanka-macro-publisher",
+    cadenceMinutes: 43200,
+    adapter: "api",
+    description:
+      "Colombo Consumer Price Index (CCPI) latest release mirrored as machine-readable JSON.",
+    methodology:
+      "Server-side fetch of sri-lanka-macro-publisher `data/latest/dcs_ccpi.json` (DCS primary). Shows index, YoY, MoM for Colombo CCPI — not NCPI national and not Lankawa COL. Falls back to curated NCPI seed when the mirror is down.",
+    metrics: ["ccpi_index", "ccpi_yoy", "ccpi_mom"],
+  },
+  {
+    id: "cbsl_price_monitor",
+    name: "CBSL Daily Price Report (price-monitor JSON)",
+    category: "economy",
+    url: "https://github.com/wmrkumara/lanka-price-monitor",
+    cadenceMinutes: 1440,
+    adapter: "api",
+    description:
+      "Retail staple prices from the CBSL Daily Price Report republished as JSON.",
+    methodology:
+      "While FoodLK is unhealthy, Lankawa fetches lanka-price-monitor `data.json` (CBSL PDF extract) for coconut, dhal, sugar, onions, eggs, and related staples. Third-party mirror — not a Lankawa PDF parser. District meal bands remain seed. Prefer FoodLK when it returns real metrics.",
+    metrics: ["food_basket_estimate", "staple_prices"],
+  },
+  {
+    id: "news_esana",
+    name: "Helakuru Esana (unofficial API)",
+    category: "civic",
+    url: "https://esana-api.vercel.app",
+    cadenceMinutes: 30,
+    adapter: "api",
+    description:
+      "Optional Sinhala/English breaking headlines from the unofficial Helakuru Esana API.",
+    methodology:
+      "Opt-in only (`NEWS_ESANA_ENABLED=true`). Merged after RSS feeds with title dedupe. Default news strategy remains RSS-only — see docs/NEWS_RSS_MASTER_PLAN.md and docs/EXTERNAL_REPOS_ASSESSMENT.md.",
+    metrics: ["news_headlines"],
   },
   {
     id: "pucsl_tariff",

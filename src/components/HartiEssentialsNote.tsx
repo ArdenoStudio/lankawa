@@ -14,7 +14,7 @@ function formatMarketMonthYear(isoOrDate: string, locale: string): string {
   });
 }
 
-/** P30 — essentials honesty: FoodLK live / WFP / SPAR2U / Life / seed. */
+/** P30 — essentials honesty: FoodLK live / CBSL monitor / WFP / SPAR2U / Life / seed. */
 export async function HartiEssentialsNote({
   provenance,
   corpusAsOf,
@@ -31,27 +31,33 @@ export async function HartiEssentialsNote({
   const t = await getTranslations("food");
 
   const title =
-    provenance === "wfp_hdx"
-      ? t("hartiTitleWfp")
-      : provenance === "spar2u"
-        ? t("hartiTitleSpar")
-        : t("hartiTitle");
+    provenance === "cbsl_price_monitor"
+      ? t("hartiTitleCbslMonitor")
+      : provenance === "wfp_hdx"
+        ? t("hartiTitleWfp")
+        : provenance === "spar2u"
+          ? t("hartiTitleSpar")
+          : t("hartiTitle");
 
   const body =
-    provenance === "wfp_hdx"
-      ? t("hartiBodyWfp")
-      : provenance === "spar2u"
-        ? t("hartiBodySpar")
-        : provenance === "life_federation"
-          ? t("hartiBodyLife")
-          : t("hartiBodySeed");
+    provenance === "cbsl_price_monitor"
+      ? t("hartiBodyCbslMonitor")
+      : provenance === "wfp_hdx"
+        ? t("hartiBodyWfp")
+        : provenance === "spar2u"
+          ? t("hartiBodySpar")
+          : provenance === "life_federation"
+            ? t("hartiBodyLife")
+            : t("hartiBodySeed");
 
   const honesty =
-    provenance === "wfp_hdx"
-      ? t("hartiHonestyWfp")
-      : provenance === "spar2u"
-        ? t("hartiHonestySpar")
-        : t("hartiHonesty");
+    provenance === "cbsl_price_monitor"
+      ? t("hartiHonestyCbslMonitor")
+      : provenance === "wfp_hdx"
+        ? t("hartiHonestyWfp")
+        : provenance === "spar2u"
+          ? t("hartiHonestySpar")
+          : t("hartiHonesty");
 
   const lagMonthYear =
     corpusAsOf && locale

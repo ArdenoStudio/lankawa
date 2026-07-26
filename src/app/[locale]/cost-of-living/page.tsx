@@ -26,6 +26,7 @@ export default async function CostOfLivingPage({
     life_federation: t("honestyValueLifeFederation"),
     wfp_hdx: t("honestyValueWfp"),
     spar2u: t("honestyValueSpar"),
+    cbsl_price_monitor: t("honestyValueCbslMonitor"),
   };
   const honestyItems = snapshot.inputHonesty
     ? [

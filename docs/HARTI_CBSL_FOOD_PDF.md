@@ -127,15 +127,16 @@ FoodLK official market sync (HARTI + CBSL + WFP + …)
         ▼  /api/v1/*  (often HTTP 500 as of mid-2026)
 Lankawa food.ts
         │
+        ├─ lanka-price-monitor CBSL JSON (food-price-monitor.ts)  ← interim civic
         ├─ WFP HDX CSV direct (food-direct.ts)
         ├─ SPAR2U retail JSON (food-spar.ts)   ← supermarket, not civic market
         ├─ Life food domain
         └─ seed
 ```
 
-Food Platform marks **`harti` and `cbsl` Active** with PDF parsers. Lankawa UI copy already says HARTI ingest is planned via FoodLK and must not be claimed live.
+Food Platform marks **`harti` and `cbsl` Active** with PDF parsers. Lankawa also consumes the third-party **lanka-price-monitor** CBSL `data.json` republish when FoodLK is down (source id `cbsl_price_monitor`).
 
-Stub (intentional no-op): `src/lib/integrations/food-harti-cbsl.ts` — returns `null` so the chain never pretends HARTI/CBSL HTML is live.
+Stub (intentional no-op PDF index): `src/lib/integrations/food-harti-cbsl.ts` — returns `null` so we never invent HTML table prices from HARTI/CBSL indexes.
 
 ---
 
@@ -144,11 +145,11 @@ Stub (intentional no-op): `src/lib/integrations/food-harti-cbsl.ts` — returns 
 1. **P0 — FoodLK market sync health**  
    Ensure FoodLK `run_official_market_sync` / HARTI+CBSL scrapers populate API metrics so Lankawa can stamp `live` / `food_platform_api` honestly.
 
-2. **P1 — Do not add Lankawa PDF parsers**  
-   Duplicating `pdfplumber` pipelines in Next.js is brittle (filename drift, layout changes, Sinhala pages). Keep PDF ownership on FoodLK.
+2. **P1 — Interim civic JSON (shipped)**  
+   lanka-price-monitor CBSL Daily Price Report JSON is wired as FoodLK fallthrough (`cbsl_price_monitor`). Prefer FoodLK when healthy; keep attributing the third-party mirror.
 
-3. **P2 — Optional later**  
-   If FoodLK stays down for weeks: a Lankawa “latest PDF URL + asOf” badge (link-out only, no parse) is acceptable; still not “live HARTI prices.”
+3. **P2 — Do not add Lankawa PDF parsers**  
+   Duplicating `pdfplumber` pipelines in Next.js is brittle (filename drift, layout changes, Sinhala pages). Keep PDF ownership on FoodLK.
 
 4. **Keep** WFP HDX for lagged staples and SPAR for retail shelf fallbacks; label clearly (not HARTI/NCPI).
 

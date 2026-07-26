@@ -9,12 +9,13 @@ This document describes how Lankawa integrates the Ardeno sister platforms: Octa
 | **Octane** | `src/lib/integrations/octane.ts` | ✅ Live (`/v1/prices/latest`, `/v1/prices/history`) | Home pulse, `/economy`, `/api/v1/fuel/history` | Static CPC series in `src/lib/fuel.ts`; pulse uses last-known CPC prices |
 | **PropertyLK** | `src/lib/integrations/propertylk.ts` | ✅ Live via `GET /districts` (was wrong path `/api/v1/districts`) | `/property`, `/api/v1/property`, pulse property metric | `src/data/property-seed.json` — seed when fetch fails |
 | **Vehicle Platform** | `src/lib/integrations/vehicle.ts` | ✅ Live | `/vehicles`, `/api/v1/vehicles`, pulse vehicle metric | `src/data/vehicle-seed.json` |
-| **Food Platform** | `src/lib/integrations/food.ts` | ❌ Direct `/api/v1/*` still HTTP 500 | `/food`, `/api/v1/food`, COL food link | Life food domain labeled `life_platform_food` (not FoodLK live); else seed |
+| **Food Platform** | `src/lib/integrations/food.ts` | ❌ Direct `/api/v1/*` still HTTP 500 | `/food`, `/api/v1/food`, COL food link | CBSL price-monitor JSON → WFP → SPAR → Life → seed |
+| **Macro publisher CCPI** | `src/lib/integrations/macro-publisher.ts` | ✅ Live GitHub raw JSON | `/economy` inflation card, `/api/v1/economy/ncpi` | NCPI seed when mirror fails |
 | **Life Platform** | `src/lib/integrations/life.ts` | ✅ Live (`/api/v1/life/overview`) | `/ardeno`, `/api/v1/life`, home Ardeno cards | `src/lib/life.ts` seed overview |
 | **Open-Meteo (weather)** | `src/lib/integrations/weather.ts` | ✅ Live | Home pulse, hero strip | Unavailable → `—` with tier `down` |
 | **CEB power** | `src/lib/integrations/power.ts` | ✅ Live (CEB Care scrape) | Home pulse, `/disaster` | `unknown` status when CEB Care unreachable — never fake normal |
 | **CSE (Colombo Stock Exchange)** | `src/lib/integrations/cse.ts` | ✅ Live (`cse.lk` public HTTP) | `/economy` CseMarketCard + pulse `cse_aspi` | Seed snapshot when API unavailable |
-| **News RSS** | `src/lib/integrations/news.ts` | ✅ Live (Daily Mirror + Ada Derana RSS) | Pulse civic metric `news_headlines` | Ingest cache at `ingest/output/sl_news.json` |
+| **News RSS** | `src/lib/integrations/news.ts` | ✅ Live (Daily Mirror + Ada Derana RSS; optional Esana) | Pulse civic metric `news_headlines` | Ingest cache at `ingest/output/sl_news.json` |
 
 ## Environment variables
 
@@ -85,7 +86,7 @@ NEWS_RSS_FEEDS=https://www.dailymirror.lk/rss/1,https://www.adaderana.lk/rss.php
 
 - `/api/v1/stats/summary`, `/categories/summary`, `/home/summary`
 
-**Call order:** FoodLK (real metrics) → WFP HDX → SPAR2U (thin) → Life → seed. Keells/Cargills/SPAR retail ingest stays in FoodLK; Lankawa does not chase those APIs. HARTI/CBSL PDFs still needed on FoodLK for fresh civic food.
+**Call order:** FoodLK (real metrics) → CBSL price-monitor JSON (`food-price-monitor.ts`, lanka-price-monitor mirror) → WFP HDX → SPAR2U (thin) → Life → seed. Keells/Cargills/SPAR retail ingest stays in FoodLK; Lankawa does not chase those APIs. HARTI/CBSL PDF parsers still preferred on FoodLK long-term; the price-monitor JSON is an interim civic fallthrough (see `docs/EXTERNAL_REPOS_ASSESSMENT.md`).
 
 **Secondary live source**
 
@@ -183,7 +184,9 @@ Reference endpoints (from Chime probe, Jul 2026): `aspiData`, `snpData`, `tradeS
 
 ## News RSS
 
-**Adapter:** `src/lib/integrations/news.ts`
+**Adapter:** `src/lib/integrations/news.ts` (+ optional `news-esana.ts`)
+
+Default feeds are RSS-only. Set `NEWS_ESANA_ENABLED=true` to merge unofficial Helakuru Esana headlines after RSS with title dedupe. See `docs/EXTERNAL_REPOS_ASSESSMENT.md`.
 
 - **Feeds:** Daily Mirror breaking news, Ada Derana RSS
 - **Pulse builder:** `buildNewsPulseMetric()` → metric `news_headlines` (count + top headline note)

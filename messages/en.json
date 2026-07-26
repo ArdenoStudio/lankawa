@@ -727,7 +727,12 @@
       "title": "Daily gold price",
       "unit": "Per troy ounce",
       "asOf": "As of {date}",
-      "provenance": "Source"
+      "provenance": "Source",
+      "pawn22k": "22K / pawn (8g)",
+      "pawn24k": "24K / pawn (8g)",
+      "gram22k": "22K / gram",
+      "gram24k": "24K / gram",
+      "derivedNote": "Pawn/gram figures are derived from CBSL troy oz — shops add margins."
     },
     "lpg": {
       "eyebrow": "Household LPG",
@@ -831,7 +836,10 @@
       "period": "Period",
       "honesty": "Monthly official series with a period label. Not live inflation. Not the Lankawa cost-of-living composite.",
       "source": "Source provenance",
-      "release": "DCS release"
+      "release": "DCS release",
+      "ccpiTitle": "CCPI inflation (Colombo)",
+      "ccpiSubtitle": "Colombo Consumer Price Index mirrored from DCS via sri-lanka-macro-publisher — official CCPI, not NCPI national and not Lankawa COL.",
+      "ccpiHonesty": "Live CCPI mirror of the latest DCS release (index, YoY, MoM). Food/core breakdown is omitted until the mirror publishes those splits. Not a live daily feed."
     },
     "tariff": {
       "title": "Electricity tariff (domestic)",
@@ -1530,7 +1538,8 @@
     },
     "choroplethTitle": "District index map",
     "choroplethSubtitle": "Monochrome table-map of the COL composite by district (brighter = higher index).",
-    "choroplethHonesty": "Simple SVG choropleth from the composite index — not an official NCPI map."
+    "choroplethHonesty": "Simple SVG choropleth from the composite index — not an official NCPI map.",
+    "honestyValueCbslMonitor": "CBSL price-monitor JSON"
   },
   "environment": {
     "title": "Environment & Air Quality",
@@ -1734,7 +1743,13 @@
     "hartiBodySeed": "FoodLK, WFP HDX, SPAR2U, and Life food endpoints are unavailable. Showing seed essentials. HARTI wholesale ingest is planned when FoodLK stays down.",
     "hartiHonesty": "Not official HARTI or NCPI. Labels stay seed-honest until a HARTI adapter lands.",
     "hartiHonestyWfp": "WFP/HDX market quotes — not official HARTI or NCPI. District meal bands stay seed until FoodLK recovers.",
-    "hartiHonestySpar": "SPAR2U retail shelf prices (one page) — not official HARTI or NCPI. District meal bands stay seed until FoodLK recovers."
+    "hartiHonestySpar": "SPAR2U retail shelf prices (one page) — not official HARTI or NCPI. District meal bands stay seed until FoodLK recovers.",
+    "provenanceCbslMonitor": "CBSL price-monitor JSON",
+    "bannerCbslMonitor": "FoodLK is unavailable — showing CBSL Daily Price Report staples republished by lanka-price-monitor (civic retail markets, not supermarket shelves).",
+    "disclaimerCbslMonitor": "CBSL Daily Price Report retail staples via lanka-price-monitor JSON — not FoodLK and not a Lankawa PDF scrape. District meal bands may still be seed.",
+    "hartiTitleCbslMonitor": "CBSL daily markets (interim)",
+    "hartiBodyCbslMonitor": "Staples mapped from the CBSL Daily Price Report JSON mirror while FoodLK market sync is down.",
+    "hartiHonestyCbslMonitor": "Third-party republish of official CBSL PDFs. Prefer FoodLK when healthy. Not HARTI weekly bulletins and not NCPI."
   },
   "ardeno": {
     "eyebrow": "Sister platforms",

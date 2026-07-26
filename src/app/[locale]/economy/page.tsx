@@ -39,12 +39,16 @@ import { Link } from "@/i18n/navigation";
 import { getEconomyMacroSnapshot, getFxSeries, getLatestFxRate } from "@/lib/economy";
 import { computeFxAnomaly } from "@/lib/fx-anomaly";
 import { getForeignDebtSnapshot } from "@/lib/foreign-debt";
+import {
+  deriveGoldPawnFromTroyOz,
+  roundGoldLkr,
+} from "@/lib/gold-pawn";
 import { fetchBankDepositRatesSnapshot } from "@/lib/integrations/bank-deposit-rates";
 import { fetchLatestCbslGoldRate } from "@/lib/integrations/cbsl";
 import { fetchLpgPriceSnapshot } from "@/lib/integrations/lpg";
 import { getFuelHistorySeries, getFuelRevisionSteps } from "@/lib/fuel";
 import { buildCseSnapshot } from "@/lib/integrations/cse";
-import { getNcpiSnapshot } from "@/lib/ncpi";
+import { getInflationSnapshot } from "@/lib/ncpi";
 import { getPucslTariffSnapshot } from "@/lib/pucsl";
 import { fetchLiveWaterBillEstimate, getNwsdbTariffSnapshot } from "@/lib/nwsdb";
 import { buildPulseSnapshot } from "@/lib/pulse";
@@ -79,9 +83,12 @@ export default async function EconomyPage({
   ]);
   const cseSnapshot = await buildCseSnapshot();
   const goldRate = await fetchLatestCbslGoldRate();
+  const goldPawn = goldRate
+    ? deriveGoldPawnFromTroyOz(goldRate.priceLkr)
+    : null;
   const lpgSnapshot = await fetchLpgPriceSnapshot();
   const debtSnapshot = getForeignDebtSnapshot();
-  const ncpiSnapshot = getNcpiSnapshot();
+  const ncpiSnapshot = await getInflationSnapshot();
   const tariffSnapshot = getPucslTariffSnapshot();
   const waterSnapshot = getNwsdbTariffSnapshot();
   const waterLiveEstimate = await fetchLiveWaterBillEstimate({
@@ -180,11 +187,54 @@ export default async function EconomyPage({
                 </span>
               </p>
               <p className="mt-1 text-xs text-slate-500">{t("gold.unit")}</p>
+              {goldPawn ? (
+                <dl className="mt-3 grid grid-cols-2 gap-2 text-xs text-slate-400">
+                  <div>
+                    <dt>{t("gold.pawn22k")}</dt>
+                    <dd className="mt-0.5 text-sm font-medium text-white">
+                      {roundGoldLkr(goldPawn.karat22PerPawnLkr).toLocaleString(
+                        locale,
+                        { maximumFractionDigits: 0 },
+                      )}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>{t("gold.pawn24k")}</dt>
+                    <dd className="mt-0.5 text-sm font-medium text-white">
+                      {roundGoldLkr(goldPawn.pure24kPerPawnLkr).toLocaleString(
+                        locale,
+                        { maximumFractionDigits: 0 },
+                      )}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>{t("gold.gram22k")}</dt>
+                    <dd className="mt-0.5 text-sm font-medium text-white">
+                      {roundGoldLkr(goldPawn.karat22PerGramLkr).toLocaleString(
+                        locale,
+                        { maximumFractionDigits: 0 },
+                      )}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>{t("gold.gram24k")}</dt>
+                    <dd className="mt-0.5 text-sm font-medium text-white">
+                      {roundGoldLkr(goldPawn.pure24kPerGramLkr).toLocaleString(
+                        locale,
+                        { maximumFractionDigits: 0 },
+                      )}
+                    </dd>
+                  </div>
+                </dl>
+              ) : null}
               <p className="mt-3 text-xs text-slate-500">
                 {t("gold.asOf", {
                   date: new Date(goldRate.observedAt).toLocaleDateString(locale),
                 })}
               </p>
+              {goldPawn ? (
+                <p className="mt-1 text-xs text-slate-500">{t("gold.derivedNote")}</p>
+              ) : null}
             </article>
           ) : null}
           <LpgPriceCard
@@ -348,8 +398,14 @@ export default async function EconomyPage({
             sourcePath={getSourceProvenancePath(ncpiSnapshot.sourceId)}
             permalink={`/${locale}/economy`}
             labels={{
-              title: t("ncpi.title"),
-              subtitle: t("ncpi.subtitle"),
+              title:
+                ncpiSnapshot.sourceId === "dcs_ccpi_macro"
+                  ? t("ncpi.ccpiTitle")
+                  : t("ncpi.title"),
+              subtitle:
+                ncpiSnapshot.sourceId === "dcs_ccpi_macro"
+                  ? t("ncpi.ccpiSubtitle")
+                  : t("ncpi.subtitle"),
               yoy: t("ncpi.yoy"),
               mom: t("ncpi.mom"),
               core: t("ncpi.core"),
@@ -357,7 +413,10 @@ export default async function EconomyPage({
               nonFood: t("ncpi.nonFood"),
               index: t("ncpi.index"),
               period: t("ncpi.period"),
-              honesty: t("ncpi.honesty"),
+              honesty:
+                ncpiSnapshot.sourceId === "dcs_ccpi_macro"
+                  ? t("ncpi.ccpiHonesty")
+                  : t("ncpi.honesty"),
               source: t("ncpi.source"),
               release: t("ncpi.release"),
             }}
