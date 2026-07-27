@@ -1,0 +1,44 @@
+name: api-docs-catalog-changelog
+on:
+  push:
+    branches: [main]
+    paths:
+      - "api-docs/packages/**/catalog/endpoints.yaml"
+      - "api-docs/packages/**/PACKAGE.yaml"
+      - "scripts/update-api-catalog-changelog.py"
+      - "scripts/build-html-vs-api.py"
+  workflow_dispatch:
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install PyYAML
+        run: pip install pyyaml
+      - name: Refresh HTML-vs-API + catalog changelogs
+        run: |
+          python3 scripts/build-html-vs-api.py
+          python3 scripts/update-api-catalog-changelog.py
+      - name: Commit if dirty
+        run: |
+          git config user.name "api-docs-catalog[bot]"
+          git config user.email "api-docs-catalog[bot]@users.noreply.github.com"
+          git add \
+            api-docs/HTML_VS_API.md \
+            api-docs/HTML_VS_API.yaml \
+            api-docs/CHANGELOG.md \
+            api-docs/packages \
+            src/lib/api-docs-html-vs-api.json \
+            src/lib/api-docs-changelog.json \
+            || true
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "docs(api-docs): refresh HTML-vs-API and catalog changelogs"
+            git push
+          fi

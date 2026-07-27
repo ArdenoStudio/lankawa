@@ -1,0 +1,10 @@
+slug: ntb-amex-offers-docs
+tier: B
+title: NTB Mastercard + Amex Offers
+host: multi
+category: cards
+status: ready
+summary: NTB promotions/hub + americanexpress.lk supermarket-offers.
+source_docs:
+- docs/NTB_SC_HSBC_OFFERS_RESEARCH.md
+extract_to: Cookie-Cat21/ntb-amex-offers-docs

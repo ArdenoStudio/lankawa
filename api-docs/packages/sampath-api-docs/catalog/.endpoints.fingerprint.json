@@ -1,0 +1,44 @@
+{
+  "sha256": "3cc77dc0002feb9b32041463bd30b8a1797bae6efc2cf092d2b25377a4b6dde2",
+  "endpoint_count": 3,
+  "endpoints": {
+    "card_promotions_super_markets": {
+      "id": "card_promotions_super_markets",
+      "method": "GET",
+      "path": "/api/card-promotions",
+      "url": "https://www.sampath.lk/api/card-promotions?category=super_markets&page_number=1&size=20",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Supermarket card offers JSON.",
+      "pagination": {
+        "style": "page_number",
+        "params": {
+          "page_number": "1-based",
+          "size": "page size"
+        },
+        "lab": true
+      }
+    },
+    "exchange_rates": {
+      "id": "exchange_rates",
+      "method": "GET",
+      "path": "/api/exchange-rates",
+      "url": "https://www.sampath.lk/api/exchange-rates",
+      "status": "live",
+      "access": "json_api",
+      "summary": "TTBUY/TTSEL FX JSON.",
+      "pagination": null
+    },
+    "rates_and_charges_external": {
+      "id": "rates_and_charges_external",
+      "method": "GET",
+      "path": "/api/rates-and-charges/external",
+      "url": "https://www.sampath.lk/api/rates-and-charges/external",
+      "status": "live",
+      "access": "json_api",
+      "summary": "local.term_and_deposite FD slabs + savings.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

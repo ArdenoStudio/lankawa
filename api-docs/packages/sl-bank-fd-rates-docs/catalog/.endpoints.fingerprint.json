@@ -1,0 +1,17 @@
+{
+  "sha256": "e48bf2d799ffb411521256cbbab879487ec1c3cc1d814844a3da72861d4f3df3",
+  "endpoint_count": 1,
+  "endpoints": {
+    "pack_overview": {
+      "id": "pack_overview",
+      "method": "GET",
+      "path": "(multi-host pack)",
+      "url": "https://www.combank.lk/api/interest-rates-fd",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Aggregator: ComBank/Sampath/Seylan/HNB FD JSON \u2192 unified ladder.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

@@ -1,0 +1,10 @@
+slug: sl-bank-remittance-tt-docs
+tier: B
+title: SL Bank Remittance TT Rates
+host: multi
+category: banks
+status: ready
+summary: 9-bank USD TT board contracts (JSON + HTML).
+source_docs:
+- docs/BANK_AND_API_UNIVERSE.md
+extract_to: Cookie-Cat21/sl-bank-remittance-tt-docs

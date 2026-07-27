@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "foodlk-api-docs-unofficial"
+version = "0.1.0"
+description = "Minimal unofficial HTTP helpers for FoodLK / Food Platform API (educational)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/Cookie-Cat21/foodlk-api-docs"
+
+[tool.setuptools]
+packages = ["foodlk_api_docs"]

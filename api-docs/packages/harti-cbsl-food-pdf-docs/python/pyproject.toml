@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "harti-cbsl-food-pdf-docs-unofficial"
+version = "0.1.0"
+description = "Minimal unofficial HTTP helpers for HARTI + CBSL Food Price PDFs (educational)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/Cookie-Cat21/harti-cbsl-food-pdf-docs"
+
+[tool.setuptools]
+packages = ["harti_cbsl_food_pdf_docs"]

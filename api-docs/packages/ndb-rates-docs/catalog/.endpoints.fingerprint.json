@@ -1,0 +1,37 @@
+{
+  "sha256": "9b61bf86a5bb8ed31e6b6d343e85dde201efd5bb53c570ba8ac387f223eb9265",
+  "endpoint_count": 3,
+  "endpoints": {
+    "card_offers": {
+      "id": "card_offers",
+      "method": "GET",
+      "path": "/cards/offers",
+      "url": "https://www.ndbbank.com/cards/offers",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Card offers HTML.",
+      "pagination": null
+    },
+    "deposit_interest": {
+      "id": "deposit_interest",
+      "method": "GET",
+      "path": "/rates-and-tariffs/interest-rates-for-deposits",
+      "url": "https://www.ndbbank.com/rates-and-tariffs/interest-rates-for-deposits",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Deposit interest HTML.",
+      "pagination": null
+    },
+    "exchange_rates": {
+      "id": "exchange_rates",
+      "method": "GET",
+      "path": "/rates-and-tariffs/exchange-rates",
+      "url": "https://www.ndbbank.com/rates-and-tariffs/exchange-rates",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "FX rates HTML.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

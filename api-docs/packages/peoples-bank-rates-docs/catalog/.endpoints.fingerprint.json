@@ -1,0 +1,37 @@
+{
+  "sha256": "1fd2827f1167d4bf0c976e14576885057393c1db8c4b6fda66e6fb2e3a97bfc0",
+  "endpoint_count": 3,
+  "endpoints": {
+    "exchange_rates_html": {
+      "id": "exchange_rates_html",
+      "method": "GET",
+      "path": "/exchange-rates/",
+      "url": "https://www.peoplesbank.lk/exchange-rates/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "FX TT HTML.",
+      "pagination": null
+    },
+    "interest_rates_html": {
+      "id": "interest_rates_html",
+      "method": "GET",
+      "path": "/interest-rates/",
+      "url": "https://www.peoplesbank.lk/interest-rates/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Deposit/loan interest HTML.",
+      "pagination": null
+    },
+    "offer_cards": {
+      "id": "offer_cards",
+      "method": "GET",
+      "path": "/card-offers/",
+      "url": "https://www.peoplesbank.lk/card-offers/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Card offer listing HTML.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

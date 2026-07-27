@@ -1,0 +1,47 @@
+{
+  "sha256": "79d5b165298b48a9baeab136c9596cc30982f83d84f913fa130dcf4aa6d703d6",
+  "endpoint_count": 4,
+  "endpoints": {
+    "basket_estimate": {
+      "id": "basket_estimate",
+      "method": "GET",
+      "path": "/api/v1/basket/estimate",
+      "url": "https://food-platform-backend.fly.dev/api/v1/basket/estimate?preset=essentials",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Essentials staples preset.",
+      "pagination": null
+    },
+    "hub_manifest": {
+      "id": "hub_manifest",
+      "method": "GET",
+      "path": "/api/v1/hub/manifest",
+      "url": "https://food-platform-backend.fly.dev/api/v1/hub/manifest",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Often 200 when hub/summary is 500.",
+      "pagination": null
+    },
+    "hub_summary": {
+      "id": "hub_summary",
+      "method": "GET",
+      "path": "/api/v1/hub/summary",
+      "url": "https://food-platform-backend.fly.dev/api/v1/hub/summary",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Preferred Lankawa surface \u2014 frequently 500.",
+      "pagination": null
+    },
+    "openapi": {
+      "id": "openapi",
+      "method": "GET",
+      "path": "/openapi.json",
+      "url": "https://food-platform-backend.fly.dev/openapi.json",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Full OpenAPI (41 paths).",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "b4e3efb0533c6549bb84c54c6e3494acc0074009e7666d3e1bb983fbc38c6510",
+  "endpoint_count": 2,
+  "endpoints": {
+    "laugfs_prices": {
+      "id": "laugfs_prices",
+      "method": "GET",
+      "path": "laugfs.lk/",
+      "url": "https://www.laugfs.lk/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "LAUGFS LPG price HTML.",
+      "pagination": null
+    },
+    "litro_prices": {
+      "id": "litro_prices",
+      "method": "GET",
+      "path": "litrogas.com/",
+      "url": "https://litrogas.com/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Litro cylinder price HTML scrape surface.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

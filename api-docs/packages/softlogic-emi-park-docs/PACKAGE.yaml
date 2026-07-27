@@ -1,0 +1,10 @@
+slug: softlogic-emi-park-docs
+tier: B
+title: Softlogic EMI (park — heavy crawl)
+host: https://www.softlogic.lk
+category: retail
+status: ready
+summary: Softlogic EMI (park — heavy crawl)
+source_docs:
+- docs/BANK_AND_API_UNIVERSE.md
+extract_to: Cookie-Cat21/softlogic-emi-park-docs

@@ -1,0 +1,21 @@
+title: Seylan Bank API
+host: https://www.seylan.lk
+tier: A
+category: banks
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/BANK_API_DEEP_DIVE_SAMPATH_SEYLAN_NSB.md
+endpoints:
+- id: exchange_rates_usd
+  method: GET
+  url: https://www.seylan.lk/api/exchange-rates-get-value/USD
+  path: /api/exchange-rates-get-value/{CCY}
+  summary: Per-currency FX JSON.
+  access: json_api
+- id: get_fd_data
+  method: GET
+  url: https://www.seylan.lk/get-fd-data
+  path: /get-fd-data
+  summary: FD calculator JSON (Content-Type may lie text/html).
+  access: hybrid

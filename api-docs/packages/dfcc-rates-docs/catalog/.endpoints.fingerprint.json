@@ -1,0 +1,37 @@
+{
+  "sha256": "f39063ed42d8365c3bc0da16d22dfae31b8b4273efe7a8c5a3fc3319f3a0b445",
+  "endpoint_count": 3,
+  "endpoints": {
+    "card_offers_supermarket": {
+      "id": "card_offers_supermarket",
+      "method": "GET",
+      "path": "/personal/cards/card-offers/",
+      "url": "https://www.dfcc.lk/personal/cards/card-offers/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Card offers hub (supermarket DOW scrape).",
+      "pagination": null
+    },
+    "exchange_rates_page": {
+      "id": "exchange_rates_page",
+      "method": "GET",
+      "path": "/exchange-rates/",
+      "url": "https://www.dfcc.lk/exchange-rates/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "FX rates page.",
+      "pagination": null
+    },
+    "interest_rates_page": {
+      "id": "interest_rates_page",
+      "method": "GET",
+      "path": "/interest-rates/",
+      "url": "https://www.dfcc.lk/interest-rates/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "RSC-embedded deposit/loan rates.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

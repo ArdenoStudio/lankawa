@@ -1,0 +1,11 @@
+slug: cbsl-public-data-docs
+tier: A
+title: CBSL Public Data
+host: https://www.cbsl.gov.lk
+category: macro
+status: ready
+summary: FX/gold scrapes, plrates OPR, eResearch IDs, payments bulletin PDFs.
+source_docs:
+- docs/CBSL_RATES_API_DEEP_DIVE.md
+- docs/CBSL_PAYMENTS_BULLETIN.md
+extract_to: Cookie-Cat21/cbsl-public-data-docs

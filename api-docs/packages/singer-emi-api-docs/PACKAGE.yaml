@@ -1,0 +1,10 @@
+slug: singer-emi-api-docs
+tier: B
+title: Singer Sri Lanka EMI API
+host: https://www.singersl.com
+category: retail
+status: ready
+summary: json-get-emi + json-get-single-emi household instalments.
+source_docs:
+- docs/HOUSEHOLD_RETAIL_EMI_RESEARCH.md
+extract_to: Cookie-Cat21/singer-emi-api-docs

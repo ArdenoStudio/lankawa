@@ -1,0 +1,17 @@
+{
+  "sha256": "5f322dfe8686e7370813d4ccfa1dd4ace851decb455c68817d39dee0882ef9cc",
+  "endpoint_count": 1,
+  "endpoints": {
+    "flood_latest": {
+      "id": "flood_latest",
+      "method": "GET",
+      "path": "/lk_flood.json",
+      "url": "https://raw.githubusercontent.com/nuuuwan/lk_flood/data/lk_flood.json",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Flood station levels JSON used by Lankawa flood adapter.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

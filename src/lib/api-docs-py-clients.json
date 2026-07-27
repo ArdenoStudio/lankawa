@@ -1,0 +1,365 @@
+{
+  "version": 1,
+  "clients": [
+    {
+      "slug": "amana-union-cargills-bank-docs",
+      "pip": "amana-union-cargills-bank-docs-unofficial",
+      "module": "amana_union_cargills_bank_docs",
+      "className": "AmanaUnionCargillsBankDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/amana-union-cargills-bank-docs/python"
+    },
+    {
+      "slug": "ardeno-sister-backends-docs",
+      "pip": "ardeno-sister-backends-docs-unofficial",
+      "module": "ardeno_sister_backends_docs",
+      "className": "ArdenoSisterBackendsDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/ardeno-sister-backends-docs/python"
+    },
+    {
+      "slug": "boc-rates-docs",
+      "pip": "boc-rates-docs-unofficial",
+      "module": "boc_rates_docs",
+      "className": "BocRatesDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/boc-rates-docs/python"
+    },
+    {
+      "slug": "cbsl-public-data-docs",
+      "pip": "cbsl-public-data-docs-unofficial",
+      "module": "cbsl_public_data_docs",
+      "className": "CbslPublicDataDocsClient",
+      "endpointCount": 6,
+      "methodCount": 6,
+      "path": "api-docs/packages/cbsl-public-data-docs/python"
+    },
+    {
+      "slug": "cebcare-api-docs",
+      "pip": "cebcare-api-docs-unofficial",
+      "module": "cebcare_api_docs",
+      "className": "CebcareApiDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/cebcare-api-docs/python"
+    },
+    {
+      "slug": "combank-api-docs",
+      "pip": "combank-api-docs-unofficial",
+      "module": "combank_api_docs",
+      "className": "CombankApiDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/combank-api-docs/python"
+    },
+    {
+      "slug": "cse-api-docs-deepen",
+      "pip": "cse-api-docs-deepen-unofficial",
+      "module": "cse_api_docs_deepen",
+      "className": "CseApiDocsDeepenClient",
+      "endpointCount": 5,
+      "methodCount": 5,
+      "path": "api-docs/packages/cse-api-docs-deepen/python"
+    },
+    {
+      "slug": "dfcc-rates-docs",
+      "pip": "dfcc-rates-docs-unofficial",
+      "module": "dfcc_rates_docs",
+      "className": "DfccRatesDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/dfcc-rates-docs/python"
+    },
+    {
+      "slug": "foodlk-api-docs",
+      "pip": "foodlk-api-docs-unofficial",
+      "module": "foodlk_api_docs",
+      "className": "FoodlkApiDocsClient",
+      "endpointCount": 4,
+      "methodCount": 4,
+      "path": "api-docs/packages/foodlk-api-docs/python"
+    },
+    {
+      "slug": "gdacs-firms-docs",
+      "pip": "gdacs-firms-docs-unofficial",
+      "module": "gdacs_firms_docs",
+      "className": "GdacsFirmsDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/gdacs-firms-docs/python"
+    },
+    {
+      "slug": "gold-retail-rates-docs",
+      "pip": "gold-retail-rates-docs-unofficial",
+      "module": "gold_retail_rates_docs",
+      "className": "GoldRetailRatesDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/gold-retail-rates-docs/python"
+    },
+    {
+      "slug": "harti-cbsl-food-pdf-docs",
+      "pip": "harti-cbsl-food-pdf-docs-unofficial",
+      "module": "harti_cbsl_food_pdf_docs",
+      "className": "HartiCbslFoodPdfDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/harti-cbsl-food-pdf-docs/python"
+    },
+    {
+      "slug": "hnb-venus-api-docs",
+      "pip": "hnb-venus-api-docs-unofficial",
+      "module": "hnb_venus_api_docs",
+      "className": "HnbVenusApiDocsClient",
+      "endpointCount": 7,
+      "methodCount": 7,
+      "path": "api-docs/packages/hnb-venus-api-docs/python"
+    },
+    {
+      "slug": "irrigation-arcgis-api-docs",
+      "pip": "irrigation-arcgis-api-docs-unofficial",
+      "module": "irrigation_arcgis_api_docs",
+      "className": "IrrigationArcgisApiDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/irrigation-arcgis-api-docs/python"
+    },
+    {
+      "slug": "leco-outages-docs",
+      "pip": "leco-outages-docs-unofficial",
+      "module": "leco_outages_docs",
+      "className": "LecoOutagesDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/leco-outages-docs/python"
+    },
+    {
+      "slug": "litro-laugfs-lpg-docs",
+      "pip": "litro-laugfs-lpg-docs-unofficial",
+      "module": "litro_laugfs_lpg_docs",
+      "className": "LitroLaugfsLpgDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/litro-laugfs-lpg-docs/python"
+    },
+    {
+      "slug": "lk-flood-api-docs",
+      "pip": "lk-flood-api-docs-unofficial",
+      "module": "lk_flood_api_docs",
+      "className": "LkFloodApiDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/lk-flood-api-docs/python"
+    },
+    {
+      "slug": "metdept-cap-api-docs",
+      "pip": "metdept-cap-api-docs-unofficial",
+      "module": "metdept_cap_api_docs",
+      "className": "MetdeptCapApiDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/metdept-cap-api-docs/python"
+    },
+    {
+      "slug": "mypromo-park-docs",
+      "pip": "mypromo-park-docs-unofficial",
+      "module": "mypromo_park_docs",
+      "className": "MypromoParkDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/mypromo-park-docs/python"
+    },
+    {
+      "slug": "ndb-rates-docs",
+      "pip": "ndb-rates-docs-unofficial",
+      "module": "ndb_rates_docs",
+      "className": "NdbRatesDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/ndb-rates-docs/python"
+    },
+    {
+      "slug": "nsb-rates-docs",
+      "pip": "nsb-rates-docs-unofficial",
+      "module": "nsb_rates_docs",
+      "className": "NsbRatesDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/nsb-rates-docs/python"
+    },
+    {
+      "slug": "ntb-amex-offers-docs",
+      "pip": "ntb-amex-offers-docs-unofficial",
+      "module": "ntb_amex_offers_docs",
+      "className": "NtbAmexOffersDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/ntb-amex-offers-docs/python"
+    },
+    {
+      "slug": "nwsdb-bill-api-docs",
+      "pip": "nwsdb-bill-api-docs-unofficial",
+      "module": "nwsdb_bill_api_docs",
+      "className": "NwsdbBillApiDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/nwsdb-bill-api-docs/python"
+    },
+    {
+      "slug": "octane-fuel-api-docs",
+      "pip": "octane-fuel-api-docs-unofficial",
+      "module": "octane_fuel_api_docs",
+      "className": "OctaneFuelApiDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/octane-fuel-api-docs/python"
+    },
+    {
+      "slug": "open-meteo-lk-docs",
+      "pip": "open-meteo-lk-docs-unofficial",
+      "module": "open_meteo_lk_docs",
+      "className": "OpenMeteoLkDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/open-meteo-lk-docs/python"
+    },
+    {
+      "slug": "openaq-lk-docs",
+      "pip": "openaq-lk-docs-unofficial",
+      "module": "openaq_lk_docs",
+      "className": "OpenaqLkDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/openaq-lk-docs/python"
+    },
+    {
+      "slug": "pabc-card-offers-docs",
+      "pip": "pabc-card-offers-docs-unofficial",
+      "module": "pabc_card_offers_docs",
+      "className": "PabcCardOffersDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/pabc-card-offers-docs/python"
+    },
+    {
+      "slug": "peoples-bank-rates-docs",
+      "pip": "peoples-bank-rates-docs-unofficial",
+      "module": "peoples_bank_rates_docs",
+      "className": "PeoplesBankRatesDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/peoples-bank-rates-docs/python"
+    },
+    {
+      "slug": "promise-lk-tenders-docs",
+      "pip": "promise-lk-tenders-docs-unofficial",
+      "module": "promise_lk_tenders_docs",
+      "className": "PromiseLkTendersDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/promise-lk-tenders-docs/python"
+    },
+    {
+      "slug": "sampath-api-docs",
+      "pip": "sampath-api-docs-unofficial",
+      "module": "sampath_api_docs",
+      "className": "SampathApiDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/sampath-api-docs/python"
+    },
+    {
+      "slug": "sc-hsbc-offers-park-docs",
+      "pip": "sc-hsbc-offers-park-docs-unofficial",
+      "module": "sc_hsbc_offers_park_docs",
+      "className": "ScHsbcOffersParkDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/sc-hsbc-offers-park-docs/python"
+    },
+    {
+      "slug": "sdb-rates-docs",
+      "pip": "sdb-rates-docs-unofficial",
+      "module": "sdb_rates_docs",
+      "className": "SdbRatesDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/sdb-rates-docs/python"
+    },
+    {
+      "slug": "seylan-api-docs",
+      "pip": "seylan-api-docs-unofficial",
+      "module": "seylan_api_docs",
+      "className": "SeylanApiDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/seylan-api-docs/python"
+    },
+    {
+      "slug": "singer-emi-api-docs",
+      "pip": "singer-emi-api-docs-unofficial",
+      "module": "singer_emi_api_docs",
+      "className": "SingerEmiApiDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/singer-emi-api-docs/python"
+    },
+    {
+      "slug": "sl-bank-card-offers-docs",
+      "pip": "sl-bank-card-offers-docs-unofficial",
+      "module": "sl_bank_card_offers_docs",
+      "className": "SlBankCardOffersDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/sl-bank-card-offers-docs/python"
+    },
+    {
+      "slug": "sl-bank-fd-rates-docs",
+      "pip": "sl-bank-fd-rates-docs-unofficial",
+      "module": "sl_bank_fd_rates_docs",
+      "className": "SlBankFdRatesDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/sl-bank-fd-rates-docs/python"
+    },
+    {
+      "slug": "sl-bank-remittance-tt-docs",
+      "pip": "sl-bank-remittance-tt-docs-unofficial",
+      "module": "sl_bank_remittance_tt_docs",
+      "className": "SlBankRemittanceTtDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/sl-bank-remittance-tt-docs/python"
+    },
+    {
+      "slug": "softlogic-emi-park-docs",
+      "pip": "softlogic-emi-park-docs-unofficial",
+      "module": "softlogic_emi_park_docs",
+      "className": "SoftlogicEmiParkDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/softlogic-emi-park-docs/python"
+    },
+    {
+      "slug": "visa-lk-perks-api-docs",
+      "pip": "visa-lk-perks-api-docs-unofficial",
+      "module": "visa_lk_perks_api_docs",
+      "className": "VisaLkPerksApiDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/visa-lk-perks-api-docs/python"
+    },
+    {
+      "slug": "wfp-hdx-lka-food-docs",
+      "pip": "wfp-hdx-lka-food-docs-unofficial",
+      "module": "wfp_hdx_lka_food_docs",
+      "className": "WfpHdxLkaFoodDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/wfp-hdx-lka-food-docs/python"
+    }
+  ]
+}

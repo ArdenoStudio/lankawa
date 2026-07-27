@@ -1,0 +1,11 @@
+slug: lk-flood-api-docs
+tier: A
+title: lk-flood-api (nuuuwan)
+host: https://nuuuwan.github.io
+category: disaster
+status: ready
+summary: lk-flood-api (nuuuwan)
+source_docs:
+- docs/WEATHER_DISASTER_APIS_RESEARCH.md
+- docs/EXISTING_APIS_UNUSED_ENDPOINTS.md
+extract_to: Cookie-Cat21/lk-flood-api-docs

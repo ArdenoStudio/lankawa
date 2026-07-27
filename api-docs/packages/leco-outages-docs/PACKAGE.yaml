@@ -1,0 +1,11 @@
+slug: leco-outages-docs
+tier: B
+title: LECO Outage Notices
+host: https://www.leco.lk
+category: utilities
+status: ready
+summary: Western/coastal LECO interruption notice scrape surfaces.
+source_docs:
+- docs/INTEGRATIONS.md
+- docs/WEATHER_DISASTER_APIS_RESEARCH.md
+extract_to: Cookie-Cat21/leco-outages-docs

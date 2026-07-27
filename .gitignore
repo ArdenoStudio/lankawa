@@ -46,3 +46,12 @@ ingest/output/
 ingest/**/__pycache__/
 __pycache__/
 *.pyc
+# api-docs TS / Python clients
+api-docs/packages/*/typescript/node_modules/
+api-docs/packages/*/typescript/dist/
+api-docs/packages/*/python/.venv/
+api-docs/packages/*/python/**/__pycache__/
+api-docs/packages/*/python/*.egg-info/
+api-docs/packages/*/python/**/*.egg-info/
+api-docs/packages/*/python/build/
+api-docs/packages/*/python/dist/

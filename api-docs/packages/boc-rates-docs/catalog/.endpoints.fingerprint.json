@@ -1,0 +1,27 @@
+{
+  "sha256": "e03334ecbeb708aa38194899cb7a3881a008f8b243387b2afc36b2397e38c4a0",
+  "endpoint_count": 2,
+  "endpoints": {
+    "interest_rates_fd_json_parked": {
+      "id": "interest_rates_fd_json_parked",
+      "method": "GET",
+      "path": "/api/interest-rates-fd",
+      "url": "https://www.boc.lk/api/interest-rates-fd",
+      "status": "parked",
+      "access": "parked",
+      "summary": "PARK \u2014 live JSON but wrong vs rates-tariff HTML.",
+      "pagination": null
+    },
+    "rates_tariff_html": {
+      "id": "rates_tariff_html",
+      "method": "GET",
+      "path": "/rates-tariff",
+      "url": "https://www.boc.lk/rates-tariff",
+      "status": "live",
+      "access": "hybrid",
+      "summary": "Canonical FX + FD HTML \u2014 prefer over stale JSON.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

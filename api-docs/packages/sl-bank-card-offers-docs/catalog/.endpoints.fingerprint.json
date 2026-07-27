@@ -1,0 +1,21 @@
+{
+  "sha256": "7c6b9d747507a8dfd7b1125716d3d0808c6a31116c6be8412d29c7ea76eeea4c",
+  "endpoint_count": 1,
+  "endpoints": {
+    "pack_overview": {
+      "id": "pack_overview",
+      "method": "GET",
+      "path": "(multi-host pack)",
+      "url": "https://www.sampath.lk/api/card-promotions?category=super_markets&page_number=1&size=20",
+      "status": "live",
+      "access": "hybrid",
+      "summary": "Aggregator pack: Sampath + HNB Venus + ComBank HTML + peers \u2192 supermarket DOW.",
+      "pagination": {
+        "style": "multi_host",
+        "lab": true,
+        "notes": "See sibling bank packages for per-host pagination"
+      }
+    }
+  },
+  "updated": "2026-07-20"
+}

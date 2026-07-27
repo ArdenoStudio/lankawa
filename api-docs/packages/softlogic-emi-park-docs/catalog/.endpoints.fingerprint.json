@@ -1,0 +1,17 @@
+{
+  "sha256": "3d6173ec564989cc667823cd9415627a4fe90ec39cf314b7f054ef9de2a4cc00",
+  "endpoint_count": 1,
+  "endpoints": {
+    "variation_detail_parked": {
+      "id": "variation_detail_parked",
+      "method": "GET",
+      "path": "/variation-detail/{id}",
+      "url": "https://www.softlogic.lk/",
+      "status": "parked",
+      "access": "parked",
+      "summary": "PARK \u2014 per-SKU EMI crawl too heavy vs Singer json-get-emi.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

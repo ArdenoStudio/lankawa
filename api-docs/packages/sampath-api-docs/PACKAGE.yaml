@@ -1,0 +1,11 @@
+slug: sampath-api-docs
+tier: A
+title: Sampath Bank API
+host: https://www.sampath.lk
+category: banks
+status: ready
+summary: exchange-rates TTBUY/TTSEL, rates-and-charges/external FD, card-promotions.
+source_docs:
+- docs/BANK_API_DEEP_DIVE_SAMPATH_SEYLAN_NSB.md
+- docs/BANK_FD_API_SCHEMAS.md
+extract_to: Cookie-Cat21/sampath-api-docs

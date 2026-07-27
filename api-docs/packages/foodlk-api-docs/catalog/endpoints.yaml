@@ -1,0 +1,35 @@
+title: FoodLK / Food Platform API
+host: https://food-platform-backend.fly.dev
+tier: A
+category: food
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/FOODLK_OPENAPI_EXHAUST.md
+- docs/FOOD_API_SOURCES.md
+endpoints:
+- id: openapi
+  method: GET
+  url: https://food-platform-backend.fly.dev/openapi.json
+  path: /openapi.json
+  summary: Full OpenAPI (41 paths).
+  access: json_api
+- id: hub_manifest
+  method: GET
+  url: https://food-platform-backend.fly.dev/api/v1/hub/manifest
+  path: /api/v1/hub/manifest
+  summary: Often 200 when hub/summary is 500.
+  access: json_api
+- id: hub_summary
+  method: GET
+  url: https://food-platform-backend.fly.dev/api/v1/hub/summary
+  path: /api/v1/hub/summary
+  summary: Preferred Lankawa surface — frequently 500.
+  access: json_api
+- id: basket_estimate
+  method: GET
+  url: https://food-platform-backend.fly.dev/api/v1/basket/estimate?preset=essentials
+  path: /api/v1/basket/estimate
+  summary: Essentials staples preset.
+  pagination: null
+  access: json_api

@@ -1,0 +1,10 @@
+slug: sdb-rates-docs
+tier: B
+title: SANASA Development Bank rates
+host: https://www.sdb.lk
+category: banks
+status: ready
+summary: SANASA Development Bank rates
+source_docs:
+- docs/AMANA_PABC_SDB_OFFERS_RESEARCH.md
+extract_to: Cookie-Cat21/sdb-rates-docs

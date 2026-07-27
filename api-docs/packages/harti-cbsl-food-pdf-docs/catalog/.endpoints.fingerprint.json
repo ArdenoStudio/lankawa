@@ -1,0 +1,27 @@
+{
+  "sha256": "8cdb0613ecd43249cfd00f18f5ef5b8562692009a8ba26f70ac2ad86c56aea27",
+  "endpoint_count": 2,
+  "endpoints": {
+    "cbsl_weekly_food": {
+      "id": "cbsl_weekly_food",
+      "method": "GET",
+      "path": "/en/statistics/economic-indicators",
+      "url": "https://www.cbsl.gov.lk/en/statistics/economic-indicators",
+      "status": "live",
+      "access": "pdf_document",
+      "summary": "CBSL food/economic indicator PDF entry points.",
+      "pagination": null
+    },
+    "harti_daily_prices_index": {
+      "id": "harti_daily_prices_index",
+      "method": "GET",
+      "path": "/market-information/daily-prices",
+      "url": "https://www.harti.gov.lk/index.php/en/market-information/daily-prices",
+      "status": "live",
+      "access": "pdf_document",
+      "summary": "HARTI daily price PDF index.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

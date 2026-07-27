@@ -1,0 +1,10 @@
+slug: seylan-api-docs
+tier: A
+title: Seylan Bank API
+host: https://www.seylan.lk
+category: banks
+status: ready
+summary: Per-currency FX JSON + get-fd-data deposit calculator.
+source_docs:
+- docs/BANK_API_DEEP_DIVE_SAMPATH_SEYLAN_NSB.md
+extract_to: Cookie-Cat21/seylan-api-docs

@@ -1,0 +1,10 @@
+slug: octane-fuel-api-docs
+tier: B
+title: Octane Fuel API
+host: https://octane-api.fly.dev
+category: fuel
+status: ready
+summary: 'Sister Octane routes: prices, world compare, history.'
+source_docs:
+- docs/OCTANE_OPENMETEO_UNUSED_PROBE.md
+extract_to: Cookie-Cat21/octane-fuel-api-docs

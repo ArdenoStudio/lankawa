@@ -1,0 +1,10 @@
+slug: metdept-cap-api-docs
+tier: B
+title: Met Dept CAP / Advisories
+host: https://was.meteo.gov.lk
+category: disaster
+status: ready
+summary: dashboard-api advisories + CAP RSS/XML.
+source_docs:
+- docs/WEATHER_DISASTER_APIS_RESEARCH.md
+extract_to: Cookie-Cat21/metdept-cap-api-docs

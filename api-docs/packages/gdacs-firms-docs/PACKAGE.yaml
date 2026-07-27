@@ -1,0 +1,10 @@
+slug: gdacs-firms-docs
+tier: B
+title: GDACS + NASA FIRMS
+host: multi
+category: disaster
+status: ready
+summary: GDACS events + FIRMS hotspot CSV for LK bbox.
+source_docs:
+- docs/WEATHER_DISASTER_APIS_RESEARCH.md
+extract_to: Cookie-Cat21/gdacs-firms-docs

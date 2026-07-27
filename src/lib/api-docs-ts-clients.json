@@ -1,0 +1,365 @@
+{
+  "version": 1,
+  "clients": [
+    {
+      "slug": "amana-union-cargills-bank-docs",
+      "npm": "@cookie-cat21/amana-union-cargills-bank-docs-client",
+      "className": "AmanaUnionCargillsBankDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/amana-union-cargills-bank-docs/typescript",
+      "jsPath": "api-docs/packages/amana-union-cargills-bank-docs/javascript"
+    },
+    {
+      "slug": "ardeno-sister-backends-docs",
+      "npm": "@cookie-cat21/ardeno-sister-backends-docs-client",
+      "className": "ArdenoSisterBackendsDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/ardeno-sister-backends-docs/typescript",
+      "jsPath": "api-docs/packages/ardeno-sister-backends-docs/javascript"
+    },
+    {
+      "slug": "boc-rates-docs",
+      "npm": "@cookie-cat21/boc-rates-docs-client",
+      "className": "BocRatesDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/boc-rates-docs/typescript",
+      "jsPath": "api-docs/packages/boc-rates-docs/javascript"
+    },
+    {
+      "slug": "cbsl-public-data-docs",
+      "npm": "@cookie-cat21/cbsl-public-data-docs-client",
+      "className": "CbslPublicDataDocsClient",
+      "endpointCount": 6,
+      "methodCount": 6,
+      "path": "api-docs/packages/cbsl-public-data-docs/typescript",
+      "jsPath": "api-docs/packages/cbsl-public-data-docs/javascript"
+    },
+    {
+      "slug": "cebcare-api-docs",
+      "npm": "@cookie-cat21/cebcare-api-docs-client",
+      "className": "CebcareApiDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/cebcare-api-docs/typescript",
+      "jsPath": "api-docs/packages/cebcare-api-docs/javascript"
+    },
+    {
+      "slug": "combank-api-docs",
+      "npm": "@cookie-cat21/combank-api-docs-client",
+      "className": "CombankApiDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/combank-api-docs/typescript",
+      "jsPath": "api-docs/packages/combank-api-docs/javascript"
+    },
+    {
+      "slug": "cse-api-docs-deepen",
+      "npm": "@cookie-cat21/cse-api-docs-deepen-client",
+      "className": "CseApiDocsDeepenClient",
+      "endpointCount": 5,
+      "methodCount": 5,
+      "path": "api-docs/packages/cse-api-docs-deepen/typescript",
+      "jsPath": "api-docs/packages/cse-api-docs-deepen/javascript"
+    },
+    {
+      "slug": "dfcc-rates-docs",
+      "npm": "@cookie-cat21/dfcc-rates-docs-client",
+      "className": "DfccRatesDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/dfcc-rates-docs/typescript",
+      "jsPath": "api-docs/packages/dfcc-rates-docs/javascript"
+    },
+    {
+      "slug": "foodlk-api-docs",
+      "npm": "@cookie-cat21/foodlk-api-docs-client",
+      "className": "FoodlkApiDocsClient",
+      "endpointCount": 4,
+      "methodCount": 4,
+      "path": "api-docs/packages/foodlk-api-docs/typescript",
+      "jsPath": "api-docs/packages/foodlk-api-docs/javascript"
+    },
+    {
+      "slug": "gdacs-firms-docs",
+      "npm": "@cookie-cat21/gdacs-firms-docs-client",
+      "className": "GdacsFirmsDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/gdacs-firms-docs/typescript",
+      "jsPath": "api-docs/packages/gdacs-firms-docs/javascript"
+    },
+    {
+      "slug": "gold-retail-rates-docs",
+      "npm": "@cookie-cat21/gold-retail-rates-docs-client",
+      "className": "GoldRetailRatesDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/gold-retail-rates-docs/typescript",
+      "jsPath": "api-docs/packages/gold-retail-rates-docs/javascript"
+    },
+    {
+      "slug": "harti-cbsl-food-pdf-docs",
+      "npm": "@cookie-cat21/harti-cbsl-food-pdf-docs-client",
+      "className": "HartiCbslFoodPdfDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/harti-cbsl-food-pdf-docs/typescript",
+      "jsPath": "api-docs/packages/harti-cbsl-food-pdf-docs/javascript"
+    },
+    {
+      "slug": "hnb-venus-api-docs",
+      "npm": "@cookie-cat21/hnb-venus-api-docs-client",
+      "className": "HnbVenusApiDocsClient",
+      "endpointCount": 7,
+      "methodCount": 7,
+      "path": "api-docs/packages/hnb-venus-api-docs/typescript",
+      "jsPath": "api-docs/packages/hnb-venus-api-docs/javascript"
+    },
+    {
+      "slug": "irrigation-arcgis-api-docs",
+      "npm": "@cookie-cat21/irrigation-arcgis-api-docs-client",
+      "className": "IrrigationArcgisApiDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/irrigation-arcgis-api-docs/typescript",
+      "jsPath": "api-docs/packages/irrigation-arcgis-api-docs/javascript"
+    },
+    {
+      "slug": "leco-outages-docs",
+      "npm": "@cookie-cat21/leco-outages-docs-client",
+      "className": "LecoOutagesDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/leco-outages-docs/typescript",
+      "jsPath": "api-docs/packages/leco-outages-docs/javascript"
+    },
+    {
+      "slug": "litro-laugfs-lpg-docs",
+      "npm": "@cookie-cat21/litro-laugfs-lpg-docs-client",
+      "className": "LitroLaugfsLpgDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/litro-laugfs-lpg-docs/typescript",
+      "jsPath": "api-docs/packages/litro-laugfs-lpg-docs/javascript"
+    },
+    {
+      "slug": "lk-flood-api-docs",
+      "npm": "@cookie-cat21/lk-flood-api-docs-client",
+      "className": "LkFloodApiDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/lk-flood-api-docs/typescript",
+      "jsPath": "api-docs/packages/lk-flood-api-docs/javascript"
+    },
+    {
+      "slug": "metdept-cap-api-docs",
+      "npm": "@cookie-cat21/metdept-cap-api-docs-client",
+      "className": "MetdeptCapApiDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/metdept-cap-api-docs/typescript",
+      "jsPath": "api-docs/packages/metdept-cap-api-docs/javascript"
+    },
+    {
+      "slug": "mypromo-park-docs",
+      "npm": "@cookie-cat21/mypromo-park-docs-client",
+      "className": "MypromoParkDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/mypromo-park-docs/typescript",
+      "jsPath": "api-docs/packages/mypromo-park-docs/javascript"
+    },
+    {
+      "slug": "ndb-rates-docs",
+      "npm": "@cookie-cat21/ndb-rates-docs-client",
+      "className": "NdbRatesDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/ndb-rates-docs/typescript",
+      "jsPath": "api-docs/packages/ndb-rates-docs/javascript"
+    },
+    {
+      "slug": "nsb-rates-docs",
+      "npm": "@cookie-cat21/nsb-rates-docs-client",
+      "className": "NsbRatesDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/nsb-rates-docs/typescript",
+      "jsPath": "api-docs/packages/nsb-rates-docs/javascript"
+    },
+    {
+      "slug": "ntb-amex-offers-docs",
+      "npm": "@cookie-cat21/ntb-amex-offers-docs-client",
+      "className": "NtbAmexOffersDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/ntb-amex-offers-docs/typescript",
+      "jsPath": "api-docs/packages/ntb-amex-offers-docs/javascript"
+    },
+    {
+      "slug": "nwsdb-bill-api-docs",
+      "npm": "@cookie-cat21/nwsdb-bill-api-docs-client",
+      "className": "NwsdbBillApiDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/nwsdb-bill-api-docs/typescript",
+      "jsPath": "api-docs/packages/nwsdb-bill-api-docs/javascript"
+    },
+    {
+      "slug": "octane-fuel-api-docs",
+      "npm": "@cookie-cat21/octane-fuel-api-docs-client",
+      "className": "OctaneFuelApiDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/octane-fuel-api-docs/typescript",
+      "jsPath": "api-docs/packages/octane-fuel-api-docs/javascript"
+    },
+    {
+      "slug": "open-meteo-lk-docs",
+      "npm": "@cookie-cat21/open-meteo-lk-docs-client",
+      "className": "OpenMeteoLkDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/open-meteo-lk-docs/typescript",
+      "jsPath": "api-docs/packages/open-meteo-lk-docs/javascript"
+    },
+    {
+      "slug": "openaq-lk-docs",
+      "npm": "@cookie-cat21/openaq-lk-docs-client",
+      "className": "OpenaqLkDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/openaq-lk-docs/typescript",
+      "jsPath": "api-docs/packages/openaq-lk-docs/javascript"
+    },
+    {
+      "slug": "pabc-card-offers-docs",
+      "npm": "@cookie-cat21/pabc-card-offers-docs-client",
+      "className": "PabcCardOffersDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/pabc-card-offers-docs/typescript",
+      "jsPath": "api-docs/packages/pabc-card-offers-docs/javascript"
+    },
+    {
+      "slug": "peoples-bank-rates-docs",
+      "npm": "@cookie-cat21/peoples-bank-rates-docs-client",
+      "className": "PeoplesBankRatesDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/peoples-bank-rates-docs/typescript",
+      "jsPath": "api-docs/packages/peoples-bank-rates-docs/javascript"
+    },
+    {
+      "slug": "promise-lk-tenders-docs",
+      "npm": "@cookie-cat21/promise-lk-tenders-docs-client",
+      "className": "PromiseLkTendersDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/promise-lk-tenders-docs/typescript",
+      "jsPath": "api-docs/packages/promise-lk-tenders-docs/javascript"
+    },
+    {
+      "slug": "sampath-api-docs",
+      "npm": "@cookie-cat21/sampath-api-docs-client",
+      "className": "SampathApiDocsClient",
+      "endpointCount": 3,
+      "methodCount": 3,
+      "path": "api-docs/packages/sampath-api-docs/typescript",
+      "jsPath": "api-docs/packages/sampath-api-docs/javascript"
+    },
+    {
+      "slug": "sc-hsbc-offers-park-docs",
+      "npm": "@cookie-cat21/sc-hsbc-offers-park-docs-client",
+      "className": "ScHsbcOffersParkDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/sc-hsbc-offers-park-docs/typescript",
+      "jsPath": "api-docs/packages/sc-hsbc-offers-park-docs/javascript"
+    },
+    {
+      "slug": "sdb-rates-docs",
+      "npm": "@cookie-cat21/sdb-rates-docs-client",
+      "className": "SdbRatesDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/sdb-rates-docs/typescript",
+      "jsPath": "api-docs/packages/sdb-rates-docs/javascript"
+    },
+    {
+      "slug": "seylan-api-docs",
+      "npm": "@cookie-cat21/seylan-api-docs-client",
+      "className": "SeylanApiDocsClient",
+      "endpointCount": 2,
+      "methodCount": 2,
+      "path": "api-docs/packages/seylan-api-docs/typescript",
+      "jsPath": "api-docs/packages/seylan-api-docs/javascript"
+    },
+    {
+      "slug": "singer-emi-api-docs",
+      "npm": "@cookie-cat21/singer-emi-api-docs-client",
+      "className": "SingerEmiApiDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/singer-emi-api-docs/typescript",
+      "jsPath": "api-docs/packages/singer-emi-api-docs/javascript"
+    },
+    {
+      "slug": "sl-bank-card-offers-docs",
+      "npm": "@cookie-cat21/sl-bank-card-offers-docs-client",
+      "className": "SlBankCardOffersDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/sl-bank-card-offers-docs/typescript",
+      "jsPath": "api-docs/packages/sl-bank-card-offers-docs/javascript"
+    },
+    {
+      "slug": "sl-bank-fd-rates-docs",
+      "npm": "@cookie-cat21/sl-bank-fd-rates-docs-client",
+      "className": "SlBankFdRatesDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/sl-bank-fd-rates-docs/typescript",
+      "jsPath": "api-docs/packages/sl-bank-fd-rates-docs/javascript"
+    },
+    {
+      "slug": "sl-bank-remittance-tt-docs",
+      "npm": "@cookie-cat21/sl-bank-remittance-tt-docs-client",
+      "className": "SlBankRemittanceTtDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/sl-bank-remittance-tt-docs/typescript",
+      "jsPath": "api-docs/packages/sl-bank-remittance-tt-docs/javascript"
+    },
+    {
+      "slug": "softlogic-emi-park-docs",
+      "npm": "@cookie-cat21/softlogic-emi-park-docs-client",
+      "className": "SoftlogicEmiParkDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/softlogic-emi-park-docs/typescript",
+      "jsPath": "api-docs/packages/softlogic-emi-park-docs/javascript"
+    },
+    {
+      "slug": "visa-lk-perks-api-docs",
+      "npm": "@cookie-cat21/visa-lk-perks-api-docs-client",
+      "className": "VisaLkPerksApiDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/visa-lk-perks-api-docs/typescript",
+      "jsPath": "api-docs/packages/visa-lk-perks-api-docs/javascript"
+    },
+    {
+      "slug": "wfp-hdx-lka-food-docs",
+      "npm": "@cookie-cat21/wfp-hdx-lka-food-docs-client",
+      "className": "WfpHdxLkaFoodDocsClient",
+      "endpointCount": 1,
+      "methodCount": 1,
+      "path": "api-docs/packages/wfp-hdx-lka-food-docs/typescript",
+      "jsPath": "api-docs/packages/wfp-hdx-lka-food-docs/javascript"
+    }
+  ]
+}

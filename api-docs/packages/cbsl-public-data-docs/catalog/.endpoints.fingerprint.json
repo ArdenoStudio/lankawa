@@ -1,0 +1,67 @@
+{
+  "sha256": "9259564779eb7edf0f06f0656525b0dd1cc893e153e79b48e326dd9a0b3abe95",
+  "endpoint_count": 6,
+  "endpoints": {
+    "eresearch_awpr_6277": {
+      "id": "eresearch_awpr_6277",
+      "method": "GET",
+      "path": "/eresearch/.../6277",
+      "url": "https://www.cbsl.gov.lk/eresearch/en_US/viewReport/6277",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Weekly AWPR series.",
+      "pagination": null
+    },
+    "eresearch_tbill_6169": {
+      "id": "eresearch_tbill_6169",
+      "method": "GET",
+      "path": "/eresearch/.../6169",
+      "url": "https://www.cbsl.gov.lk/eresearch/en_US/viewReport/6169",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Secondary market T-bill yields (91/182/364).",
+      "pagination": null
+    },
+    "fx_buying_selling_html": {
+      "id": "fx_buying_selling_html",
+      "method": "GET",
+      "path": "/en/rates-and-indicators/exchange-rates",
+      "url": "https://www.cbsl.gov.lk/en/rates-and-indicators/exchange-rates",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "CBSL indicative FX HTML tables.",
+      "pagination": null
+    },
+    "historical_policy_xlsx": {
+      "id": "historical_policy_xlsx",
+      "method": "GET",
+      "path": "/historical_policy_interest_rates.xlsx",
+      "url": "https://www.cbsl.gov.lk/sites/default/files/cbslweb_documents/statistics/sheets/historical_policy_interest_rates.xlsx",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Historical SDFR/SLFR/OPR Excel tip.",
+      "pagination": null
+    },
+    "payments_bulletin_index": {
+      "id": "payments_bulletin_index",
+      "method": "GET",
+      "path": "/en/payments-and-settlements/payments-bulletin",
+      "url": "https://www.cbsl.gov.lk/en/payments-and-settlements/payments-bulletin",
+      "status": "live",
+      "access": "pdf_document",
+      "summary": "Payments bulletin PDF index.",
+      "pagination": null
+    },
+    "plrates_html": {
+      "id": "plrates_html",
+      "method": "GET",
+      "path": "/en/rates-and-indicators/policy-rates",
+      "url": "https://www.cbsl.gov.lk/en/rates-and-indicators/policy-rates",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Policy rates page (OPR / corridor context).",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}
