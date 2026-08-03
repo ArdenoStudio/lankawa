@@ -1,0 +1,510 @@
+{
+  "districts": [
+    {
+      "slug": "colombo",
+      "name": "Colombo",
+      "nameSi": "කොළඹ",
+      "nameTa": "கொழும்பு",
+      "province": "Western",
+      "capital": "Colombo",
+      "population": 2324135,
+      "areaSqKm": 699,
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "cities": [
+        { "name": "Colombo Fort", "slug": "colombo-fort", "postcode": "00100", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.9344, "longitude": 79.8428, "altNames": ["Colombo 01", "Fort"] },
+        { "name": "Slave Island", "slug": "slave-island", "postcode": "00200", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.9234, "longitude": 79.8521, "altNames": ["Colombo 02", "Kompannavidiya"] },
+        { "name": "Kollupitiya", "slug": "kollupitiya", "postcode": "00300", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.9147, "longitude": 79.8517, "altNames": ["Colombo 03", "Colpetty"] },
+        { "name": "Bambalapitiya", "slug": "bambalapitiya", "postcode": "00400", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.8967, "longitude": 79.8572, "altNames": ["Colombo 04"] },
+        { "name": "Havelock Town", "slug": "havelock-town", "postcode": "00500", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.8872, "longitude": 79.8667, "altNames": ["Colombo 05", "Kirulapone"] },
+        { "name": "Wellawatte", "slug": "wellawatte", "postcode": "00600", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.8744, "longitude": 79.8611, "altNames": ["Colombo 06"] },
+        { "name": "Cinnamon Gardens", "slug": "cinnamon-gardens", "postcode": "00700", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.9083, "longitude": 79.8667, "altNames": ["Colombo 07"] },
+        { "name": "Borella", "slug": "borella", "postcode": "00800", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.9142, "longitude": 79.8778, "altNames": ["Colombo 08"] },
+        { "name": "Dehiwala", "slug": "dehiwala", "postcode": "10350", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.8511, "longitude": 79.8656, "altNames": ["Dehiwala-Mount Lavinia"] },
+        { "name": "Mount Lavinia", "slug": "mount-lavinia", "postcode": "10370", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.8383, "longitude": 79.8647, "altNames": ["Galkissa"] },
+        { "name": "Moratuwa", "slug": "moratuwa", "postcode": "10400", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.7730, "longitude": 79.8816, "altNames": [] },
+        { "name": "Nugegoda", "slug": "nugegoda", "postcode": "10250", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.8711, "longitude": 79.8978, "altNames": [] },
+        { "name": "Maharagama", "slug": "maharagama", "postcode": "10280", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.8481, "longitude": 79.9267, "altNames": [] },
+        { "name": "Sri Jayawardenepura Kotte", "slug": "kotte", "postcode": "10100", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.8889, "longitude": 79.9056, "altNames": ["Kotte"] },
+        { "name": "Homagama", "slug": "homagama", "postcode": "10200", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.8444, "longitude": 80.0028, "altNames": [] },
+        { "name": "Kaduwela", "slug": "kaduwela", "postcode": "10600", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.9347, "longitude": 79.9839, "altNames": [] },
+        { "name": "Battaramulla", "slug": "battaramulla", "postcode": "10120", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.8986, "longitude": 79.9222, "altNames": [] },
+        { "name": "Malabe", "slug": "malabe", "postcode": "10115", "districtSlug": "colombo", "districtName": "Colombo", "province": "Western", "latitude": 6.9044, "longitude": 79.9606, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "gampaha",
+      "name": "Gampaha",
+      "nameSi": "ගම්පහ",
+      "nameTa": "கம்பஹா",
+      "province": "Western",
+      "capital": "Gampaha",
+      "population": 2304833,
+      "areaSqKm": 1387,
+      "latitude": 7.0897,
+      "longitude": 79.9925,
+      "cities": [
+        { "name": "Gampaha", "slug": "gampaha", "postcode": "11000", "districtSlug": "gampaha", "districtName": "Gampaha", "province": "Western", "latitude": 7.0897, "longitude": 79.9925, "altNames": [] },
+        { "name": "Negombo", "slug": "negombo", "postcode": "11500", "districtSlug": "gampaha", "districtName": "Gampaha", "province": "Western", "latitude": 7.2083, "longitude": 79.8358, "altNames": ["MIGAMUWA"] },
+        { "name": "Wattala", "slug": "wattala", "postcode": "11300", "districtSlug": "gampaha", "districtName": "Gampaha", "province": "Western", "latitude": 6.9892, "longitude": 79.8922, "altNames": [] },
+        { "name": "Ja-Ela", "slug": "ja-ela", "postcode": "11350", "districtSlug": "gampaha", "districtName": "Gampaha", "province": "Western", "latitude": 7.0744, "longitude": 79.8917, "altNames": [] },
+        { "name": "Kelaniya", "slug": "kelaniya", "postcode": "11600", "districtSlug": "gampaha", "districtName": "Gampaha", "province": "Western", "latitude": 6.9556, "longitude": 79.9147, "altNames": [] },
+        { "name": "Kiribathgoda", "slug": "kiribathgoda", "postcode": "11600", "districtSlug": "gampaha", "districtName": "Gampaha", "province": "Western", "latitude": 6.9811, "longitude": 79.9278, "altNames": [] },
+        { "name": "Kadawatha", "slug": "kadawatha", "postcode": "11850", "districtSlug": "gampaha", "districtName": "Gampaha", "province": "Western", "latitude": 7.0017, "longitude": 79.9511, "altNames": [] },
+        { "name": "Veyangoda", "slug": "veyangoda", "postcode": "11100", "districtSlug": "gampaha", "districtName": "Gampaha", "province": "Western", "latitude": 7.1558, "longitude": 80.0583, "altNames": [] },
+        { "name": "Mirigama", "slug": "mirigama", "postcode": "11200", "districtSlug": "gampaha", "districtName": "Gampaha", "province": "Western", "latitude": 7.2417, "longitude": 80.1306, "altNames": [] },
+        { "name": "Minuwangoda", "slug": "minuwangoda", "postcode": "11370", "districtSlug": "gampaha", "districtName": "Gampaha", "province": "Western", "latitude": 7.1667, "longitude": 79.9500, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "kalutara",
+      "name": "Kalutara",
+      "nameSi": "කළුතර",
+      "nameTa": "களுத்துறை",
+      "province": "Western",
+      "capital": "Kalutara",
+      "population": 1217432,
+      "areaSqKm": 1598,
+      "latitude": 6.5833,
+      "longitude": 79.9583,
+      "cities": [
+        { "name": "Kalutara", "slug": "kalutara", "postcode": "12000", "districtSlug": "kalutara", "districtName": "Kalutara", "province": "Western", "latitude": 6.5833, "longitude": 79.9583, "altNames": [] },
+        { "name": "Panadura", "slug": "panadura", "postcode": "12500", "districtSlug": "kalutara", "districtName": "Kalutara", "province": "Western", "latitude": 6.7114, "longitude": 79.9075, "altNames": [] },
+        { "name": "Horana", "slug": "horana", "postcode": "12400", "districtSlug": "kalutara", "districtName": "Kalutara", "province": "Western", "latitude": 6.7167, "longitude": 80.0667, "altNames": [] },
+        { "name": "Beruwala", "slug": "beruwala", "postcode": "12070", "districtSlug": "kalutara", "districtName": "Kalutara", "province": "Western", "latitude": 6.4778, "longitude": 79.9828, "altNames": [] },
+        { "name": "Aluthgama", "slug": "aluthgama", "postcode": "12080", "districtSlug": "kalutara", "districtName": "Kalutara", "province": "Western", "latitude": 6.4356, "longitude": 79.9972, "altNames": [] },
+        { "name": "Matugama", "slug": "matugama", "postcode": "12100", "districtSlug": "kalutara", "districtName": "Kalutara", "province": "Western", "latitude": 6.5222, "longitude": 80.1167, "altNames": [] },
+        { "name": "Wadduwa", "slug": "wadduwa", "postcode": "12560", "districtSlug": "kalutara", "districtName": "Kalutara", "province": "Western", "latitude": 6.6644, "longitude": 79.9317, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "kandy",
+      "name": "Kandy",
+      "nameSi": "මහනුවර",
+      "nameTa": "கண்டி",
+      "province": "Central",
+      "capital": "Kandy",
+      "population": 1375382,
+      "areaSqKm": 1940,
+      "latitude": 7.2906,
+      "longitude": 80.6337,
+      "cities": [
+        { "name": "Kandy", "slug": "kandy", "postcode": "20000", "districtSlug": "kandy", "districtName": "Kandy", "province": "Central", "latitude": 7.2906, "longitude": 80.6337, "altNames": ["Senkadagala"] },
+        { "name": "Peradeniya", "slug": "peradeniya", "postcode": "20400", "districtSlug": "kandy", "districtName": "Kandy", "province": "Central", "latitude": 7.2667, "longitude": 80.5958, "altNames": [] },
+        { "name": "Katugastota", "slug": "katugastota", "postcode": "20000", "districtSlug": "kandy", "districtName": "Kandy", "province": "Central", "latitude": 7.3167, "longitude": 80.6167, "altNames": [] },
+        { "name": "Gampola", "slug": "gampola", "postcode": "20500", "districtSlug": "kandy", "districtName": "Kandy", "province": "Central", "latitude": 7.1647, "longitude": 80.5692, "altNames": [] },
+        { "name": "Nawalapitiya", "slug": "nawalapitiya", "postcode": "20650", "districtSlug": "kandy", "districtName": "Kandy", "province": "Central", "latitude": 7.0544, "longitude": 80.5367, "altNames": [] },
+        { "name": "Kundasale", "slug": "kundasale", "postcode": "20168", "districtSlug": "kandy", "districtName": "Kandy", "province": "Central", "latitude": 7.2889, "longitude": 80.6833, "altNames": [] },
+        { "name": "Digana", "slug": "digana", "postcode": "20180", "districtSlug": "kandy", "districtName": "Kandy", "province": "Central", "latitude": 7.3000, "longitude": 80.7333, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "matale",
+      "name": "Matale",
+      "nameSi": "මාතලේ",
+      "nameTa": "மாத்தளை",
+      "province": "Central",
+      "capital": "Matale",
+      "population": 484531,
+      "areaSqKm": 1993,
+      "latitude": 7.4667,
+      "longitude": 80.6239,
+      "cities": [
+        { "name": "Matale", "slug": "matale", "postcode": "21000", "districtSlug": "matale", "districtName": "Matale", "province": "Central", "latitude": 7.4667, "longitude": 80.6239, "altNames": [] },
+        { "name": "Dambulla", "slug": "dambulla", "postcode": "21100", "districtSlug": "matale", "districtName": "Matale", "province": "Central", "latitude": 7.8600, "longitude": 80.6517, "altNames": [] },
+        { "name": "Sigiriya", "slug": "sigiriya", "postcode": "21120", "districtSlug": "matale", "districtName": "Matale", "province": "Central", "latitude": 7.9570, "longitude": 80.7600, "altNames": [] },
+        { "name": "Galewela", "slug": "galewela", "postcode": "21200", "districtSlug": "matale", "districtName": "Matale", "province": "Central", "latitude": 7.7556, "longitude": 80.5611, "altNames": [] },
+        { "name": "Rattota", "slug": "rattota", "postcode": "21400", "districtSlug": "matale", "districtName": "Matale", "province": "Central", "latitude": 7.5167, "longitude": 80.6667, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "nuwara-eliya",
+      "name": "Nuwara Eliya",
+      "nameSi": "නුවර එළිය",
+      "nameTa": "நுவரெலியா",
+      "province": "Central",
+      "capital": "Nuwara Eliya",
+      "population": 711644,
+      "areaSqKm": 1741,
+      "latitude": 6.9497,
+      "longitude": 80.7891,
+      "cities": [
+        { "name": "Nuwara Eliya", "slug": "nuwara-eliya", "postcode": "22200", "districtSlug": "nuwara-eliya", "districtName": "Nuwara Eliya", "province": "Central", "latitude": 6.9497, "longitude": 80.7891, "altNames": [] },
+        { "name": "Hatton", "slug": "hatton", "postcode": "22000", "districtSlug": "nuwara-eliya", "districtName": "Nuwara Eliya", "province": "Central", "latitude": 6.8917, "longitude": 80.5961, "altNames": [] },
+        { "name": "Talawakele", "slug": "talawakele", "postcode": "22090", "districtSlug": "nuwara-eliya", "districtName": "Nuwara Eliya", "province": "Central", "latitude": 6.9389, "longitude": 80.6556, "altNames": [] },
+        { "name": "Maskeliya", "slug": "maskeliya", "postcode": "22070", "districtSlug": "nuwara-eliya", "districtName": "Nuwara Eliya", "province": "Central", "latitude": 6.8333, "longitude": 80.5667, "altNames": [] },
+        { "name": "Ginigathena", "slug": "ginigathena", "postcode": "22080", "districtSlug": "nuwara-eliya", "districtName": "Nuwara Eliya", "province": "Central", "latitude": 6.9889, "longitude": 80.4944, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "galle",
+      "name": "Galle",
+      "nameSi": "ගාල්ල",
+      "nameTa": "காலி",
+      "province": "Southern",
+      "capital": "Galle",
+      "population": 1063334,
+      "areaSqKm": 1652,
+      "latitude": 6.0535,
+      "longitude": 80.2210,
+      "cities": [
+        { "name": "Galle", "slug": "galle", "postcode": "80000", "districtSlug": "galle", "districtName": "Galle", "province": "Southern", "latitude": 6.0535, "longitude": 80.2210, "altNames": [] },
+        { "name": "Hikkaduwa", "slug": "hikkaduwa", "postcode": "80240", "districtSlug": "galle", "districtName": "Galle", "province": "Southern", "latitude": 6.1394, "longitude": 80.1011, "altNames": [] },
+        { "name": "Ambalangoda", "slug": "ambalangoda", "postcode": "80300", "districtSlug": "galle", "districtName": "Galle", "province": "Southern", "latitude": 6.2361, "longitude": 80.0544, "altNames": [] },
+        { "name": "Elpitiya", "slug": "elpitiya", "postcode": "80400", "districtSlug": "galle", "districtName": "Galle", "province": "Southern", "latitude": 6.2567, "longitude": 80.1425, "altNames": [] },
+        { "name": "Bentota", "slug": "bentota", "postcode": "80500", "districtSlug": "galle", "districtName": "Galle", "province": "Southern", "latitude": 6.4258, "longitude": 80.0011, "altNames": [] },
+        { "name": "Ahangama", "slug": "ahangama", "postcode": "80650", "districtSlug": "galle", "districtName": "Galle", "province": "Southern", "latitude": 5.9694, "longitude": 80.3667, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "matara",
+      "name": "Matara",
+      "nameSi": "මාතර",
+      "nameTa": "மாத்தறை",
+      "province": "Southern",
+      "capital": "Matara",
+      "population": 814048,
+      "areaSqKm": 1283,
+      "latitude": 5.9496,
+      "longitude": 80.5469,
+      "cities": [
+        { "name": "Matara", "slug": "matara", "postcode": "81000", "districtSlug": "matara", "districtName": "Matara", "province": "Southern", "latitude": 5.9496, "longitude": 80.5469, "altNames": [] },
+        { "name": "Weligama", "slug": "weligama", "postcode": "81700", "districtSlug": "matara", "districtName": "Matara", "province": "Southern", "latitude": 5.9750, "longitude": 80.4292, "altNames": [] },
+        { "name": "Dikwella", "slug": "dikwella", "postcode": "81200", "districtSlug": "matara", "districtName": "Matara", "province": "Southern", "latitude": 5.9611, "longitude": 80.6972, "altNames": [] },
+        { "name": "Deniyaya", "slug": "deniyaya", "postcode": "81500", "districtSlug": "matara", "districtName": "Matara", "province": "Southern", "latitude": 6.3417, "longitude": 80.5583, "altNames": [] },
+        { "name": "Akuressa", "slug": "akuressa", "postcode": "81400", "districtSlug": "matara", "districtName": "Matara", "province": "Southern", "latitude": 6.0989, "longitude": 80.4722, "altNames": [] },
+        { "name": "Mirissa", "slug": "mirissa", "postcode": "81740", "districtSlug": "matara", "districtName": "Matara", "province": "Southern", "latitude": 5.9483, "longitude": 80.4711, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "hambantota",
+      "name": "Hambantota",
+      "nameSi": "හම්බන්තොට",
+      "nameTa": "அம்பாந்தோட்டை",
+      "province": "Southern",
+      "capital": "Hambantota",
+      "population": 599617,
+      "areaSqKm": 2609,
+      "latitude": 6.1242,
+      "longitude": 81.1185,
+      "cities": [
+        { "name": "Hambantota", "slug": "hambantota", "postcode": "82000", "districtSlug": "hambantota", "districtName": "Hambantota", "province": "Southern", "latitude": 6.1242, "longitude": 81.1185, "altNames": [] },
+        { "name": "Tangalle", "slug": "tangalle", "postcode": "82200", "districtSlug": "hambantota", "districtName": "Hambantota", "province": "Southern", "latitude": 6.0244, "longitude": 80.7942, "altNames": [] },
+        { "name": "Ambalantota", "slug": "ambalantota", "postcode": "82100", "districtSlug": "hambantota", "districtName": "Hambantota", "province": "Southern", "latitude": 6.1228, "longitude": 81.0244, "altNames": [] },
+        { "name": "Tissamaharama", "slug": "tissamaharama", "postcode": "82600", "districtSlug": "hambantota", "districtName": "Hambantota", "province": "Southern", "latitude": 6.2806, "longitude": 81.2867, "altNames": ["Tissa"] },
+        { "name": "Beliatta", "slug": "beliatta", "postcode": "82400", "districtSlug": "hambantota", "districtName": "Hambantota", "province": "Southern", "latitude": 6.0469, "longitude": 80.7428, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "jaffna",
+      "name": "Jaffna",
+      "nameSi": "යාපනය",
+      "nameTa": "யாழ்ப்பாணம்",
+      "province": "Northern",
+      "capital": "Jaffna",
+      "population": 583882,
+      "areaSqKm": 1025,
+      "latitude": 9.6615,
+      "longitude": 80.0255,
+      "cities": [
+        { "name": "Jaffna", "slug": "jaffna", "postcode": "40000", "districtSlug": "jaffna", "districtName": "Jaffna", "province": "Northern", "latitude": 9.6615, "longitude": 80.0255, "altNames": ["Yalpanam"] },
+        { "name": "Chavakachcheri", "slug": "chavakachcheri", "postcode": "40000", "districtSlug": "jaffna", "districtName": "Jaffna", "province": "Northern", "latitude": 9.6558, "longitude": 80.1567, "altNames": [] },
+        { "name": "Point Pedro", "slug": "point-pedro", "postcode": "40000", "districtSlug": "jaffna", "districtName": "Jaffna", "province": "Northern", "latitude": 9.8167, "longitude": 80.2333, "altNames": ["Paruthithurai"] },
+        { "name": "Nallur", "slug": "nallur", "postcode": "40000", "districtSlug": "jaffna", "districtName": "Jaffna", "province": "Northern", "latitude": 9.6736, "longitude": 80.0294, "altNames": [] },
+        { "name": "Chunnakam", "slug": "chunnakam", "postcode": "40000", "districtSlug": "jaffna", "districtName": "Jaffna", "province": "Northern", "latitude": 9.7461, "longitude": 80.0256, "altNames": [] },
+        { "name": "Valvettithurai", "slug": "valvettithurai", "postcode": "40000", "districtSlug": "jaffna", "districtName": "Jaffna", "province": "Northern", "latitude": 9.8142, "longitude": 80.1683, "altNames": ["VVT"] }
+      ]
+    },
+    {
+      "slug": "kilinochchi",
+      "name": "Kilinochchi",
+      "nameSi": "කිලිනොච්චි",
+      "nameTa": "கிளிநொச்சி",
+      "province": "Northern",
+      "capital": "Kilinochchi",
+      "population": 112875,
+      "areaSqKm": 1279,
+      "latitude": 9.3803,
+      "longitude": 80.3986,
+      "cities": [
+        { "name": "Kilinochchi", "slug": "kilinochchi", "postcode": "44000", "districtSlug": "kilinochchi", "districtName": "Kilinochchi", "province": "Northern", "latitude": 9.3803, "longitude": 80.3986, "altNames": [] },
+        { "name": "Pallai", "slug": "pallai", "postcode": "44000", "districtSlug": "kilinochchi", "districtName": "Kilinochchi", "province": "Northern", "latitude": 9.5581, "longitude": 80.2867, "altNames": [] },
+        { "name": "Pooneryn", "slug": "pooneryn", "postcode": "44000", "districtSlug": "kilinochchi", "districtName": "Kilinochchi", "province": "Northern", "latitude": 9.5167, "longitude": 80.2000, "altNames": [] },
+        { "name": "Paranthan", "slug": "paranthan", "postcode": "44000", "districtSlug": "kilinochchi", "districtName": "Kilinochchi", "province": "Northern", "latitude": 9.4333, "longitude": 80.4000, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "mannar",
+      "name": "Mannar",
+      "nameSi": "මන්නාරම",
+      "nameTa": "மன்னார்",
+      "province": "Northern",
+      "capital": "Mannar",
+      "population": 99051,
+      "areaSqKm": 1996,
+      "latitude": 8.9814,
+      "longitude": 79.9042,
+      "cities": [
+        { "name": "Mannar", "slug": "mannar", "postcode": "41000", "districtSlug": "mannar", "districtName": "Mannar", "province": "Northern", "latitude": 8.9814, "longitude": 79.9042, "altNames": [] },
+        { "name": "Murunkan", "slug": "murunkan", "postcode": "41000", "districtSlug": "mannar", "districtName": "Mannar", "province": "Northern", "latitude": 8.8333, "longitude": 80.0167, "altNames": [] },
+        { "name": "Pesalai", "slug": "pesalai", "postcode": "41000", "districtSlug": "mannar", "districtName": "Mannar", "province": "Northern", "latitude": 9.0833, "longitude": 79.8167, "altNames": [] },
+        { "name": "Talaimannar", "slug": "talaimannar", "postcode": "41000", "districtSlug": "mannar", "districtName": "Mannar", "province": "Northern", "latitude": 9.1000, "longitude": 79.7333, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "vavuniya",
+      "name": "Vavuniya",
+      "nameSi": "වවුනියාව",
+      "nameTa": "வவுனியா",
+      "province": "Northern",
+      "capital": "Vavuniya",
+      "population": 167420,
+      "areaSqKm": 1967,
+      "latitude": 8.7514,
+      "longitude": 80.4971,
+      "cities": [
+        { "name": "Vavuniya", "slug": "vavuniya", "postcode": "43000", "districtSlug": "vavuniya", "districtName": "Vavuniya", "province": "Northern", "latitude": 8.7514, "longitude": 80.4971, "altNames": [] },
+        { "name": "Cheddikulam", "slug": "cheddikulam", "postcode": "43000", "districtSlug": "vavuniya", "districtName": "Vavuniya", "province": "Northern", "latitude": 8.6667, "longitude": 80.3000, "altNames": [] },
+        { "name": "Omanthai", "slug": "omanthai", "postcode": "43000", "districtSlug": "vavuniya", "districtName": "Vavuniya", "province": "Northern", "latitude": 8.8833, "longitude": 80.5000, "altNames": [] },
+        { "name": "Nedunkeni", "slug": "nedunkeni", "postcode": "43000", "districtSlug": "vavuniya", "districtName": "Vavuniya", "province": "Northern", "latitude": 8.9500, "longitude": 80.6833, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "mullaitivu",
+      "name": "Mullaitivu",
+      "nameSi": "මුලතිව්",
+      "nameTa": "முல்லைத்தீவு",
+      "province": "Northern",
+      "capital": "Mullaitivu",
+      "population": 91947,
+      "areaSqKm": 2617,
+      "latitude": 9.2671,
+      "longitude": 80.8142,
+      "cities": [
+        { "name": "Mullaitivu", "slug": "mullaitivu", "postcode": "42000", "districtSlug": "mullaitivu", "districtName": "Mullaitivu", "province": "Northern", "latitude": 9.2671, "longitude": 80.8142, "altNames": [] },
+        { "name": "Puthukkudiyiruppu", "slug": "puthukkudiyiruppu", "postcode": "42000", "districtSlug": "mullaitivu", "districtName": "Mullaitivu", "province": "Northern", "latitude": 9.3167, "longitude": 80.6833, "altNames": ["PTK"] },
+        { "name": "Oddusuddan", "slug": "oddusuddan", "postcode": "42000", "districtSlug": "mullaitivu", "districtName": "Mullaitivu", "province": "Northern", "latitude": 9.1500, "longitude": 80.6500, "altNames": [] },
+        { "name": "Mallavi", "slug": "mallavi", "postcode": "42000", "districtSlug": "mullaitivu", "districtName": "Mullaitivu", "province": "Northern", "latitude": 9.1333, "longitude": 80.3000, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "batticaloa",
+      "name": "Batticaloa",
+      "nameSi": "මඩකලපුව",
+      "nameTa": "மட்டக்களப்பு",
+      "province": "Eastern",
+      "capital": "Batticaloa",
+      "population": 526567,
+      "areaSqKm": 2854,
+      "latitude": 7.7170,
+      "longitude": 81.7000,
+      "cities": [
+        { "name": "Batticaloa", "slug": "batticaloa", "postcode": "30000", "districtSlug": "batticaloa", "districtName": "Batticaloa", "province": "Eastern", "latitude": 7.7170, "longitude": 81.7000, "altNames": [] },
+        { "name": "Kattankudy", "slug": "kattankudy", "postcode": "30100", "districtSlug": "batticaloa", "districtName": "Batticaloa", "province": "Eastern", "latitude": 7.6833, "longitude": 81.7167, "altNames": [] },
+        { "name": "Eravur", "slug": "eravur", "postcode": "30300", "districtSlug": "batticaloa", "districtName": "Batticaloa", "province": "Eastern", "latitude": 7.7667, "longitude": 81.6000, "altNames": [] },
+        { "name": "Valachchenai", "slug": "valachchenai", "postcode": "30400", "districtSlug": "batticaloa", "districtName": "Batticaloa", "province": "Eastern", "latitude": 7.9239, "longitude": 81.5306, "altNames": [] },
+        { "name": "Kaluwanchikudy", "slug": "kaluwanchikudy", "postcode": "30200", "districtSlug": "batticaloa", "districtName": "Batticaloa", "province": "Eastern", "latitude": 7.5333, "longitude": 81.7833, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "ampara",
+      "name": "Ampara",
+      "nameSi": "අම්පාර",
+      "nameTa": "அம்பாறை",
+      "province": "Eastern",
+      "capital": "Ampara",
+      "population": 649402,
+      "areaSqKm": 4415,
+      "latitude": 7.2912,
+      "longitude": 81.6724,
+      "cities": [
+        { "name": "Ampara", "slug": "ampara", "postcode": "32000", "districtSlug": "ampara", "districtName": "Ampara", "province": "Eastern", "latitude": 7.2912, "longitude": 81.6724, "altNames": [] },
+        { "name": "Kalmunai", "slug": "kalmunai", "postcode": "32300", "districtSlug": "ampara", "districtName": "Ampara", "province": "Eastern", "latitude": 7.4167, "longitude": 81.8333, "altNames": [] },
+        { "name": "Sammanthurai", "slug": "sammanthurai", "postcode": "32200", "districtSlug": "ampara", "districtName": "Ampara", "province": "Eastern", "latitude": 7.3667, "longitude": 81.8000, "altNames": [] },
+        { "name": "Akkaraipattu", "slug": "akkaraipattu", "postcode": "32400", "districtSlug": "ampara", "districtName": "Ampara", "province": "Eastern", "latitude": 7.2167, "longitude": 81.8500, "altNames": [] },
+        { "name": "Pottuvil", "slug": "pottuvil", "postcode": "32500", "districtSlug": "ampara", "districtName": "Ampara", "province": "Eastern", "latitude": 6.8667, "longitude": 81.8333, "altNames": ["Arugam Bay"] },
+        { "name": "Dehiattakandiya", "slug": "dehiattakandiya", "postcode": "32150", "districtSlug": "ampara", "districtName": "Ampara", "province": "Eastern", "latitude": 7.6744, "longitude": 81.0183, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "trincomalee",
+      "name": "Trincomalee",
+      "nameSi": "ත්‍රිකුණාමලය",
+      "nameTa": "திருகோணமலை",
+      "province": "Eastern",
+      "capital": "Trincomalee",
+      "population": 379541,
+      "areaSqKm": 2727,
+      "latitude": 8.5874,
+      "longitude": 81.2152,
+      "cities": [
+        { "name": "Trincomalee", "slug": "trincomalee", "postcode": "31000", "districtSlug": "trincomalee", "districtName": "Trincomalee", "province": "Eastern", "latitude": 8.5874, "longitude": 81.2152, "altNames": ["Trinco"] },
+        { "name": "Kinniya", "slug": "kinniya", "postcode": "31100", "districtSlug": "trincomalee", "districtName": "Trincomalee", "province": "Eastern", "latitude": 8.4975, "longitude": 81.1925, "altNames": [] },
+        { "name": "Mutur", "slug": "mutur", "postcode": "31200", "districtSlug": "trincomalee", "districtName": "Trincomalee", "province": "Eastern", "latitude": 8.4500, "longitude": 81.2667, "altNames": [] },
+        { "name": "Kantale", "slug": "kantale", "postcode": "31300", "districtSlug": "trincomalee", "districtName": "Trincomalee", "province": "Eastern", "latitude": 8.3583, "longitude": 80.9917, "altNames": [] },
+        { "name": "Nilaveli", "slug": "nilaveli", "postcode": "31010", "districtSlug": "trincomalee", "districtName": "Trincomalee", "province": "Eastern", "latitude": 8.6833, "longitude": 81.2000, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "kurunegala",
+      "name": "Kurunegala",
+      "nameSi": "කුරුණෑගල",
+      "nameTa": "குருணாகல்",
+      "province": "North Western",
+      "capital": "Kurunegala",
+      "population": 1618465,
+      "areaSqKm": 4816,
+      "latitude": 7.4863,
+      "longitude": 80.3623,
+      "cities": [
+        { "name": "Kurunegala", "slug": "kurunegala", "postcode": "60000", "districtSlug": "kurunegala", "districtName": "Kurunegala", "province": "North Western", "latitude": 7.4863, "longitude": 80.3623, "altNames": [] },
+        { "name": "Kuliyapitiya", "slug": "kuliyapitiya", "postcode": "60200", "districtSlug": "kurunegala", "districtName": "Kurunegala", "province": "North Western", "latitude": 7.4689, "longitude": 80.0403, "altNames": [] },
+        { "name": "Narammala", "slug": "narammala", "postcode": "60100", "districtSlug": "kurunegala", "districtName": "Kurunegala", "province": "North Western", "latitude": 7.4333, "longitude": 80.2167, "altNames": [] },
+        { "name": "Pannala", "slug": "pannala", "postcode": "60160", "districtSlug": "kurunegala", "districtName": "Kurunegala", "province": "North Western", "latitude": 7.3333, "longitude": 79.9833, "altNames": [] },
+        { "name": "Giriulla", "slug": "giriulla", "postcode": "60140", "districtSlug": "kurunegala", "districtName": "Kurunegala", "province": "North Western", "latitude": 7.3667, "longitude": 80.1167, "altNames": [] },
+        { "name": "Wariyapola", "slug": "wariyapola", "postcode": "60400", "districtSlug": "kurunegala", "districtName": "Kurunegala", "province": "North Western", "latitude": 7.6167, "longitude": 80.2667, "altNames": [] },
+        { "name": "Nikaweratiya", "slug": "nikaweratiya", "postcode": "60470", "districtSlug": "kurunegala", "districtName": "Kurunegala", "province": "North Western", "latitude": 7.7500, "longitude": 80.1167, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "puttalam",
+      "name": "Puttalam",
+      "nameSi": "පුත්තලම",
+      "nameTa": "புத்தளம்",
+      "province": "North Western",
+      "capital": "Puttalam",
+      "population": 762396,
+      "areaSqKm": 3072,
+      "latitude": 8.0362,
+      "longitude": 79.8283,
+      "cities": [
+        { "name": "Puttalam", "slug": "puttalam", "postcode": "61300", "districtSlug": "puttalam", "districtName": "Puttalam", "province": "North Western", "latitude": 8.0362, "longitude": 79.8283, "altNames": [] },
+        { "name": "Chilaw", "slug": "chilaw", "postcode": "61000", "districtSlug": "puttalam", "districtName": "Puttalam", "province": "North Western", "latitude": 7.5758, "longitude": 79.7953, "altNames": ["Halawatha"] },
+        { "name": "Wennappuwa", "slug": "wennappuwa", "postcode": "61170", "districtSlug": "puttalam", "districtName": "Puttalam", "province": "North Western", "latitude": 7.3667, "longitude": 79.8500, "altNames": [] },
+        { "name": "Marawila", "slug": "marawila", "postcode": "61210", "districtSlug": "puttalam", "districtName": "Puttalam", "province": "North Western", "latitude": 7.4167, "longitude": 79.8167, "altNames": [] },
+        { "name": "Dankotuwa", "slug": "dankotuwa", "postcode": "61130", "districtSlug": "puttalam", "districtName": "Puttalam", "province": "North Western", "latitude": 7.3000, "longitude": 79.8833, "altNames": [] },
+        { "name": "Anamaduwa", "slug": "anamaduwa", "postcode": "61500", "districtSlug": "puttalam", "districtName": "Puttalam", "province": "North Western", "latitude": 8.0167, "longitude": 80.0167, "altNames": [] },
+        { "name": "Kalpitiya", "slug": "kalpitiya", "postcode": "61360", "districtSlug": "puttalam", "districtName": "Puttalam", "province": "North Western", "latitude": 8.2333, "longitude": 79.7667, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "anuradhapura",
+      "name": "Anuradhapura",
+      "nameSi": "අනුරාධපුරය",
+      "nameTa": "அனுராதபுரம்",
+      "province": "North Central",
+      "capital": "Anuradhapura",
+      "population": 856500,
+      "areaSqKm": 7179,
+      "latitude": 8.3114,
+      "longitude": 80.4037,
+      "cities": [
+        { "name": "Anuradhapura", "slug": "anuradhapura", "postcode": "50000", "districtSlug": "anuradhapura", "districtName": "Anuradhapura", "province": "North Central", "latitude": 8.3114, "longitude": 80.4037, "altNames": [] },
+        { "name": "Kekirawa", "slug": "kekirawa", "postcode": "50100", "districtSlug": "anuradhapura", "districtName": "Anuradhapura", "province": "North Central", "latitude": 8.0333, "longitude": 80.5833, "altNames": [] },
+        { "name": "Eppawala", "slug": "eppawala", "postcode": "50260", "districtSlug": "anuradhapura", "districtName": "Anuradhapura", "province": "North Central", "latitude": 8.1333, "longitude": 80.4167, "altNames": [] },
+        { "name": "Medawachchiya", "slug": "medawachchiya", "postcode": "50500", "districtSlug": "anuradhapura", "districtName": "Anuradhapura", "province": "North Central", "latitude": 8.5333, "longitude": 80.4833, "altNames": [] },
+        { "name": "Tambuttegama", "slug": "tambuttegama", "postcode": "50150", "districtSlug": "anuradhapura", "districtName": "Anuradhapura", "province": "North Central", "latitude": 8.1500, "longitude": 80.2833, "altNames": [] },
+        { "name": "Mihintale", "slug": "mihintale", "postcode": "50000", "districtSlug": "anuradhapura", "districtName": "Anuradhapura", "province": "North Central", "latitude": 8.3500, "longitude": 80.5000, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "polonnaruwa",
+      "name": "Polonnaruwa",
+      "nameSi": "පොළොන්නරුව",
+      "nameTa": "பொலன்னறுவை",
+      "province": "North Central",
+      "capital": "Polonnaruwa",
+      "population": 406088,
+      "areaSqKm": 3293,
+      "latitude": 7.9403,
+      "longitude": 81.0188,
+      "cities": [
+        { "name": "Polonnaruwa", "slug": "polonnaruwa", "postcode": "51000", "districtSlug": "polonnaruwa", "districtName": "Polonnaruwa", "province": "North Central", "latitude": 7.9403, "longitude": 81.0188, "altNames": [] },
+        { "name": "Kaduruwela", "slug": "kaduruwela", "postcode": "51000", "districtSlug": "polonnaruwa", "districtName": "Polonnaruwa", "province": "North Central", "latitude": 7.9333, "longitude": 81.0167, "altNames": [] },
+        { "name": "Hingurakgoda", "slug": "hingurakgoda", "postcode": "52100", "districtSlug": "polonnaruwa", "districtName": "Polonnaruwa", "province": "North Central", "latitude": 8.0500, "longitude": 80.9833, "altNames": [] },
+        { "name": "Medirigiriya", "slug": "medirigiriya", "postcode": "52150", "districtSlug": "polonnaruwa", "districtName": "Polonnaruwa", "province": "North Central", "latitude": 8.1500, "longitude": 81.0500, "altNames": [] },
+        { "name": "Minneriya", "slug": "minneriya", "postcode": "50150", "districtSlug": "polonnaruwa", "districtName": "Polonnaruwa", "province": "North Central", "latitude": 8.0333, "longitude": 80.9000, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "badulla",
+      "name": "Badulla",
+      "nameSi": "බදුල්ල",
+      "nameTa": "பதுளை",
+      "province": "Uva",
+      "capital": "Badulla",
+      "population": 815405,
+      "areaSqKm": 2861,
+      "latitude": 6.9934,
+      "longitude": 81.0550,
+      "cities": [
+        { "name": "Badulla", "slug": "badulla", "postcode": "90000", "districtSlug": "badulla", "districtName": "Badulla", "province": "Uva", "latitude": 6.9934, "longitude": 81.0550, "altNames": [] },
+        { "name": "Bandarawela", "slug": "bandarawela", "postcode": "90100", "districtSlug": "badulla", "districtName": "Badulla", "province": "Uva", "latitude": 6.8333, "longitude": 80.9833, "altNames": [] },
+        { "name": "Haputale", "slug": "haputale", "postcode": "90160", "districtSlug": "badulla", "districtName": "Badulla", "province": "Uva", "latitude": 6.7681, "longitude": 80.9575, "altNames": [] },
+        { "name": "Ella", "slug": "ella", "postcode": "90090", "districtSlug": "badulla", "districtName": "Badulla", "province": "Uva", "latitude": 6.8667, "longitude": 81.0464, "altNames": [] },
+        { "name": "Welimada", "slug": "welimada", "postcode": "90200", "districtSlug": "badulla", "districtName": "Badulla", "province": "Uva", "latitude": 6.9044, "longitude": 80.9167, "altNames": [] },
+        { "name": "Mahiyanganaya", "slug": "mahiyanganaya", "postcode": "90700", "districtSlug": "badulla", "districtName": "Badulla", "province": "Uva", "latitude": 7.3167, "longitude": 81.0000, "altNames": [] },
+        { "name": "Diyatalawa", "slug": "diyatalawa", "postcode": "90150", "districtSlug": "badulla", "districtName": "Badulla", "province": "Uva", "latitude": 6.8167, "longitude": 80.9667, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "monaragala",
+      "name": "Monaragala",
+      "nameSi": "මොණරාගල",
+      "nameTa": "மொனராகலை",
+      "province": "Uva",
+      "capital": "Monaragala",
+      "population": 451058,
+      "areaSqKm": 5639,
+      "latitude": 6.8731,
+      "longitude": 81.3514,
+      "cities": [
+        { "name": "Monaragala", "slug": "monaragala", "postcode": "91000", "districtSlug": "monaragala", "districtName": "Monaragala", "province": "Uva", "latitude": 6.8731, "longitude": 81.3514, "altNames": [] },
+        { "name": "Wellawaya", "slug": "wellawaya", "postcode": "91200", "districtSlug": "monaragala", "districtName": "Monaragala", "province": "Uva", "latitude": 6.7389, "longitude": 81.1028, "altNames": [] },
+        { "name": "Kataragama", "slug": "kataragama", "postcode": "91400", "districtSlug": "monaragala", "districtName": "Monaragala", "province": "Uva", "latitude": 6.4167, "longitude": 81.3333, "altNames": [] },
+        { "name": "Bibile", "slug": "bibile", "postcode": "91500", "districtSlug": "monaragala", "districtName": "Monaragala", "province": "Uva", "latitude": 7.1667, "longitude": 81.2167, "altNames": [] },
+        { "name": "Buttala", "slug": "buttala", "postcode": "91210", "districtSlug": "monaragala", "districtName": "Monaragala", "province": "Uva", "latitude": 6.7583, "longitude": 81.2417, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "ratnapura",
+      "name": "Ratnapura",
+      "nameSi": "රත්නපුර",
+      "nameTa": "இரத்தினபுரி",
+      "province": "Sabaragamuwa",
+      "capital": "Ratnapura",
+      "population": 1088007,
+      "areaSqKm": 3275,
+      "latitude": 6.6828,
+      "longitude": 80.4014,
+      "cities": [
+        { "name": "Ratnapura", "slug": "ratnapura", "postcode": "70000", "districtSlug": "ratnapura", "districtName": "Ratnapura", "province": "Sabaragamuwa", "latitude": 6.6828, "longitude": 80.4014, "altNames": [] },
+        { "name": "Balangoda", "slug": "balangoda", "postcode": "70100", "districtSlug": "ratnapura", "districtName": "Ratnapura", "province": "Sabaragamuwa", "latitude": 6.6500, "longitude": 80.7000, "altNames": [] },
+        { "name": "Embilipitiya", "slug": "embilipitiya", "postcode": "70200", "districtSlug": "ratnapura", "districtName": "Ratnapura", "province": "Sabaragamuwa", "latitude": 6.3389, "longitude": 80.8486, "altNames": [] },
+        { "name": "Kuruwita", "slug": "kuruwita", "postcode": "70400", "districtSlug": "ratnapura", "districtName": "Ratnapura", "province": "Sabaragamuwa", "latitude": 6.7667, "longitude": 80.3667, "altNames": [] },
+        { "name": "Pelmadulla", "slug": "pelmadulla", "postcode": "70500", "districtSlug": "ratnapura", "districtName": "Ratnapura", "province": "Sabaragamuwa", "latitude": 6.6231, "longitude": 80.5394, "altNames": [] },
+        { "name": "Eheliyagoda", "slug": "eheliyagoda", "postcode": "70600", "districtSlug": "ratnapura", "districtName": "Ratnapura", "province": "Sabaragamuwa", "latitude": 6.8481, "longitude": 80.2625, "altNames": [] }
+      ]
+    },
+    {
+      "slug": "kegalle",
+      "name": "Kegalle",
+      "nameSi": "කෑගල්ල",
+      "nameTa": "கேகாலை",
+      "province": "Sabaragamuwa",
+      "capital": "Kegalle",
+      "population": 840648,
+      "areaSqKm": 1693,
+      "latitude": 7.2514,
+      "longitude": 80.3464,
+      "cities": [
+        { "name": "Kegalle", "slug": "kegalle", "postcode": "71000", "districtSlug": "kegalle", "districtName": "Kegalle", "province": "Sabaragamuwa", "latitude": 7.2514, "longitude": 80.3464, "altNames": [] },
+        { "name": "Mawanella", "slug": "mawanella", "postcode": "71050", "districtSlug": "kegalle", "districtName": "Kegalle", "province": "Sabaragamuwa", "latitude": 7.2525, "longitude": 80.4447, "altNames": [] },
+        { "name": "Warakapola", "slug": "warakapola", "postcode": "71600", "districtSlug": "kegalle", "districtName": "Kegalle", "province": "Sabaragamuwa", "latitude": 7.2247, "longitude": 80.1978, "altNames": [] },
+        { "name": "Rambukkana", "slug": "rambukkana", "postcode": "71100", "districtSlug": "kegalle", "districtName": "Kegalle", "province": "Sabaragamuwa", "latitude": 7.3167, "longitude": 80.3833, "altNames": [] },
+        { "name": "Ruwanwella", "slug": "ruwanwella", "postcode": "71300", "districtSlug": "kegalle", "districtName": "Kegalle", "province": "Sabaragamuwa", "latitude": 7.0431, "longitude": 80.2528, "altNames": [] },
+        { "name": "Dehiowita", "slug": "dehiowita", "postcode": "71400", "districtSlug": "kegalle", "districtName": "Kegalle", "province": "Sabaragamuwa", "latitude": 6.9744, "longitude": 80.2644, "altNames": [] }
+      ]
+    }
+  ]
+}

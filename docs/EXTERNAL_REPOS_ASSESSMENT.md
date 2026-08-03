@@ -22,13 +22,13 @@
 |------|------------------|-------------|
 | [wmrkumara/lanka-price-monitor](https://github.com/wmrkumara/lanka-price-monitor) | GitHub raw `data.json` (CBSL Daily Price Report) + `harti_data_clean.json` | Food fallthrough after FoodLK: `src/lib/integrations/food-price-monitor.ts` |
 | [Gajarthan/sri-lanka-macro-publisher](https://github.com/Gajarthan/sri-lanka-macro-publisher) | `data/latest/dcs_ccpi.json` (+ FX/veg archives) | Live CCPI for `/economy` inflation card via `src/lib/integrations/macro-publisher.ts` |
-| [Damantha126/Helakuru-Esana-API](https://github.com/Damantha126/Helakuru-Esana-API) | `GET https://esana-api.vercel.app/EsanaV3` | **Opt-in** secondary headlines when `NEWS_ESANA_ENABLED=true` — default remains RSS-only |
+| [ThaminduDisnaZ/Esena-News-API](https://github.com/ThaminduDisnaZ/Esena-News-API-Sinhala-News-API) / [Damantha126/Helakuru-Esana-API](https://github.com/Damantha126/Helakuru-Esana-API) | `GET https://esena-news-api-v3.vercel.app/` / `GET https://esana-api.vercel.app/EsanaV3` | **Opt-in** secondary headlines with dual-endpoint fallback when `NEWS_ESANA_ENABLED=true` — default remains RSS-only |
 
 ### Honesty notes
 
 - **Price monitor:** Third-party JSON republish of CBSL/HARTI PDFs. Attribute as `cbsl_price_monitor` / `harti_price_monitor`, not as FoodLK or a Lankawa PDF scrape.
 - **Macro publisher:** DCS CCPI mirror with `status.json` health. Prefer over stale NCPI seed when parse succeeds; label series as **CCPI (Colombo)**, not NCPI.
-- **Esana:** Unofficial Helakuru API, GPL-3.0 upstream project, third-party fragility. Off by default; never replaces RSS strategy in `NEWS_RSS_MASTER_PLAN.md`.
+- **Esana:** Unofficial Helakuru API variants (`ThaminduDisnaZ` and `Damantha126`), third-party fragility with automatic dual-endpoint fallback. Off by default; never replaces RSS strategy in `NEWS_RSS_MASTER_PLAN.md`.
 
 ---
 

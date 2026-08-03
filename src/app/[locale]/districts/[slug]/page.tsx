@@ -45,6 +45,11 @@ import { getDengueDistrictStats } from "@/lib/health";
 import { getPublicServicesForDistrict } from "@/lib/services";
 import { getMpByElectoralDistrict } from "@/lib/civic";
 import { isVanniAdminDistrict } from "@/lib/election-swing";
+import {
+  getDistrictCities,
+  SEED_FALLBACK_DISCLAIMER,
+} from "@/lib/integrations/slcities";
+import { getSourceProvenancePath } from "@/lib/sources";
 
 export async function generateStaticParams() {
   return DISTRICTS.map((district) => ({ slug: district.slug }));
@@ -97,6 +102,8 @@ export default async function DistrictDetailPage({
   const marineSwell = isCoastalDistrict(slug)
     ? await fetchMarineSwell(slug)
     : null;
+
+  const locationData = await getDistrictCities(slug);
 
   const electionWinner = electionResult
     ? getElectionCandidate(electionResult.winner)
@@ -305,6 +312,67 @@ export default async function DistrictDetailPage({
           </div>
         ) : null}
       </dl>
+
+      {/* Location & Postal Code Hierarchy */}
+      <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 className="text-xl font-semibold text-white">
+              {districtName} City & Postal Hierarchy
+            </h2>
+            <p className="text-sm text-slate-400">
+              Major urban centers, 5-digit postal codes, and regional coordinates for {districtName}.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href={`/cities/nearby?district=${slug}`}
+              className="rounded-lg bg-teal-600 px-4 py-2 text-xs font-semibold text-white hover:bg-teal-500 transition"
+            >
+              Proximity Search & Nearby Cities →
+            </Link>
+            <Link
+              href={getSourceProvenancePath(locationData.sourceId) as any}
+              className="rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-xs font-medium text-slate-300 hover:text-white"
+            >
+              Source: {locationData.sourceId}
+            </Link>
+          </div>
+        </div>
+
+        {locationData.isFallback && (
+          <div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-xs text-amber-300">
+            <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
+            <span className="font-semibold">{SEED_FALLBACK_DISCLAIMER}</span>
+          </div>
+        )}
+
+        {locationData.cities.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 pt-2">
+            {locationData.cities.map((city) => (
+              <div
+                key={`${city.slug}-${city.postcode}`}
+                className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950/40 p-3"
+              >
+                <div>
+                  <span className="block text-sm font-medium text-white">{city.name}</span>
+                  <span className="block text-xs font-mono text-slate-500">
+                    {city.latitude.toFixed(3)}°N, {city.longitude.toFixed(3)}°E
+                  </span>
+                </div>
+                <Link
+                  href={`/cities/nearby?postal=${city.postcode}`}
+                  className="rounded-md bg-teal-950/80 px-2.5 py-1 text-xs font-mono font-semibold text-teal-300 border border-teal-800/60 hover:bg-teal-900"
+                >
+                  {city.postcode}
+                </Link>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-slate-400">No urban centers registered for this district.</p>
+        )}
+      </section>
 
       <FloodStationList
         stations={liveFloodStations}

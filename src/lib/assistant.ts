@@ -8,6 +8,11 @@ import {
 import { buildPulseSnapshot } from "./pulse";
 import { getPresidentialElection2024 } from "./elections";
 import { getPublicServicesCatalog, getPublicServicesForDistrict } from "./services";
+import {
+  lookupPostcode,
+  getCitySearch,
+  getDistrictCities,
+} from "./integrations/slcities";
 import type { PulseSnapshot } from "./types";
 
 export interface AssistantCitation {
@@ -92,6 +97,33 @@ export async function resolveDistrictSlugAsync(
     return sync;
   }
 
+  // 1. Try 5-digit postcode lookup
+  const trimmed = query.trim();
+  if (/^\d{5}$/.test(trimmed)) {
+    try {
+      const pcRes = await lookupPostcode(trimmed);
+      if (pcRes.city?.districtSlug && getDistrict(pcRes.city.districtSlug)) {
+        return pcRes.city.districtSlug;
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  // 2. Try city search
+  try {
+    const cityRes = await getCitySearch(query);
+    if (cityRes.hits.length > 0) {
+      const hit = cityRes.hits[0];
+      if (hit.districtSlug && getDistrict(hit.districtSlug)) {
+        return hit.districtSlug;
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  // 3. Fallback to Open-Meteo geocoding
   try {
     const hits = await searchSriLankaPlaces(query);
     for (const hit of hits) {
@@ -125,8 +157,19 @@ async function scopedDistrictAnswer(slug: string): Promise<AssistantAnswer> {
   let wikiLine = "";
   const citations: AssistantCitation[] = [
     { label: `${district.name} profile`, path: `/districts/${district.slug}` },
+    { label: "Cities & Postcodes", path: `/cities/nearby?district=${district.slug}` },
     { label: "Cost of living", path: "/cost-of-living" },
   ];
+
+  let cityLine = "";
+  try {
+    const cityRes = await getDistrictCities(slug);
+    if (cityRes.cities.length > 0) {
+      cityLine = ` ${cityRes.cities.length} major urban centers / postcodes mapped.`;
+    }
+  } catch {
+    // optional enrichment
+  }
 
   try {
     const wiki = await fetchDistrictWikipediaSummary(slug);
@@ -140,7 +183,7 @@ async function scopedDistrictAnswer(slug: string): Promise<AssistantAnswer> {
   }
 
   return {
-    answer: `${district.name} (${district.province}) — population ${district.population.toLocaleString()}, capital ${district.capital}, area ${district.areaSqKm.toLocaleString()} km². ${services.length} public facilities listed.${colLine}${wikiLine}`.trim(),
+    answer: `${district.name} (${district.province}) — population ${district.population.toLocaleString()}, capital ${district.capital}, area ${district.areaSqKm.toLocaleString()} km². ${services.length} public facilities listed.${cityLine}${colLine}${wikiLine}`.trim(),
     citations,
     mode: "rule",
     districtSlug: slug,
@@ -235,6 +278,46 @@ async function ruleBasedAnswer(
     return {
       answer: `Lankawa covers all ${ctx.districts.length} administrative districts of Sri Lanka. Ask about a specific district by name (e.g. Colombo, Kandy, Jaffna), or pass districtSlug.`,
       citations: [{ label: "District atlas", path: "/districts" }],
+      mode: "rule",
+      districtSlug: null,
+    };
+  }
+
+  if (/postcode|postal|zip code|^\d{5}$/.test(q)) {
+    const codeMatch = q.match(/\b\d{5}\b/);
+    if (codeMatch) {
+      const code = codeMatch[0];
+      const res = await lookupPostcode(code);
+      if (res.city) {
+        return {
+          answer: `Postal code ${code} belongs to ${res.city.name} in ${res.city.districtName} District (${res.city.province} Province). Coordinates: ${res.city.latitude.toFixed(3)}°N, ${res.city.longitude.toFixed(3)}°E.`,
+          citations: [
+            { label: `Postcode ${code}`, path: `/cities/nearby?postal=${code}` },
+            { label: `${res.city.districtName} district`, path: `/districts/${res.city.districtSlug}` },
+          ],
+          mode: "rule",
+          districtSlug: res.city.districtSlug,
+        };
+      }
+    }
+  }
+
+  if (/city|cities|nearby|postal|location directory/.test(q)) {
+    if (scopedSlug) {
+      const cityRes = await getDistrictCities(scopedSlug);
+      const name = getDistrict(scopedSlug)?.name ?? scopedSlug;
+      return {
+        answer: `${name} District has ${cityRes.cities.length} major cities and postal codes mapped in the location hierarchy.`,
+        citations: [
+          { label: `${name} cities`, path: `/cities/nearby?district=${scopedSlug}` },
+        ],
+        mode: "rule",
+        districtSlug: scopedSlug,
+      };
+    }
+    return {
+      answer: "Lankawa tracks cities, 5-digit postal codes, and radius proximity coordinates across all 25 administrative districts of Sri Lanka.",
+      citations: [{ label: "Nearby cities directory", path: "/cities/nearby" }],
       mode: "rule",
       districtSlug: null,
     };

@@ -1077,6 +1077,41 @@ export const SOURCES: SourceDefinition[] = [
       "Computed in `lanka-stress.ts` from FX anomaly (MAD-z), elevated flood station count, CEB power status, Met Dept warnings, landslide watch/warning districts, and optional dengue high-risk districts. Each component is 0–weight; sum capped at 100. Missing inputs score 0 and set isPartial. Surfaced on home via LankaStressCard and `GET /api/v1/stress`.",
     metrics: ["lanka_stress_score", "lanka_stress_tier"],
   },
+  {
+    id: "slcities_api",
+    name: "Sri Lanka Cities API",
+    category: "civic",
+    url: "https://slcities.live/api",
+    cadenceMinutes: 1440,
+    adapter: "api",
+    description:
+      "Public REST API for Sri Lanka cities, postal codes, district hierarchy, and proximity coordinates.",
+    methodology:
+      "Lankawa queries slcities.live/api (and locatesrilanka.herokuapp.com secondary) for city search, 5-digit postal code lookups, district city listings, and radius proximity with 10s AbortController timeout. Falls back to static district seed data when live APIs are unavailable.",
+    metrics: [
+      "city_search",
+      "postal_code_lookup",
+      "nearby_cities",
+      "district_cities",
+    ],
+  },
+  {
+    id: "slcities_seed",
+    name: "Sri Lanka District & City Seed Data",
+    category: "civic",
+    url: "https://lankawa.vercel.app/cities/nearby",
+    cadenceMinutes: 10080,
+    adapter: "seed",
+    description:
+      "Embedded static JSON seed dataset containing Sri Lanka's 25 districts, major cities, 5-digit postal codes, and coordinates.",
+    methodology:
+      "Embedded static fallback seed (`src/data/districts.json`) queried when upstream slcities live APIs are offline or timed out.",
+    metrics: [
+      "city_search_seed",
+      "postal_code_seed",
+      "district_cities_seed",
+    ],
+  },
 ];
 
 export function getSource(id: string): SourceDefinition | undefined {
