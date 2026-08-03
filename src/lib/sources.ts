@@ -1138,6 +1138,50 @@ export const SOURCES: SourceDefinition[] = [
       "district_cities_seed",
     ],
   },
+  {
+    id: "aviation_edge_cmb",
+    name: "Aviation Edge — CMB Airport",
+    category: "transport",
+    url: "https://aviation-edge.com/v2/public/timetable?iataCode=CMB",
+    cadenceMinutes: 5,
+    adapter: "api",
+    description:
+      "Live flight arrivals and departures for Bandaranaike International Airport (CMB) via Aviation Edge timetable API.",
+    methodology:
+      "Lankawa queries Aviation Edge timetable endpoint for CMB arrivals and departures with a 10s AbortController timeout. Filters SriLankan Airlines (UL) fleet separately. Falls back to a static seed when the AVIATION_EDGE_API_KEY env is absent or the upstream call fails. Delayed flights counted at >15 min threshold.",
+    metrics: [
+      "cmb_arrivals_count",
+      "cmb_departures_count",
+      "cmb_delayed_count",
+      "cmb_cancelled_count",
+    ],
+  },
+  {
+    id: "aviation_seed_cmb",
+    name: "CMB Airport Seed Schedule",
+    category: "transport",
+    url: "https://lankawa.vercel.app/transport",
+    cadenceMinutes: 10080,
+    adapter: "seed",
+    description:
+      "Static seed schedule for Bandaranaike International Airport arrivals and departures used when Aviation Edge API key is absent.",
+    methodology:
+      "Embedded `src/data/aviation-seed.json` with representative CMB arrivals and departures. Shown with a 'Seed fallback — live API unavailable' disclaimer.",
+    metrics: ["cmb_arrivals_seed", "cmb_departures_seed"],
+  },
+  {
+    id: "lk_public_holidays",
+    name: "Sri Lanka Public Holidays",
+    category: "civic",
+    url: "https://lankawa.vercel.app/services",
+    cadenceMinutes: 10080,
+    adapter: "seed",
+    description:
+      "Sri Lanka public, bank, and mercantile holidays for the current year, sourced from official government gazette notices.",
+    methodology:
+      "Lankawa serves a static `lk-holidays-2026.json` seed of all official holiday dates with public/bank/mercantile flags. Exposed via `GET /api/v1/holidays` and integrated into the daily brief and services page.",
+    metrics: ["holiday_count", "next_public_holiday"],
+  },
 ];
 
 export function getSource(id: string): SourceDefinition | undefined {
