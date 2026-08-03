@@ -12,6 +12,7 @@ import {
   MacroIndicatorCard,
 } from "@/components/EconomyCards";
 import { DataSaverGate } from "@/components/DataSaverGate";
+import { CebLoadSheddingCard } from "@/components/CebLoadSheddingCard";
 import { DemandMgmtClustersStrip } from "@/components/DemandMgmtClustersStrip";
 import { HouseholdEmiStrip } from "@/components/HouseholdEmiStrip";
 import { HouseholdEnergySection } from "@/components/HouseholdEnergySection";
@@ -286,7 +287,7 @@ export default async function EconomyPage({
           emptyFuel: t("householdEnergy.emptyFuel"),
           emptyLpg: t("householdEnergy.emptyLpg"),
         }}
-        clustersStrip={<DemandMgmtClustersStrip />}
+        clustersStrip={<CebLoadSheddingCard />}
       />
 
       <section className="space-y-4">

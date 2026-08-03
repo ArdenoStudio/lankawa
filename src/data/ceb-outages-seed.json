@@ -1,0 +1,332 @@
+{
+  "asOf": "2026-08-03T12:00:00Z",
+  "sourceId": "ceb_outages_seed",
+  "disclaimer": "Seed fallback — live API unavailable",
+  "outages": [
+    {
+      "id": "OUT-COL-001",
+      "province": "Western Province North",
+      "area": "Colombo West",
+      "interruptionType": "Unplanned Breakdown",
+      "affectedCustomers": 4500,
+      "timestamp": "2026-08-03T10:15:00Z"
+    },
+    {
+      "id": "OUT-KAN-002",
+      "province": "Central Province",
+      "area": "Kandy City",
+      "interruptionType": "Transformer Fault",
+      "affectedCustomers": 2300,
+      "timestamp": "2026-08-03T11:00:00Z"
+    },
+    {
+      "id": "OUT-GAL-003",
+      "province": "Southern Province",
+      "area": "Galle Fort",
+      "interruptionType": "Feeder Breakdown",
+      "affectedCustomers": 1800,
+      "timestamp": "2026-08-03T09:30:00Z"
+    },
+    {
+      "id": "OUT-GAM-004",
+      "province": "Western Province South",
+      "area": "Gampaha",
+      "interruptionType": "Emergency Maintenance",
+      "affectedCustomers": 3100,
+      "timestamp": "2026-08-03T08:45:00Z"
+    },
+    {
+      "id": "OUT-JAF-005",
+      "province": "Northern Province",
+      "area": "Jaffna Town",
+      "interruptionType": "Substation Maintenance",
+      "affectedCustomers": 2900,
+      "timestamp": "2026-08-03T07:20:00Z"
+    },
+    {
+      "id": "OUT-KUR-006",
+      "province": "North Western Province",
+      "area": "Kurunegala",
+      "interruptionType": "Line Tripping",
+      "affectedCustomers": 1600,
+      "timestamp": "2026-08-03T11:45:00Z"
+    }
+  ],
+  "schedules": [
+    {
+      "group": "A",
+      "startTime": "08:00",
+      "endTime": "10:30",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Colombo North", "Kelaniya", "Wattala"],
+      "customerCount": 245000,
+      "description": "Morning rotation window — Group A"
+    },
+    {
+      "group": "B",
+      "startTime": "10:30",
+      "endTime": "13:00",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Dehiwala", "Mount Lavinia", "Moratuwa"],
+      "customerCount": 210000,
+      "description": "Midday rotation window — Group B"
+    },
+    {
+      "group": "C",
+      "startTime": "13:00",
+      "endTime": "15:30",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Kandy City", "Peradeniya", "Katugastota"],
+      "customerCount": 185000,
+      "description": "Afternoon rotation window — Group C"
+    },
+    {
+      "group": "D",
+      "startTime": "15:30",
+      "endTime": "18:00",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Galle Fort", "Karapitiya", "Matara"],
+      "customerCount": 195000,
+      "description": "Late afternoon rotation window — Group D"
+    },
+    {
+      "group": "E",
+      "startTime": "18:00",
+      "endTime": "20:30",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Kurunegala Town", "Kuliyapitiya", "Wariyapola"],
+      "customerCount": 220000,
+      "description": "Evening peak rotation window — Group E"
+    },
+    {
+      "group": "F",
+      "startTime": "08:00",
+      "endTime": "10:30",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Gampaha", "Negombo", "Ja-Ela"],
+      "customerCount": 260000,
+      "description": "Morning rotation window — Group F"
+    },
+    {
+      "group": "G",
+      "startTime": "10:30",
+      "endTime": "13:00",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Kalutara", "Panadura", "Horana"],
+      "customerCount": 175000,
+      "description": "Midday rotation window — Group G"
+    },
+    {
+      "group": "H",
+      "startTime": "13:00",
+      "endTime": "15:30",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Ratnapura", "Balangoda", "Eheliyagoda"],
+      "customerCount": 160000,
+      "description": "Afternoon rotation window — Group H"
+    },
+    {
+      "group": "I",
+      "startTime": "15:30",
+      "endTime": "18:00",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Anuradhapura", "Kekirawa", "Tambuttegama"],
+      "customerCount": 140000,
+      "description": "Late afternoon rotation window — Group I"
+    },
+    {
+      "group": "J",
+      "startTime": "18:00",
+      "endTime": "20:30",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Jaffna City", "Nallur", "Chavakachcheri"],
+      "customerCount": 130000,
+      "description": "Evening peak rotation window — Group J"
+    },
+    {
+      "group": "K",
+      "startTime": "08:30",
+      "endTime": "11:00",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Batticaloa", "Kattankudy", "Eravur"],
+      "customerCount": 115000,
+      "description": "Morning rotation window — Group K"
+    },
+    {
+      "group": "L",
+      "startTime": "11:00",
+      "endTime": "13:30",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Trincomalee", "Town & Gravets", "Kinniya"],
+      "customerCount": 105000,
+      "description": "Midday rotation window — Group L"
+    },
+    {
+      "group": "M",
+      "startTime": "13:30",
+      "endTime": "16:00",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Badulla", "Bandarawela", "Ella"],
+      "customerCount": 145000,
+      "description": "Afternoon rotation window — Group M"
+    },
+    {
+      "group": "N",
+      "startTime": "16:00",
+      "endTime": "18:30",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Nuwara Eliya", "Hatton", "Talawakele"],
+      "customerCount": 125000,
+      "description": "Late afternoon rotation window — Group N"
+    },
+    {
+      "group": "O",
+      "startTime": "18:30",
+      "endTime": "21:00",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Kegalle", "Mawanella", "Rambukkana"],
+      "customerCount": 155000,
+      "description": "Evening peak rotation window — Group O"
+    },
+    {
+      "group": "P",
+      "startTime": "08:30",
+      "endTime": "11:00",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Matale", "Dambulla", "Ukuwela"],
+      "customerCount": 135000,
+      "description": "Morning rotation window — Group P"
+    },
+    {
+      "group": "Q",
+      "startTime": "11:00",
+      "endTime": "13:30",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Hambantota", "Tangalle", "Ambalantota"],
+      "customerCount": 110000,
+      "description": "Midday rotation window — Group Q"
+    },
+    {
+      "group": "R",
+      "startTime": "13:30",
+      "endTime": "16:00",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Monaragala", "Wellawaya", "Bibile"],
+      "customerCount": 95000,
+      "description": "Afternoon rotation window — Group R"
+    },
+    {
+      "group": "S",
+      "startTime": "16:00",
+      "endTime": "18:30",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Polonnaruwa", "Kaduruwela", "Hingurakgoda"],
+      "customerCount": 105000,
+      "description": "Late afternoon rotation window — Group S"
+    },
+    {
+      "group": "T",
+      "startTime": "18:30",
+      "endTime": "21:00",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Vavuniya", "Cheddikulam", "Northern Division"],
+      "customerCount": 85000,
+      "description": "Evening peak rotation window — Group T"
+    },
+    {
+      "group": "U",
+      "startTime": "09:00",
+      "endTime": "11:30",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Kilinochchi", "Paranthan", "Pallai"],
+      "customerCount": 75000,
+      "description": "Morning rotation window — Group U"
+    },
+    {
+      "group": "V",
+      "startTime": "11:30",
+      "endTime": "14:00",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Mannar Island", "Murunkan", "Nanaddan"],
+      "customerCount": 65000,
+      "description": "Midday rotation window — Group V"
+    },
+    {
+      "group": "W",
+      "startTime": "14:00",
+      "endTime": "16:30",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Mullaitivu", "Puthukkudiyiruppu", "Maritimepattu"],
+      "customerCount": 55000,
+      "description": "Afternoon rotation window — Group W"
+    },
+    {
+      "group": "X",
+      "startTime": "16:30",
+      "endTime": "19:00",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Ampara", "Kalmunai", "Sammanthurai"],
+      "customerCount": 120000,
+      "description": "Late afternoon rotation window — Group X"
+    },
+    {
+      "group": "Y",
+      "startTime": "19:00",
+      "endTime": "21:30",
+      "date": "2026-08-03",
+      "durationMinutes": 150,
+      "status": "scheduled",
+      "affectedAreas": ["Biyagama", "Seethawaka", "Avissawella"],
+      "customerCount": 190000,
+      "description": "Night rotation window — Group Y"
+    }
+  ]
+}

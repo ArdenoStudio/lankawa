@@ -953,6 +953,32 @@ export const SOURCES: SourceDefinition[] = [
     metrics: ["demand_mgmt_clusters", "demand_mgmt_customers"],
   },
   {
+    id: "ceb_outages_api",
+    name: "CEB Care — Incognito Outage Map & Schedule API",
+    category: "disaster",
+    url: "https://cebcare.ceb.lk/Incognito/OutageMap",
+    cadenceMinutes: 15,
+    adapter: "api",
+    description:
+      "Live power breakdown outages map and scheduled load-shedding events across letter groups A–Y from CEB Care.",
+    methodology:
+      "Server-side fetch from CEB Care Incognito portal (`cebcare.ceb.lk/Incognito/OutageMap` and `/Incognito/DemandMgmtSchedule`). Bounded by 10s AbortController timeout and 3600s cache revalidation. Falls back cleanly to static seed data (`ceb-outages-seed.json`) with disclaimer 'Seed fallback — live API unavailable' on network error or timeout.",
+    metrics: ["ceb_live_outages", "ceb_load_shedding_schedule"],
+  },
+  {
+    id: "ceb_outages_seed",
+    name: "CEB Care — Outage & Load-Shedding Seed Data",
+    category: "disaster",
+    url: "https://lankawa.vercel.app/disaster",
+    cadenceMinutes: 10080,
+    adapter: "seed",
+    description:
+      "Curated static seed dataset containing CEB active breakdown outages and scheduled load-shedding details for letter groups A–Y.",
+    methodology:
+      "Embedded static seed dataset (`src/data/ceb-outages-seed.json`) queried when upstream CEB Care live endpoints are offline, timing out, or returning errors. Displayed with explicit fallback disclaimer: 'Seed fallback — live API unavailable'.",
+    metrics: ["ceb_live_outages_seed", "ceb_load_shedding_schedule_seed"],
+  },
+  {
     id: "leco_power",
     name: "LECO — Power Interruption Notices",
     category: "disaster",

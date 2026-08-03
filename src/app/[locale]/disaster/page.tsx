@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { CebLiveOutageStatusCard } from "@/components/CebLiveOutageStatusCard";
 import { CycloneWatchCard } from "@/components/CycloneWatchCard";
 import { DataSaverGate } from "@/components/DataSaverGate";
 import { DataSaverMapFallback } from "@/components/DataSaverMapFallback";
@@ -129,6 +130,9 @@ export default async function DisasterPage({
           <h2 className="text-xl font-semibold text-white">{t("powerTitle")}</h2>
           <p className="mt-1 text-sm text-slate-400">{t("powerSubtitle")}</p>
         </div>
+
+        <CebLiveOutageStatusCard locale={locale} />
+
         <div className="grid gap-4 lg:grid-cols-2">
           <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">

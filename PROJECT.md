@@ -9,7 +9,7 @@
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| 1 | M1: Location & District Hierarchy (R1) | `src/lib/integrations/slcities.ts`, `/districts/[slug]`, `/cities/nearby`, static seed fallback | none | PLANNED |
+| 1 | M1: Location & District Hierarchy (R1) | `src/lib/integrations/slcities.ts`, `/districts/[slug]`, `/cities/nearby`, static seed fallback | none | DONE |
 | 2 | M2: Utilities & Energy Outage (R2) | `src/lib/integrations/ceb-outages.ts`, `/economy`, `/disaster` | none | PLANNED |
 | 3 | M3: Transport & Aviation (R3) | `src/lib/integrations/aviation.ts`, `/transport`, `/api/v1/transport` | none | PLANNED |
 | 4 | M4: Citizen Identity & Holidays (R4) | `src/lib/integrations/holidays.ts`, `src/lib/nic-decoder.ts`, `/services`, `/brief/[date]` | none | PLANNED |
