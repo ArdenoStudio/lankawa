@@ -131,6 +131,33 @@ jobs:
             | "  \(.id): \(.tier)\(if .error then " — \(.error)" else "" end)"
           ' /tmp/canary.json
 
+      - name: Notify ops Telegram on failure
+        if: failure()
+        env:
+          TELEGRAM_OPS_BOT_TOKEN: ${{ secrets.TELEGRAM_OPS_BOT_TOKEN }}
+          TELEGRAM_OPS_CHAT_ID: ${{ secrets.TELEGRAM_OPS_CHAT_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${TELEGRAM_OPS_BOT_TOKEN:-}" ] || [ -z "${TELEGRAM_OPS_CHAT_ID:-}" ]; then
+            echo "TELEGRAM_OPS_* secrets not configured on this repo - skipping notification"
+            exit 0
+          fi
+          run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          summary=$(printf '[Lankawa ops] Adapter canary FAILED\nrun: %s' "$run_url")
+          if [ -f /tmp/canary.json ]; then
+            down=$(jq -r '[.sources[]? | select(.tier == "down") | .id] | join(", ")' /tmp/canary.json 2>/dev/null || true)
+            if [ -n "${down:-}" ]; then
+              summary=$(printf '%s\ndown: %s' "$summary" "$down")
+            fi
+          fi
+          payload=$(jq -n --arg chat "$TELEGRAM_OPS_CHAT_ID" --arg text "$summary" \
+            '{chat_id: $chat, text: $text, disable_web_page_preview: true}')
+          curl -sfS --max-time 30 \
+            -H "Content-Type: application/json" \
+            -d "$payload" \
+            "https://api.telegram.org/bot${TELEGRAM_OPS_BOT_TOKEN}/sendMessage" \
+            || echo "Telegram notification failed (non-blocking)"
+
       - name: Upload canary report
         if: always()
         uses: actions/upload-artifact@v4

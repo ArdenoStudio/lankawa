@@ -38,3 +38,24 @@ jobs:
           else
             echo "CRON_SECRET not set — skipping Vercel cron trigger"
           fi
+
+      - name: Notify ops Telegram on failure
+        if: failure()
+        env:
+          TELEGRAM_OPS_BOT_TOKEN: ${{ secrets.TELEGRAM_OPS_BOT_TOKEN }}
+          TELEGRAM_OPS_CHAT_ID: ${{ secrets.TELEGRAM_OPS_CHAT_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${TELEGRAM_OPS_BOT_TOKEN:-}" ] || [ -z "${TELEGRAM_OPS_CHAT_ID:-}" ]; then
+            echo "TELEGRAM_OPS_* secrets not configured on this repo - skipping notification"
+            exit 0
+          fi
+          run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          text=$(printf '[Lankawa ops] Daily ingest FAILED\nrun: %s\nObservations will be missing from pulse history until the next success.' "$run_url")
+          payload=$(jq -n --arg chat "$TELEGRAM_OPS_CHAT_ID" --arg text "$text" \
+            '{chat_id: $chat, text: $text, disable_web_page_preview: true}')
+          curl -sfS --max-time 30 \
+            -H "Content-Type: application/json" \
+            -d "$payload" \
+            "https://api.telegram.org/bot${TELEGRAM_OPS_BOT_TOKEN}/sendMessage" \
+            || echo "Telegram notification failed (non-blocking)"
