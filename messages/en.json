@@ -820,6 +820,14 @@
       "noSectors": "No sector rows",
       "noActive": "No active trades",
       "highLow": "Session high / low",
+      "week52": {
+        "title": "ASPI · 52-week context",
+        "high": "52-week high",
+        "low": "52-week low",
+        "change": "52-week change",
+        "ytd": "YTD change",
+        "prevClose": "Previous close"
+      },
       "notices": "Exchange notices",
       "noNotices": "No exchange notices available",
       "announcementsTitle": "CSE notices",

@@ -800,6 +800,14 @@
       "noSectors": "No sector rows",
       "noActive": "No active trades",
       "highLow": "Session high / low",
+      "week52": {
+        "title": "ASPI · සති 52 සන්දර්භය",
+        "high": "සති 52 ඉහළම",
+        "low": "සති 52 පහළම",
+        "change": "සති 52 වෙනස",
+        "ytd": "මේ අවුරුද්දේ වෙනස",
+        "prevClose": "පෙර වැසුම"
+      },
       "notices": "Exchange notices",
       "noNotices": "No exchange notices available",
       "sectorsSkipped": "Data Saver නිසා අංශ මඟ හැරිණි",

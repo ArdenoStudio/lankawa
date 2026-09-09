@@ -79,6 +79,12 @@ export function CseMarketCard({
     sectorsSkipped: string;
     noActive: string;
     highLow: string;
+    week52Title: string;
+    week52High: string;
+    week52Low: string;
+    week52Change: string;
+    week52Ytd: string;
+    week52PrevClose: string;
   };
 }) {
   const indices = [
@@ -285,6 +291,48 @@ export function CseMarketCard({
           )}
         </article>
       </div>
+
+      {snapshot.week52 ? (
+        <div className="space-y-2">
+          <h3 className="text-sm font-medium text-neutral-300">
+            {labels.week52Title}
+          </h3>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          {[
+            { label: labels.week52High, value: snapshot.week52.week52High },
+            { label: labels.week52Low, value: snapshot.week52.week52Low },
+            {
+              label: labels.week52Change,
+              value: snapshot.week52.week52Change,
+              suffix: "%",
+              signed: true,
+            },
+            {
+              label: labels.week52Ytd,
+              value: snapshot.week52.ytdChange,
+              suffix: "%",
+              signed: true,
+            },
+            {
+              label: labels.week52PrevClose,
+              value: snapshot.week52.previousClose,
+            },
+          ].map((cell) => (
+            <div
+              key={cell.label}
+              className="rounded-xl border border-white/10 bg-black/20 px-4 py-3"
+            >
+              <p className="text-xs text-slate-500">{cell.label}</p>
+              <p className="mt-1 text-lg font-semibold tabular-nums text-white">
+                {cell.value == null
+                  ? "—"
+                  : `${cell.signed && cell.value > 0 ? "+" : ""}${cell.value.toLocaleString(undefined, { maximumFractionDigits: 2 })}${cell.suffix ?? ""}`}
+              </p>
+            </div>
+          ))}
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }

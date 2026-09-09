@@ -564,6 +564,12 @@ export default async function EconomyPage({
           sectorsSkipped: t("cse.sectorsSkipped"),
           noActive: t("cse.noActive"),
           highLow: t("cse.highLow"),
+          week52Title: t("cse.week52.title"),
+          week52High: t("cse.week52.high"),
+          week52Low: t("cse.week52.low"),
+          week52Change: t("cse.week52.change"),
+          week52Ytd: t("cse.week52.ytd"),
+          week52PrevClose: t("cse.week52.prevClose"),
         }}
       />
 

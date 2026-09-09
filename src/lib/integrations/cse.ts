@@ -92,6 +92,16 @@ export interface CseForeignDomestic {
   observedAt: string | null;
 }
 
+/** 52-week context from `POST /52WeekSectors?sectorId=1` (ASPI = sectorId 1). */
+export interface CseWeek52Range {
+  previousClose: number | null;
+  week52High: number | null;
+  week52Low: number | null;
+  ytdHigh: number | null;
+  ytdChange: number | null;
+  week52Change: number | null;
+}
+
 export interface CseSnapshot {
   sourceId: string;
   sourceName: string;
@@ -106,6 +116,8 @@ export interface CseSnapshot {
   sectors: CseSector[];
   mostActive: CseActiveTrade[];
   foreignDomestic: CseForeignDomestic | null;
+  /** 52-week / YTD context for ASPI; null when `/52WeekSectors` misses. */
+  week52: CseWeek52Range | null;
   notices: CseNotice[];
   /** True when the notices strip is seed (live GET/POST notices missed). */
   noticesIsFallback: boolean;
@@ -256,6 +268,15 @@ interface CseDailyMarketRow {
   equityForeignSales?: number;
 }
 
+interface CseWeek52Response {
+  previousClose?: number;
+  week52High?: number;
+  week52Low?: number;
+  ytdHigh?: number;
+  ytdChange?: number;
+  week52Change?: number;
+}
+
 const SEED_AS_OF = "2026-07-18T09:30:00.000Z";
 
 const SEED_SNAPSHOT: Omit<CseSnapshot, "tier" | "isFallback"> = {
@@ -281,6 +302,14 @@ const SEED_SNAPSHOT: Omit<CseSnapshot, "tier" | "isFallback"> = {
     high: 6_020.4,
     low: 5_980.1,
     observedAt: SEED_AS_OF,
+  },
+  week52: {
+    previousClose: 21_447.57,
+    week52High: 22_180.34,
+    week52Low: 16_940.12,
+    ytdHigh: 22_180.34,
+    ytdChange: 6.2,
+    week52Change: 22.9,
   },
   topGainers: [
     {
@@ -1084,6 +1113,22 @@ function parseForeignDomestic(
   };
 }
 
+function parseWeek52(raw: CseWeek52Response | null): CseWeek52Range | null {
+  if (!raw) {
+    return null;
+  }
+  const range: CseWeek52Range = {
+    previousClose: finiteNumber(raw.previousClose),
+    week52High: finiteNumber(raw.week52High),
+    week52Low: finiteNumber(raw.week52Low),
+    ytdHigh: finiteNumber(raw.ytdHigh),
+    ytdChange: finiteNumber(raw.ytdChange),
+    week52Change: finiteNumber(raw.week52Change),
+  };
+  const hasAny = Object.values(range).some((value) => value != null);
+  return hasAny ? range : null;
+}
+
 function buildSnapshotFromLive(parts: {
   aspi: CseIndexResponse | null;
   snp: CseIndexResponse | null;
@@ -1096,6 +1141,7 @@ function buildSnapshotFromLive(parts: {
   gicsSummery: unknown;
   mostActive: CseActiveRow[] | null;
   dailyMarket: CseDailyMarketRow[] | null;
+  week52: CseWeek52Range | null;
   notices: CseNotice[];
 }): CseSnapshot | null {
   const aspi = parseIndex(parts.aspi, {
@@ -1130,6 +1176,7 @@ function buildSnapshotFromLive(parts: {
   const foreignDomestic =
     parseForeignDomestic(parts.dailyMarket, aspi.observedAt) ??
     SEED_SNAPSHOT.foreignDomestic;
+  const week52 = parts.week52 ?? SEED_SNAPSHOT.week52;
 
   const asOf = [aspi.observedAt, snp.observedAt, summaryObservedAt]
     .sort()
@@ -1158,6 +1205,7 @@ function buildSnapshotFromLive(parts: {
     sectors: sectors.length > 0 ? sectors : SEED_SNAPSHOT.sectors,
     mostActive: mostActive.length > 0 ? mostActive : SEED_SNAPSHOT.mostActive,
     foreignDomestic,
+    week52,
     notices:
       parts.notices.length > 0 ? parts.notices : SEED_SNAPSHOT.notices,
     noticesIsFallback: parts.notices.length === 0,
@@ -1173,6 +1221,7 @@ function buildFallbackSnapshot(notices?: CseNotice[]): CseSnapshot {
     ...SEED_SNAPSHOT,
     notices: hasLiveNotices ? notices! : SEED_SNAPSHOT.notices,
     noticesIsFallback: !hasLiveNotices,
+    week52: SEED_SNAPSHOT.week52,
     tier: "stale",
     isFallback: true,
   };
@@ -1182,8 +1231,7 @@ function buildFallbackSnapshot(notices?: CseNotice[]): CseSnapshot {
  * Live notices: GET `/notifications` (halt/auction banners) then
  * POST `/approvedAnnouncement` (corporate disclosures). Seed if both miss.
  */
-async function fetchCseNotices(fallbackAsOf: string): Promise<CseNotice[]> {
-  const [notificationsRaw, approvedRaw] = await Promise.all([
+async function fetchCseNotices(fallbackAsOf: string): Promise<CseNotice[]> {  const [notificationsRaw, approvedRaw] = await Promise.all([
     getCseJson<unknown>("/notifications"),
     postCseJson<unknown>("/approvedAnnouncement"),
   ]);
@@ -1192,6 +1240,22 @@ async function fetchCseNotices(fallbackAsOf: string): Promise<CseNotice[]> {
   const fromApproved = parseCseNotices(approvedRaw, fallbackAsOf);
 
   return dedupeNotices([...fromNotifications, ...fromApproved]).slice(0, 8);
+}
+
+/**
+ * 52-week / YTD context for ASPI: `POST /52WeekSectors?sectorId=1` (query string
+ * required — JSON body `{sectorId:1}` alone fails per probe docs).
+ */
+async function fetchCseWeek52(): Promise<CseWeek52Range | null> {
+  const raw = await cseFetch<CseWeek52Response>(
+    "/52WeekSectors?sectorId=1",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: "{}",
+    },
+  );
+  return parseWeek52(raw);
 }
 
 export async function buildCseSnapshot(): Promise<CseSnapshot> {
@@ -1207,6 +1271,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     gicsSummery,
     mostActive,
     dailyMarket,
+    week52,
     notices,
   ] = await Promise.all([
     postCseJson<CseIndexResponse>("/aspiData"),
@@ -1230,6 +1295,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
       }
       return raw as CseDailyMarketRow[];
     }),
+    fetchCseWeek52(),
     fetchCseNotices(SEED_AS_OF),
   ]);
 
@@ -1245,6 +1311,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     gicsSummery,
     mostActive,
     dailyMarket,
+    week52,
     notices,
   });
 

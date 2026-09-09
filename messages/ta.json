@@ -801,6 +801,14 @@
       "noSectors": "No sector rows",
       "noActive": "No active trades",
       "highLow": "அமர்வு உயர் / தாழ்",
+      "week52": {
+        "title": "ASPI · 52 வார சூழல்",
+        "high": "52 வார உயர்",
+        "low": "52 வார தாழ்",
+        "change": "52 வார மாற்றம்",
+        "ytd": "ஆண்டுத் தொடக்க மாற்றம்",
+        "prevClose": "முந்தைய முடிவு"
+      },
       "notices": "பரிவர்த்தனை அறிவிப்புகள்",
       "noNotices": "பரிவர்த்தனை அறிவிப்புகள் இல்லை",
       "announcementsTitle": "CSE அறிவிப்புகள்",
