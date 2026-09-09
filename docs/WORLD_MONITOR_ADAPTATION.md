@@ -77,12 +77,12 @@ These are Lankawa-native implementations inspired by WM-class products — **not
 
 Prioritize only after live layers stay green (`MASTER_PLAN` non-goal).
 
-| Idea | Why | Sketch |
-|------|-----|--------|
-| **Bootstrap tiers** | Faster morning cold load | Tier-0: FX/fuel/weather/power; Tier-1: news/CSE; Tier-2: maps |
-| **Shareable views** | Journalist / WhatsApp deep links | Encode selected map mode + district + pins in URL; document schema |
-| **Cmd+K district fly-to** | Power-user atlas | Command palette → district slug → map flyTo + morning pack |
-| **Regional PMTiles** | Faster maps offline/4G | Host Sri Lanka district/province PMTiles on CDN; keep GeoJSON fallback |
+| Idea | Why | Sketch | Status |
+|------|-----|--------|--------|
+| **Bootstrap tiers** | Faster morning cold load | Tier-0: FX/fuel/weather/power; Tier-1: news/CSE; Tier-2: maps | Parked — perf-gated |
+| **Shareable views** | Journalist / WhatsApp deep links | Encode selected map mode + district + pins in URL; document schema | ✅ Shipped — `/disaster?preset=monsoon` & `?layers=` via `disaster-map-layers.ts` |
+| **Cmd+K district fly-to** | Power-user atlas | Command palette → district slug → map flyTo + morning pack | ✅ Shipped (search-first) — Cmd/Ctrl+K focuses GlobalSearch with ⌘K/Ctrl+K hint; full map flyTo parked |
+| **Regional PMTiles** | Faster maps offline/4G | Host Sri Lanka district/province PMTiles on CDN; keep GeoJSON fallback | Parked — GeoJSON + SW caching is sufficient at 25 districts |
 
 ### Shipped this wave (patterns)
 

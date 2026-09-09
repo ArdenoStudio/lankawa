@@ -135,7 +135,7 @@ Note: `priceIndex` / turnover on GICS summary can lag the live `allSectors.index
 | Endpoint | Working call | Sample | Lankawa |
 |----------|--------------|--------|---------|
 | `POST /sectorHighLow` | form `sectorId=1` **or** JSON `{}` with `?sectorId=1` | `{ lastValue, openValue, dailyLow, dailyHigh }` | Unused — fills ASPI high/low if `aspiData` omits them |
-| `POST /52WeekSectors` | form `sectorId=1` **or** query `?sectorId=1` | `{ previousClose, week52High, ytdHigh, ytdChange, week52Change }` | Unused |
+| `POST /52WeekSectors` | form `sectorId=1` **or** query `?sectorId=1` | `{ previousClose, week52High, ytdHigh, ytdChange, week52Change }` | **Wired** — `fetchCseWeek52()` feeds the 52-week strip on `CseMarketCard` (seed fallback) |
 | GET on either | — | **405** | — |
 
 JSON body `{"sectorId":1}` alone: works for `52WeekSectors`, **fails** for `sectorHighLow` (`sectorId parameter is missing`) — prefer form or query string.

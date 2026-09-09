@@ -28,9 +28,9 @@ Synthesized from **60+ parallel research agents** (July 2026). Prioritized for i
 | WM-pattern: tenders/environment live vs seed copy | Trust | ✅ |
 | WM-pattern: Met∩flood district intersection | Alert precision | ✅ |
 | WM-pattern: disaster multi-toggle + GFM pins | Map IA | ✅ |
-| WM-pattern: shareable multi-layer URL views | Journalist deep links | Planned |
+| WM-pattern: shareable multi-layer URL views | Journalist deep links | ✅ (`/disaster?preset=` / `?layers=`) |
 | WM-pattern: citizen\|markets\|ops presets | Persona packs on `/explore?view=` | ✅ |
-| WM-pattern: Cmd+K district fly-to | Atlas power-user | Planned |
+| WM-pattern: Cmd+K district fly-to | Atlas power-user | ✅ search-first (Cmd/Ctrl+K focuses GlobalSearch; map flyTo parked) |
 | Lanka Stress Index (composite) | One morning number + `/api/v1/stress` | ✅ |
 | Regional PMTiles + bootstrap tiers | Perf / 4G | Planned |
 | Public-apis: market FX + World Bank LKA + Open-Meteo geocode (+ CoinGecko chip) | Economy honesty + assistant places | ✅ |
