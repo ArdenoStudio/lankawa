@@ -105,3 +105,36 @@ export async function fetchOctanePriceChanges(
 
   return response.json() as Promise<OctaneChangesResponse>;
 }
+
+export interface OctaneWorldCountryPrice {
+  country: string;
+  price_usd: number;
+  recorded_at: string;
+}
+
+export interface OctaneWorldComparison {
+  fuel_type: string;
+  fuel_category: string;
+  sri_lanka: {
+    price_lkr: number;
+    price_usd: number;
+    recorded_at: string;
+  };
+  world_average_usd: number;
+  delta_vs_world_pct: number;
+  neighbors: OctaneWorldCountryPrice[];
+  fx_rate_used: number;
+}
+
+export async function fetchOctaneWorldComparison(): Promise<OctaneWorldComparison> {
+  const response = await fetch(`${OCTANE_BASE}/v1/comparison/world`, {
+    next: { revalidate: 3600 },
+    headers: { Accept: "application/json" },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Octane world comparison API returned ${response.status}`);
+  }
+
+  return response.json() as Promise<OctaneWorldComparison>;
+}

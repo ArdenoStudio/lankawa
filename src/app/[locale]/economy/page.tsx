@@ -105,7 +105,7 @@ export default async function EconomyPage({
     (metric) => metric.id === "fuel_diesel",
   );
   const usdMetric = snapshot.metrics.find((metric) => metric.id === "usd_lkr");
-  const worldPump = getWorldPumpSnapshot({
+  const worldPump = await getWorldPumpSnapshot({
     sriLankaPetrolLkr: petrolMetric ? Number(petrolMetric.value) : null,
     usdLkr: usdMetric ? Number(usdMetric.value) : latestFxRate?.sellRate ?? null,
   });
@@ -364,6 +364,7 @@ export default async function EconomyPage({
               asOf: t("worldPump.asOf"),
               methodology: t("worldPump.methodology"),
               empty: t("worldPump.empty"),
+              worldAvg: t("worldPump.worldAvg"),
             }}
           />
           <DebtCompositionCard

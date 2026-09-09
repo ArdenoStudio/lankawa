@@ -15,6 +15,7 @@ export function WorldPumpCompare({
     asOf: string;
     methodology: string;
     empty: string;
+    worldAvg: string;
   };
 }) {
   if (snapshot.peers.length === 0) {
@@ -52,6 +53,19 @@ export function WorldPumpCompare({
           <ChartExportButton targetId={chartId} />
         </div>
       </div>
+
+      {snapshot.worldAverageUsd != null ? (
+        <p className="mt-3 text-xs text-slate-400">
+          {labels.worldAvg
+            .replace("{avg}", snapshot.worldAverageUsd.toFixed(2))
+            .replace(
+              "{delta}",
+              snapshot.deltaVsWorldPct == null
+                ? "—"
+                : `${snapshot.deltaVsWorldPct > 0 ? "+" : ""}${snapshot.deltaVsWorldPct.toFixed(1)}%`,
+            )}
+        </p>
+      ) : null}
 
       <div className="mt-5 overflow-x-auto">
         <svg
@@ -117,7 +131,7 @@ export function WorldPumpCompare({
           <li key={`${peer.id}-meta`}>
             <span className="text-slate-400">{peer.name}</span>
             {" · "}
-            {peer.live ? labels.liveBadge : labels.seedBadge}
+            {(peer.live ?? false) ? labels.liveBadge : labels.seedBadge}
             {peer.note ? ` · ${peer.note}` : null}
           </li>
         ))}

@@ -865,9 +865,10 @@
       "subtitle": "Sri Lanka petrol 92 vs curated South/Southeast Asia retail peers (USD/L).",
       "seedBadge": "Seed",
       "liveBadge": "Live",
-      "asOf": "Peer seed as of {date}",
+      "asOf": "Peer prices as of {date}",
       "methodology": "Methodology:",
-      "empty": "Regional pump comparison unavailable."
+      "empty": "Regional pump comparison unavailable.",
+      "worldAvg": "World gasoline average {avg} USD/L · Sri Lanka {delta} vs world"
     },
     "remittanceBoard": {
       "title": "Bank TT remittance board",
