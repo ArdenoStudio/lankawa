@@ -8,18 +8,20 @@ Maintained by [Ardeno Studio](https://github.com/ArdenoStudio). Repository: [git
 
 ## Modules
 
-- **Pulse** — FX, fuel prices (Octane API), flood station monitoring
-- **District Atlas** — All 25 districts with population, area, province
-- **Status** — Source health dashboard at `/status`
+- **Pulse** — FX, fuel prices (Octane API), flood station monitoring, regional fuel comparison
+- **District Atlas** — All 25 districts with exact Census 2024 population, living conditions and age structure
+- **Disaster** — Flood gauges, basin rain watch, landslide advisories, hazard pins on a self-hosted map
+- **Status** — Source health dashboard at `/status` with age-honest freshness tiers
 - **Civic Assistant** — Grounded Q&A at `/assistant`
 - **Public API** — `/api/v1/*` with rate limiting and OpenAPI spec
 
 ## Stack
 
-- Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4
+- Next.js 16 (App Router, proxy convention), React 19, TypeScript, Tailwind CSS v4
 - `next-intl` — English, Sinhala, Tamil
 - Python ingest workers + optional Supabase/Postgres persistence
 - Vercel cron for daily CBSL FX ingest
+- Census 2024 datasets mirrored from the open `nuuuwan/lk_census_2024` DCS transcription (`npm run update:census`)
 
 ## Development
 

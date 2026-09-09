@@ -69,6 +69,8 @@ Set these in **Vercel → Project → Settings → Environment Variables**. Do n
 | `RESEND_API_KEY` | Brief email | Resend API key for morning-brief delivery |
 | `BRIEF_FROM_EMAIL` | Brief email | From header, e.g. `Lankawa <brief@updates.example.com>` |
 | `NEXT_PUBLIC_SITE_URL` | Brief email | Canonical site URL used in confirm/unsubscribe links |
+| `TELEGRAM_OPS_BOT_TOKEN` | Optional (ops) | Telegram bot token for ops alerts (adapter failure streaks; also used as a GitHub Actions secret for canary/ingest failure notifications) |
+| `TELEGRAM_OPS_CHAT_ID` | Optional (ops) | Telegram chat id for ops alerts (also a GitHub Actions secret) |
 
 Copy from `.env.example` for local development:
 
@@ -91,6 +93,22 @@ cp .env.example .env.local
 ### RLS note
 
 Migrations assume service-role access via PostgREST. Do not expose the service role key in client bundles.
+
+## Census data maintenance
+
+Static census datasets (population, living conditions, age structure) mirror
+the open [`nuuuwan/lk_census_2024`](https://github.com/nuuuwan/lk_census_2024)
+project, which transcribes the DCS Census of Population and Housing 2024 Final
+Report. Provenance (upstream commit + table path) is embedded in each dataset.
+
+```bash
+npm run update:census          # fetch + write
+npm run update:census -- --check   # exit 1 on drift, no writes
+```
+
+The updater validates 25 districts and the national sum before writing, and
+patches district populations surgically so diffs stay reviewable. Run it when
+DCS publishes revisions.
 
 ## Neon alternative
 
