@@ -1,0 +1,227 @@
+{
+  "asOf": "2024-12-31",
+  "isSeed": false,
+  "sourceName": "Department of Census and Statistics (Census 2024, Final Report — household tables)",
+  "methodologyNote": "Shares derived from exact household counts in the DCS Census of Population and Housing 2024 Final Report (cooking fuel, source of drinking water, toilet facilities, lighting), mirrored from the open nuuuwan/lk_census_2024 dataset. Clean cooking = gas/electricity/biogas over cooking households; pipe-borne water = NWSDB/local authority/community/private; improved sanitation = toilet within unit or premises. Static census reference — updated when DCS publishes revisions.",
+  "national": {
+    "households": 6111315,
+    "cleanCookingPct": 43.3,
+    "pipeBorneWaterPct": 49.5,
+    "improvedSanitationPct": 98,
+    "gridElectricityPct": 98
+  },
+  "districts": [
+    {
+      "slug": "gampaha",
+      "households": 688635,
+      "cleanCookingPct": 66.4,
+      "pipeBorneWaterPct": 43.7,
+      "improvedSanitationPct": 99.1,
+      "gridElectricityPct": 98.8
+    },
+    {
+      "slug": "colombo",
+      "households": 661822,
+      "cleanCookingPct": 88.4,
+      "pipeBorneWaterPct": 86.6,
+      "improvedSanitationPct": 98.9,
+      "gridElectricityPct": 98.7
+    },
+    {
+      "slug": "kurunegala",
+      "households": 511166,
+      "cleanCookingPct": 21.7,
+      "pipeBorneWaterPct": 13.4,
+      "improvedSanitationPct": 98.3,
+      "gridElectricityPct": 98.1
+    },
+    {
+      "slug": "kandy",
+      "households": 397626,
+      "cleanCookingPct": 40.9,
+      "pipeBorneWaterPct": 72.6,
+      "improvedSanitationPct": 98.5,
+      "gridElectricityPct": 98.6
+    },
+    {
+      "slug": "kalutara",
+      "households": 352963,
+      "cleanCookingPct": 56.8,
+      "pipeBorneWaterPct": 47.7,
+      "improvedSanitationPct": 98.9,
+      "gridElectricityPct": 98.8
+    },
+    {
+      "slug": "ratnapura",
+      "households": 327645,
+      "cleanCookingPct": 21.1,
+      "pipeBorneWaterPct": 53.9,
+      "improvedSanitationPct": 97.5,
+      "gridElectricityPct": 97.4
+    },
+    {
+      "slug": "galle",
+      "households": 307704,
+      "cleanCookingPct": 46.9,
+      "pipeBorneWaterPct": 41,
+      "improvedSanitationPct": 98.2,
+      "gridElectricityPct": 98.8
+    },
+    {
+      "slug": "anuradhapura",
+      "households": 275084,
+      "cleanCookingPct": 24.3,
+      "pipeBorneWaterPct": 22,
+      "improvedSanitationPct": 97.6,
+      "gridElectricityPct": 97.5
+    },
+    {
+      "slug": "badulla",
+      "households": 248262,
+      "cleanCookingPct": 18.7,
+      "pipeBorneWaterPct": 58.6,
+      "improvedSanitationPct": 98,
+      "gridElectricityPct": 97.9
+    },
+    {
+      "slug": "kegalle",
+      "households": 244037,
+      "cleanCookingPct": 26.3,
+      "pipeBorneWaterPct": 34.7,
+      "improvedSanitationPct": 98.7,
+      "gridElectricityPct": 98.2
+    },
+    {
+      "slug": "puttalam",
+      "households": 234027,
+      "cleanCookingPct": 38.2,
+      "pipeBorneWaterPct": 20.9,
+      "improvedSanitationPct": 97.7,
+      "gridElectricityPct": 97.3
+    },
+    {
+      "slug": "matara",
+      "households": 231946,
+      "cleanCookingPct": 38.1,
+      "pipeBorneWaterPct": 49.6,
+      "improvedSanitationPct": 98.3,
+      "gridElectricityPct": 98.8
+    },
+    {
+      "slug": "ampara",
+      "households": 207007,
+      "cleanCookingPct": 50.2,
+      "pipeBorneWaterPct": 81.8,
+      "improvedSanitationPct": 96.8,
+      "gridElectricityPct": 96.8
+    },
+    {
+      "slug": "nuwara-eliya",
+      "households": 200261,
+      "cleanCookingPct": 27.2,
+      "pipeBorneWaterPct": 49.9,
+      "improvedSanitationPct": 96.7,
+      "gridElectricityPct": 97.9
+    },
+    {
+      "slug": "hambantota",
+      "households": 188638,
+      "cleanCookingPct": 26.7,
+      "pipeBorneWaterPct": 76.8,
+      "improvedSanitationPct": 98,
+      "gridElectricityPct": 97.6
+    },
+    {
+      "slug": "batticaloa",
+      "households": 170262,
+      "cleanCookingPct": 55.5,
+      "pipeBorneWaterPct": 41.6,
+      "improvedSanitationPct": 92,
+      "gridElectricityPct": 94.5
+    },
+    {
+      "slug": "jaffna",
+      "households": 159753,
+      "cleanCookingPct": 43.6,
+      "pipeBorneWaterPct": 10.7,
+      "improvedSanitationPct": 97.2,
+      "gridElectricityPct": 97.5
+    },
+    {
+      "slug": "monaragala",
+      "households": 151763,
+      "cleanCookingPct": 15.7,
+      "pipeBorneWaterPct": 58.8,
+      "improvedSanitationPct": 96.6,
+      "gridElectricityPct": 96.6
+    },
+    {
+      "slug": "matale",
+      "households": 151132,
+      "cleanCookingPct": 23.9,
+      "pipeBorneWaterPct": 57.8,
+      "improvedSanitationPct": 98,
+      "gridElectricityPct": 98.3
+    },
+    {
+      "slug": "polonnaruwa",
+      "households": 127385,
+      "cleanCookingPct": 21.6,
+      "pipeBorneWaterPct": 51.5,
+      "improvedSanitationPct": 98,
+      "gridElectricityPct": 97.6
+    },
+    {
+      "slug": "trincomalee",
+      "households": 121948,
+      "cleanCookingPct": 49.3,
+      "pipeBorneWaterPct": 76.1,
+      "improvedSanitationPct": 96.7,
+      "gridElectricityPct": 96.5
+    },
+    {
+      "slug": "vavuniya",
+      "households": 48399,
+      "cleanCookingPct": 42.3,
+      "pipeBorneWaterPct": 15.9,
+      "improvedSanitationPct": 97.1,
+      "gridElectricityPct": 97
+    },
+    {
+      "slug": "kilinochchi",
+      "households": 36734,
+      "cleanCookingPct": 21.9,
+      "pipeBorneWaterPct": 13.1,
+      "improvedSanitationPct": 95,
+      "gridElectricityPct": 94.7
+    },
+    {
+      "slug": "mullaitivu",
+      "households": 34786,
+      "cleanCookingPct": 25.2,
+      "pipeBorneWaterPct": 10.8,
+      "improvedSanitationPct": 96.3,
+      "gridElectricityPct": 95.2
+    },
+    {
+      "slug": "mannar",
+      "households": 32330,
+      "cleanCookingPct": 42.4,
+      "pipeBorneWaterPct": 45,
+      "improvedSanitationPct": 96.9,
+      "gridElectricityPct": 96.7
+    }
+  ],
+  "provenance": {
+    "upstream": "nuuuwan/lk_census_2024",
+    "tables": {
+      "cookingFuel": "data/House-CookingFuel/data.json",
+      "drinkingWater": "data/House-SourceOfDrinkingWater/data.json",
+      "toiletFacilities": "data/House-ToiletFacilities/data.json",
+      "lighting": "data/House-Lighting/data.json"
+    },
+    "commit": "19d83f177252f9b256b125e30130b5bb5f733480",
+    "fetchedAt": "2026-09-09T14:38:56.532Z",
+    "dcsSource": "Census of Population and Housing 2024, Final Report — housing tables"
+  }
+}

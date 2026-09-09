@@ -395,7 +395,14 @@
       "population": "Indicative population",
       "seed": "Seed",
       "honesty": "Stale-OK population context from curated DCS/HDX tables — not a live census API.",
-      "source": "Census footnote provenance"
+      "source": "Census footnote provenance",
+      "livingTitle": "Living conditions (Census 2024)",
+      "livingCleanCooking": "Clean cooking fuel (gas / electricity / biogas)",
+      "livingPipeBorneWater": "Pipe-borne drinking water",
+      "livingImprovedSanitation": "Toilet within unit or premises",
+      "livingGridElectricity": "Grid electricity lighting",
+      "livingHouseholds": "{count} households enumerated",
+      "livingHonesty": "Shares from exact Census 2024 household counts; delta vs the national share. Static census reference."
     },
     "marine": {
       "title": "Marine swell",

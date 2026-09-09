@@ -31,6 +31,15 @@ const UPSTREAM_URL = `https://raw.githubusercontent.com/${UPSTREAM_REPO}/main/${
 const ROOT = path.resolve(process.cwd());
 const CENSUS_SEED_PATH = path.join(ROOT, "src/data/census-2024-seed.json");
 const DISTRICTS_PATH = path.join(ROOT, "src/data/districts.json");
+const LIVING_SEED_PATH = path.join(ROOT, "src/data/census-living-conditions.json");
+
+// Household living-conditions tables (Census 2024 Final Report).
+const LIVING_TABLES = {
+  cookingFuel: "data/House-CookingFuel/data.json",
+  drinkingWater: "data/House-SourceOfDrinkingWater/data.json",
+  toiletFacilities: "data/House-ToiletFacilities/data.json",
+  lighting: "data/House-Lighting/data.json",
+};
 
 // Lankawa slugs (URL-safe) mapped from upstream region_name.
 const SLUG_BY_NAME = {
@@ -97,6 +106,87 @@ async function fetchUpstream() {
     throw new Error(`Upstream fetch failed: HTTP ${res.status} for ${UPSTREAM_URL}`);
   }
   return res.json();
+}
+
+async function fetchJson(url) {
+  const res = await fetch(url, { headers: { Accept: "application/json" } });
+  if (!res.ok) {
+    throw new Error(`Upstream fetch failed: HTTP ${res.status} for ${url}`);
+  }
+  return res.json();
+}
+
+function pct(part, total) {
+  if (!Number.isFinite(total) || total <= 0) return null;
+  return Math.round((part / total) * 1000) / 10; // one decimal
+}
+
+/**
+ * Reduce a living-conditions table to per-slug indicator shares.
+ * Returns { bySlug, national } where shares are null when the denominator is 0.
+ */
+function parseLivingTable(raw, derive) {
+  const bySlug = new Map();
+  let national = null;
+  for (const row of raw) {
+    if (row.region_ent_type === "district") {
+      const slug = SLUG_BY_NAME[row.region_name];
+      if (!slug) {
+        throw new Error(`Unmapped upstream district name: "${row.region_name}"`);
+      }
+      bySlug.set(slug, derive(row.values ?? {}, row.total_value));
+    } else if (row.region_ent_type === "country") {
+      national = derive(row.values ?? {}, row.total_value);
+    }
+  }
+  if (bySlug.size !== 25) {
+    throw new Error(`Expected 25 districts in living table, got ${bySlug.size}`);
+  }
+  if (national == null) {
+    throw new Error("Upstream national (country) row missing in living table");
+  }
+  return { bySlug, national };
+}
+
+// Clean cooking (SDG 7): gas, electricity or biogas as the main cooking fuel,
+// over households that cook (excludes not_relevant).
+function deriveCooking(values, total) {
+  const cookingTotal = total - (values.not_relevant ?? 0);
+  const clean =
+    (values.gas ?? 0) + (values.electricity ?? 0) + (values.bio_gas ?? 0);
+  return {
+    households: total,
+    cleanCookingPct: pct(clean, cookingTotal),
+  };
+}
+
+// Pipe-borne drinking water (NWSDB, local authority, community or private),
+// over all households.
+function deriveWater(values, total) {
+  const pipeBorne =
+    (values.pipe_borne_nwsdb ?? 0) +
+    (values.pipe_borne_local_authority ?? 0) +
+    (values.pipe_borne_community ?? 0) +
+    (values.pipe_borne_private ?? 0);
+  return { households: total, pipeBorneWaterPct: pct(pipeBorne, total) };
+}
+
+// Toilet within the housing unit or on premises, over all households.
+function deriveToilet(values, total) {
+  const improved =
+    (values.within_unit_exclusive ?? 0) +
+    (values.within_unit_shared ?? 0) +
+    (values.within_premises_exclusive ?? 0) +
+    (values.within_premises_shared ?? 0);
+  return { households: total, improvedSanitationPct: pct(improved, total) };
+}
+
+// Main lighting source is the electricity grid, over all households.
+function deriveLighting(values, total) {
+  return {
+    households: total,
+    gridElectricityPct: pct(values.electricity_grid ?? 0, total),
+  };
 }
 
 async function fetchUpstreamCommit() {
@@ -211,6 +301,51 @@ async function run() {
   ]);
   const parsed = parseRows(upstreamRaw);
 
+  const livingRaw = await Promise.all(
+    Object.values(LIVING_TABLES).map((tablePath) =>
+      fetchJson(`https://raw.githubusercontent.com/${UPSTREAM_REPO}/main/${tablePath}`),
+    ),
+  );
+  const living = {
+    cookingFuel: parseLivingTable(livingRaw[0], deriveCooking),
+    drinkingWater: parseLivingTable(livingRaw[1], deriveWater),
+    toiletFacilities: parseLivingTable(livingRaw[2], deriveToilet),
+    lighting: parseLivingTable(livingRaw[3], deriveLighting),
+  };
+
+  const livingSeedValue = {
+    asOf: "2024-12-31",
+    isSeed: false,
+    sourceName:
+      "Department of Census and Statistics (Census 2024, Final Report — household tables)",
+    methodologyNote:
+      "Shares derived from exact household counts in the DCS Census of Population and Housing 2024 Final Report (cooking fuel, source of drinking water, toilet facilities, lighting), mirrored from the open nuuuwan/lk_census_2024 dataset. Clean cooking = gas/electricity/biogas over cooking households; pipe-borne water = NWSDB/local authority/community/private; improved sanitation = toilet within unit or premises. Static census reference — updated when DCS publishes revisions.",
+    national: {
+      households: living.cookingFuel.national.households,
+      cleanCookingPct: living.cookingFuel.national.cleanCookingPct,
+      pipeBorneWaterPct: living.drinkingWater.national.pipeBorneWaterPct,
+      improvedSanitationPct: living.toiletFacilities.national.improvedSanitationPct,
+      gridElectricityPct: living.lighting.national.gridElectricityPct,
+    },
+    districts: [...living.cookingFuel.bySlug.keys()].map((slug) => ({
+      slug,
+      households: living.cookingFuel.bySlug.get(slug).households,
+      cleanCookingPct: living.cookingFuel.bySlug.get(slug).cleanCookingPct,
+      pipeBorneWaterPct: living.drinkingWater.bySlug.get(slug).pipeBorneWaterPct,
+      improvedSanitationPct:
+        living.toiletFacilities.bySlug.get(slug).improvedSanitationPct,
+      gridElectricityPct: living.lighting.bySlug.get(slug).gridElectricityPct,
+    })),
+    provenance: {
+      upstream: UPSTREAM_REPO,
+      tables: LIVING_TABLES,
+      commit: upstreamSha,
+      fetchedAt: new Date().toISOString(),
+      dcsSource:
+        "Census of Population and Housing 2024, Final Report — housing tables",
+    },
+  };
+
   const provenance = {
     upstream: UPSTREAM_REPO,
     table: UPSTREAM_TABLE_PATH,
@@ -221,13 +356,22 @@ async function run() {
 
   const censusSeed = JSON.parse(fs.readFileSync(CENSUS_SEED_PATH, "utf8"));
   const districtsRaw = fs.readFileSync(DISTRICTS_PATH, "utf8");
+  let livingSeedExisting = null;
+  try {
+    livingSeedExisting = JSON.parse(fs.readFileSync(LIVING_SEED_PATH, "utf8"));
+  } catch {
+    livingSeedExisting = null; // First run — file does not exist yet.
+  }
 
   const nextCensus = updateCensusSeed(censusSeed, parsed, provenance);
   const { text: nextDistrictsText, changed } = patchDistrictPopulations(districtsRaw, parsed);
 
   const censusDrift = JSON.stringify(nextCensus) !== JSON.stringify(censusSeed);
   const districtsDrift = nextDistrictsText !== districtsRaw;
-  const drift = censusDrift || districtsDrift;
+  const livingDrift =
+    livingSeedExisting != null &&
+    JSON.stringify(livingSeedExisting) !== JSON.stringify(livingSeedValue);
+  const drift = censusDrift || districtsDrift || livingDrift;
 
   console.log(
     `Census 2024 check: national=${parsed.national.toLocaleString()} districts=${parsed.districts.size} atlasRowsChanged=${changed}`,
@@ -246,8 +390,12 @@ async function run() {
 
   fs.writeFileSync(CENSUS_SEED_PATH, JSON.stringify(nextCensus, null, 2) + "\n");
   fs.writeFileSync(DISTRICTS_PATH, nextDistrictsText);
+  fs.writeFileSync(
+    LIVING_SEED_PATH,
+    JSON.stringify(livingSeedValue, null, 2) + "\n",
+  );
   console.log(
-    `Updated ${path.relative(ROOT, CENSUS_SEED_PATH)} and ${path.relative(ROOT, DISTRICTS_PATH)} (${changed} atlas rows).`,
+    `Updated ${path.relative(ROOT, CENSUS_SEED_PATH)}, ${path.relative(ROOT, DISTRICTS_PATH)} (${changed} atlas rows) and ${path.relative(ROOT, LIVING_SEED_PATH)}.`,
   );
 }
 

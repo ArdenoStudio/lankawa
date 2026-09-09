@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { CensusFootnote } from "@/components/CensusFootnote";
+import { CensusLivingConditionsCard } from "@/components/CensusLivingConditionsCard";
 import { DistrictLandPulse } from "@/components/DistrictLandPulse";
 import { DistrictMapLazy } from "@/components/DistrictMapLazy";
 import { DistrictPinButton } from "@/components/DistrictPinButton";
@@ -199,6 +200,21 @@ export default async function DistrictDetailPage({
           population: t("census.population"),
           seed: t("census.seed"),
           honesty: t("census.honesty"),
+          source: t("census.source"),
+        }}
+      />
+
+      <CensusLivingConditionsCard
+        slug={slug}
+        locale={locale}
+        labels={{
+          title: t("census.livingTitle"),
+          cleanCooking: t("census.livingCleanCooking"),
+          pipeBorneWater: t("census.livingPipeBorneWater"),
+          improvedSanitation: t("census.livingImprovedSanitation"),
+          gridElectricity: t("census.livingGridElectricity"),
+          households: t.raw("census.livingHouseholds"),
+          honesty: t("census.livingHonesty"),
           source: t("census.source"),
         }}
       />
