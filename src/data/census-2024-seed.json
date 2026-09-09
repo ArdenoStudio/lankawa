@@ -1,35 +1,142 @@
 {
   "sourceId": "census_2024_seed",
-  "sourceName": "Department of Census and Statistics (seed footnotes)",
+  "sourceName": "Department of Census and Statistics (Census 2024, Final Report Table 3.2)",
   "asOf": "2024-12-31",
-  "isSeed": true,
-  "methodologyNote": "Population footnotes curated from public DCS / HDX district tables for morning context. Stale-OK — not a live census API. Prefer official DCS publications for formal citation.",
-  "nationalPopulation": 21763000,
+  "isSeed": false,
+  "methodologyNote": "Exact resident populations from the DCS Census of Population and Housing 2024 Final Report (Table 3.2), mirrored from the open nuuuwan/lk_census_2024 dataset. Static census reference — updated when DCS publishes revisions, not a live feed.",
+  "nationalPopulation": 21781800,
   "districts": [
-    { "slug": "colombo", "population2024": 2450000, "note": "Western mega-district; densest housing stock." },
-    { "slug": "gampaha", "population2024": 2430000, "note": "Rapid peri-urban growth around Colombo." },
-    { "slug": "kalutara", "population2024": 1280000, "note": "Coastal + estate hinterland mix." },
-    { "slug": "kandy", "population2024": 1450000, "note": "Central hill-country urban core." },
-    { "slug": "matale", "population2024": 510000, "note": "Central province inland district." },
-    { "slug": "nuwara-eliya", "population2024": 740000, "note": "Plantation / highland settlement pattern." },
-    { "slug": "galle", "population2024": 1120000, "note": "Southern coastal urban corridor." },
-    { "slug": "matara", "population2024": 850000, "note": "Southern coastal mid-size district." },
-    { "slug": "hambantota", "population2024": 630000, "note": "Dry-zone southern district." },
-    { "slug": "jaffna", "population2024": 610000, "note": "Northern peninsula urban centre." },
-    { "slug": "kilinochchi", "population2024": 120000, "note": "Northern resettlement / rural profile." },
-    { "slug": "mannar", "population2024": 105000, "note": "Western Northern coastal district." },
-    { "slug": "vavuniya", "population2024": 175000, "note": "Northern inland service hub." },
-    { "slug": "mullaitivu", "population2024": 98000, "note": "Lowest-population Northern district." },
-    { "slug": "batticaloa", "population2024": 555000, "note": "Eastern coastal lagoon district." },
-    { "slug": "ampara", "population2024": 680000, "note": "Largest Eastern land area." },
-    { "slug": "trincomalee", "population2024": 400000, "note": "Eastern harbour district." },
-    { "slug": "kurunegala", "population2024": 1700000, "note": "North Western population centre." },
-    { "slug": "puttalam", "population2024": 800000, "note": "Coastal North Western district." },
-    { "slug": "anuradhapura", "population2024": 900000, "note": "North Central dry-zone hub." },
-    { "slug": "polonnaruwa", "population2024": 430000, "note": "North Central irrigation district." },
-    { "slug": "badulla", "population2024": 860000, "note": "Uva highland district." },
-    { "slug": "monaragala", "population2024": 480000, "note": "Uva dry-zone district." },
-    { "slug": "ratnapura", "population2024": 1140000, "note": "Sabaragamuwa gem / estate district." },
-    { "slug": "kegalle", "population2024": 880000, "note": "Sabaragamuwa mid-country district." }
-  ]
+    {
+      "slug": "colombo",
+      "population2024": 2375415,
+      "note": "Western mega-district; densest housing stock."
+    },
+    {
+      "slug": "gampaha",
+      "population2024": 2436142,
+      "note": "Rapid peri-urban growth around Colombo."
+    },
+    {
+      "slug": "kalutara",
+      "population2024": 1305784,
+      "note": "Coastal + estate hinterland mix."
+    },
+    {
+      "slug": "kandy",
+      "population2024": 1461895,
+      "note": "Central hill-country urban core."
+    },
+    {
+      "slug": "matale",
+      "population2024": 526870,
+      "note": "Central province inland district."
+    },
+    {
+      "slug": "nuwara-eliya",
+      "population2024": 725280,
+      "note": "Plantation / highland settlement pattern."
+    },
+    {
+      "slug": "galle",
+      "population2024": 1097372,
+      "note": "Southern coastal urban corridor."
+    },
+    {
+      "slug": "matara",
+      "population2024": 837889,
+      "note": "Southern coastal mid-sized urban belt."
+    },
+    {
+      "slug": "hambantota",
+      "population2024": 671418,
+      "note": "Southern interior growth corridor."
+    },
+    {
+      "slug": "jaffna",
+      "population2024": 594751,
+      "note": "Northern peninsula administrative capital."
+    },
+    {
+      "slug": "kilinochchi",
+      "population2024": 136710,
+      "note": "Northern agricultural district."
+    },
+    {
+      "slug": "mannar",
+      "population2024": 123756,
+      "note": "Island-and-mainland coastal district."
+    },
+    {
+      "slug": "vavuniya",
+      "population2024": 172312,
+      "note": "Northern gateway district."
+    },
+    {
+      "slug": "mullaitivu",
+      "population2024": 122619,
+      "note": "Northeastern coastal district."
+    },
+    {
+      "slug": "batticaloa",
+      "population2024": 595918,
+      "note": "Eastern lagoon-and-coast district."
+    },
+    {
+      "slug": "ampara",
+      "population2024": 744551,
+      "note": "Eastern agricultural district."
+    },
+    {
+      "slug": "trincomalee",
+      "population2024": 442745,
+      "note": "Northeastern port district."
+    },
+    {
+      "slug": "kurunegala",
+      "population2024": 1768156,
+      "note": "North Western hub district."
+    },
+    {
+      "slug": "puttalam",
+      "population2024": 818816,
+      "note": "North Western coastal district."
+    },
+    {
+      "slug": "anuradhapura",
+      "population2024": 960080,
+      "note": "North Central heritage capital."
+    },
+    {
+      "slug": "polonnaruwa",
+      "population2024": 447530,
+      "note": "North Central agricultural district."
+    },
+    {
+      "slug": "badulla",
+      "population2024": 872307,
+      "note": "Uva hill-country district."
+    },
+    {
+      "slug": "monaragala",
+      "population2024": 527585,
+      "note": "Uva sparsely-populated interior."
+    },
+    {
+      "slug": "ratnapura",
+      "population2024": 1145423,
+      "note": "Sabaragamuwa gem-and-rain district."
+    },
+    {
+      "slug": "kegalle",
+      "population2024": 870476,
+      "note": "Sabaragamuwa rubber smallholding belt."
+    }
+  ],
+  "provenance": {
+    "upstream": "nuuuwan/lk_census_2024",
+    "table": "data/final-report-tables/chapter-3/3.2-Distribution-of-Population-by-Province-and-District-2024/data.json",
+    "commit": "19d83f177252f9b256b125e30130b5bb5f733480",
+    "fetchedAt": "2026-09-09T10:27:18.960Z",
+    "dcsSource": "Census of Population and Housing 2024, Final Report, Table 3.2"
+  }
 }
