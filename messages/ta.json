@@ -1290,6 +1290,8 @@
     "cseQuotesDescription": "Company quotes from cse.lk companyInfoSummery for a comma-separated symbol list, with seed fallback.",
     "export_landChange": "Land change indices",
     "export_foreignDebt": "Foreign debt composition",
+    "export_censusLiving": "Census 2024 living conditions",
+    "export_censusAge": "Census 2024 age structure",
     "landslideSummary": "Landslide early warning",
     "landslideDescription": "District watch/warning from lk_dmc tip layout parse, with seed honesty when unavailable.",
     "changesSummary": "Product changelog",

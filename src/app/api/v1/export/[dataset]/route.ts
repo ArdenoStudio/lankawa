@@ -2,6 +2,10 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 import { recordExportAudit } from "@/lib/db";
+import {
+  getCensusAgeStructure,
+  getCensusLivingConditions,
+} from "@/lib/census";
 import { DISTRICTS } from "@/lib/districts";
 import { getPresidentialElection2024 } from "@/lib/elections";
 import { getParliamentaryElection2024 } from "@/lib/elections";
@@ -17,6 +21,8 @@ const VALID_DATASETS = [
   "fuel-history",
   "land-change",
   "foreign-debt",
+  "census-living-conditions",
+  "census-age-structure",
 ] as const;
 type ExportDataset = (typeof VALID_DATASETS)[number];
 type ExportFormat = "csv" | "geojson" | "json";
@@ -255,6 +261,50 @@ function buildLandChangeCsv(): string {
   return toCsv(headers, rows);
 }
 
+function buildCensusLivingConditionsCsv(): string {
+  const snapshot = getCensusLivingConditions();
+  const headers = [
+    "slug",
+    "households",
+    "cleanCookingPct",
+    "pipeBorneWaterPct",
+    "improvedSanitationPct",
+    "gridElectricityPct",
+  ];
+  const rows: CsvRow[] = snapshot.districts.map((row) => ({
+    slug: row.slug,
+    households: row.households,
+    cleanCookingPct: row.cleanCookingPct,
+    pipeBorneWaterPct: row.pipeBorneWaterPct,
+    improvedSanitationPct: row.improvedSanitationPct,
+    gridElectricityPct: row.gridElectricityPct,
+  }));
+
+  return toCsv(headers, rows);
+}
+
+function buildCensusAgeStructureCsv(): string {
+  const snapshot = getCensusAgeStructure();
+  const headers = [
+    "slug",
+    "population",
+    "childrenSharePct",
+    "workingAgeSharePct",
+    "ageingSharePct",
+    "dependencyRatio",
+  ];
+  const rows: CsvRow[] = snapshot.districts.map((row) => ({
+    slug: row.slug,
+    population: row.population,
+    childrenSharePct: row.childrenSharePct,
+    workingAgeSharePct: row.workingAgeSharePct,
+    ageingSharePct: row.ageingSharePct,
+    dependencyRatio: row.dependencyRatio,
+  }));
+
+  return toCsv(headers, rows);
+}
+
 function buildForeignDebtCsv(): string {
   const snapshot = getForeignDebtSnapshot();
   const headers = [
@@ -321,6 +371,10 @@ export async function GET(
         return csvResponse(dataset, buildLandChangeCsv());
       case "foreign-debt":
         return csvResponse(dataset, buildForeignDebtCsv());
+      case "census-living-conditions":
+        return csvResponse(dataset, buildCensusLivingConditionsCsv());
+      case "census-age-structure":
+        return csvResponse(dataset, buildCensusAgeStructureCsv());
       default: {
         const _exhaustive: never = dataset;
         return _exhaustive;
@@ -380,6 +434,36 @@ export async function GET(
         {
           headers: {
             "Content-Disposition": 'attachment; filename="lankawa-services.json"',
+            "Cache-Control": "public, max-age=86400",
+          },
+        },
+      );
+    }
+    case "census-living-conditions": {
+      const snapshot = getCensusLivingConditions();
+      return NextResponse.json(
+        {
+          exportedAt: new Date().toISOString(),
+          ...snapshot,
+        },
+        {
+          headers: {
+            "Content-Disposition": 'attachment; filename="lankawa-census-living-conditions.json"',
+            "Cache-Control": "public, max-age=86400",
+          },
+        },
+      );
+    }
+    case "census-age-structure": {
+      const snapshot = getCensusAgeStructure();
+      return NextResponse.json(
+        {
+          exportedAt: new Date().toISOString(),
+          ...snapshot,
+        },
+        {
+          headers: {
+            "Content-Disposition": 'attachment; filename="lankawa-census-age-structure.json"',
             "Cache-Control": "public, max-age=86400",
           },
         },

@@ -93,6 +93,36 @@ const EXPORT_DATASETS = [
       },
     ],
   },
+  {
+    id: "censusLiving",
+    formats: [
+      {
+        label: "JSON",
+        path: "/api/v1/export/census-living-conditions",
+        filename: "lankawa-census-living-conditions.json",
+      },
+      {
+        label: "CSV",
+        path: "/api/v1/export/census-living-conditions?format=csv",
+        filename: "lankawa-census-living-conditions.csv",
+      },
+    ],
+  },
+  {
+    id: "censusAge",
+    formats: [
+      {
+        label: "JSON",
+        path: "/api/v1/export/census-age-structure",
+        filename: "lankawa-census-age-structure.json",
+      },
+      {
+        label: "CSV",
+        path: "/api/v1/export/census-age-structure?format=csv",
+        filename: "lankawa-census-age-structure.csv",
+      },
+    ],
+  },
 ] as const;
 
 export function DataExportPanel() {
