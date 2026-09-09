@@ -134,7 +134,7 @@ Note: `priceIndex` / turnover on GICS summary can lag the live `allSectors.index
 
 | Endpoint | Working call | Sample | Lankawa |
 |----------|--------------|--------|---------|
-| `POST /sectorHighLow` | form `sectorId=1` **or** JSON `{}` with `?sectorId=1` | `{ lastValue, openValue, dailyLow, dailyHigh }` | Unused — fills ASPI high/low if `aspiData` omits them |
+| `POST /sectorHighLow` | form `sectorId=1` **or** JSON `{}` with `?sectorId=1` | `{ lastValue, openValue, dailyLow, dailyHigh }` | **Wired** — `fetchCseSectorHighLow()` fills ASPI high/low when `aspiData` omits them |
 | `POST /52WeekSectors` | form `sectorId=1` **or** query `?sectorId=1` | `{ previousClose, week52High, ytdHigh, ytdChange, week52Change }` | **Wired** — `fetchCseWeek52()` feeds the 52-week strip on `CseMarketCard` (seed fallback) |
 | GET on either | — | **405** | — |
 
@@ -248,7 +248,7 @@ curl -sS "${H[@]}" -X POST -H 'Content-Type: application/x-www-form-urlencoded' 
 1. ~~**Fix notices ingest**~~ — wired: `GET /notifications` (`content`) + `POST /approvedAnnouncement` (`approvedAnnouncements`); economy strip below CSE card; seed fallback.
 2. ~~**Per-symbol quotes**~~ — wired: `POST /companyInfoSummery` via `/api/v1/cse/quotes` for the home watchlist.
 3. ~~**Optional GICS deepen**~~ — wired: join `GICSSectorSummery` onto existing sector rows for PER/PBV/DY + traded/listed counts (one extra POST; seed fallback).
-4. **Optional ASPI range** — `POST /sectorHighLow?sectorId=1` if `aspiData` high/low sparse.
+4. ~~**Optional ASPI range**~~ — wired: `POST /sectorHighLow?sectorId=1` fills ASPI high/low when `aspiData` is sparse.
 5. **Do not** add COVID / buy-in / new-listings dumps to the economy card — keep the strip short (halt notices + recent approved disclosures).
 
 Cite Cookie-Cat docs as a **catalog**, not an SLA. Keep polite delays (≥300 ms between probes); descriptive UA; no auth/account automation.
