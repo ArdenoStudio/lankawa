@@ -277,6 +277,13 @@ interface CseWeek52Response {
   week52Change?: number;
 }
 
+interface CseSectorHighLowResponse {
+  lastValue?: number;
+  openValue?: number;
+  dailyHigh?: number;
+  dailyLow?: number;
+}
+
 const SEED_AS_OF = "2026-07-18T09:30:00.000Z";
 
 const SEED_SNAPSHOT: Omit<CseSnapshot, "tier" | "isFallback"> = {
@@ -1129,6 +1136,30 @@ function parseWeek52(raw: CseWeek52Response | null): CseWeek52Range | null {
   return hasAny ? range : null;
 }
 
+/**
+ * `POST /sectorHighLow?sectorId=1` — session high/low for ASPI (sectorId 1).
+ * Fills `aspiData` when its own high/low fields are sparse.
+ */
+async function fetchCseSectorHighLow(): Promise<{
+  high: number | null;
+  low: number | null;
+} | null> {
+  const raw = await cseFetch<CseSectorHighLowResponse>(
+    "/sectorHighLow?sectorId=1",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: "{}",
+    },
+  );
+  if (!raw) {
+    return null;
+  }
+  const high = finiteNumber(raw.dailyHigh);
+  const low = finiteNumber(raw.dailyLow);
+  return high != null || low != null ? { high, low } : null;
+}
+
 function buildSnapshotFromLive(parts: {
   aspi: CseIndexResponse | null;
   snp: CseIndexResponse | null;
@@ -1142,6 +1173,7 @@ function buildSnapshotFromLive(parts: {
   mostActive: CseActiveRow[] | null;
   dailyMarket: CseDailyMarketRow[] | null;
   week52: CseWeek52Range | null;
+  sectorHighLow: { high: number | null; low: number | null } | null;
   notices: CseNotice[];
 }): CseSnapshot | null {
   const aspi = parseIndex(parts.aspi, {
@@ -1152,6 +1184,14 @@ function buildSnapshotFromLive(parts: {
     code: "SNP_SL20",
     name: "S&P Sri Lanka 20",
   }, SEED_SNAPSHOT.snp);
+
+  // Fill sparse ASPI session high/low from the dedicated sectorHighLow probe.
+  if (aspi.high == null && parts.sectorHighLow?.high != null) {
+    aspi.high = parts.sectorHighLow.high;
+  }
+  if (aspi.low == null && parts.sectorHighLow?.low != null) {
+    aspi.low = parts.sectorHighLow.low;
+  }
 
   const hasLiveIndex =
     parts.aspi != null &&
@@ -1272,6 +1312,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     mostActive,
     dailyMarket,
     week52,
+    sectorHighLow,
     notices,
   ] = await Promise.all([
     postCseJson<CseIndexResponse>("/aspiData"),
@@ -1296,6 +1337,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
       return raw as CseDailyMarketRow[];
     }),
     fetchCseWeek52(),
+    fetchCseSectorHighLow(),
     fetchCseNotices(SEED_AS_OF),
   ]);
 
@@ -1312,6 +1354,7 @@ export async function buildCseSnapshot(): Promise<CseSnapshot> {
     mostActive,
     dailyMarket,
     week52,
+    sectorHighLow,
     notices,
   });
 
