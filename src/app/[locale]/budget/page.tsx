@@ -69,7 +69,7 @@ export default async function BudgetPage({
             methodology: t("yoy.methodology"),
             prior: t("yoy.prior"),
             current: t("yoy.current"),
-            delta: t("yoy.delta"),
+            delta: t.raw("yoy.delta"),
             totalsTitle: t("yoy.totalsTitle"),
             sectorsTitle: t("yoy.sectorsTitle"),
             ministriesTitle: t("yoy.ministriesTitle"),

@@ -121,7 +121,7 @@ export default async function DisasterPage({
           discharge: t("glofas.discharge"),
           empty: t("glofas.empty"),
           honesty: t("glofas.honesty"),
-          asOf: t("glofas.asOf"),
+          asOf: t.raw("glofas.asOf"),
         }}
       />
 
@@ -291,11 +291,11 @@ export default async function DisasterPage({
           seed: t("irrigation.seed"),
           empty: t("irrigation.empty"),
           honesty: t("irrigation.honesty"),
-          asOf: t("irrigation.asOf"),
+          asOf: t.raw("irrigation.asOf"),
           source: t("irrigation.source"),
           dashboard: t("irrigation.dashboard"),
           stations: t("irrigation.stations"),
-          elevated: t("irrigation.elevated"),
+          elevated: t.raw("irrigation.elevated"),
           level: t("irrigation.level"),
           rain: t("irrigation.rain"),
           normal: t("irrigation.normal"),
@@ -340,8 +340,8 @@ export default async function DisasterPage({
           unavailableBody: t("metUnavailableBody"),
           emptyTitle: t("metEmptyTitle"),
           emptyBody: t("metEmptyBody"),
-          issuedAt: t("metIssuedAt"),
-          checkedAt: t("metCheckedAt"),
+          issuedAt: t.raw("metIssuedAt"),
+          checkedAt: t.raw("metCheckedAt"),
           activeCount: t("metActiveCount", {
             count: metWarnings?.warnings.length ?? 0,
           }),
@@ -373,7 +373,7 @@ export default async function DisasterPage({
           firesTitle: t("firesTitle"),
           firesEmpty: t("firesEmpty"),
           firesNeedsKey: t("firesNeedsKey"),
-          firesCount: t("firesCount"),
+          firesCount: t.raw("firesCount"),
           brightness: t("firesBrightness"),
           confidence: t("firesConfidence"),
           gdacsTitle: t("gdacsTitle"),
@@ -410,7 +410,7 @@ export default async function DisasterPage({
           magnitude: t("earthquakeMagnitude"),
           depth: t("earthquakeDepth"),
           coordinates: t("earthquakeCoordinates"),
-          occurredAt: t("earthquakeOccurredAt"),
+          occurredAt: t.raw("earthquakeOccurredAt"),
           tsunamiFlag: t("earthquakeTsunamiFlag"),
           windowLabel: t("earthquakeWindowLabel", {
             days: earthquakes.queryWindowDays,

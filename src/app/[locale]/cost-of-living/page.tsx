@@ -155,7 +155,7 @@ export default async function CostOfLivingPage({
           title: t("coconutSpark.title"),
           subtitle: t("coconutSpark.subtitle"),
           seed: t("coconutSpark.seed"),
-          delta: t("coconutSpark.delta"),
+          delta: t.raw("coconutSpark.delta"),
           honesty: t("coconutSpark.honesty"),
           empty: t("coconutSpark.empty"),
         }}

@@ -84,7 +84,11 @@ export default async function SourcesPage({
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-slate-500">{t("lastUpdated")}</dt>
+                  <dt className="text-slate-500">{t("lastUpdated", {
+                    date: health?.lastSuccessAt
+                      ? new Date(health.lastSuccessAt).toLocaleString()
+                      : t("unknownDate"),
+                  })}</dt>
                   <dd className="font-medium text-slate-200">
                     {health?.lastSuccessAt
                       ? new Date(health.lastSuccessAt).toLocaleString()

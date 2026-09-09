@@ -251,7 +251,7 @@ export default async function EconomyPage({
               }),
               source: t("lpg.source"),
               seed: t("lpg.seed"),
-              otherDistricts: t("lpg.otherDistricts"),
+              otherDistricts: t.raw("lpg.otherDistricts"),
             }}
             filter={
               <LpgDistrictFilter
@@ -361,10 +361,10 @@ export default async function EconomyPage({
               subtitle: t("worldPump.subtitle"),
               seedBadge: t("worldPump.seedBadge"),
               liveBadge: t("worldPump.liveBadge"),
-              asOf: t("worldPump.asOf"),
+              asOf: t.raw("worldPump.asOf"),
               methodology: t("worldPump.methodology"),
               empty: t("worldPump.empty"),
-              worldAvg: t("worldPump.worldAvg"),
+              worldAvg: t.raw("worldPump.worldAvg"),
             }}
           />
           <DebtCompositionCard
@@ -479,7 +479,7 @@ export default async function EconomyPage({
               subtitle: t("generationMix.subtitle"),
               seed: t("generationMix.seed"),
               hydro: t("generationMix.hydro"),
-              asOf: t("generationMix.asOf"),
+              asOf: t.raw("generationMix.asOf"),
               honesty: t("generationMix.honesty"),
               source: t("generationMix.source"),
             }}
@@ -506,8 +506,8 @@ export default async function EconomyPage({
             mixed: t("remittanceBoard.mixed"),
             bankSeed: t("remittanceBoard.bankSeed"),
             bankLive: t("remittanceBoard.bankLive"),
-            coverage: t("remittanceBoard.coverage"),
-            asOf: t("remittanceBoard.asOf"),
+            coverage: t.raw("remittanceBoard.coverage"),
+            asOf: t.raw("remittanceBoard.asOf"),
             source: t("remittanceBoard.source"),
             honesty: t("remittanceBoard.honesty"),
             metricsLabel: t("remittanceBoard.metricsLabel"),
@@ -527,12 +527,12 @@ export default async function EconomyPage({
             mixed: t("depositRates.mixed"),
             bankSeed: t("depositRates.bankSeed"),
             bankLive: t("depositRates.bankLive"),
-            coverage: t("depositRates.coverage"),
-            asOf: t("depositRates.asOf"),
+            coverage: t.raw("depositRates.coverage"),
+            asOf: t.raw("depositRates.asOf"),
             source: t("depositRates.source"),
             honesty: t("depositRates.honesty"),
             tableLabel: t("depositRates.tableLabel"),
-            months: t("depositRates.months"),
+            months: t.raw("depositRates.months"),
             paidIn: t("depositRates.paidIn"),
           }}
         />

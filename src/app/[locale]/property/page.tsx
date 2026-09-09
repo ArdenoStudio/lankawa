@@ -75,7 +75,7 @@ export default async function PropertyPage({
           title: t("listings.title"),
           subtitle: t("listings.subtitle"),
           seed: t("listings.seed"),
-          delta: t("listings.delta"),
+          delta: t.raw("listings.delta"),
           honesty: t("listings.honesty"),
         }}
       />

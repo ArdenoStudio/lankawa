@@ -1154,7 +1154,7 @@
     "metrics": "Live metrics",
     "cadence": "Update cadence",
     "adapter": "Integration type",
-    "lastUpdated": "Last updated {date}",
+    "lastUpdated": "Last updated",
     "lastChecked": "Last checked",
     "lastSuccess": "Last successful fetch",
     "unknownDate": "Not available",

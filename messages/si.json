@@ -1145,7 +1145,7 @@
     "metrics": "සජීවී මිනුම්",
     "cadence": "යාවත්කාලීන කාලසටහන",
     "adapter": "ඒකාබද්ධ වර්ගය",
-    "lastUpdated": "අවසන් යාවත්කාලීන {date}",
+    "lastUpdated": "අවසන් යාවත්කාලීන",
     "lastChecked": "අවසන් පරීක්ෂාව",
     "lastSuccess": "අවසන් සාර්ථක ලබා ගැනීම",
     "unknownDate": "ලබා ගත නොහැක",
