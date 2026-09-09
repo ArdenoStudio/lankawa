@@ -1300,6 +1300,8 @@
     "waterBillDescription": "Domestic/Samurdhi water tariff slabs with seed estimate and optional live BillCalculator totals.",
     "cseQuotesSummary": "CSE per-symbol quotes",
     "cseQuotesDescription": "Company quotes from cse.lk companyInfoSummery for a comma-separated symbol list, with seed fallback.",
+    "cseAnnouncementsSummary": "CSE பங்கு அறிவிப்புகள்",
+    "cseAnnouncementsDescription": "கோரப்பட்ட பங்குகளுக்கு cse.lk getAnnouncementByCompany இலிருந்து கடந்த ~90 நாட்களின் நிறுவன அறிவிப்புகள்.",
     "export_landChange": "Land change indices",
     "export_foreignDebt": "Foreign debt composition",
     "export_censusLiving": "Census 2024 living conditions",
@@ -2263,7 +2265,8 @@
     "remove": "பட்டியலிலிருந்து நீக்கு",
     "privacy": "இந்த உலாவியில் மட்டும். Data Saver இயங்கினால் மறைக்கப்படும்.",
     "loadingQuote": "ஏற்றுகிறது…",
-    "seedQuote": "seed"
+    "seedQuote": "seed",
+    "latest": "சமீபத்திய"
   },
   "webPush": {
     "title": "Alert push (opt-in)",

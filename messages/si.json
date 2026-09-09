@@ -1310,6 +1310,8 @@
     "waterBillDescription": "Domestic/Samurdhi water tariff slabs with seed estimate and optional live BillCalculator totals.",
     "cseQuotesSummary": "CSE per-symbol quotes",
     "cseQuotesDescription": "Company quotes from cse.lk companyInfoSummery for a comma-separated symbol list, with seed fallback.",
+    "cseAnnouncementsSummary": "CSE සංඥා නිවේදන",
+    "cseAnnouncementsDescription": "ඉල්ලූ සංඥා සඳහා cse.lk getAnnouncementByCompany හි පසුගිය දින ~90 න් පසු සමාගම් නිවේදන.",
     "export_landChange": "Land change indices",
     "export_foreignDebt": "Foreign debt composition",
     "export_censusLiving": "Census 2024 living conditions",
@@ -2263,7 +2265,8 @@
     "remove": "ලැයිස්තුවෙන් ඉවත් කරන්න",
     "privacy": "මෙම බ්‍රවුසරයේ පමණි. Data Saver ක්‍රියාත්මක විට සැඟවේ.",
     "loadingQuote": "පූරණය වෙමින්…",
-    "seedQuote": "seed"
+    "seedQuote": "seed",
+    "latest": "නවතම"
   },
   "webPush": {
     "title": "Alert push (opt-in)",

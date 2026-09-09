@@ -11,7 +11,7 @@ import {
   toggleCseWatchlistSymbol,
   writeCseWatchlist,
 } from "@/lib/cse-watchlist";
-import type { CseCompanyQuote } from "@/lib/integrations/cse";
+import type { CseCompanyQuote, CseNotice } from "@/lib/integrations/cse";
 
 function formatChange(changePct: number | null): string {
   if (changePct == null) {
@@ -30,6 +30,9 @@ function WatchlistInner() {
     return readCseWatchlist(window.localStorage);
   });
   const [quotes, setQuotes] = useState<CseCompanyQuote[]>([]);
+  const [announcements, setAnnouncements] = useState<Record<string, CseNotice[]>>(
+    {},
+  );
 
   useEffect(() => {
     if (symbols.length === 0) {
@@ -54,6 +57,44 @@ function WatchlistInner() {
       .catch(() => {
         if (!cancelled) {
           setQuotes([]);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [symbols]);
+
+  useEffect(() => {
+    if (symbols.length === 0) {
+      return;
+    }
+
+    let cancelled = false;
+    const params = new URLSearchParams({ symbols: symbols.join(",") });
+
+    fetch(`/api/v1/cse/announcements?${params.toString()}`)
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error("announcement fetch failed");
+        }
+        return (await response.json()) as {
+          announcements?: Record<string, CseNotice[]>;
+        };
+      })
+      .then((payload) => {
+        if (!cancelled) {
+          setAnnouncements(
+            payload.announcements &&
+              typeof payload.announcements === "object"
+              ? payload.announcements
+              : {},
+          );
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setAnnouncements({});
         }
       });
 
@@ -126,6 +167,15 @@ function WatchlistInner() {
                     <p className="text-xs text-neutral-600">{t("loadingQuote")}</p>
                   )}
                 </div>
+                {announcements[symbol]?.[0] ? (
+                  <p
+                    className="w-full text-xs text-neutral-500 sm:w-auto sm:flex-1 sm:text-right"
+                    title={announcements[symbol][0].title}
+                  >
+                    <span className="sm:hidden">{t("latest")}: </span>
+                    {announcements[symbol][0].title}
+                  </p>
+                ) : null}
               </li>
             );
           })}

@@ -60,6 +60,26 @@ export const openApiSpec = {
         },
       },
     },
+    "/cse/announcements": {
+      get: {
+        summary: "CSE per-symbol corporate announcements (getAnnouncementByCompany)",
+        parameters: [
+          {
+            name: "symbols",
+            in: "query",
+            required: false,
+            schema: { type: "string" },
+            description: "Comma-separated CSE symbols, e.g. JKH.N0000,COMB.N0000",
+          },
+        ],
+        responses: {
+          "200": {
+            description:
+              "Recent announcements (last ~90 days) keyed by symbol, empty arrays on failure",
+          },
+        },
+      },
+    },
     "/brief": {
       get: {
         summary: "Trilingual morning brief",
@@ -887,6 +907,13 @@ export const apiEndpoints = [
     summaryKey: "cseQuotesSummary" as const,
     descriptionKey: "cseQuotesDescription" as const,
     example: `{ "generatedAt": "...", "quotes": [{ "symbol": "JKH.N0000", "price": 22.1 }], "provenancePath": "/sources/cse_lk" }`,
+  },
+  {
+    method: "GET",
+    path: "/api/v1/cse/announcements?symbols=JKH.N0000",
+    summaryKey: "cseAnnouncementsSummary" as const,
+    descriptionKey: "cseAnnouncementsDescription" as const,
+    example: `{ "generatedAt": "...", "announcements": { "JKH.N0000": [{ "title": "DEALINGS BY DIRECTORS", "publishedAt": "..." }] }, "provenancePath": "/sources/cse_lk" }`,
   },
   {
     method: "GET",

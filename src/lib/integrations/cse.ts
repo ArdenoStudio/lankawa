@@ -888,6 +888,31 @@ export async function fetchCseCompanyQuote(
   return seedCompanyQuote(normalized);
 }
 
+/**
+ * Per-symbol corporate announcements: POST `/getAnnouncementByCompany` with
+ * form fields `symbol`, `fromDate`, `toDate` (`YYYY-MM-DD` — slashes 500).
+ * Rows land in `reqCompanyAnnouncement[]`, parsed by the shared notice parser.
+ */
+export async function fetchCseCompanyAnnouncements(
+  symbol: string,
+  days = 90,
+): Promise<CseNotice[]> {
+  const normalized = symbol.trim().toUpperCase();
+  if (!normalized) {
+    return [];
+  }
+  const toDate = new Date();
+  const fromDate = new Date(toDate.getTime() - days * 86_400_000);
+  const iso = (date: Date) => date.toISOString().slice(0, 10);
+
+  const raw = await postCseForm<unknown>("/getAnnouncementByCompany", {
+    symbol: normalized,
+    fromDate: iso(fromDate),
+    toDate: iso(toDate),
+  });
+  return parseCseNotices(raw, SEED_AS_OF).slice(0, 3);
+}
+
 export async function fetchCseCompanyQuotes(
   symbols: string[],
 ): Promise<CseCompanyQuote[]> {

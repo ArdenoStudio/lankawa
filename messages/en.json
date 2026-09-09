@@ -1297,6 +1297,8 @@
     "waterBillDescription": "Domestic/Samurdhi water tariff slabs with seed estimate and optional live BillCalculator totals.",
     "cseQuotesSummary": "CSE per-symbol quotes",
     "cseQuotesDescription": "Company quotes from cse.lk companyInfoSummery for a comma-separated symbol list, with seed fallback.",
+    "cseAnnouncementsSummary": "CSE per-symbol announcements",
+    "cseAnnouncementsDescription": "Recent corporate announcements (last ~90 days) for each requested symbol from cse.lk getAnnouncementByCompany.",
     "exportLandChangeSummary": "Export land change",
     "exportLandChangeDescription": "Download district greenery and built-up indices as JSON or CSV.",
     "exportForeignDebtSummary": "Export foreign debt composition",
@@ -2263,7 +2265,8 @@
     "remove": "Remove from watchlist",
     "privacy": "Saved in this browser only. Hidden when Data Saver is on.",
     "loadingQuote": "Loading…",
-    "seedQuote": "seed"
+    "seedQuote": "seed",
+    "latest": "Latest"
   },
   "webPush": {
     "title": "Alert push (opt-in)",
