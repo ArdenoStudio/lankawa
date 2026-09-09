@@ -20,7 +20,7 @@ Related: [`DATA_EXPANSION_RESEARCH.md`](./DATA_EXPANSION_RESEARCH.md) · [`STOCK
 | Session aggregates | `POST /marketSummery`, `POST /dailyMarketSummery` | — |
 | Sectors (GICS UI) | `POST /allSectors` + `POST /GICSSectorSummery` (valuation join) | Unused: `marketIndices`, `listAllSectors`, range helpers |
 | Market status | `POST /marketStatus` → `status` string | Documented status vocabulary; WS `/topic/status` not used |
-| Notices | `GET /notifications` + `POST /approvedAnnouncement` (seed fallback) | Optional per-symbol `getAnnouncementByCompany` for watchlist |
+| Notices | `GET /notifications` + `POST /approvedAnnouncement` (seed fallback) + per-symbol `POST /getAnnouncementByCompany` for watchlist | — |
 | Quotes | `POST /companyInfoSummery` (form `symbol`) via `/api/v1/cse/quotes` | — |
 
 ---
@@ -165,7 +165,7 @@ Lankawa’s `fetchCseNotices()` currently tries, in order: `POST /notifications`
 |----------|---------------|--------------|---------------|----------|---------|
 | `GET /notifications` | none | `content[]` → `title`, `body`, `status` | 50 | Halt / auction / site banners | **Wire first** (fix POST→GET + parse `content`) |
 | `POST /approvedAnnouncement` | JSON `{}` | `approvedAnnouncements[]` | 50 | Homepage corporate disclosures | **Wire second** (economy notices strip) |
-| `POST /getAnnouncementByCompany` | form `symbol`, `fromDate`, `toDate` (`YYYY-MM-DD`) | `reqCompanyAnnouncement[]` | 11 (JKH) | Watchlist per-symbol | Unused |
+| `POST /getAnnouncementByCompany` | form `symbol`, `fromDate`, `toDate` (`YYYY-MM-DD`) | `reqCompanyAnnouncement[]` | 11 (JKH) | Watchlist per-symbol (`/api/v1/cse/announcements` + chip) | Wired |
 | `POST /announcements` | form `symbol=JKH.N0000` | `infoAnnouncement[]` (PDF archive) | 162 | Legacy per-name PDF list | Unused (not market-wide) |
 | `POST /getFinancialAnnouncement` | form empty / JSON | `reqFinancialAnnouncemnets` (**typo**) | 10 | Annual/quarterly report PDFs | Unused |
 | `POST /circularAnnouncement` | JSON `{}` | `reqCircularAnnouncement[]` | 5 | CSE circulars | Unused |
