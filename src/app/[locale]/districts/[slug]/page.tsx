@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { CensusFootnote } from "@/components/CensusFootnote";
+import { CensusAgeStructureCard } from "@/components/CensusAgeStructureCard";
 import { CensusLivingConditionsCard } from "@/components/CensusLivingConditionsCard";
 import { DistrictLandPulse } from "@/components/DistrictLandPulse";
 import { DistrictMapLazy } from "@/components/DistrictMapLazy";
@@ -215,6 +216,19 @@ export default async function DistrictDetailPage({
           gridElectricity: t("census.livingGridElectricity"),
           households: t.raw("census.livingHouseholds"),
           honesty: t("census.livingHonesty"),
+          source: t("census.source"),
+        }}
+      />
+
+      <CensusAgeStructureCard
+        slug={slug}
+        labels={{
+          title: t("census.ageTitle"),
+          children: t("census.ageChildren"),
+          workingAge: t("census.ageWorkingAge"),
+          ageing: t("census.ageAgeing"),
+          dependency: t("census.ageDependency"),
+          honesty: t("census.ageHonesty"),
           source: t("census.source"),
         }}
       />

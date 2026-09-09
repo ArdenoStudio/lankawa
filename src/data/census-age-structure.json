@@ -1,0 +1,222 @@
+{
+  "asOf": "2024-12-31",
+  "isSeed": false,
+  "sourceName": "Department of Census and Statistics (Census 2024, Final Report — age structure)",
+  "methodologyNote": "Age structure from exact 5-year age-band counts in the DCS Census of Population and Housing 2024 Final Report (Person-AgeGroup), mirrored from the open nuuuwan/lk_census_2024 dataset. Children 0-14, working age 15-64, seniors 65+. Dependency ratio = (children + seniors) per 100 working-age. Static census reference — updated when DCS publishes revisions.",
+  "national": {
+    "population": 21781800,
+    "childrenSharePct": 20.7,
+    "workingAgeSharePct": 66.7,
+    "ageingSharePct": 12.6,
+    "dependencyRatio": 49.8
+  },
+  "districts": [
+    {
+      "slug": "gampaha",
+      "population": 2436142,
+      "childrenSharePct": 18,
+      "workingAgeSharePct": 68.8,
+      "ageingSharePct": 13.2,
+      "dependencyRatio": 45.4
+    },
+    {
+      "slug": "colombo",
+      "population": 2375415,
+      "childrenSharePct": 16.5,
+      "workingAgeSharePct": 70,
+      "ageingSharePct": 13.5,
+      "dependencyRatio": 43
+    },
+    {
+      "slug": "kurunegala",
+      "population": 1768156,
+      "childrenSharePct": 20.6,
+      "workingAgeSharePct": 65.7,
+      "ageingSharePct": 13.7,
+      "dependencyRatio": 52.2
+    },
+    {
+      "slug": "kandy",
+      "population": 1461895,
+      "childrenSharePct": 21.1,
+      "workingAgeSharePct": 65.1,
+      "ageingSharePct": 13.7,
+      "dependencyRatio": 53.5
+    },
+    {
+      "slug": "kalutara",
+      "population": 1305784,
+      "childrenSharePct": 19.5,
+      "workingAgeSharePct": 67.2,
+      "ageingSharePct": 13.4,
+      "dependencyRatio": 48.9
+    },
+    {
+      "slug": "ratnapura",
+      "population": 1145423,
+      "childrenSharePct": 20.3,
+      "workingAgeSharePct": 66.5,
+      "ageingSharePct": 13.2,
+      "dependencyRatio": 50.3
+    },
+    {
+      "slug": "galle",
+      "population": 1097372,
+      "childrenSharePct": 19.9,
+      "workingAgeSharePct": 65.8,
+      "ageingSharePct": 14.3,
+      "dependencyRatio": 52.1
+    },
+    {
+      "slug": "anuradhapura",
+      "population": 960080,
+      "childrenSharePct": 22.9,
+      "workingAgeSharePct": 66.9,
+      "ageingSharePct": 10.2,
+      "dependencyRatio": 49.5
+    },
+    {
+      "slug": "badulla",
+      "population": 872307,
+      "childrenSharePct": 21.6,
+      "workingAgeSharePct": 66.4,
+      "ageingSharePct": 12,
+      "dependencyRatio": 50.5
+    },
+    {
+      "slug": "kegalle",
+      "population": 870476,
+      "childrenSharePct": 19.7,
+      "workingAgeSharePct": 65.2,
+      "ageingSharePct": 15.1,
+      "dependencyRatio": 53.3
+    },
+    {
+      "slug": "matara",
+      "population": 837889,
+      "childrenSharePct": 20.7,
+      "workingAgeSharePct": 64.5,
+      "ageingSharePct": 14.8,
+      "dependencyRatio": 55
+    },
+    {
+      "slug": "puttalam",
+      "population": 818816,
+      "childrenSharePct": 22.7,
+      "workingAgeSharePct": 66.6,
+      "ageingSharePct": 10.7,
+      "dependencyRatio": 50.2
+    },
+    {
+      "slug": "ampara",
+      "population": 744551,
+      "childrenSharePct": 25.5,
+      "workingAgeSharePct": 65.9,
+      "ageingSharePct": 8.5,
+      "dependencyRatio": 51.6
+    },
+    {
+      "slug": "nuwara-eliya",
+      "population": 725280,
+      "childrenSharePct": 23.4,
+      "workingAgeSharePct": 64.6,
+      "ageingSharePct": 12,
+      "dependencyRatio": 54.8
+    },
+    {
+      "slug": "hambantota",
+      "population": 671418,
+      "childrenSharePct": 22.5,
+      "workingAgeSharePct": 64.8,
+      "ageingSharePct": 12.7,
+      "dependencyRatio": 54.3
+    },
+    {
+      "slug": "batticaloa",
+      "population": 595918,
+      "childrenSharePct": 24.6,
+      "workingAgeSharePct": 67.2,
+      "ageingSharePct": 8.2,
+      "dependencyRatio": 48.7
+    },
+    {
+      "slug": "jaffna",
+      "population": 594751,
+      "childrenSharePct": 19.6,
+      "workingAgeSharePct": 65.9,
+      "ageingSharePct": 14.5,
+      "dependencyRatio": 51.7
+    },
+    {
+      "slug": "monaragala",
+      "population": 527585,
+      "childrenSharePct": 23.5,
+      "workingAgeSharePct": 66.4,
+      "ageingSharePct": 10.1,
+      "dependencyRatio": 50.7
+    },
+    {
+      "slug": "matale",
+      "population": 526870,
+      "childrenSharePct": 21.9,
+      "workingAgeSharePct": 65.3,
+      "ageingSharePct": 12.8,
+      "dependencyRatio": 53.2
+    },
+    {
+      "slug": "polonnaruwa",
+      "population": 447530,
+      "childrenSharePct": 22.6,
+      "workingAgeSharePct": 66.5,
+      "ageingSharePct": 10.8,
+      "dependencyRatio": 50.3
+    },
+    {
+      "slug": "trincomalee",
+      "population": 442745,
+      "childrenSharePct": 26.1,
+      "workingAgeSharePct": 66.4,
+      "ageingSharePct": 7.4,
+      "dependencyRatio": 50.5
+    },
+    {
+      "slug": "vavuniya",
+      "population": 172312,
+      "childrenSharePct": 22.5,
+      "workingAgeSharePct": 68.1,
+      "ageingSharePct": 9.4,
+      "dependencyRatio": 46.8
+    },
+    {
+      "slug": "kilinochchi",
+      "population": 136710,
+      "childrenSharePct": 22.2,
+      "workingAgeSharePct": 68.5,
+      "ageingSharePct": 9.4,
+      "dependencyRatio": 46
+    },
+    {
+      "slug": "mannar",
+      "population": 123756,
+      "childrenSharePct": 24.4,
+      "workingAgeSharePct": 67.2,
+      "ageingSharePct": 8.4,
+      "dependencyRatio": 48.8
+    },
+    {
+      "slug": "mullaitivu",
+      "population": 122619,
+      "childrenSharePct": 22.7,
+      "workingAgeSharePct": 67.8,
+      "ageingSharePct": 9.4,
+      "dependencyRatio": 47.4
+    }
+  ],
+  "provenance": {
+    "upstream": "nuuuwan/lk_census_2024",
+    "table": "data/Person-AgeGroup/data.json",
+    "commit": "19d83f177252f9b256b125e30130b5bb5f733480",
+    "fetchedAt": "2026-09-09T14:52:55.318Z",
+    "dcsSource": "Census of Population and Housing 2024, Final Report — age structure"
+  }
+}

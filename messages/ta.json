@@ -393,7 +393,13 @@
       "livingImprovedSanitation": "Toilet within unit or premises",
       "livingGridElectricity": "Grid electricity lighting",
       "livingHouseholds": "{count} households enumerated",
-      "livingHonesty": "Shares from exact Census 2024 household counts; delta vs the national share. Static census reference."
+      "livingHonesty": "Shares from exact Census 2024 household counts; delta vs the national share. Static census reference.",
+      "ageTitle": "Age structure (Census 2024)",
+      "ageChildren": "Children 0–14",
+      "ageWorkingAge": "Working age 15–64",
+      "ageAgeing": "Seniors 65+",
+      "ageDependency": "Dependency ratio (per 100 working-age)",
+      "ageHonesty": "From exact Census 2024 5-year age bands; delta vs the national share. Static census reference."
     },
     "marine": {
       "title": "Marine swell",

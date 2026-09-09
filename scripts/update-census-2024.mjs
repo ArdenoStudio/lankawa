@@ -41,6 +41,10 @@ const LIVING_TABLES = {
   lighting: "data/House-Lighting/data.json",
 };
 
+// Person age-structure table (Census 2024 Final Report).
+const AGE_TABLE = "data/Person-AgeGroup/data.json";
+const AGE_SEED_PATH = path.join(ROOT, "src/data/census-age-structure.json");
+
 // Lankawa slugs (URL-safe) mapped from upstream region_name.
 const SLUG_BY_NAME = {
   "Colombo": "colombo",
@@ -189,6 +193,69 @@ function deriveLighting(values, total) {
   };
 }
 
+const AGE_CHILD_BUCKETS = ["00_04", "05_09", "10_14"];
+const AGE_SENIOR_BUCKETS = [
+  "65_69",
+  "70_74",
+  "75_79",
+  "80_84",
+  "85_89",
+  "90_94",
+  "95_and_above",
+];
+
+/**
+ * Reduce the Person-AgeGroup table to per-region age-structure indicators.
+ * Buckets are 5-year bands: 0-14 children, 15-64 working age, 65+ seniors.
+ */
+function parseAgeTable(raw) {
+  const bySlug = new Map();
+  let national = null;
+  for (const row of raw) {
+    if (row.region_ent_type !== "district" && row.region_ent_type !== "country") {
+      continue;
+    }
+    const values = row.values ?? {};
+    let population = 0;
+    let children = 0;
+    let seniors = 0;
+    for (const [bucket, count] of Object.entries(values)) {
+      const n = Number(count);
+      if (!Number.isFinite(n)) continue;
+      population += n;
+      if (AGE_CHILD_BUCKETS.includes(bucket)) children += n;
+      if (AGE_SENIOR_BUCKETS.includes(bucket)) seniors += n;
+    }
+    const workingAge = population - children - seniors;
+    const derived = {
+      population,
+      childrenSharePct: pct(children, population),
+      workingAgeSharePct: pct(workingAge, population),
+      ageingSharePct: pct(seniors, population),
+      dependencyRatio:
+        workingAge > 0
+          ? Math.round(((children + seniors) / workingAge) * 1000) / 10
+          : null,
+    };
+    if (row.region_ent_type === "district") {
+      const slug = SLUG_BY_NAME[row.region_name];
+      if (!slug) {
+        throw new Error(`Unmapped upstream district name: "${row.region_name}"`);
+      }
+      bySlug.set(slug, derived);
+    } else {
+      national = derived;
+    }
+  }
+  if (bySlug.size !== 25) {
+    throw new Error(`Expected 25 districts in age table, got ${bySlug.size}`);
+  }
+  if (national == null) {
+    throw new Error("Upstream national (country) row missing in age table");
+  }
+  return { bySlug, national };
+}
+
 async function fetchUpstreamCommit() {
   try {
     const res = await fetch(
@@ -313,6 +380,11 @@ async function run() {
     lighting: parseLivingTable(livingRaw[3], deriveLighting),
   };
 
+  const ageRaw = await fetchJson(
+    `https://raw.githubusercontent.com/${UPSTREAM_REPO}/main/${AGE_TABLE}`,
+  );
+  const age = parseAgeTable(ageRaw);
+
   const livingSeedValue = {
     asOf: "2024-12-31",
     isSeed: false,
@@ -346,6 +418,28 @@ async function run() {
     },
   };
 
+  const ageSeedValue = {
+    asOf: "2024-12-31",
+    isSeed: false,
+    sourceName:
+      "Department of Census and Statistics (Census 2024, Final Report — age structure)",
+    methodologyNote:
+      "Age structure from exact 5-year age-band counts in the DCS Census of Population and Housing 2024 Final Report (Person-AgeGroup), mirrored from the open nuuuwan/lk_census_2024 dataset. Children 0-14, working age 15-64, seniors 65+. Dependency ratio = (children + seniors) per 100 working-age. Static census reference — updated when DCS publishes revisions.",
+    national: age.national,
+    districts: [...age.bySlug.entries()].map(([slug, derived]) => ({
+      slug,
+      ...derived,
+    })),
+    provenance: {
+      upstream: UPSTREAM_REPO,
+      table: AGE_TABLE,
+      commit: upstreamSha,
+      fetchedAt: new Date().toISOString(),
+      dcsSource:
+        "Census of Population and Housing 2024, Final Report — age structure",
+    },
+  };
+
   const provenance = {
     upstream: UPSTREAM_REPO,
     table: UPSTREAM_TABLE_PATH,
@@ -362,6 +456,12 @@ async function run() {
   } catch {
     livingSeedExisting = null; // First run — file does not exist yet.
   }
+  let ageSeedExisting = null;
+  try {
+    ageSeedExisting = JSON.parse(fs.readFileSync(AGE_SEED_PATH, "utf8"));
+  } catch {
+    ageSeedExisting = null; // First run — file does not exist yet.
+  }
 
   const nextCensus = updateCensusSeed(censusSeed, parsed, provenance);
   const { text: nextDistrictsText, changed } = patchDistrictPopulations(districtsRaw, parsed);
@@ -371,7 +471,10 @@ async function run() {
   const livingDrift =
     livingSeedExisting != null &&
     JSON.stringify(livingSeedExisting) !== JSON.stringify(livingSeedValue);
-  const drift = censusDrift || districtsDrift || livingDrift;
+  const ageDrift =
+    ageSeedExisting != null &&
+    JSON.stringify(ageSeedExisting) !== JSON.stringify(ageSeedValue);
+  const drift = censusDrift || districtsDrift || livingDrift || ageDrift;
 
   console.log(
     `Census 2024 check: national=${parsed.national.toLocaleString()} districts=${parsed.districts.size} atlasRowsChanged=${changed}`,
@@ -394,8 +497,12 @@ async function run() {
     LIVING_SEED_PATH,
     JSON.stringify(livingSeedValue, null, 2) + "\n",
   );
+  fs.writeFileSync(
+    AGE_SEED_PATH,
+    JSON.stringify(ageSeedValue, null, 2) + "\n",
+  );
   console.log(
-    `Updated ${path.relative(ROOT, CENSUS_SEED_PATH)}, ${path.relative(ROOT, DISTRICTS_PATH)} (${changed} atlas rows) and ${path.relative(ROOT, LIVING_SEED_PATH)}.`,
+    `Updated ${path.relative(ROOT, CENSUS_SEED_PATH)}, ${path.relative(ROOT, DISTRICTS_PATH)} (${changed} atlas rows), ${path.relative(ROOT, LIVING_SEED_PATH)} and ${path.relative(ROOT, AGE_SEED_PATH)}.`,
   );
 }
 

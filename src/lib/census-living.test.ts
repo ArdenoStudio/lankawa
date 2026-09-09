@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import {
   getCensus2024Snapshot,
+  getCensusAgeForDistrict,
+  getCensusAgeStructure,
   getCensusFootnoteForDistrict,
   getCensusLivingConditions,
   getCensusLivingForDistrict,
@@ -61,4 +63,40 @@ assert.ok(Math.abs(nuwaraEliya.cleanCookingPct! - 27.2) < 0.15);
 
 assert.equal(getCensusLivingForDistrict("nope"), undefined);
 
-console.log("census living-conditions test passed");
+// --- age structure ----------------------------------------------------------
+
+const age = getCensusAgeStructure();
+assert.equal(age.isSeed, false);
+assert.equal(age.districts.length, 25);
+assert.equal(age.national.population, 21_781_800);
+
+// Shares must sum to ~100 per region (one-decimal tolerance).
+const nationalSum =
+  age.national.childrenSharePct! +
+  age.national.workingAgeSharePct! +
+  age.national.ageingSharePct!;
+assert.ok(Math.abs(nationalSum - 100) <= 0.2, `national shares sum ${nationalSum}`);
+
+// Dependency ratio consistency: (children + seniors) / working age * 100.
+const expectedDep =
+  Math.round(
+    ((age.national.childrenSharePct! + age.national.ageingSharePct!) /
+      age.national.workingAgeSharePct!) *
+      1000,
+  ) / 10;
+assert.ok(
+  Math.abs(age.national.dependencyRatio! - expectedDep) <= 0.2,
+  `dependency ratio ${age.national.dependencyRatio} vs derived ${expectedDep}`,
+);
+
+const colomboAge = getCensusAgeForDistrict("colombo");
+assert.ok(colomboAge);
+assert.equal(colomboAge.population, 2_375_415, "age table population matches Table 3.2");
+
+const jaffnaAge = getCensusAgeForDistrict("jaffna");
+assert.ok(jaffnaAge);
+assert.ok(jaffnaAge.ageingSharePct! > age.national.ageingSharePct!, "Jaffna more aged than national");
+
+assert.equal(getCensusAgeForDistrict("nope"), undefined);
+
+console.log("census living-conditions + age-structure test passed");

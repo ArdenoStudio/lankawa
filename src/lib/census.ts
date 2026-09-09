@@ -1,5 +1,6 @@
 import censusData from "@/data/census-2024-seed.json";
 import livingData from "@/data/census-living-conditions.json";
+import ageData from "@/data/census-age-structure.json";
 
 export interface CensusDistrictFootnote {
   slug: string;
@@ -38,6 +39,25 @@ export interface CensusLivingConditions {
 
 const livingSeed = livingData as unknown as CensusLivingConditions;
 
+export interface CensusAgeDistrictRow {
+  slug: string;
+  population: number;
+  childrenSharePct: number | null;
+  workingAgeSharePct: number | null;
+  ageingSharePct: number | null;
+  dependencyRatio: number | null;
+}
+
+export interface CensusAgeStructure {
+  asOf: string;
+  isSeed: boolean;
+  sourceName: string;
+  national: Omit<CensusAgeDistrictRow, "slug">;
+  districts: CensusAgeDistrictRow[];
+}
+
+const ageSeed = ageData as unknown as CensusAgeStructure;
+
 export function getCensus2024Snapshot(): Census2024Snapshot {
   return seed;
 }
@@ -50,6 +70,16 @@ export function getCensusFootnoteForDistrict(
 
 export function getCensusLivingConditions(): CensusLivingConditions {
   return livingSeed;
+}
+
+export function getCensusAgeStructure(): CensusAgeStructure {
+  return ageSeed;
+}
+
+export function getCensusAgeForDistrict(
+  slug: string,
+): CensusAgeDistrictRow | undefined {
+  return ageSeed.districts.find((row) => row.slug === slug);
 }
 
 export function getCensusLivingForDistrict(
