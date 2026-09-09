@@ -554,7 +554,16 @@ export const openApiSpec = {
             required: true,
             schema: {
               type: "string",
-              enum: ["districts", "elections", "services", "fuel-history"],
+              enum: [
+                "districts",
+                "elections",
+                "services",
+                "fuel-history",
+                "land-change",
+                "foreign-debt",
+                "census-living-conditions",
+                "census-age-structure",
+              ],
             },
           },
           {
@@ -892,6 +901,20 @@ export const apiEndpoints = [
     summaryKey: "exportForeignDebtSummary" as const,
     descriptionKey: "exportForeignDebtDescription" as const,
     example: "year,commercialPct,concessionaryPct,...",
+  },
+  {
+    method: "GET",
+    path: "/api/v1/export/census-living-conditions?format=csv",
+    summaryKey: "exportCensusLivingSummary" as const,
+    descriptionKey: "exportCensusLivingDescription" as const,
+    example: "slug,households,cleanCookingPct,pipeBorneWaterPct,improvedSanitationPct,gridElectricityPct",
+  },
+  {
+    method: "GET",
+    path: "/api/v1/export/census-age-structure?format=csv",
+    summaryKey: "exportCensusAgeSummary" as const,
+    descriptionKey: "exportCensusAgeDescription" as const,
+    example: "slug,population,childrenSharePct,workingAgeSharePct,ageingSharePct,dependencyRatio",
   },
   {
     method: "GET",
