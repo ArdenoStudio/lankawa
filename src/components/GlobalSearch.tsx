@@ -218,6 +218,7 @@ export function GlobalSearch() {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [shortcutLabel, setShortcutLabel] = useState<"⌘K" | "Ctrl+K">("⌘K");
 
   const index = useMemo(() => buildSearchIndex(locale), [locale]);
 
@@ -278,6 +279,29 @@ export function GlobalSearch() {
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Cmd/Ctrl+K focuses the search from anywhere (skips text inputs/form fields).
+  useEffect(() => {
+    function handleShortcut(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        inputRef.current?.focus();
+        setOpen(true);
+      }
+    }
+    function handleKeydownCapture(event: KeyboardEvent) {
+      // Windows/Linux users get the Ctrl+K hint instead of ⌘K (event-driven, no SSR mismatch).
+      if (event.ctrlKey && !event.metaKey) {
+        setShortcutLabel("Ctrl+K");
+      }
+    }
+    document.addEventListener("keydown", handleShortcut);
+    document.addEventListener("keydown", handleKeydownCapture);
+    return () => {
+      document.removeEventListener("keydown", handleShortcut);
+      document.removeEventListener("keydown", handleKeydownCapture);
+    };
   }, []);
 
   function navigateTo(href: string) {
@@ -357,8 +381,17 @@ export function GlobalSearch() {
         }}
         onFocus={() => setOpen(true)}
         onKeyDown={handleKeyDown}
-        className="w-full rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-slate-500 focus:border-teal-400/40 focus:outline-none focus:ring-2 focus:ring-teal-400/20"
+        className="w-full rounded-full border border-white/10 bg-white/5 px-4 py-2 pr-16 text-sm text-white placeholder:text-slate-500 focus:border-teal-400/40 focus:outline-none focus:ring-2 focus:ring-teal-400/20"
       />
+
+      {open ? null : (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute right-2.5 top-1/2 hidden -translate-y-1/2 rounded-md border border-white/15 bg-black/40 px-1.5 py-0.5 text-[10px] font-medium leading-none text-slate-400 xl:block"
+        >
+          {shortcutLabel}
+        </span>
+      )}
 
       {open && query && flatResults.length > 0 ? (
         <ul
