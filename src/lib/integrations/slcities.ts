@@ -128,7 +128,33 @@ function mapSeedCityToHit(c: SeedCity): CityHit {
   };
 }
 
-async function fetchWithTimeout(url: string): Promise<any> {
+/** Loose upstream JSON record — field names vary across primary/secondary APIs. */
+type UpstreamRecord = Record<string, unknown>;
+
+function firstString(...values: unknown[]): string {
+  for (const value of values) {
+    if (typeof value === "string" && value.length > 0) {
+      return value;
+    }
+  }
+  return "";
+}
+
+function firstNumber(...values: unknown[]): number {
+  for (const value of values) {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+  return 0;
+}
+
+function toSlug(...parts: unknown[]): string {
+  return firstString(...parts).toLowerCase().replace(/\s+/g, "-");
+}
+
+async function fetchWithTimeout(url: string): Promise<unknown> {
   const signal = buildTimeoutSignal(FETCH_TIMEOUT_MS);
   const res = await fetch(url, {
     headers: {
@@ -154,15 +180,16 @@ export async function getCitySearch(query: string): Promise<CitySearchResult> {
   try {
     const data = await fetchWithTimeout(`${PRIMARY_API_URL}/cities/search?q=${encodeURIComponent(query)}`);
     if (Array.isArray(data) && data.length > 0) {
-      const hits: CityHit[] = data.map((item: any) => ({
-        name: item.name ?? item.cityName,
-        slug: item.slug ?? (item.name ? item.name.toLowerCase().replace(/\s+/g, "-") : ""),
-        postcode: String(item.postcode ?? item.postalCode ?? ""),
-        districtSlug: item.districtSlug ?? (item.district ? item.district.toLowerCase() : ""),
-        districtName: item.districtName ?? item.district ?? "",
-        province: item.province ?? "",
-        latitude: Number(item.latitude ?? item.lat ?? 0),
-        longitude: Number(item.longitude ?? item.lng ?? item.lon ?? 0),
+      const rows = data as UpstreamRecord[];
+      const hits: CityHit[] = rows.map((item) => ({
+        name: firstString(item.name, item.cityName),
+        slug: firstString(item.slug) || toSlug(item.name),
+        postcode: firstString(item.postcode, item.postalCode),
+        districtSlug: firstString(item.districtSlug) || toSlug(item.district),
+        districtName: firstString(item.districtName, item.district),
+        province: firstString(item.province),
+        latitude: firstNumber(item.latitude, item.lat),
+        longitude: firstNumber(item.longitude, item.lng, item.lon),
       }));
       return {
         hits,
@@ -180,15 +207,16 @@ export async function getCitySearch(query: string): Promise<CitySearchResult> {
   try {
     const data = await fetchWithTimeout(`${SECONDARY_API_URL}/cities/cordinates/${encodeURIComponent(query)}`);
     if (Array.isArray(data) && data.length > 0) {
-      const hits: CityHit[] = data.map((item: any) => ({
-        name: item.name ?? item.cityName ?? item.city,
-        slug: (item.name ?? item.city ?? "").toLowerCase().replace(/\s+/g, "-"),
-        postcode: String(item.postcode ?? item.postalCode ?? ""),
-        districtSlug: item.districtSlug ?? (item.district ? item.district.toLowerCase() : ""),
-        districtName: item.districtName ?? item.district ?? "",
-        province: item.province ?? "",
-        latitude: Number(item.latitude ?? item.lat ?? 0),
-        longitude: Number(item.longitude ?? item.lng ?? item.lon ?? 0),
+      const rows = data as UpstreamRecord[];
+      const hits: CityHit[] = rows.map((item) => ({
+        name: firstString(item.name, item.cityName, item.city),
+        slug: toSlug(item.name, item.city),
+        postcode: firstString(item.postcode, item.postalCode),
+        districtSlug: firstString(item.districtSlug) || toSlug(item.district),
+        districtName: firstString(item.districtName, item.district),
+        province: firstString(item.province),
+        latitude: firstNumber(item.latitude, item.lat),
+        longitude: firstNumber(item.longitude, item.lng, item.lon),
       }));
       return {
         hits,
@@ -234,17 +262,19 @@ export async function lookupPostcode(code: string): Promise<PostcodeResult> {
 
   // Try primary API
   try {
-    const data = await fetchWithTimeout(`${PRIMARY_API_URL}/cities/postcode/${sanitized}`);
-    if (data && (data.name || data.cityName)) {
+    const data = (await fetchWithTimeout(`${PRIMARY_API_URL}/cities/postcode/${sanitized}`)) as
+      | UpstreamRecord
+      | null;
+    if (data && (typeof data.name === "string" || typeof data.cityName === "string")) {
       const city: CityHit = {
-        name: data.name ?? data.cityName,
-        slug: data.slug ?? (data.name ? data.name.toLowerCase().replace(/\s+/g, "-") : ""),
-        postcode: String(data.postcode ?? data.postalCode ?? sanitized),
-        districtSlug: data.districtSlug ?? (data.district ? data.district.toLowerCase() : ""),
-        districtName: data.districtName ?? data.district ?? "",
-        province: data.province ?? "",
-        latitude: Number(data.latitude ?? data.lat ?? 0),
-        longitude: Number(data.longitude ?? data.lng ?? data.lon ?? 0),
+        name: firstString(data.name, data.cityName),
+        slug: firstString(data.slug) || toSlug(data.name),
+        postcode: firstString(data.postcode, data.postalCode) || sanitized,
+        districtSlug: firstString(data.districtSlug) || toSlug(data.district),
+        districtName: firstString(data.districtName, data.district),
+        province: firstString(data.province),
+        latitude: firstNumber(data.latitude, data.lat),
+        longitude: firstNumber(data.longitude, data.lng, data.lon),
       };
       return {
         city,
@@ -281,19 +311,24 @@ export async function getNearbyCities(
       `${PRIMARY_API_URL}/cities/nearby?lat=${lat}&lon=${lng}&radius=${radiusKm}`,
     );
     if (Array.isArray(data) && data.length > 0) {
-      const cities: CityHit[] = data.map((item: any) => {
-        const cityLat = Number(item.latitude ?? item.lat ?? 0);
-        const cityLng = Number(item.longitude ?? item.lng ?? item.lon ?? 0);
+      const rows = data as UpstreamRecord[];
+      const cities: CityHit[] = rows.map((item) => {
+        const cityLat = firstNumber(item.latitude, item.lat);
+        const cityLng = firstNumber(item.longitude, item.lng, item.lon);
+        const rawDistance = item.distanceKm;
         return {
-          name: item.name ?? item.cityName,
-          slug: item.slug ?? (item.name ? item.name.toLowerCase().replace(/\s+/g, "-") : ""),
-          postcode: String(item.postcode ?? item.postalCode ?? ""),
-          districtSlug: item.districtSlug ?? (item.district ? item.district.toLowerCase() : ""),
-          districtName: item.districtName ?? item.district ?? "",
-          province: item.province ?? "",
+          name: firstString(item.name, item.cityName),
+          slug: firstString(item.slug) || toSlug(item.name),
+          postcode: firstString(item.postcode, item.postalCode),
+          districtSlug: firstString(item.districtSlug) || toSlug(item.district),
+          districtName: firstString(item.districtName, item.district),
+          province: firstString(item.province),
           latitude: cityLat,
           longitude: cityLng,
-          distanceKm: item.distanceKm ?? haversineDistanceKm(lat, lng, cityLat, cityLng),
+          distanceKm:
+            typeof rawDistance === "number" && Number.isFinite(rawDistance)
+              ? rawDistance
+              : haversineDistanceKm(lat, lng, cityLat, cityLng),
         };
       });
       cities.sort((a, b) => (a.distanceKm ?? 0) - (b.distanceKm ?? 0));
@@ -345,15 +380,16 @@ export async function getDistrictCities(
   try {
     const data = await fetchWithTimeout(`${PRIMARY_API_URL}/districts/${normSlug}/cities`);
     if (Array.isArray(data) && data.length > 0) {
-      const cities: CityHit[] = data.map((item: any) => ({
-        name: item.name ?? item.cityName,
-        slug: item.slug ?? (item.name ? item.name.toLowerCase().replace(/\s+/g, "-") : ""),
-        postcode: String(item.postcode ?? item.postalCode ?? ""),
+      const rows = data as UpstreamRecord[];
+      const cities: CityHit[] = rows.map((item) => ({
+        name: firstString(item.name, item.cityName),
+        slug: firstString(item.slug) || toSlug(item.name),
+        postcode: firstString(item.postcode, item.postalCode),
         districtSlug: normSlug,
-        districtName: item.districtName ?? item.district ?? "",
-        province: item.province ?? "",
-        latitude: Number(item.latitude ?? item.lat ?? 0),
-        longitude: Number(item.longitude ?? item.lng ?? item.lon ?? 0),
+        districtName: firstString(item.districtName, item.district),
+        province: firstString(item.province),
+        latitude: firstNumber(item.latitude, item.lat),
+        longitude: firstNumber(item.longitude, item.lng, item.lon),
       }));
       const districtName = cities[0]?.districtName || normSlug;
       return {
@@ -374,15 +410,16 @@ export async function getDistrictCities(
   try {
     const data = await fetchWithTimeout(`${SECONDARY_API_URL}/cities/byDistrict/${normSlug}`);
     if (Array.isArray(data) && data.length > 0) {
-      const cities: CityHit[] = data.map((item: any) => ({
-        name: item.name ?? item.cityName ?? item.city,
-        slug: (item.name ?? item.city ?? "").toLowerCase().replace(/\s+/g, "-"),
-        postcode: String(item.postcode ?? item.postalCode ?? ""),
+      const rows = data as UpstreamRecord[];
+      const cities: CityHit[] = rows.map((item) => ({
+        name: firstString(item.name, item.cityName, item.city),
+        slug: toSlug(item.name, item.city),
+        postcode: firstString(item.postcode, item.postalCode),
         districtSlug: normSlug,
-        districtName: item.districtName ?? item.district ?? "",
-        province: item.province ?? "",
-        latitude: Number(item.latitude ?? item.lat ?? 0),
-        longitude: Number(item.longitude ?? item.lng ?? item.lon ?? 0),
+        districtName: firstString(item.districtName, item.district),
+        province: firstString(item.province),
+        latitude: firstNumber(item.latitude, item.lat),
+        longitude: firstNumber(item.longitude, item.lng, item.lon),
       }));
       const districtName = cities[0]?.districtName || normSlug;
       return {

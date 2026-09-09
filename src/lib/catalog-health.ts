@@ -61,13 +61,26 @@ function healthFrom(
 ): SourceHealth {
   // Status means "adapter can serve data", not "upstream observation is new".
   // Successful checks are scored against the check time so old seed/corpus
-  // timestamps do not flood the dashboard with Down/Unknown.
+  // timestamps do not flood the dashboard with Down/Unknown. When an
+  // integration supplies a real upstream observation timestamp, though, the
+  // tier must reflect DATA freshness — otherwise a source can serve
+  // months-old observations behind a green "Fresh" badge.
   if (result.ok) {
+    const seedFlagged =
+      isCuratedSeed(source) ||
+      (result.error?.toLowerCase().includes("seed") ?? false);
+    const hasUpstreamObservation =
+      !seedFlagged &&
+      result.observedAt != null &&
+      result.observedAt !== checkedAt;
+
     return {
       id: source.id,
       name: source.name,
       category: source.category,
-      tier: computeFreshnessTier(checkedAt, source.cadenceMinutes),
+      tier: hasUpstreamObservation
+        ? computeFreshnessTier(result.observedAt, source.cadenceMinutes)
+        : computeFreshnessTier(checkedAt, source.cadenceMinutes),
       lastSuccessAt: result.observedAt ?? checkedAt,
       lastCheckedAt: checkedAt,
       error: result.error,

@@ -332,7 +332,7 @@ export default async function DistrictDetailPage({
               Proximity Search & Nearby Cities →
             </Link>
             <Link
-              href={getSourceProvenancePath(locationData.sourceId) as any}
+              href={getSourceProvenancePath(locationData.sourceId)}
               className="rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-xs font-medium text-slate-300 hover:text-white"
             >
               Source: {locationData.sourceId}

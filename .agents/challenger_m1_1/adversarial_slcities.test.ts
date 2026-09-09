@@ -4,9 +4,7 @@ import {
   lookupPostcode,
   getNearbyCities,
   getDistrictCities,
-  haversineDistanceKm,
   SEED_FALLBACK_DISCLAIMER,
-  SLCITIES_API_SOURCE_ID,
   SLCITIES_SEED_SOURCE_ID,
 } from "../../src/lib/integrations/slcities.ts";
 
@@ -27,6 +25,16 @@ function recordResult(name: string, category: string, status: "PASS" | "FAIL", d
   console.log(`${icon} [${category}] ${name}${details ? ` - ${details}` : ""}`);
 }
 
+function errMessage(err: unknown): string {
+  return err instanceof Error ? err.message : String(err);
+}
+
+interface MetaResult {
+  isFallback: boolean;
+  disclaimer: string | null;
+  sourceId: string;
+}
+
 async function runAdversarialSuite() {
   console.log("=== STARTING ADVERSARIAL TEST SUITE FOR slcities.ts ===\n");
 
@@ -37,10 +45,13 @@ async function runAdversarialSuite() {
 
   // Test 1.1: Simulated Timeout (>10s delay in fetch)
   try {
-    globalThis.fetch = async (url: any, init?: any) => {
+    globalThis.fetch = (async (
+      _url: RequestInfo | URL,
+      init?: RequestInit,
+    ) => {
       // Simulate slow connection exceeding 10s timeout signal
       return new Promise((_, reject) => {
-        const signal = init?.signal as AbortSignal | undefined;
+        const signal = init?.signal;
         if (signal) {
           if (signal.aborted) {
             return reject(new DOMException("The operation was aborted due to timeout", "TimeoutError"));
@@ -54,7 +65,7 @@ async function runAdversarialSuite() {
           reject(new DOMException("The operation was aborted due to timeout", "TimeoutError"));
         }, 11000);
       });
-    };
+    }) as unknown as typeof fetch;
 
     const start = Date.now();
     const res = await getCitySearch("Colombo");
@@ -71,17 +82,17 @@ async function runAdversarialSuite() {
       "PASS",
       `Handled timeout gracefully in ${elapsed}ms, fallback returned ${res.hits.length} cities`,
     );
-  } catch (err: any) {
-    recordResult("Simulated Timeout (>10s) Fallback", "Timeout & Abort", "FAIL", err.message);
+  } catch (err) {
+    recordResult("Simulated Timeout (>10s) Fallback", "Timeout & Abort", "FAIL", errMessage(err));
   } finally {
     globalThis.fetch = originalFetch;
   }
 
   // Test 1.2: Immediate Abort Signal / Network Error
   try {
-    globalThis.fetch = async () => {
+    globalThis.fetch = (async () => {
       throw new Error("Network error / fetch failed");
-    };
+    }) as unknown as typeof fetch;
 
     const resSearch = await getCitySearch("Kandy");
     const resPostcode = await lookupPostcode("20000");
@@ -105,8 +116,8 @@ async function runAdversarialSuite() {
     assert.equal(resDistrict.sourceId, SLCITIES_SEED_SOURCE_ID);
 
     recordResult("Network Error Graceful Fallback", "Timeout & Abort", "PASS", "All 4 functions fell back cleanly on fetch failure");
-  } catch (err: any) {
-    recordResult("Network Error Graceful Fallback", "Timeout & Abort", "FAIL", err.message);
+  } catch (err) {
+    recordResult("Network Error Graceful Fallback", "Timeout & Abort", "FAIL", errMessage(err));
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -117,9 +128,9 @@ async function runAdversarialSuite() {
   console.log("\n--- Category 2: Invalid & Edge-Case Input Tests ---");
 
   // Force fetch to fail so we test adapter handling deterministically
-  globalThis.fetch = async () => {
+  globalThis.fetch = (async () => {
     throw new Error("API Offline for deterministic edge-case testing");
-  };
+  }) as unknown as typeof fetch;
 
   // Test 2.1: Empty query
   try {
@@ -129,8 +140,8 @@ async function runAdversarialSuite() {
     assert.equal(res.sourceId, SLCITIES_SEED_SOURCE_ID);
     assert.ok(res.hits.length > 0, "Empty query returns all seed cities");
     recordResult("Empty Query Search", "Edge Inputs", "PASS", `Returned ${res.total} seed cities`);
-  } catch (err: any) {
-    recordResult("Empty Query Search", "Edge Inputs", "FAIL", err.message);
+  } catch (err) {
+    recordResult("Empty Query Search", "Edge Inputs", "FAIL", errMessage(err));
   }
 
   // Test 2.2: Whitespace query
@@ -139,8 +150,8 @@ async function runAdversarialSuite() {
     assert.equal(res.isFallback, true);
     assert.ok(res.hits.length > 0);
     recordResult("Whitespace Query Search", "Edge Inputs", "PASS", `Trimmed whitespace, returned ${res.total} seed cities`);
-  } catch (err: any) {
-    recordResult("Whitespace Query Search", "Edge Inputs", "FAIL", err.message);
+  } catch (err) {
+    recordResult("Whitespace Query Search", "Edge Inputs", "FAIL", errMessage(err));
   }
 
   // Test 2.3: Special Characters & Injection Strings
@@ -161,8 +172,8 @@ async function runAdversarialSuite() {
       assert.ok(Array.isArray(res.hits));
     }
     recordResult("Special Characters & Injection Queries", "Edge Inputs", "PASS", `Tested ${specialQueries.length} adversarial query strings cleanly`);
-  } catch (err: any) {
-    recordResult("Special Characters & Injection Queries", "Edge Inputs", "FAIL", err.message);
+  } catch (err) {
+    recordResult("Special Characters & Injection Queries", "Edge Inputs", "FAIL", errMessage(err));
   }
 
   // Test 2.4: Non-existent / Malformed Postal Codes
@@ -185,8 +196,8 @@ async function runAdversarialSuite() {
       }
     }
     recordResult("Non-existent & Malformed Postcodes", "Edge Inputs", "PASS", `Tested ${postcodes.length} malformed/non-existent postcodes`);
-  } catch (err: any) {
-    recordResult("Non-existent & Malformed Postcodes", "Edge Inputs", "FAIL", err.message);
+  } catch (err) {
+    recordResult("Non-existent & Malformed Postcodes", "Edge Inputs", "FAIL", errMessage(err));
   }
 
   // -------------------------------------------------------------
@@ -204,8 +215,8 @@ async function runAdversarialSuite() {
     assert.equal(res.center.longitude, 0);
     assert.equal(res.total, 0, "No Sri Lanka cities within 20km of (0,0)");
     recordResult("Null Island (0,0) Coordinates", "Boundary Coords", "PASS", "Returned 0 cities within 20km");
-  } catch (err: any) {
-    recordResult("Null Island (0,0) Coordinates", "Boundary Coords", "FAIL", err.message);
+  } catch (err) {
+    recordResult("Null Island (0,0) Coordinates", "Boundary Coords", "FAIL", errMessage(err));
   }
 
   // Test 3.2: Extreme Lat/Lng Coordinates
@@ -226,8 +237,8 @@ async function runAdversarialSuite() {
       assert.ok(Array.isArray(res.cities));
     }
     recordResult("Extreme Coordinates (Poles, Out of Bounds, NaN, Infinity)", "Boundary Coords", "PASS", `Tested ${extremeCoords.length} extreme coordinate sets safely`);
-  } catch (err: any) {
-    recordResult("Extreme Coordinates (Poles, Out of Bounds, NaN, Infinity)", "Boundary Coords", "FAIL", err.message);
+  } catch (err) {
+    recordResult("Extreme Coordinates (Poles, Out of Bounds, NaN, Infinity)", "Boundary Coords", "FAIL", errMessage(err));
   }
 
   // Test 3.3: Negative and Zero Radius
@@ -242,8 +253,8 @@ async function runAdversarialSuite() {
     assert.equal(resZero.radiusKm, 0);
 
     recordResult("Negative & Zero Radius Search", "Boundary Coords", "PASS", "Negative (-10km) returned 0 cities, zero (0km) handled safely");
-  } catch (err: any) {
-    recordResult("Negative & Zero Radius Search", "Boundary Coords", "FAIL", err.message);
+  } catch (err) {
+    recordResult("Negative & Zero Radius Search", "Boundary Coords", "FAIL", errMessage(err));
   }
 
   // -------------------------------------------------------------
@@ -258,7 +269,7 @@ async function runAdversarialSuite() {
     const sNearby = await getNearbyCities(6.9, 79.8, 10);
     const sDistrict = await getDistrictCities("colombo");
 
-    const checkFallbackMetadata = (res: any, name: string) => {
+    const checkFallbackMetadata = (res: MetaResult, name: string) => {
       assert.equal(res.isFallback, true, `${name}.isFallback should be true`);
       assert.equal(res.disclaimer, "Seed fallback — live API unavailable", `${name}.disclaimer contract mismatch`);
       assert.equal(res.sourceId, "slcities_seed", `${name}.sourceId contract mismatch`);
@@ -270,90 +281,57 @@ async function runAdversarialSuite() {
     checkFallbackMetadata(sDistrict, "getDistrictCities");
 
     recordResult("Seed Fallback Metadata Compliance", "Fallback Audit", "PASS", "All 4 functions strictly follow fallback metadata contract");
-  } catch (err: any) {
-    recordResult("Seed Fallback Metadata Compliance", "Fallback Audit", "FAIL", err.message);
+  } catch (err) {
+    recordResult("Seed Fallback Metadata Compliance", "Fallback Audit", "FAIL", errMessage(err));
   }
 
   // 4.2 Check Live API metadata (simulated successful response)
   try {
-    globalThis.fetch = async (url: any) => {
+    globalThis.fetch = (async (url: RequestInfo | URL) => {
       const urlStr = String(url);
+      const liveCity = {
+        name: "Colombo Live",
+        slug: "colombo-live",
+        postcode: "00100",
+        districtSlug: "colombo",
+        districtName: "Colombo",
+        province: "Western",
+        latitude: 6.9271,
+        longitude: 79.8612,
+      };
       if (urlStr.includes("/cities/search")) {
         return {
           ok: true,
-          json: async () => [
-            {
-              name: "Colombo Live",
-              slug: "colombo-live",
-              postcode: "00100",
-              districtSlug: "colombo",
-              districtName: "Colombo",
-              province: "Western",
-              latitude: 6.9271,
-              longitude: 79.8612,
-            },
-          ],
+          json: async () => [liveCity],
         };
       }
       if (urlStr.includes("/cities/postcode/")) {
         return {
           ok: true,
-          json: async () => ({
-            name: "Colombo Live",
-            slug: "colombo-live",
-            postcode: "00100",
-            districtSlug: "colombo",
-            districtName: "Colombo",
-            province: "Western",
-            latitude: 6.9271,
-            longitude: 79.8612,
-          }),
+          json: async () => liveCity,
         };
       }
       if (urlStr.includes("/cities/nearby")) {
         return {
           ok: true,
-          json: async () => [
-            {
-              name: "Colombo Live",
-              slug: "colombo-live",
-              postcode: "00100",
-              districtSlug: "colombo",
-              districtName: "Colombo",
-              province: "Western",
-              latitude: 6.9271,
-              longitude: 79.8612,
-              distanceKm: 0,
-            },
-          ],
+          json: async () => [{ ...liveCity, distanceKm: 0 }],
         };
       }
       if (urlStr.includes("/districts/colombo/cities")) {
         return {
           ok: true,
-          json: async () => [
-            {
-              name: "Colombo Live",
-              slug: "colombo-live",
-              postcode: "00100",
-              districtSlug: "colombo",
-              districtName: "Colombo",
-              province: "Western",
-              latitude: 6.9271,
-              longitude: 79.8612,
-            },
-          ],
+          json: async () => [liveCity],
         };
       }
       throw new Error("Unhandled mock URL");
-    };
+    }) as unknown as typeof fetch;
 
     const lSearch = await getCitySearch("Colombo");
     const lPostcode = await lookupPostcode("00100");
     const lNearby = await getNearbyCities(6.9, 79.8, 10);
     const lDistrict = await getDistrictCities("colombo");
 
-    const checkLiveMetadata = (res: any, name: string) => {
+    const checkLiveMetadata = (res: MetaResult, name: string) => {
       assert.equal(res.isFallback, false, `${name}.isFallback should be false for live API`);
       assert.equal(res.disclaimer, null, `${name}.disclaimer should be null for live API`);
       assert.equal(res.sourceId, "slcities_api", `${name}.sourceId should be 'slcities_api'`);
@@ -365,8 +343,8 @@ async function runAdversarialSuite() {
     checkLiveMetadata(lDistrict, "getDistrictCities");
 
     recordResult("Live API Metadata Compliance", "Fallback Audit", "PASS", "All 4 functions return isFallback=false, disclaimer=null, sourceId='slcities_api' on live hit");
-  } catch (err: any) {
-    recordResult("Live API Metadata Compliance", "Fallback Audit", "FAIL", err.message);
+  } catch (err) {
+    recordResult("Live API Metadata Compliance", "Fallback Audit", "FAIL", errMessage(err));
   } finally {
     globalThis.fetch = originalFetch;
   }

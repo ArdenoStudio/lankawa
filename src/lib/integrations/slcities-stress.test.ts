@@ -6,7 +6,6 @@ import {
   lookupPostcode,
   getNearbyCities,
   getDistrictCities,
-  haversineDistanceKm,
   SEED_FALLBACK_DISCLAIMER,
   SLCITIES_API_SOURCE_ID,
   SLCITIES_SEED_SOURCE_ID,
@@ -171,7 +170,7 @@ async function runStressTest() {
 
   // Alt names matching
   const altNameFort = await getCitySearch("Fort");
-  assert.ok(altNameFort.hits.some((h) => h.name === "Colombo Fort" || (h as any).altNames?.includes("Fort")), "Alt name search 'Fort' should match Colombo Fort");
+  assert.ok(altNameFort.hits.some((h) => h.name === "Colombo Fort"), "Alt name search 'Fort' should match Colombo Fort");
 
   const altNameColpetty = await getCitySearch("Colpetty");
   assert.ok(altNameColpetty.hits.some((h) => h.name === "Kollupitiya"), "Alt name search 'Colpetty' should match Kollupitiya");
@@ -194,7 +193,7 @@ async function runStressTest() {
   // Nearby Colombo (6.9271, 79.8612) with 5km vs 50km
   const nearby5km = await getNearbyCities(6.9271, 79.8612, 5);
   const nearby50km = await getNearbyCities(6.9271, 79.8612, 50);
-  assert.ok(nearby50km.hits ? nearby50km.hits.length >= nearby5km.cities.length : nearby50km.cities.length >= nearby5km.cities.length);
+  assert.ok(nearby50km.cities.length >= nearby5km.cities.length);
 
   // Distant location outside Sri Lanka (London: 51.5074, -0.1278) within 50km
   const londonNearby = await getNearbyCities(51.5074, -0.1278, 50);

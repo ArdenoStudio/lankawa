@@ -13,7 +13,6 @@ import {
 } from "@/components/EconomyCards";
 import { DataSaverGate } from "@/components/DataSaverGate";
 import { CebLoadSheddingCard } from "@/components/CebLoadSheddingCard";
-import { DemandMgmtClustersStrip } from "@/components/DemandMgmtClustersStrip";
 import { HouseholdEmiStrip } from "@/components/HouseholdEmiStrip";
 import { HouseholdEnergySection } from "@/components/HouseholdEnergySection";
 import { InlineExplainerBanner } from "@/components/explainers/InlineExplainerBanner";

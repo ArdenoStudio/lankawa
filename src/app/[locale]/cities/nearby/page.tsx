@@ -6,12 +6,10 @@ import {
   getCitySearch,
   lookupPostcode,
   getNearbyCities,
-  getDistrictCities,
   getDistrictCities as getCitiesForDistrict,
   CityHit,
   SEED_FALLBACK_DISCLAIMER,
   SLCITIES_API_SOURCE_ID,
-  SLCITIES_SEED_SOURCE_ID,
 } from "@/lib/integrations/slcities";
 import { getSourceProvenancePath } from "@/lib/sources";
 import { DISTRICTS } from "@/lib/districts";
@@ -53,7 +51,6 @@ export default async function NearbyCitiesPage({
   let postalResult = null;
   let cityHits: CityHit[] = [];
   let isFallback = false;
-  let disclaimer: string | null = null;
   let sourceId: "slcities_api" | "slcities_seed" = SLCITIES_API_SOURCE_ID;
   let activeDistrictName = "";
 
@@ -62,14 +59,12 @@ export default async function NearbyCitiesPage({
     const res = await lookupPostcode(postalCode);
     postalResult = res.city;
     isFallback = res.isFallback;
-    disclaimer = res.disclaimer;
     sourceId = res.sourceId;
   } else if (query) {
     activeMode = "search";
     const res = await getCitySearch(query);
     cityHits = res.hits;
     isFallback = res.isFallback;
-    disclaimer = res.disclaimer;
     sourceId = res.sourceId;
   } else if (districtSlug) {
     activeMode = "district";
@@ -77,7 +72,6 @@ export default async function NearbyCitiesPage({
     cityHits = res.cities;
     activeDistrictName = res.districtName;
     isFallback = res.isFallback;
-    disclaimer = res.disclaimer;
     sourceId = res.sourceId;
   } else {
     activeMode = "nearby";
@@ -86,7 +80,6 @@ export default async function NearbyCitiesPage({
     const res = await getNearbyCities(lat, lng, radiusParam);
     cityHits = res.cities;
     isFallback = res.isFallback;
-    disclaimer = res.disclaimer;
     sourceId = res.sourceId;
   }
 
@@ -101,7 +94,7 @@ export default async function NearbyCitiesPage({
           subtitle="Search major urban centers, lookup 5-digit postal codes, or discover cities by proximity radius across all 25 districts."
         />
         <Link
-          href={provenancePath as any}
+          href={provenancePath}
           className="inline-flex items-center gap-2 rounded-lg bg-teal-500/10 px-3 py-1.5 text-xs font-medium text-teal-300 border border-teal-500/30 hover:bg-teal-500/20"
         >
           <span>Source: {sourceId}</span>
@@ -116,7 +109,7 @@ export default async function NearbyCitiesPage({
             <span className="font-semibold">{SEED_FALLBACK_DISCLAIMER}</span>
           </div>
           <Link
-            href={provenancePath as any}
+            href={provenancePath}
             className="text-xs text-amber-200 underline hover:text-amber-100 font-medium"
           >
             View Seed Provenance
