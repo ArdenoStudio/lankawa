@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import type { Viewport } from "next";
 import localFont from "next/font/local";
 import { Inter, Noto_Sans_Sinhala, Noto_Sans_Tamil } from "next/font/google";
 import { notFound } from "next/navigation";
@@ -65,7 +66,6 @@ export async function generateMetadata({
     title: t("title"),
     description: t("description"),
     manifest: "/manifest.json",
-    themeColor: brandMetadata.themeColor,
     icons: {
       icon: brandMetadata.favicon,
       shortcut: brandMetadata.favicon,
@@ -85,6 +85,10 @@ export async function generateMetadata({
     },
   };
 }
+
+export const viewport: Viewport = {
+  themeColor: brandMetadata.themeColor,
+};
 
 export default async function LocaleLayout({
   children,
