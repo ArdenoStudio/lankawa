@@ -25,6 +25,96 @@ export type IrrigationAlertStatus =
   | "DANGER"
   | "UNKNOWN";
 
+/** Sri Lanka Met Dept heavy-rain cautionary threshold: ≥50 mm within 24h. */
+export const HEAVY_RAIN_MM = 50;
+
+export interface BasinRainSummary {
+  basin: string;
+  gauges: number;
+  rainSumMm: number;
+  rainMaxMm: number | null;
+  heavyRainStations: number;
+  worstGauge: string | null;
+  worstWaterLevel: number | null;
+}
+
+/**
+ * Aggregate per-basin rainfall from latest gauge readings. Only basins with
+ * at least one gauge and a non-empty basin name are included. Sorted with
+ * heavy-rain basins first so flood-watch basins surface at the top.
+ */
+export function summarizeRainByBasin(
+  gauges: IrrigationGaugeReading[],
+): BasinRainSummary[] {
+  const basins = new Map<string, BasinRainSummary>();
+  for (const gauge of gauges) {
+    const basin = gauge.basin.trim();
+    if (!basin) {
+      continue;
+    }
+    let entry = basins.get(basin);
+    if (!entry) {
+      entry = {
+        basin,
+        gauges: 0,
+        rainSumMm: 0,
+        rainMaxMm: null,
+        heavyRainStations: 0,
+        worstGauge: null,
+        worstWaterLevel: null,
+      };
+      basins.set(basin, entry);
+    }
+    entry.gauges += 1;
+    if (gauge.rainFall != null && Number.isFinite(gauge.rainFall)) {
+      entry.rainSumMm += gauge.rainFall;
+      if (entry.rainMaxMm == null || gauge.rainFall > entry.rainMaxMm) {
+        entry.rainMaxMm = gauge.rainFall;
+        entry.worstGauge = gauge.gauge;
+      }
+      if (gauge.rainFall >= HEAVY_RAIN_MM) {
+        entry.heavyRainStations += 1;
+      }
+    }
+    if (
+      gauge.waterLevel != null &&
+      (entry.worstWaterLevel == null || gauge.waterLevel > entry.worstWaterLevel)
+    ) {
+      entry.worstWaterLevel = gauge.waterLevel;
+    }
+  }
+  return [...basins.values()].sort((a, b) => {
+    if (b.heavyRainStations !== a.heavyRainStations) {
+      return b.heavyRainStations - a.heavyRainStations;
+    }
+    const byMax = (b.rainMaxMm ?? -1) - (a.rainMaxMm ?? -1);
+    if (byMax !== 0) {
+      return byMax;
+    }
+    return a.basin.localeCompare(b.basin);
+  });
+}
+
+export interface RainWatch {
+  basinRain: BasinRainSummary[];
+  heavyRainCount: number;
+  rainReportingStations: number;
+}
+
+export function buildRainWatch(gauges: IrrigationGaugeReading[]): RainWatch {
+  const basinRain = summarizeRainByBasin(gauges);
+  return {
+    basinRain,
+    heavyRainCount: basinRain.reduce(
+      (sum, basin) => sum + basin.heavyRainStations,
+      0,
+    ),
+    rainReportingStations: gauges.filter(
+      (gauge) => gauge.rainFall != null && Number.isFinite(gauge.rainFall),
+    ).length,
+  };
+}
+
 export interface IrrigationGaugeReading {
   gauge: string;
   basin: string;
@@ -49,6 +139,9 @@ export interface IrrigationGaugesSnapshot {
   gauges: IrrigationGaugeReading[];
   elevatedCount: number;
   summaryByStatus: Record<IrrigationAlertStatus, number>;
+  basinRain: BasinRainSummary[];
+  heavyRainCount: number;
+  rainReportingStations: number;
   honestyNote: string;
   provenancePath: string;
   dashboardUrl: string;
@@ -268,6 +361,7 @@ function fromSeed(overrides?: {
     summaryByStatus.ALERT +
     summaryByStatus.WARNING +
     summaryByStatus.DANGER;
+  const rainWatch = buildRainWatch(gauges);
 
   return {
     sourceId: irrigationGaugesSeed.sourceId,
@@ -279,6 +373,9 @@ function fromSeed(overrides?: {
     gauges,
     elevatedCount,
     summaryByStatus,
+    basinRain: rainWatch.basinRain,
+    heavyRainCount: rainWatch.heavyRainCount,
+    rainReportingStations: rainWatch.rainReportingStations,
     honestyNote: HONESTY_NOTE,
     provenancePath: getSourceProvenancePath("irrigation_arcgis_gauges"),
     dashboardUrl: irrigationGaugesSeed.dashboardUrl,
@@ -345,6 +442,7 @@ export async function fetchIrrigationGaugesSnapshot(): Promise<IrrigationGaugesS
       summaryByStatus.ALERT +
       summaryByStatus.WARNING +
       summaryByStatus.DANGER;
+    const rainWatch = buildRainWatch(gauges);
     const source = getSource("irrigation_arcgis_gauges");
 
     return {
@@ -357,6 +455,9 @@ export async function fetchIrrigationGaugesSnapshot(): Promise<IrrigationGaugesS
       gauges,
       elevatedCount,
       summaryByStatus,
+      basinRain: rainWatch.basinRain,
+      heavyRainCount: rainWatch.heavyRainCount,
+      rainReportingStations: rainWatch.rainReportingStations,
       honestyNote: HONESTY_NOTE,
       provenancePath: getSourceProvenancePath("irrigation_arcgis_gauges"),
       dashboardUrl: DASHBOARD_URL,

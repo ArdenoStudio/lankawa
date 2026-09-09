@@ -1,3 +1,4 @@
+import { BasinRainWatch } from "@/components/BasinRainWatch";
 import { FreshnessBadge } from "@/components/FreshnessBadge";
 import { Link } from "@/i18n/navigation";
 import type { IrrigationGaugesSnapshot } from "@/lib/integrations/irrigation-gauges";
@@ -34,6 +35,10 @@ export function IrrigationGaugesPanel({
     elevated: string;
     level: string;
     rain: string;
+    rainWatchTitle: string;
+    rainHeavyChip: string;
+    rainMore: string;
+    rainNote: string;
     normal: string;
     alert: string;
     warning: string;
@@ -92,7 +97,18 @@ export function IrrigationGaugesPanel({
           {labels.empty}
         </p>
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <>
+          <BasinRainWatch
+            basinRain={snapshot.basinRain}
+            heavyRainCount={snapshot.heavyRainCount}
+            labels={{
+              title: labels.rainWatchTitle,
+              heavyChip: labels.rainHeavyChip,
+              more: labels.rainMore,
+              note: labels.rainNote,
+            }}
+          />
+          <div className="grid gap-3 sm:grid-cols-2">
           {display.map((gauge) => (
             <article
               key={gauge.gauge}
@@ -132,9 +148,9 @@ export function IrrigationGaugesPanel({
                   {new Date(gauge.observedAt).toLocaleString(locale)}
                 </p>
               ) : null}
-            </article>
-          ))}
-        </div>
+            </article>            ))}
+          </div>
+        </>
       )}
 
       <p className="text-xs text-slate-500">
