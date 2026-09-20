@@ -1,0 +1,17 @@
+{
+  "sha256": "87b02172de5f9b47b8479d8d05b5b6c769187ce7e5d19ac739631c9f3c52cc9c",
+  "endpoint_count": 1,
+  "endpoints": {
+    "mypromo_parked": {
+      "id": "mypromo_parked",
+      "method": "GET",
+      "path": "/",
+      "url": "https://mypromo.lk/",
+      "status": "parked",
+      "access": "parked",
+      "summary": "PARK \u2014 ToS bans scrape; prefer bank first-party.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

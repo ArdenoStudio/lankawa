@@ -1,0 +1,93 @@
+{
+  "sha256": "1f67e464cf3b28c6fd277ac0a9da81cca18f8f68fd58095b0ab6b6a44d61d40c",
+  "endpoint_count": 7,
+  "endpoints": {
+    "get_all_web_card_promos": {
+      "id": "get_all_web_card_promos",
+      "method": "GET",
+      "path": "/get_all_web_card_promos",
+      "url": "https://venus.hnb.lk/api/get_all_web_card_promos?page=1&limit=50&cardType=credit",
+      "status": "live",
+      "access": "json_api",
+      "summary": "~841 card promos paginated.",
+      "pagination": {
+        "style": "page_limit",
+        "params": {
+          "page": "1-based",
+          "limit": "default 50",
+          "cardType": "credit|debit"
+        },
+        "lab": true
+      }
+    },
+    "get_all_web_card_promos_debit": {
+      "id": "get_all_web_card_promos_debit",
+      "method": "GET",
+      "path": "/get_all_web_card_promos",
+      "url": "https://venus.hnb.lk/api/get_all_web_card_promos?page=1&limit=50&cardType=debit",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Debit card promos (~93); includes Glomark supermarket.",
+      "pagination": {
+        "style": "page_limit",
+        "params": {
+          "page": "1-based",
+          "limit": "page size",
+          "cardType": "debit"
+        },
+        "lab": true
+      }
+    },
+    "get_exchange_rate_last_update_date_contents": {
+      "id": "get_exchange_rate_last_update_date_contents",
+      "method": "GET",
+      "path": "/get_exchange_rate_last_update_date_contents",
+      "url": "https://venus.hnb.lk/api/get_exchange_rate_last_update_date_contents",
+      "status": "live",
+      "access": "json_api",
+      "summary": "As-of stamp for FX board.",
+      "pagination": null
+    },
+    "get_exchange_rates_contents_web": {
+      "id": "get_exchange_rates_contents_web",
+      "method": "GET",
+      "path": "/get_exchange_rates_contents_web",
+      "url": "https://venus.hnb.lk/api/get_exchange_rates_contents_web",
+      "status": "live",
+      "access": "json_api",
+      "summary": "FX contents for web.",
+      "pagination": null
+    },
+    "get_interest_rates_contents": {
+      "id": "get_interest_rates_contents",
+      "method": "GET",
+      "path": "/get_interest_rates_contents",
+      "url": "https://venus.hnb.lk/api/get_interest_rates_contents",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Nested FD/savings/loans tables in table_data_approved.",
+      "pagination": null
+    },
+    "get_rates_contents_web": {
+      "id": "get_rates_contents_web",
+      "method": "GET",
+      "path": "/get_rates_contents_web",
+      "url": "https://venus.hnb.lk/api/get_rates_contents_web",
+      "status": "live",
+      "access": "json_api",
+      "summary": "FX + deposit teaser with updated_on stamp.",
+      "pagination": null
+    },
+    "get_web_card_promo": {
+      "id": "get_web_card_promo",
+      "method": "GET",
+      "path": "/get_web_card_promo",
+      "url": "https://venus.hnb.lk/api/get_web_card_promo?id=1",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Single promo detail by id.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

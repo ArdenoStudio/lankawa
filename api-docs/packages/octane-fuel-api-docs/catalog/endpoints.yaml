@@ -1,0 +1,21 @@
+title: Octane Fuel API
+host: https://octane-api.fly.dev
+tier: B
+category: fuel
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/OCTANE_OPENMETEO_UNUSED_PROBE.md
+endpoints:
+- id: prices_latest
+  method: GET
+  url: https://octane-api.fly.dev/v1/prices/latest
+  path: /v1/prices/latest
+  summary: Latest fuel prices.
+  access: json_api
+- id: comparison_world
+  method: GET
+  url: https://octane-api.fly.dev/v1/comparison/world
+  path: /v1/comparison/world
+  summary: World pump compare.
+  access: json_api

@@ -1,0 +1,17 @@
+{
+  "sha256": "1b7f8b2e5df5b6c4fa90e3250540a7d960166195b71ef3fc77734bdecff9da98",
+  "endpoint_count": 1,
+  "endpoints": {
+    "json_get_emi": {
+      "id": "json_get_emi",
+      "method": "GET",
+      "path": "/json-get-emi",
+      "url": "https://www.singersl.com/json-get-emi?product_id=7884&product_price=53699",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Multi-bank EMI rows for a SKU.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

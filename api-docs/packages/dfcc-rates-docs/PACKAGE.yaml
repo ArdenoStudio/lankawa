@@ -1,0 +1,10 @@
+slug: dfcc-rates-docs
+tier: B
+title: DFCC Rates & Card Offers
+host: https://www.dfcc.lk
+category: banks
+status: ready
+summary: RSC-embedded rates + supermarket card hub HTML.
+source_docs:
+- docs/BANK_API_DEEP_DIVE_BOC_PEOPLES_NDB_DFCC_PABC.md
+extract_to: Cookie-Cat21/dfcc-rates-docs

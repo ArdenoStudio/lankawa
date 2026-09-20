@@ -1,0 +1,11 @@
+slug: combank-api-docs
+tier: A
+title: Commercial Bank API
+host: https://www.combank.lk
+category: banks
+status: ready
+summary: FX exchange-rates JSON, interest-rates-fd, rewards-promotions HTML.
+source_docs:
+- docs/BANK_API_DEEP_DIVE_COMBANK.md
+- docs/BANK_FD_API_SCHEMAS.md
+extract_to: Cookie-Cat21/combank-api-docs

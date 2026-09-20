@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "amana-union-cargills-bank-docs-unofficial"
+version = "0.1.0"
+description = "Minimal unofficial HTTP helpers for Amana / Union / Cargills Bank rates & offers (educational)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/Cookie-Cat21/amana-union-cargills-bank-docs"
+
+[tool.setuptools]
+packages = ["amana_union_cargills_bank_docs"]

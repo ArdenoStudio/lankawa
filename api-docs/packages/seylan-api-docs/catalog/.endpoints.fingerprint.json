@@ -1,0 +1,27 @@
+{
+  "sha256": "b1e03d01a33a516af9f3c90171f4e9bd7becd578ab4e387da25512a4d38d249f",
+  "endpoint_count": 2,
+  "endpoints": {
+    "exchange_rates_usd": {
+      "id": "exchange_rates_usd",
+      "method": "GET",
+      "path": "/api/exchange-rates-get-value/{CCY}",
+      "url": "https://www.seylan.lk/api/exchange-rates-get-value/USD",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Per-currency FX JSON.",
+      "pagination": null
+    },
+    "get_fd_data": {
+      "id": "get_fd_data",
+      "method": "GET",
+      "path": "/get-fd-data",
+      "url": "https://www.seylan.lk/get-fd-data",
+      "status": "live",
+      "access": "hybrid",
+      "summary": "FD calculator JSON (Content-Type may lie text/html).",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

@@ -1,0 +1,31 @@
+{
+  "sha256": "4464af83bf4f0d28f79f72f5ffdfb1a630eb43431ffecaf232f852c2391c3531",
+  "endpoint_count": 2,
+  "endpoints": {
+    "card_offers_js": {
+      "id": "card_offers_js",
+      "method": "GET",
+      "path": "/personal/cards/offers",
+      "url": "https://www.pabc.com/personal/cards/offers",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Offers page; arr_offers JS after Sucuri cookie.",
+      "pagination": {
+        "style": "client_array",
+        "lab": true,
+        "notes": "Parse arr_offers after WAF cookie"
+      }
+    },
+    "senior_fd_html": {
+      "id": "senior_fd_html",
+      "method": "GET",
+      "path": "/personal/deposits/senior-citizens-fixed-deposit",
+      "url": "https://www.pabc.com/personal/deposits/senior-citizens-fixed-deposit",
+      "status": "live",
+      "access": "pdf_document",
+      "summary": "Senior FD HTML (main ladder may be PDF-only).",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

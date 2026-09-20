@@ -1,0 +1,17 @@
+{
+  "sha256": "d0e0b909ebe0a89ae15d3c6adf92d71939caf1c36c12dfcf1015fba06e306c26",
+  "endpoint_count": 1,
+  "endpoints": {
+    "pack_overview": {
+      "id": "pack_overview",
+      "method": "GET",
+      "path": "(multi-host pack)",
+      "url": "https://www.combank.lk/api/exchange-rates",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Aggregator: ComBank/Sampath/HNB/Seylan/NSB/DFCC/BOC/People's/NDB TT boards.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

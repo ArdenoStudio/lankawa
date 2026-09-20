@@ -1,0 +1,17 @@
+{
+  "sha256": "8c748b984fab516d6a4253c00caccf6bdf523fb9871dd4d1b32e849f5a91f88f",
+  "endpoint_count": 1,
+  "endpoints": {
+    "interruption_notices": {
+      "id": "interruption_notices",
+      "method": "GET",
+      "path": "/pages_e.php?id=45",
+      "url": "https://www.leco.lk/pages_e.php?id=45",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "LECO interruption notices HTML.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

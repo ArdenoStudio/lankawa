@@ -1,0 +1,24 @@
+{
+  "sha256": "062358f4e89b4632acf27f90fba128ab6d96f6329ed572055dd97e1576ffce48",
+  "endpoint_count": 1,
+  "endpoints": {
+    "locations_lk": {
+      "id": "locations_lk",
+      "method": "GET",
+      "path": "/v3/locations",
+      "url": "https://api.openaq.org/v3/locations?countries_id=207&limit=100",
+      "status": "live",
+      "access": "json_api",
+      "summary": "LK monitoring locations (country id may change).",
+      "pagination": {
+        "style": "limit_page",
+        "params": {
+          "limit": "page size",
+          "page": "1-based"
+        },
+        "lab": true
+      }
+    }
+  },
+  "updated": "2026-07-20"
+}

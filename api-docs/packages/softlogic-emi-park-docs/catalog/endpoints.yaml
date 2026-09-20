@@ -1,0 +1,16 @@
+title: Softlogic EMI (park — heavy crawl)
+host: https://www.softlogic.lk
+tier: B
+category: retail
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/BANK_AND_API_UNIVERSE.md
+endpoints:
+- id: variation_detail_parked
+  method: GET
+  url: https://www.softlogic.lk/
+  path: /variation-detail/{id}
+  summary: PARK — per-SKU EMI crawl too heavy vs Singer json-get-emi.
+  status: parked
+  access: parked

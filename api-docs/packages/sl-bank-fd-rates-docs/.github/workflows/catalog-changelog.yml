@@ -1,0 +1,108 @@
+name: catalog-changelog
+on:
+  push:
+    paths:
+      - "catalog/endpoints.yaml"
+      - "PACKAGE.yaml"
+  workflow_dispatch:
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install PyYAML
+        run: pip install pyyaml
+      - name: Update changelog from catalog diff
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, re
+          from datetime import date
+          from pathlib import Path
+          import yaml
+
+          TODAY = date.today().isoformat()
+          ep_path = Path("catalog/endpoints.yaml")
+          fp_path = Path("catalog/.endpoints.fingerprint.json")
+          cl_path = Path("CHANGELOG.md")
+
+          def fingerprint(data):
+              rows = []
+              for ep in data.get("endpoints") or []:
+                  rows.append({
+                      "id": ep.get("id"),
+                      "method": ep.get("method"),
+                      "path": ep.get("path"),
+                      "url": ep.get("url"),
+                      "status": ep.get("status") or "live",
+                      "access": ep.get("access"),
+                      "summary": ep.get("summary"),
+                      "pagination": ep.get("pagination"),
+                  })
+              rows.sort(key=lambda r: str(r.get("id") or ""))
+              raw = json.dumps(rows, sort_keys=True, default=str)
+              return {
+                  "sha256": hashlib.sha256(raw.encode()).hexdigest(),
+                  "endpoint_count": len(rows),
+                  "endpoints": {r["id"]: r for r in rows if r.get("id")},
+              }
+
+          def diff(old, new):
+              old_ids = set((old.get("endpoints") or {}).keys())
+              new_ids = set((new.get("endpoints") or {}).keys())
+              added = sorted(new_ids - old_ids)
+              removed = sorted(old_ids - new_ids)
+              changed = []
+              for i in sorted(old_ids & new_ids):
+                  if old["endpoints"][i] != new["endpoints"][i]:
+                      changed.append(i)
+              return added, removed, changed
+
+          data = yaml.safe_load(ep_path.read_text()) or {}
+          new_fp = fingerprint(data)
+          old_fp = {}
+          if fp_path.exists():
+              old_fp = json.loads(fp_path.read_text())
+          if old_fp.get("sha256") == new_fp["sha256"]:
+              print("No catalog changes")
+          else:
+              added, removed, changed = diff(old_fp, new_fp)
+              bullets = []
+              for i in added:
+                  ep = new_fp["endpoints"][i]
+                  bullets.append(f"- **Added** `{i}` ({ep.get('method')} `{ep.get('path')}`)")
+              for i in removed:
+                  bullets.append(f"- **Removed** `{i}`")
+              for i in changed:
+                  bullets.append(f"- **Changed** `{i}`")
+              if not bullets:
+                  bullets.append("- Catalog fingerprint updated (metadata / ordering).")
+              entry = f"## {TODAY}\n\n" + "\n".join(bullets) + "\n"
+              existing = cl_path.read_text() if cl_path.exists() else "# Changelog\n\n"
+              if not existing.lstrip().startswith("#"):
+                  existing = "# Changelog\n\n" + existing
+              # Insert after first heading
+              parts = existing.split("\n", 1)
+              if len(parts) == 2 and parts[0].startswith("#"):
+                  body = parts[0] + "\n\n" + entry + "\n" + parts[1].lstrip("\n")
+              else:
+                  body = "# Changelog\n\n" + entry + "\n" + existing
+              cl_path.write_text(body)
+              fp_path.write_text(json.dumps(new_fp, indent=2) + "\n")
+              print("CHANGELOG updated", len(added), len(removed), len(changed))
+          PY
+      - name: Commit changelog if dirty
+        run: |
+          git config user.name "catalog-changelog[bot]"
+          git config user.email "catalog-changelog[bot]@users.noreply.github.com"
+          git add CHANGELOG.md catalog/.endpoints.fingerprint.json || true
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "docs(changelog): catalog endpoints update"
+            git push
+          fi

@@ -1,0 +1,27 @@
+{
+  "sha256": "4711078ca3992b59c7554bdac2e17ddb65d0803c67990e575dc0a414d4b4abc6",
+  "endpoint_count": 2,
+  "endpoints": {
+    "deposit_rates_html": {
+      "id": "deposit_rates_html",
+      "method": "GET",
+      "path": "/rates-tarriffs/deposit-rates/",
+      "url": "https://www.nsb.lk/rates-tarriffs/deposit-rates/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Deposit rates HTML (note path typo tarriffs).",
+      "pagination": null
+    },
+    "exchange_rates_html": {
+      "id": "exchange_rates_html",
+      "method": "GET",
+      "path": "/rates-tarriffs/exchange-rates/",
+      "url": "https://www.nsb.lk/rates-tarriffs/exchange-rates/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "FX TT HTML board.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

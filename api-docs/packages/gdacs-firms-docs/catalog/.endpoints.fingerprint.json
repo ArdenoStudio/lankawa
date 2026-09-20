@@ -1,0 +1,33 @@
+{
+  "sha256": "391334039b43248ad56c34ee23b7dd975847dc424c0ba7d430f715be884b7da4",
+  "endpoint_count": 2,
+  "endpoints": {
+    "firms_csv_lk": {
+      "id": "firms_csv_lk",
+      "method": "GET",
+      "path": "/api/area/csv/.../VIIRS_SNPP_NRT/{bbox}/{days}",
+      "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/DEMO_KEY/VIIRS_SNPP_NRT/79,5.5,82,10/1",
+      "status": "live",
+      "access": "csv_download",
+      "summary": "FIRMS hotspot CSV for LK bbox (needs MAP_KEY).",
+      "pagination": {
+        "style": "time_window",
+        "params": {
+          "days": "1-10"
+        },
+        "lab": true
+      }
+    },
+    "gdacs_events_rss": {
+      "id": "gdacs_events_rss",
+      "method": "GET",
+      "path": "/xml/rss.xml",
+      "url": "https://www.gdacs.org/xml/rss.xml",
+      "status": "live",
+      "access": "xml_cap",
+      "summary": "GDACS multi-hazard RSS.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

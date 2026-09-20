@@ -1,0 +1,37 @@
+{
+  "sha256": "26c94a18609bbf8ccd87fd5c954bdc83eb09a8e89dbb4c486ce296b2a4e5e5d7",
+  "endpoint_count": 3,
+  "endpoints": {
+    "cap_en_rss": {
+      "id": "cap_en_rss",
+      "method": "GET",
+      "path": "/images/XML/cap_en.xml",
+      "url": "https://www.meteo.gov.lk/images/XML/cap_en.xml",
+      "status": "live",
+      "access": "xml_cap",
+      "summary": "CAP English warnings RSS/XML.",
+      "pagination": null
+    },
+    "cap_si_rss": {
+      "id": "cap_si_rss",
+      "method": "GET",
+      "path": "/images/XML/cap_si.xml",
+      "url": "https://www.meteo.gov.lk/images/XML/cap_si.xml",
+      "status": "live",
+      "access": "xml_cap",
+      "summary": "CAP Sinhala warnings.",
+      "pagination": null
+    },
+    "cap_ta_rss": {
+      "id": "cap_ta_rss",
+      "method": "GET",
+      "path": "/images/XML/cap_ta.xml",
+      "url": "https://www.meteo.gov.lk/images/XML/cap_ta.xml",
+      "status": "live",
+      "access": "xml_cap",
+      "summary": "CAP Tamil warnings.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

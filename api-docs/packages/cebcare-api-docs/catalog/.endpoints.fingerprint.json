@@ -1,0 +1,33 @@
+{
+  "sha256": "223207ca098da15ccd76be0f94131176c2c1c06c07f4d7989bda868aa7b7f10b",
+  "endpoint_count": 2,
+  "endpoints": {
+    "demand_mgmt_schedule": {
+      "id": "demand_mgmt_schedule",
+      "method": "GET",
+      "path": "/Incognito/DemandMgmtSchedule",
+      "url": "https://cebcare.ceb.lk/Incognito/DemandMgmtSchedule",
+      "status": "live",
+      "access": "hybrid",
+      "summary": "HTML bootstrap for antiforgery token.",
+      "pagination": null
+    },
+    "get_demand_mgmt_clusters": {
+      "id": "get_demand_mgmt_clusters",
+      "method": "GET",
+      "path": "/Incognito/GetDemandMgmtClusters",
+      "url": "https://cebcare.ceb.lk/Incognito/GetDemandMgmtClusters?LoadShedGroupId=A",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Clusters for group A\u2013Y; requires verification token.",
+      "pagination": {
+        "style": "group_id",
+        "params": {
+          "LoadShedGroupId": "A-Y"
+        },
+        "lab": true
+      }
+    }
+  },
+  "updated": "2026-07-20"
+}

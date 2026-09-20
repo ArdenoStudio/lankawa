@@ -1,0 +1,27 @@
+{
+  "sha256": "3bb77c9623a32c749f58d3d804002da278944f8af39c22bf3289866aba5b43f8",
+  "endpoint_count": 2,
+  "endpoints": {
+    "amex_supermarket_offers": {
+      "id": "amex_supermarket_offers",
+      "method": "GET",
+      "path": "/benefits/consumer/supermarket-offers/",
+      "url": "https://www.americanexpress.lk/en-lk/benefits/consumer/supermarket-offers/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Amex LK supermarket offers HTML.",
+      "pagination": null
+    },
+    "ntb_promotions_hub": {
+      "id": "ntb_promotions_hub",
+      "method": "GET",
+      "path": "/personal/cards/promotions",
+      "url": "https://www.ntb.lk/personal/cards/promotions",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "NTB card promotions hub HTML.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

@@ -1,0 +1,11 @@
+slug: sc-hsbc-offers-park-docs
+tier: B
+title: Standard Chartered + HSBC LK offers (park notes)
+host: multi
+category: cards
+status: ready
+summary: Standard Chartered + HSBC LK offers (park notes)
+source_docs:
+- docs/NTB_SC_HSBC_OFFERS_RESEARCH.md
+- docs/BANK_API_DEEP_DIVE_VISA_SC_FDRATES.md
+extract_to: Cookie-Cat21/sc-hsbc-offers-park-docs

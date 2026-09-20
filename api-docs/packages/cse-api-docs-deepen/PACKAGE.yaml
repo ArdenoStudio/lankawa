@@ -1,0 +1,12 @@
+slug: cse-api-docs-deepen
+tier: A
+title: "CSE (cse.lk) API \u2014 deepen pack"
+host: https://www.cse.lk/api
+category: markets
+status: extend-existing
+summary: Deepen Cookie-Cat21/cse-api-docs with topGainers, topLooses, 52WeekSectors,
+  company announcements, GICS valuations.
+source_docs:
+- docs/CSE_API_DOCS.md
+- docs/CSE_UNUSED_ENDPOINTS_PROBE.md
+extract_to: Cookie-Cat21/cse-api-docs-deepen

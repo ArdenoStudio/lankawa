@@ -1,0 +1,27 @@
+{
+  "sha256": "d2c972a2f5860d75a192334786b13e7ec07a31cc10b1f1b60a0741177731ac49",
+  "endpoint_count": 2,
+  "endpoints": {
+    "comparison_world": {
+      "id": "comparison_world",
+      "method": "GET",
+      "path": "/v1/comparison/world",
+      "url": "https://octane-api.fly.dev/v1/comparison/world",
+      "status": "live",
+      "access": "json_api",
+      "summary": "World pump compare.",
+      "pagination": null
+    },
+    "prices_latest": {
+      "id": "prices_latest",
+      "method": "GET",
+      "path": "/v1/prices/latest",
+      "url": "https://octane-api.fly.dev/v1/prices/latest",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Latest fuel prices.",
+      "pagination": null
+    }
+  },
+  "updated": "2026-07-20"
+}

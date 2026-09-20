@@ -1,0 +1,10 @@
+slug: peoples-bank-rates-docs
+tier: B
+title: People's Bank Rates
+host: https://www.peoplesbank.lk
+category: banks
+status: ready
+summary: FX HTML TT + interest-rates HTML + card offer-cards.
+source_docs:
+- docs/BANK_API_DEEP_DIVE_BOC_PEOPLES_NDB_DFCC_PABC.md
+extract_to: Cookie-Cat21/peoples-bank-rates-docs

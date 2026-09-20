@@ -1,0 +1,10 @@
+slug: nwsdb-bill-api-docs
+tier: A
+title: NWSDB Bill Calculator API
+host: https://ebis.waterboard.lk
+category: utilities
+status: ready
+summary: POST BillCalculator domestic/Samurdhi tariffs.
+source_docs:
+- docs/INTEGRATIONS.md
+extract_to: Cookie-Cat21/nwsdb-bill-api-docs

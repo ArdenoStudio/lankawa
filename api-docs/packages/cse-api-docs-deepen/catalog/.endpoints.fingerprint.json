@@ -1,0 +1,64 @@
+{
+  "sha256": "38bde269732f80d57e8c8bae1aff4fc6a6bbab668d1c49691923d27d77fb6006",
+  "endpoint_count": 5,
+  "endpoints": {
+    "get_announcement_by_company": {
+      "id": "get_announcement_by_company",
+      "method": "POST",
+      "path": "/getAnnouncementByCompany",
+      "url": "https://www.cse.lk/api/getAnnouncementByCompany",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Company announcements by symbol.",
+      "pagination": null
+    },
+    "sector_52_week": {
+      "id": "sector_52_week",
+      "method": "POST",
+      "path": "/52WeekSectors",
+      "url": "https://www.cse.lk/api/52WeekSectors",
+      "status": "live",
+      "access": "json_api",
+      "summary": "52-week / YTD sector ranges.",
+      "pagination": null
+    },
+    "top_gainers": {
+      "id": "top_gainers",
+      "method": "POST",
+      "path": "/topGainers",
+      "url": "https://www.cse.lk/api/topGainers",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Dedicated top gainers board.",
+      "pagination": null
+    },
+    "top_looses": {
+      "id": "top_looses",
+      "method": "POST",
+      "path": "/topLooses",
+      "url": "https://www.cse.lk/api/topLooses",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Dedicated top losers (CSE spelling).",
+      "pagination": null
+    },
+    "trade_summary": {
+      "id": "trade_summary",
+      "method": "POST",
+      "path": "/tradeSummary",
+      "url": "https://www.cse.lk/api/tradeSummary",
+      "status": "live",
+      "access": "json_api",
+      "summary": "Full board \u2014 primary poller; client-side page in lab.",
+      "pagination": {
+        "style": "client_slice",
+        "params": {
+          "offset": "client",
+          "limit": "client"
+        },
+        "lab": true
+      }
+    }
+  },
+  "updated": "2026-07-20"
+}

@@ -1,0 +1,447 @@
+{
+  "version": 1,
+  "generated": "2026-07-20",
+  "packages": [
+    {
+      "slug": "amana-union-cargills-bank-docs",
+      "endpoint_count": 3,
+      "sha256": "677eeab87d01975ba8fc782dfdbe6b2ed90a764e1fcbe79c2429a5109501888b",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "ardeno-sister-backends-docs",
+      "endpoint_count": 3,
+      "sha256": "62a353e9d5db0c6accb512207918e531a8d31f510f88781cf644c4088eec1537",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "updated"
+    },
+    {
+      "slug": "boc-rates-docs",
+      "endpoint_count": 2,
+      "sha256": "e03334ecbeb708aa38194899cb7a3881a008f8b243387b2afc36b2397e38c4a0",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "cbsl-public-data-docs",
+      "endpoint_count": 6,
+      "sha256": "9259564779eb7edf0f06f0656525b0dd1cc893e153e79b48e326dd9a0b3abe95",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "updated"
+    },
+    {
+      "slug": "cebcare-api-docs",
+      "endpoint_count": 2,
+      "sha256": "223207ca098da15ccd76be0f94131176c2c1c06c07f4d7989bda868aa7b7f10b",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "updated"
+    },
+    {
+      "slug": "combank-api-docs",
+      "endpoint_count": 3,
+      "sha256": "cc0299f46e1e4db1669b26c12d3ded663bd96fbe88cb9367aca3a54a201162de",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "cse-api-docs-deepen",
+      "endpoint_count": 5,
+      "sha256": "38bde269732f80d57e8c8bae1aff4fc6a6bbab668d1c49691923d27d77fb6006",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "dfcc-rates-docs",
+      "endpoint_count": 3,
+      "sha256": "f39063ed42d8365c3bc0da16d22dfae31b8b4273efe7a8c5a3fc3319f3a0b445",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "foodlk-api-docs",
+      "endpoint_count": 4,
+      "sha256": "79d5b165298b48a9baeab136c9596cc30982f83d84f913fa130dcf4aa6d703d6",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "gdacs-firms-docs",
+      "endpoint_count": 2,
+      "sha256": "391334039b43248ad56c34ee23b7dd975847dc424c0ba7d430f715be884b7da4",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "updated"
+    },
+    {
+      "slug": "gold-retail-rates-docs",
+      "endpoint_count": 1,
+      "sha256": "65c49ed59e1018920b26441d8cbd36224689b58718be9ada7ff2aec457d1cac3",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "harti-cbsl-food-pdf-docs",
+      "endpoint_count": 2,
+      "sha256": "8cdb0613ecd43249cfd00f18f5ef5b8562692009a8ba26f70ac2ad86c56aea27",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "hnb-venus-api-docs",
+      "endpoint_count": 7,
+      "sha256": "1f67e464cf3b28c6fd277ac0a9da81cca18f8f68fd58095b0ab6b6a44d61d40c",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "irrigation-arcgis-api-docs",
+      "endpoint_count": 2,
+      "sha256": "f7fdb6b151e4cbb6c173b897b2ef7265523e072e8a850c3a7a493c69ab03c4a2",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "leco-outages-docs",
+      "endpoint_count": 1,
+      "sha256": "8c748b984fab516d6a4253c00caccf6bdf523fb9871dd4d1b32e849f5a91f88f",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "litro-laugfs-lpg-docs",
+      "endpoint_count": 2,
+      "sha256": "b4e3efb0533c6549bb84c54c6e3494acc0074009e7666d3e1bb983fbc38c6510",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "lk-flood-api-docs",
+      "endpoint_count": 1,
+      "sha256": "5f322dfe8686e7370813d4ccfa1dd4ace851decb455c68817d39dee0882ef9cc",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "metdept-cap-api-docs",
+      "endpoint_count": 3,
+      "sha256": "26c94a18609bbf8ccd87fd5c954bdc83eb09a8e89dbb4c486ce296b2a4e5e5d7",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "mypromo-park-docs",
+      "endpoint_count": 1,
+      "sha256": "87b02172de5f9b47b8479d8d05b5b6c769187ce7e5d19ac739631c9f3c52cc9c",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "ndb-rates-docs",
+      "endpoint_count": 3,
+      "sha256": "9b61bf86a5bb8ed31e6b6d343e85dde201efd5bb53c570ba8ac387f223eb9265",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "nsb-rates-docs",
+      "endpoint_count": 2,
+      "sha256": "4711078ca3992b59c7554bdac2e17ddb65d0803c67990e575dc0a414d4b4abc6",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "ntb-amex-offers-docs",
+      "endpoint_count": 2,
+      "sha256": "3bb77c9623a32c749f58d3d804002da278944f8af39c22bf3289866aba5b43f8",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "nwsdb-bill-api-docs",
+      "endpoint_count": 2,
+      "sha256": "1982af64644cd2034e5f012fa531e02bc2b2de617de714ace0531cb34a79655d",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "updated"
+    },
+    {
+      "slug": "octane-fuel-api-docs",
+      "endpoint_count": 2,
+      "sha256": "d2c972a2f5860d75a192334786b13e7ec07a31cc10b1f1b60a0741177731ac49",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "open-meteo-lk-docs",
+      "endpoint_count": 3,
+      "sha256": "075df75a9fe563521ea65abaef9b68bf729e5d727c947c1bdfbeecebc8f8df2e",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "openaq-lk-docs",
+      "endpoint_count": 1,
+      "sha256": "062358f4e89b4632acf27f90fba128ab6d96f6329ed572055dd97e1576ffce48",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "updated"
+    },
+    {
+      "slug": "pabc-card-offers-docs",
+      "endpoint_count": 2,
+      "sha256": "4464af83bf4f0d28f79f72f5ffdfb1a630eb43431ffecaf232f852c2391c3531",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "peoples-bank-rates-docs",
+      "endpoint_count": 3,
+      "sha256": "1fd2827f1167d4bf0c976e14576885057393c1db8c4b6fda66e6fb2e3a97bfc0",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "promise-lk-tenders-docs",
+      "endpoint_count": 1,
+      "sha256": "4e1ba317865c5aa1717f7c2ca5d198f0a52b2f4141dcf2200538ed0cb3f8d92f",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "sampath-api-docs",
+      "endpoint_count": 3,
+      "sha256": "3cc77dc0002feb9b32041463bd30b8a1797bae6efc2cf092d2b25377a4b6dde2",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "sc-hsbc-offers-park-docs",
+      "endpoint_count": 2,
+      "sha256": "3188d5ecdcbae61560e9fb826aeaf57aecb4a410e26822539972b59c267b5bff",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "sdb-rates-docs",
+      "endpoint_count": 1,
+      "sha256": "94082773f54410a67fa492b743f5b4b510d2e3d4e4eb684a8a7da5e926fa11c4",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "seylan-api-docs",
+      "endpoint_count": 2,
+      "sha256": "b1e03d01a33a516af9f3c90171f4e9bd7becd578ab4e387da25512a4d38d249f",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "singer-emi-api-docs",
+      "endpoint_count": 1,
+      "sha256": "1b7f8b2e5df5b6c4fa90e3250540a7d960166195b71ef3fc77734bdecff9da98",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "updated"
+    },
+    {
+      "slug": "sl-bank-card-offers-docs",
+      "endpoint_count": 1,
+      "sha256": "7c6b9d747507a8dfd7b1125716d3d0808c6a31116c6be8412d29c7ea76eeea4c",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "sl-bank-fd-rates-docs",
+      "endpoint_count": 1,
+      "sha256": "e48bf2d799ffb411521256cbbab879487ec1c3cc1d814844a3da72861d4f3df3",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "sl-bank-remittance-tt-docs",
+      "endpoint_count": 1,
+      "sha256": "d0e0b909ebe0a89ae15d3c6adf92d71939caf1c36c12dfcf1015fba06e306c26",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "softlogic-emi-park-docs",
+      "endpoint_count": 1,
+      "sha256": "3d6173ec564989cc667823cd9415627a4fe90ec39cf314b7f054ef9de2a4cc00",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "visa-lk-perks-api-docs",
+      "endpoint_count": 1,
+      "sha256": "b0e8cdd98536d9e46aa564455a744a88da85160fb26ed57eef8674dfdb282c76",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    },
+    {
+      "slug": "wfp-hdx-lka-food-docs",
+      "endpoint_count": 1,
+      "sha256": "fcb199007f565990dd4961f5b99307e9ccefa5fdb0b7d9070e9af0cb19c71542",
+      "changelog": "CHANGELOG.md",
+      "fingerprint": "catalog/.endpoints.fingerprint.json",
+      "workflow": ".github/workflows/catalog-changelog.yml",
+      "action": "unchanged"
+    }
+  ],
+  "recent_updates": [
+    {
+      "slug": "ardeno-sister-backends-docs",
+      "date": "2026-07-20",
+      "added": [],
+      "removed": [],
+      "changed": [
+        "life_health"
+      ],
+      "endpoint_count": 3,
+      "bootstrap": false
+    },
+    {
+      "slug": "cbsl-public-data-docs",
+      "date": "2026-07-20",
+      "added": [],
+      "removed": [],
+      "changed": [
+        "eresearch_awpr_6277",
+        "eresearch_tbill_6169"
+      ],
+      "endpoint_count": 6,
+      "bootstrap": false
+    },
+    {
+      "slug": "cebcare-api-docs",
+      "date": "2026-07-20",
+      "added": [],
+      "removed": [],
+      "changed": [
+        "get_demand_mgmt_clusters"
+      ],
+      "endpoint_count": 2,
+      "bootstrap": false
+    },
+    {
+      "slug": "gdacs-firms-docs",
+      "date": "2026-07-20",
+      "added": [],
+      "removed": [],
+      "changed": [
+        "gdacs_events_rss"
+      ],
+      "endpoint_count": 2,
+      "bootstrap": false
+    },
+    {
+      "slug": "nwsdb-bill-api-docs",
+      "date": "2026-07-20",
+      "added": [],
+      "removed": [],
+      "changed": [
+        "bill_calculator",
+        "get_tariff_adjustment"
+      ],
+      "endpoint_count": 2,
+      "bootstrap": false
+    },
+    {
+      "slug": "openaq-lk-docs",
+      "date": "2026-07-20",
+      "added": [],
+      "removed": [],
+      "changed": [
+        "locations_lk"
+      ],
+      "endpoint_count": 1,
+      "bootstrap": false
+    },
+    {
+      "slug": "singer-emi-api-docs",
+      "date": "2026-07-20",
+      "added": [],
+      "removed": [],
+      "changed": [
+        "json_get_emi"
+      ],
+      "endpoint_count": 1,
+      "bootstrap": false
+    }
+  ]
+}

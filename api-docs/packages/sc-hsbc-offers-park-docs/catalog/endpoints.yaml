@@ -1,0 +1,24 @@
+title: Standard Chartered + HSBC LK offers (park notes)
+host: multi
+tier: B
+category: cards
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/NTB_SC_HSBC_OFFERS_RESEARCH.md
+- docs/BANK_API_DEEP_DIVE_VISA_SC_FDRATES.md
+endpoints:
+- id: sc_tgl_offers_json_parked
+  method: GET
+  url: https://www.sc.com/lk/offers.json
+  path: /lk/offers.json
+  summary: PARK — TGL offers.json mostly expired on probe.
+  status: parked
+  access: parked
+- id: hsbc_retail_parked
+  method: GET
+  url: https://www.hsbc.lk/
+  path: /
+  summary: PARK — HSBC LK retail sold to NTB; offer URLs dead.
+  status: parked
+  access: parked

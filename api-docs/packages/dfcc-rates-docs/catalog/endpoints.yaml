@@ -1,0 +1,27 @@
+title: DFCC Rates & Card Offers
+host: https://www.dfcc.lk
+tier: B
+category: banks
+probe_delay_seconds: 1.0
+ethics: See docs/ETHICS.md
+source_docs_in_lankawa:
+- docs/BANK_API_DEEP_DIVE_BOC_PEOPLES_NDB_DFCC_PABC.md
+endpoints:
+- id: interest_rates_page
+  method: GET
+  url: https://www.dfcc.lk/interest-rates/
+  path: /interest-rates/
+  summary: RSC-embedded deposit/loan rates.
+  access: html_scrape
+- id: exchange_rates_page
+  method: GET
+  url: https://www.dfcc.lk/exchange-rates/
+  path: /exchange-rates/
+  summary: FX rates page.
+  access: html_scrape
+- id: card_offers_supermarket
+  method: GET
+  url: https://www.dfcc.lk/personal/cards/card-offers/
+  path: /personal/cards/card-offers/
+  summary: Card offers hub (supermarket DOW scrape).
+  access: html_scrape

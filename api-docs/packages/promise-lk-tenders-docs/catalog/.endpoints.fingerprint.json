@@ -1,0 +1,20 @@
+{
+  "sha256": "4e1ba317865c5aa1717f7c2ca5d198f0a52b2f4141dcf2200538ed0cb3f8d92f",
+  "endpoint_count": 1,
+  "endpoints": {
+    "procurements_list": {
+      "id": "procurements_list",
+      "method": "GET",
+      "path": "/",
+      "url": "https://promise.lk/",
+      "status": "live",
+      "access": "html_scrape",
+      "summary": "Public procurement listings (scrape/API as probed).",
+      "pagination": {
+        "style": "html_list",
+        "lab": true
+      }
+    }
+  },
+  "updated": "2026-07-20"
+}
