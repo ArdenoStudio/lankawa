@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import {
   getSourceConsecutiveFailures,
@@ -259,6 +260,16 @@ export async function GET(request: NextRequest) {
     );
   }
 
+  // Bust the ISR cache for every locale homepage so /si and /ta refresh
+  // on the same cadence as /en instead of going stale between visits.
+  for (const path of ["/en", "/si", "/ta"]) {
+    try {
+      revalidatePath(path);
+    } catch {
+      // Revalidation is best-effort; ingest results are already persisted.
+    }
+  }
+
   const failed = runs.filter((run) => !run.ok);
   const payload = {
     ok: failed.length === 0,
@@ -278,3 +289,4 @@ export async function GET(request: NextRequest) {
     status: failed.length === runs.length ? 500 : 200,
   });
 }
+

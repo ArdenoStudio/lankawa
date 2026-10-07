@@ -250,6 +250,10 @@ export function DisasterRiskMap({
     }
 
     let cancelled = false;
+    let intersectionObserver: IntersectionObserver | null = null;
+    let resizeObserver: ResizeObserver | null = null;
+    let onVisibility: (() => void) | null = null;
+    let onContextLost: ((event: Event) => void) | null = null;
 
     async function initMap() {
       try {
@@ -403,6 +407,55 @@ export function DisasterRiskMap({
         );
 
         mapRef.current = map;
+
+        // Repaint guard: the GL canvas can go blank when the map scrolls out
+        // of view and back (compositor drops the layer, mobile URL-bar
+        // show/hide shifts layout, or the WebGL context is lost). Force a
+        // resize + repaint whenever the container re-enters the viewport,
+        // changes size, or the tab becomes visible again.
+        const repaint = () => {
+          const current = mapRef.current;
+          if (!current) {
+            return;
+          }
+          current.resize();
+          current.triggerRepaint();
+        };
+
+        const containerEl = containerRef.current;
+        intersectionObserver =
+          typeof IntersectionObserver !== "undefined" && containerEl
+            ? new IntersectionObserver(
+                (entries) => {
+                  if (entries.some((entry) => entry.isIntersecting)) {
+                    repaint();
+                  }
+                },
+                { threshold: 0.05 },
+              )
+            : null;
+        intersectionObserver?.observe(containerEl as Element);
+
+        resizeObserver =
+          typeof ResizeObserver !== "undefined" && containerEl
+            ? new ResizeObserver(() => repaint())
+            : null;
+        resizeObserver?.observe(containerEl as Element);
+
+        onVisibility = () => {
+          if (document.visibilityState === "visible") {
+            repaint();
+          }
+        };
+        document.addEventListener("visibilitychange", onVisibility);
+
+        const canvas = map.getCanvas();
+        onContextLost = (event: Event) => {
+          // Let the browser restore the context; maplibre re-inits on restore.
+          event.preventDefault();
+        };
+        canvas.addEventListener("webglcontextlost", onContextLost);
+
         popupRef.current = new maplibregl.Popup({
           closeButton: false,
           closeOnClick: false,
@@ -547,6 +600,16 @@ export function DisasterRiskMap({
 
     return () => {
       cancelled = true;
+      intersectionObserver?.disconnect();
+      resizeObserver?.disconnect();
+      if (onVisibility) {
+        document.removeEventListener("visibilitychange", onVisibility);
+      }
+      if (onContextLost) {
+        mapRef.current
+          ?.getCanvas()
+          ?.removeEventListener("webglcontextlost", onContextLost);
+      }
       popupRef.current?.remove();
       popupRef.current = null;
       mapRef.current?.remove();
@@ -794,3 +857,4 @@ export function DisasterRiskMap({
     </section>
   );
 }
+

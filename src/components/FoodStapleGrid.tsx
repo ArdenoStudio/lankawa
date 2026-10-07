@@ -4,6 +4,32 @@ import { useTranslations } from "next-intl";
 import { getFoodSnapshot } from "@/lib/food";
 import type { FoodSnapshot } from "@/lib/types";
 
+const STAPLE_SOURCE_LABELS: Record<string, string> = {
+  foodlk: "FoodLK",
+  cbsl_daily_price_report: "CBSL daily prices",
+  cbsl_price_monitor: "CBSL price monitor",
+  wfp_hdx: "WFP market data",
+  spar2u: "SPAR retail",
+  life: "Life platform",
+  market: "Market",
+  retail: "Retail",
+  seed: "Lankawa seed",
+};
+
+/** Never show raw source slugs (e.g. cbsl_daily_price_report) in the UI. */
+function formatStapleSource(source: string): string {
+  const known = STAPLE_SOURCE_LABELS[source.toLowerCase()];
+  if (known) {
+    return known;
+  }
+  return source
+    .replace(/[_-]+/g, " ")
+    .replace(/\bcbsl\b/gi, "CBSL")
+    .replace(/\bwfp\b/gi, "WFP")
+    .replace(/\bhdx\b/gi, "HDX")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 export function FoodStapleGrid({
   snapshot: snapshotProp,
 }: {
@@ -52,7 +78,7 @@ export function FoodStapleGrid({
               LKR {item.priceLkr.toLocaleString()}
             </p>
             <p className="mt-1 text-xs text-slate-500">
-              {t("perUnit", { unit: item.unit })} · {item.source}
+              {t("perUnit", { unit: item.unit })} · {formatStapleSource(item.source)}
               {item.quoteAsOf ? ` · ${item.quoteAsOf}` : ""}
             </p>
             {item.note ? (
@@ -70,3 +96,4 @@ export function FoodStapleGrid({
     </div>
   );
 }
+

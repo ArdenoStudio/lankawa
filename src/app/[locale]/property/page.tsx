@@ -64,7 +64,10 @@ export default async function PropertyPage({
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
           <dt className="text-sm text-slate-500">{t("districtsCovered")}</dt>
           <dd className="mt-2 text-3xl font-semibold text-white">
-            {snapshot.districts.length}
+            {t("coverage", {
+              count: snapshot.districts.length,
+              total: 25,
+            })}
           </dd>
         </div>
       </dl>
@@ -97,6 +100,10 @@ export default async function PropertyPage({
             <span className="inline-block h-3 w-3 rounded-full bg-teal-200" />
             {t("mapLegendLow")}
           </span>
+          <span className="inline-flex items-center gap-2">
+            <span className="inline-block h-3 w-3 rounded-full bg-slate-700" />
+            {t("mapLegendNoData")}
+          </span>
         </div>
       </section>
 
@@ -113,3 +120,4 @@ export default async function PropertyPage({
     </div>
   );
 }
+

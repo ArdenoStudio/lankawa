@@ -28,18 +28,7 @@
     { "slug": "jaffna", "dailyMealCostLkr": 1518, "monthlyBasketLkr": 45537, "restaurantIndex": 89 },
     { "slug": "kilinochchi", "dailyMealCostLkr": 1508, "monthlyBasketLkr": 45242, "restaurantIndex": 88 },
     { "slug": "mannar", "dailyMealCostLkr": 1488, "monthlyBasketLkr": 44653, "restaurantIndex": 87 },
-    { "slug": "vavuniya", "dailyMealCostLkr": 1484, "monthlyBasketLkr": 44505, "restaurantIndex": 86 },
-    { "slug": "mullaitivu", "dailyMealCostLkr": 1434, "monthlyBasketLkr": 43032, "restaurantIndex": 84 },
-    { "slug": "batticaloa", "dailyMealCostLkr": 1434, "monthlyBasketLkr": 43032, "restaurantIndex": 84 },
-    { "slug": "ampara", "dailyMealCostLkr": 1434, "monthlyBasketLkr": 43032, "restaurantIndex": 84 },
-    { "slug": "trincomalee", "dailyMealCostLkr": 1434, "monthlyBasketLkr": 43032, "restaurantIndex": 84 },
-    { "slug": "kurunegala", "dailyMealCostLkr": 1434, "monthlyBasketLkr": 43032, "restaurantIndex": 84 },
-    { "slug": "puttalam", "dailyMealCostLkr": 1434, "monthlyBasketLkr": 43032, "restaurantIndex": 84 },
-    { "slug": "anuradhapura", "dailyMealCostLkr": 1434, "monthlyBasketLkr": 43032, "restaurantIndex": 84 },
-    { "slug": "polonnaruwa", "dailyMealCostLkr": 1434, "monthlyBasketLkr": 43032, "restaurantIndex": 84 },
-    { "slug": "badulla", "dailyMealCostLkr": 1434, "monthlyBasketLkr": 43032, "restaurantIndex": 84 },
-    { "slug": "monaragala", "dailyMealCostLkr": 1434, "monthlyBasketLkr": 43032, "restaurantIndex": 84 },
-    { "slug": "ratnapura", "dailyMealCostLkr": 1434, "monthlyBasketLkr": 43032, "restaurantIndex": 84 },
-    { "slug": "kegalle", "dailyMealCostLkr": 1434, "monthlyBasketLkr": 43032, "restaurantIndex": 84 }
+    { "slug": "vavuniya", "dailyMealCostLkr": 1484, "monthlyBasketLkr": 44505, "restaurantIndex": 86 }
   ]
 }
+

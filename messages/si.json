@@ -719,11 +719,11 @@
     "liveTitle": "Live indicators",
     "macroTitle": "Macro snapshot",
     "macroSubtitle": "CBSL public figures වලින් static seed",
-    "fxSparklineTitle": "USD/LKR (30-day trend)",
+    "fxSparklineTitle": "USD/LKR ({days}-day trend)",
     "fxBandTitle": "CBSL indicative buy/sell band",
     "fxBuy": "Buy",
     "fxSell": "Sell",
-    "fuelHistoryTitle": "Fuel prices (90-day trend)",
+    "fuelHistoryTitle": "Fuel prices ({days}-day trend)",
     "fuelRevisionsTitle": "CPC revision steps",
     "fuelRevisionsSubtitle": "Official petrol 92 and auto diesel price changes from the Octane partner API.",
     "fuelRevisionsDate": "Effective",
@@ -1118,7 +1118,8 @@
     "fresh": "නැවුම්",
     "stale": "පැරණි",
     "down": "අක්‍රිය",
-    "unknown": "නොදනී"
+    "unknown": "නොදනී",
+    "seed": "සීඩ්"
   },
   "footer": {
     "built": "ශ්‍රී ලාංකිකයන් සඳහා, ශ්‍රී ලාංකිකයන් විසින්",
@@ -1669,6 +1670,7 @@
     "nationalMedian": "National median",
     "colomboMedian": "Colombo median",
     "districtsCovered": "Districts covered",
+    "coverage": "දිස්ත්‍රික්ක {total} න් {count}",
     "perchUnit": "perch",
     "mapTitle": "Price choropleth",
     "mapSubtitle": "Districts colored by median land price per perch.",
@@ -1676,12 +1678,14 @@
     "mapLegendHigh": "High price",
     "mapLegendMid": "Mid price",
     "mapLegendLow": "Lower price",
+    "mapLegendNoData": "දත්ත නැත",
     "tableTitle": "District price table",
     "district": "District",
     "medianPerPerch": "Median / perch",
     "priceBand": "Price band",
     "trend": "YoY trend",
     "intensity": "Relative price",
+    "noDataYet": "තවම සජීවී දත්ත නැත",
     "disclaimer": "Representative seed data aligned with PropertyLK patterns. Not a property valuation service — verify with licensed professionals.",
     "disclaimerSeed": "Showing seed fallback data — the live PropertyLK API was unavailable at fetch time. Figures are representative, not valuations.",
     "listings": {
@@ -1703,7 +1707,7 @@
     "popularMakesTitle": "Popular makes",
     "listingsLabel": "listings",
     "tableTitle": "District price bands",
-    "tableSubtitle": "Median listing prices mapped to Lankawa district slugs.",
+    "tableSubtitle": "Median listing prices by district.",
     "district": "District",
     "listings": "Listings",
     "medianPrice": "Median price",
@@ -1723,7 +1727,7 @@
   },
   "food": {
     "title": "Food Price Pulse",
-    "subtitle": "Staple food prices and district meal-cost bands — enhances the cost-of-living food component.",
+    "subtitle": "Staple food prices and district meal costs across Sri Lanka.",
     "asOf": "As of {date}",
     "essentialsBasket": "Essentials basket",
     "basketExcludesStale": "Basket total uses non-stale staples only — lagged staple quotes ඉහත පෙන්වන නමුත් මෙම එකතුවට ඇතුළත් නොවේ.",
@@ -1737,12 +1741,14 @@
     "perUnit": "per {unit}",
     "tableTitle": "District meal costs",
     "tableSubtitle": "Estimated daily meal cost and monthly food basket by district.",
+    "coverage": "දිස්ත්‍රික්ක {total} න් {count}",
     "mixedSeedDistricts": "දිස්ත්‍රික් ආහාර පිරිවැය seed ඇස්තමේන්තු — live FoodLK දිස්ත්‍රික් quotes නොවේ.",
     "district": "District",
     "dailyMeal": "Daily meal (est.)",
     "monthlyBasket": "Monthly basket",
     "restaurantIndex": "Restaurant index",
     "intensity": "Relative cost",
+    "noDataYet": "තවම සජීවී දත්ත නැත",
     "disclaimer": "Representative food price intelligence — not official NCPI. Seed fallback used when FoodLK endpoints are unavailable.",
     "disclaimerLife": "FoodLK API unavailable. Headline figures from Ariva Life Platform food layer; district meal bands are seed until FoodLK recovers.",
     "disclaimerWfp": "FoodLK unavailable. Staples from WFP HDX Sri Lanka CSV (direct) — lagged market averages, same-day shelf prices නොවේ. Essentials basket = non-stale staples only. District meal bands seed. HARTI/NCPI නොවේ.",
@@ -1834,7 +1840,8 @@
       "fresh": "Fresh",
       "stale": "Stale",
       "down": "Down",
-      "unknown": "Unknown"
+      "unknown": "Unknown",
+      "seed": "Seed"
     },
     "table": {
       "source": "Source",
@@ -1848,7 +1855,7 @@
   "assistant": {
     "title": "Civic assistant",
     "subtitle": "දිස්ත්‍රික්, pulse metrics, elections, සහ public services ගැන අසන්න — answers Lankawa data only.",
-    "groundingNote": "Grounded on Lankawa API data only. No external links.",
+    "groundingNote": "Grounded on Lankawa data only. No external links.",
     "emptyState": "Ask a question to get started.",
     "inputPlaceholder": "e.g. What's the USD/LKR rate?",
     "submit": "Ask",
@@ -2333,3 +2340,4 @@
     "honesty": "එක් නියැදි SKU මිලකට ප්‍රසිද්ධ Singer EMI — මිලදී ගැනීමට පෙර singersl.com හි තහවුරු කරන්න. Softlogic per-SKU EMI crawl මග හැර ඇත (බර වැඩි). Abans/Arpico merchant EMI parked. Singer හෝ බැංකු සමඟ අනුබද්ධ නොවේ."
   }
 }
+

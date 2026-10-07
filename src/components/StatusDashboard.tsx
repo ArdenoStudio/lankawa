@@ -18,7 +18,7 @@ export interface StatusSourceRow {
 
 export function StatusDashboard({ sources }: { sources: StatusSourceRow[] }) {
   const t = useTranslations("status");
-  const tierOrder: FreshnessTier[] = ["down", "stale", "unknown", "fresh"];
+  const tierOrder: FreshnessTier[] = ["down", "stale", "seed", "unknown", "fresh"];
 
   const sorted = [...sources].sort(
     (a, b) => tierOrder.indexOf(a.tier) - tierOrder.indexOf(b.tier),
@@ -34,8 +34,8 @@ export function StatusDashboard({ sources }: { sources: StatusSourceRow[] }) {
 
   return (
     <div className="space-y-8">
-      <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {(["fresh", "stale", "down", "unknown"] as const).map((tier) => (
+      <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {(["fresh", "stale", "seed", "down", "unknown"] as const).map((tier) => (
           <div
             key={tier}
             className="rounded-2xl border border-white/10 bg-white/5 p-5"
@@ -101,3 +101,4 @@ export function StatusDashboard({ sources }: { sources: StatusSourceRow[] }) {
     </div>
   );
 }
+

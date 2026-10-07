@@ -31,6 +31,8 @@ import { fetchLandslideSnapshot } from "@/lib/integrations/landslide";
 import { buildLankaStressIndex } from "@/lib/lanka-stress";
 import { buildPulseSnapshot, getTodayPulseMetrics } from "@/lib/pulse";
 
+export const revalidate = 3600;
+
 export async function generateMetadata({
   params,
 }: {
@@ -176,3 +178,4 @@ export default async function HomePage({
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-export type FreshnessTier = "fresh" | "stale" | "down" | "unknown";
+export type FreshnessTier = "fresh" | "stale" | "down" | "unknown" | "seed";
 
 export type SourceCategory =
   | "economy"
@@ -632,3 +632,4 @@ export interface ParliamentaryHistoryCycle {
   sourceId: string;
   note?: string;
 }
+

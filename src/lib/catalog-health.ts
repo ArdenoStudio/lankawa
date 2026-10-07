@@ -74,13 +74,20 @@ function healthFrom(
       result.observedAt != null &&
       result.observedAt !== checkedAt;
 
+    // A row serving seed fallback must never wear a "Fresh" badge: seed is a
+    // provenance state, not a freshness age. Cap it at the "seed" tier even
+    // when the check itself just succeeded.
+    const tier = seedFlagged
+      ? "seed"
+      : hasUpstreamObservation
+        ? computeFreshnessTier(result.observedAt, source.cadenceMinutes)
+        : computeFreshnessTier(checkedAt, source.cadenceMinutes);
+
     return {
       id: source.id,
       name: source.name,
       category: source.category,
-      tier: hasUpstreamObservation
-        ? computeFreshnessTier(result.observedAt, source.cadenceMinutes)
-        : computeFreshnessTier(checkedAt, source.cadenceMinutes),
+      tier,
       lastSuccessAt: result.observedAt ?? checkedAt,
       lastCheckedAt: checkedAt,
       error: result.error,
@@ -761,3 +768,4 @@ export const buildCatalogHealthSnapshot = unstable_cache(
 export async function buildCatalogHealthSnapshotFresh(): Promise<SourceHealth[]> {
   return buildCatalogHealthSnapshotUncached();
 }
+

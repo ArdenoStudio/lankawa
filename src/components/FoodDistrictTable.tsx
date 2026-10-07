@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { getDistrictName, getDistrict } from "@/lib/districts";
+import { DISTRICTS, getDistrictName } from "@/lib/districts";
 import { formatFoodPrice, getFoodSnapshot } from "@/lib/food";
 import type { FoodSnapshot } from "@/lib/types";
 
@@ -17,10 +17,19 @@ export function FoodDistrictTable({
 }) {
   const t = useTranslations("food");
   const snapshot = snapshotProp ?? getFoodSnapshot();
-  const sorted = [...snapshot.districts].sort(
-    (a, b) => b.monthlyBasketLkr - a.monthlyBasketLkr,
+  const bySlug = new Map(snapshot.districts.map((row) => [row.slug, row]));
+  // Districts with data first (basket desc), then districts with no live data
+  // yet — never fabricated placeholder figures.
+  const covered = DISTRICTS.filter((district) => bySlug.has(district.slug)).sort(
+    (a, b) =>
+      (bySlug.get(b.slug)?.monthlyBasketLkr ?? 0) -
+      (bySlug.get(a.slug)?.monthlyBasketLkr ?? 0),
   );
-  const maxBasket = sorted[0]?.monthlyBasketLkr ?? 1;
+  const uncovered = DISTRICTS.filter((district) => !bySlug.has(district.slug));
+  const maxBasket = Math.max(
+    ...covered.map((d) => bySlug.get(d.slug)?.monthlyBasketLkr ?? 0),
+    1,
+  );
 
   return (
     <div className="space-y-3">
@@ -41,9 +50,8 @@ export function FoodDistrictTable({
             </tr>
           </thead>
           <tbody>
-            {sorted.map((row) => {
-              const district = getDistrict(row.slug);
-              const label = district ? getDistrictName(district, locale) : row.slug;
+            {covered.map((district) => {
+              const row = bySlug.get(district.slug)!;
               return (
                 <tr key={row.slug} className="border-b border-white/5">
                   <td className="px-4 py-3">
@@ -51,7 +59,7 @@ export function FoodDistrictTable({
                       href={`/districts/${row.slug}`}
                       className="font-medium text-white underline decoration-white/30 hover:decoration-white"
                     >
-                      {label}
+                      {getDistrictName(district, locale)}
                     </Link>
                   </td>
                   <td className="px-4 py-3 text-right text-white">
@@ -76,6 +84,26 @@ export function FoodDistrictTable({
                 </tr>
               );
             })}
+            {uncovered.map((district) => (
+              <tr key={district.slug} className="border-b border-white/5">
+                <td className="px-4 py-3">
+                  <Link
+                    href={`/districts/${district.slug}`}
+                    className="font-medium text-white underline decoration-white/30 hover:decoration-white"
+                  >
+                    {getDistrictName(district, locale)}
+                  </Link>
+                </td>
+                <td
+                  colSpan={4}
+                  className="px-4 py-3 text-right text-sm text-slate-500"
+                >
+                  <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ring-white/25 text-neutral-400">
+                    {t("noDataYet")}
+                  </span>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

@@ -10,6 +10,7 @@ const tierStyles: Record<FreshnessTier, string> = {
   stale: "bg-white/10 text-neutral-200 ring-white/35",
   down: "bg-transparent text-neutral-400 ring-white/25",
   unknown: "bg-transparent text-neutral-500 ring-white/15",
+  seed: "bg-transparent text-neutral-300 ring-white/40",
 };
 
 export function FreshnessBadge({ tier }: { tier: FreshnessTier }) {
@@ -26,3 +27,4 @@ export function FreshnessBadge({ tier }: { tier: FreshnessTier }) {
     </span>
   );
 }
+
