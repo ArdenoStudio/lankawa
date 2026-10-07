@@ -49,6 +49,18 @@ const defaultModules = [
     ),
   },
   {
+    href: "/fuel",
+    key: "fuel",
+    icon: (
+      <>
+        <path d="M5 21V5a2 2 0 012-2h6a2 2 0 012 2v16" />
+        <path d="M3 21h14" />
+        <path d="M15 10h2.5a2 2 0 012 2v7a1.5 1.5 0 003 0V8.5L19 4" />
+        <rect x="7.5" y="7.5" width="4" height="5" rx="1" />
+      </>
+    ),
+  },
+  {
     href: "/property",
     key: "property",
     icon: (
@@ -168,6 +180,18 @@ export const exploreModuleCatalog = {
   districts: defaultModules[0],
   elections: defaultModules[1],
   economy: defaultModules[2],
+  fuel: {
+    href: "/fuel",
+    key: "fuel",
+    icon: (
+      <>
+        <path d="M5 21V5a2 2 0 012-2h6a2 2 0 012 2v16" />
+        <path d="M3 21h14" />
+        <path d="M15 10h2.5a2 2 0 012 2v7a1.5 1.5 0 003 0V8.5L19 4" />
+        <rect x="7.5" y="7.5" width="4" height="5" rx="1" />
+      </>
+    ),
+  },
   property: defaultModules[3],
   health: defaultModules[4],
   transport: defaultModules[5],
@@ -345,6 +369,7 @@ export const exploreSections: readonly ModuleSection[] = [
     key: "economyLiving",
     modules: [
       exploreModuleCatalog.economy,
+      exploreModuleCatalog.fuel,
       exploreModuleCatalog.property,
       exploreModuleCatalog.costOfLiving,
       exploreModuleCatalog.ardeno,
