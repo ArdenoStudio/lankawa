@@ -4,6 +4,7 @@ import { VehicleModelDeepDive } from "@/components/VehicleModelDeepDive";
 import { VehiclePopularMakes } from "@/components/VehiclePopularMakes";
 import { Link } from "@/i18n/navigation";
 import { getSourceProvenancePath } from "@/lib/sources";
+import { formatDisplayDate } from "@/lib/format";
 import { formatVehiclePrice, getVehicleData } from "@/lib/vehicle";
 
 export default async function VehiclesPage({
@@ -25,7 +26,7 @@ export default async function VehiclesPage({
         <h1 className="text-3xl font-semibold text-white">{t("title")}</h1>
         <p className="mt-2 max-w-2xl text-slate-400">{t("subtitle")}</p>
         <p className="mt-2 text-sm text-slate-500">
-          {t("asOf", { date: snapshot.asOf })} ·{" "}
+          {t("asOf", { date: formatDisplayDate(snapshot.asOf, locale) })} ·{" "}
           <Link
             href={getSourceProvenancePath(snapshot.sourceId)}
             className="text-teal-300 hover:text-teal-200"
@@ -81,3 +82,4 @@ export default async function VehiclesPage({
     </div>
   );
 }
+
