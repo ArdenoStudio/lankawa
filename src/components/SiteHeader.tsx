@@ -17,6 +17,7 @@ const primaryLinks = [
 const moreLinks = [
   { href: "/elections", key: "elections" },
   { href: "/economy", key: "economy" },
+  { href: "/fuel", key: "fuel" },
   { href: "/services", key: "services" },
   { href: "/provinces", key: "provinces" },
   { href: "/disaster", key: "disaster" },
@@ -62,6 +63,7 @@ const mobileSections = [
     key: "data",
     links: [
       { href: "/economy", key: "economy" },
+      { href: "/fuel", key: "fuel" },
       { href: "/budget", key: "budget" },
       { href: "/property", key: "property" },
       { href: "/health", key: "health" },
