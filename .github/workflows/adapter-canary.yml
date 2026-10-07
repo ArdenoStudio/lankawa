@@ -28,7 +28,14 @@ jobs:
       DEPLOY_URL: ${{ inputs.deploy_url || 'https://lankawa.vercel.app' }}
       FAIL_ON_STALE: ${{ inputs.fail_on_stale || 'false' }}
       # Today strip + economy pulse adapters that must not be "down".
-      CRITICAL_SOURCES: '["cbsl_fx","octane_fuel","lk_flood_api","open_meteo","ceb_power","cse_lk"]'
+      # cse_lk is asserted only during CSE market hours (see assert step) —
+      # its tier legitimately decays to "down" overnight/weekends.
+      CRITICAL_SOURCES: '["cbsl_fx","lk_flood_api","open_meteo","ceb_power","cse_lk"]'
+      # Sources with a KNOWN upstream outage: tracked as warnings every run,
+      # never a hard failure. octane_fuel: upstream octane-api.fly.dev has
+      # been down since 2026-06-30. Restore it to CRITICAL_SOURCES when the
+      # feed is revived.
+      KNOWN_DOWN_SOURCES: '["octane_fuel"]'
 
     steps:
       - name: Install jq
@@ -89,7 +96,21 @@ jobs:
             exit 1
           fi
 
-          down=$(jq -r --argjson critical "$CRITICAL_SOURCES" '
+          # CSE publishes only during market hours (Mon–Fri 09:30–14:30 SLT
+          # = 04:00–09:00 UTC). Outside that window the adapter cannot refresh
+          # and its tier legitimately decays to "down" — expected, not an
+          # incident. Assert cse_lk only when the market should be open.
+          dow=$(date -u +%u)    # 1=Mon … 7=Sun
+          hhmm=$(date -u +%H%M)
+          effective_critical="$CRITICAL_SOURCES"
+          if [ "$dow" -gt 5 ] || [ "$hhmm" -lt 0400 ] || [ "$hhmm" -ge 0930 ]; then
+            echo "CSE market closed (UTC $(date -u +%H:%M), weekday=$dow) — cse_lk downgraded to warning-only for this run"
+            effective_critical=$(echo "$CRITICAL_SOURCES" | jq -c 'map(select(. != "cse_lk"))')
+          else
+            echo "CSE market open — cse_lk asserted as critical"
+          fi
+
+          down=$(jq -r --argjson critical "$effective_critical" '
             [
               .sources[]?
               | select(.id as $id | $critical | index($id))
@@ -100,7 +121,7 @@ jobs:
 
           if [ "$(echo "$down" | jq 'length')" -gt 0 ]; then
             echo "::error::Critical adapters down: $(echo "$down" | jq -c .)"
-            jq -r --argjson critical "$CRITICAL_SOURCES" '
+            jq -r --argjson critical "$effective_critical" '
               .sources[]?
               | select(.id as $id | $critical | index($id))
               | select(.tier == "down")
@@ -110,7 +131,7 @@ jobs:
           fi
 
           if [ "$FAIL_ON_STALE" = "true" ]; then
-            stale=$(jq -r --argjson critical "$CRITICAL_SOURCES" '
+            stale=$(jq -r --argjson critical "$effective_critical" '
               [
                 .sources[]?
                 | select(.id as $id | $critical | index($id))
@@ -125,11 +146,25 @@ jobs:
           fi
 
           echo "Critical adapter tiers:"
-          jq -r --argjson critical "$CRITICAL_SOURCES" '
+          jq -r --argjson critical "$effective_critical" '
             .sources[]?
             | select(.id as $id | $critical | index($id))
             | "  \(.id): \(.tier)\(if .error then " — \(.error)" else "" end)"
           ' /tmp/canary.json
+
+          # Known-down sources: still probed and reported every run as
+          # warnings, but they never fail the canary on their own. When one
+          # recovers, the log line says to restore it to CRITICAL_SOURCES.
+          echo "Known-down sources (tracked, warning-only):"
+          for id in $(echo "$KNOWN_DOWN_SOURCES" | jq -r '.[]'); do
+            tier=$(jq -r --arg id "$id" '.sources[]? | select(.id == $id) | .tier // "unknown"' /tmp/canary.json)
+            last=$(jq -r --arg id "$id" '.sources[]? | select(.id == $id) | .lastSuccessAt // "never"' /tmp/canary.json)
+            if [ "$tier" = "down" ]; then
+              echo "::warning::Known-down source still down: $id (last success: $last)"
+            else
+              echo "::notice::Known-down source recovered: $id tier=$tier (last success: $last) — consider restoring it to CRITICAL_SOURCES"
+            fi
+          done
 
       - name: Notify ops Telegram on failure
         if: failure()
@@ -138,7 +173,7 @@ jobs:
           TELEGRAM_OPS_CHAT_ID: ${{ secrets.TELEGRAM_OPS_CHAT_ID }}
         run: |
           set -euo pipefail
-          if [ -z "${TELEGRAM_OPS_BOT_TOKEN:-}" ] || [ -z "${TELEGRAM_OPS_CHAT_ID:-}" ]; then
+          if [ -z "${TELEGRAM_OPS_BOT_TOKEN:-}" ]; then
             echo "TELEGRAM_OPS_* secrets not configured on this repo - skipping notification"
             exit 0
           fi
