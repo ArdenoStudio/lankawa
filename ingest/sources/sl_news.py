@@ -53,14 +53,50 @@ class SlNews(Source):
     file_cache_only = True
 
     def fetch(self) -> list[tuple[str, str]]:
-        return [(source_id, self.http_get(url).text) for source_id, url in RSS_FEEDS]
+        """Fetch each feed independently.
+
+        Some hosts bot-block certain egress IPs (e.g. adaderana.lk returns
+        HTTP 403 to GitHub Actions runners while serving Vercel fine). A
+        single dead feed must not fail the whole source — soft-skip it and
+        keep going. Only raise if *every* feed failed.
+        """
+        bodies: list[tuple[str, str]] = []
+        skipped: list[str] = []
+        for source_id, url in RSS_FEEDS:
+            try:
+                bodies.append((source_id, self.http_get(url).text))
+            except Exception as exc:  # noqa: BLE001 — per-feed soft skip
+                reason = f"{type(exc).__name__}: {exc}"[:200]
+                logger.warning("feed %s soft-skipped (%s): %s", source_id, url, reason)
+                skipped.append(source_id)
+        if skipped:
+            logger.info(
+                "news fetch: %d/%d feeds ok, soft-skipped: %s",
+                len(bodies),
+                len(RSS_FEEDS),
+                ", ".join(skipped),
+            )
+        if not bodies:
+            raise RuntimeError(
+                f"all {len(RSS_FEEDS)} RSS feeds failed — nothing to ingest"
+            )
+        return bodies
 
     def normalise(self, raw: list[tuple[str, str]]) -> list[NewsHeadline]:
         headlines: list[NewsHeadline] = []
         seen_urls: set[str] = set()
 
         for source_id, body in raw:
-            for item in self._parse_items(body):
+            try:
+                items = self._parse_items(body)
+            except Exception as exc:  # noqa: BLE001 — per-feed parse tolerance
+                logger.warning(
+                    "feed %s returned an unparsable body — soft-skipped: %s",
+                    source_id,
+                    type(exc).__name__,
+                )
+                continue
+            for item in items:
                 url = item["url"].strip()
                 title = self._clean_text(item["title"])
                 if not title or not url or url in seen_urls:
@@ -87,6 +123,10 @@ class SlNews(Source):
         try:
             raw = self.fetch()
             headlines = self.normalise(raw)
+            if not headlines:
+                raise RuntimeError(
+                    "no headlines parsed from any feed — refusing to write an empty cache"
+                )
             fetched_at = datetime.now(timezone.utc).isoformat()
             payload = {
                 "sourceId": self.id,
