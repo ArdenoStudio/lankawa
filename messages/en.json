@@ -1127,7 +1127,8 @@
     "fresh": "Fresh",
     "stale": "Stale",
     "down": "Down",
-    "unknown": "Unknown"
+    "unknown": "Unknown",
+    "seed": "Seed"
   },
   "footer": {
     "built": "Built for Sri Lankans, by Sri Lankans",
@@ -1678,6 +1679,7 @@
     "nationalMedian": "National median",
     "colomboMedian": "Colombo median",
     "districtsCovered": "Districts covered",
+    "coverage": "{count} of {total} districts",
     "perchUnit": "perch",
     "mapTitle": "Price choropleth",
     "mapSubtitle": "Districts colored by median land price per perch.",
@@ -1685,12 +1687,14 @@
     "mapLegendHigh": "High price",
     "mapLegendMid": "Mid price",
     "mapLegendLow": "Lower price",
+    "mapLegendNoData": "No data yet",
     "tableTitle": "District price table",
     "district": "District",
     "medianPerPerch": "Median / perch",
     "priceBand": "Price band",
     "trend": "YoY trend",
     "intensity": "Relative price",
+    "noDataYet": "No live data yet",
     "disclaimer": "Representative seed data aligned with PropertyLK patterns. Not a property valuation service — verify with licensed professionals.",
     "disclaimerSeed": "Showing seed fallback data — the live PropertyLK API was unavailable at fetch time. Figures are representative, not valuations.",
     "listings": {
@@ -1746,12 +1750,14 @@
     "perUnit": "per {unit}",
     "tableTitle": "District meal costs",
     "tableSubtitle": "Estimated daily meal cost and monthly food basket by district.",
+    "coverage": "{count} of {total} districts",
     "mixedSeedDistricts": "District meal bands are Lankawa seed estimates — not live FoodLK district quotes.",
     "district": "District",
     "dailyMeal": "Daily meal (est.)",
     "monthlyBasket": "Monthly basket",
     "restaurantIndex": "Restaurant index",
     "intensity": "Relative cost",
+    "noDataYet": "No live data yet",
     "disclaimer": "Representative food price intelligence — not official NCPI. Seed fallback used when FoodLK endpoints are unavailable.",
     "disclaimerLife": "FoodLK API was unavailable at fetch time. Headline figures come from the Ariva Life Platform food federation layer; district meal bands use Lankawa seed estimates until FoodLK recovers.",
     "disclaimerWfp": "FoodLK was unavailable. Staple prices are from the WFP HDX Sri Lanka CSV (direct) — lagged market averages, not same-day shelf prices. The essentials basket sums non-stale staples only. District meal bands remain Lankawa seed. Not HARTI or NCPI.",
@@ -1843,7 +1849,8 @@
       "fresh": "Fresh",
       "stale": "Stale",
       "down": "Down",
-      "unknown": "Unknown"
+      "unknown": "Unknown",
+      "seed": "Seed"
     },
     "table": {
       "source": "Source",
@@ -2333,3 +2340,4 @@
     "honesty": "Indicative public Singer EMI for one sample SKU price — confirm on singersl.com before purchase. Softlogic per-SKU EMI crawl skipped (too heavy). Abans/Arpico merchant EMI parked. Lankawa is not affiliated with Singer or the banks."
   }
 }
+
