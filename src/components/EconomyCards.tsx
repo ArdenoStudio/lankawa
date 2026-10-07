@@ -57,7 +57,6 @@ export function MacroIndicatorCard({
 export function FxSparkline({
   title,
   series,
-  asOf,
   latestBand,
   labels,
   anomaly,
@@ -66,7 +65,6 @@ export function FxSparkline({
 }: {
   title: string;
   series: Array<{ date: string; sellRate: number }>;
-  asOf: string;
   latestBand?: {
     date: string;
     buyRate: number;
@@ -169,7 +167,7 @@ export function FxSparkline({
       </div>
       <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
         <p className="text-xs text-slate-500">
-          {first.date} → {latest.date} · {asOf} · {band.date}
+          {first.date} → {latest.date}
         </p>
         <ChartExportButton targetId={chartId} />
       </div>
@@ -480,3 +478,4 @@ export function LpgPriceCard({
     </article>
   );
 }
+
