@@ -81,6 +81,22 @@ export default async function EconomyPage({
     getFuelHistorySeries(90),
     getFuelRevisionSteps(8),
   ]);
+  // Honest chart span: the fallback seed covers revision history (~months),
+  // live Octane covers ~90 days. Title the chart with the actual span.
+  const fuelHistorySpanDays = Math.max(
+    ...fuelHistory.map((item) => {
+      const points = item.points;
+      if (points.length < 2) {
+        return 0;
+      }
+      const first = new Date(points[0].recorded_at).getTime();
+      const last = new Date(points[points.length - 1].recorded_at).getTime();
+      return Number.isFinite(first) && Number.isFinite(last) && last >= first
+        ? Math.round((last - first) / 86_400_000)
+        : 0;
+    }),
+    1,
+  );
   const cseSnapshot = await buildCseSnapshot();
   const goldRate = await fetchLatestCbslGoldRate();
   const goldPawn = goldRate
@@ -314,9 +330,8 @@ export default async function EconomyPage({
             />
           ))}
           <FxSparkline
-            title={t("fxSparklineTitle")}
+            title={t("fxSparklineTitle", { days: fxSeries.length })}
             series={fxSeries}
-            asOf={macro.asOf}
             latestBand={latestFxRate}
             anomaly={fxAnomaly}
             chartId="economy-fx-usd-lkr-chart"
@@ -334,7 +349,7 @@ export default async function EconomyPage({
             }}
           />
           <FuelHistoryChart
-            title={t("fuelHistoryTitle")}
+            title={t("fuelHistoryTitle", { days: fuelHistorySpanDays })}
             series={fuelHistory}
             chartId="economy-fuel-history-chart"
             citation={{
@@ -609,3 +624,4 @@ export default async function EconomyPage({
     </div>
   );
 }
+
