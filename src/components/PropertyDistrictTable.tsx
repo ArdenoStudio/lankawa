@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { getDistrictName, getDistrict } from "@/lib/districts";
+import { DISTRICTS, getDistrictName } from "@/lib/districts";
 import type { PropertySnapshot } from "@/lib/types";
 import {
   formatPropertyPrice,
@@ -26,9 +26,15 @@ export function PropertyDistrictTable({
   const t = useTranslations("property");
   const snapshot = snapshotProp ?? getPropertySnapshot();
   const maxMedian = getMaxPropertyMedian();
-  const sorted = [...snapshot.districts].sort(
-    (a, b) => b.medianPerPerch - a.medianPerPerch,
+  const bySlug = new Map(snapshot.districts.map((row) => [row.slug, row]));
+  // Districts with data first (median desc), then districts with no live data
+  // yet — never fabricated placeholder figures.
+  const covered = DISTRICTS.filter((district) => bySlug.has(district.slug)).sort(
+    (a, b) =>
+      (bySlug.get(b.slug)?.medianPerPerch ?? 0) -
+      (bySlug.get(a.slug)?.medianPerPerch ?? 0),
   );
+  const uncovered = DISTRICTS.filter((district) => !bySlug.has(district.slug));
 
   return (
     <div className="overflow-x-auto rounded-2xl border border-white/10">
@@ -47,9 +53,9 @@ export function PropertyDistrictTable({
           </tr>
         </thead>
         <tbody>
-          {sorted.map((row) => {
-            const district = getDistrict(row.slug);
-            const label = district ? getDistrictName(district, locale) : row.slug;
+          {covered.map((district) => {
+            const row = bySlug.get(district.slug)!;
+            const label = getDistrictName(district, locale);
             return (
               <tr key={row.slug} className="border-b border-white/5">
                 <td className="px-4 py-3">
@@ -83,6 +89,26 @@ export function PropertyDistrictTable({
               </tr>
             );
           })}
+          {uncovered.map((district) => (
+            <tr key={district.slug} className="border-b border-white/5">
+              <td className="px-4 py-3">
+                <Link
+                  href={`/districts/${district.slug}`}
+                  className="font-medium text-teal-200 hover:text-teal-100"
+                >
+                  {getDistrictName(district, locale)}
+                </Link>
+              </td>
+              <td
+                colSpan={4}
+                className="px-4 py-3 text-right text-sm text-slate-500"
+              >
+                <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ring-white/25 text-neutral-400">
+                  {t("noDataYet")}
+                </span>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
