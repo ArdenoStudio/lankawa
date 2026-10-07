@@ -18,11 +18,17 @@ const DEPLOY_URL = (process.env.DEPLOY_URL || "https://lankawa.vercel.app").repl
   "",
 );
 
+// NOTE: /en/brief has no index route — only /en/brief/[date] exists
+// (src/app/[locale]/brief/[date]/page.tsx), so the old "/en/brief" smoke
+// entry 404'd forever and made this check permanently red. Smoke-test
+// today's dated brief instead; the page serves any valid YYYY-MM-DD.
+const today = new Date().toISOString().slice(0, 10);
+
 const SMOKE_ROUTES = [
   "/en",
   "/en/status",
   "/en/news",
-  "/en/brief",
+  `/en/brief/${today}`,
   "/api/v1/status",
   "/api/v1/news",
   "/api/v1/news/clusters",
