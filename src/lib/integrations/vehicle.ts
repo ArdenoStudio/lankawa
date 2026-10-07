@@ -35,15 +35,16 @@ interface VehicleMakeRow {
 }
 
 function resolveDistrictSlug(name: string): string | null {
-  if (!name || name === "Sri Lanka") {
+  const trimmed = (name ?? "").trim();
+  if (!trimmed || trimmed === "Sri Lanka") {
     return null;
   }
-  const slug = name.toLowerCase().replace(/\s+/g, "-");
+  const slug = trimmed.toLowerCase().replace(/\s+/g, "-");
   if (DISTRICTS.some((district) => district.slug === slug)) {
     return slug;
   }
   const match = DISTRICTS.find(
-    (district) => district.name.toLowerCase() === name.toLowerCase(),
+    (district) => district.name.toLowerCase() === trimmed.toLowerCase(),
   );
   return match?.slug ?? null;
 }
@@ -55,13 +56,64 @@ function mapDistrictPoint(point: VehicleDistrictPoint): VehicleDistrictPrice | n
   }
   return {
     slug,
-    districtName: point.district,
+    districtName: point.district.trim(),
     listingCount: point.count,
     medianPriceLkr: Math.round(point.median_price_lkr),
     avgPriceLkr: Math.round(point.avg_price_lkr),
     topMake: point.top_make,
     topModel: point.top_model,
   };
+}
+
+/**
+ * The upstream district feed occasionally returns two rows for the same
+ * district (case/whitespace variants that resolve to one slug). Merge them so
+ * each district appears exactly once: listing counts sum, prices are
+ * listing-weighted, and labels come from the largest row.
+ */
+function dedupeDistrictPrices(
+  points: VehicleDistrictPrice[],
+): VehicleDistrictPrice[] {
+  const bySlug = new Map<string, VehicleDistrictPrice[]>();
+  for (const point of points) {
+    const group = bySlug.get(point.slug);
+    if (group) {
+      group.push(point);
+    } else {
+      bySlug.set(point.slug, [point]);
+    }
+  }
+
+  const merged: VehicleDistrictPrice[] = [];
+  for (const group of bySlug.values()) {
+    if (group.length === 1) {
+      merged.push(group[0]);
+      continue;
+    }
+    const total = group.reduce((sum, item) => sum + item.listingCount, 0);
+    const biggest = [...group].sort(
+      (a, b) => b.listingCount - a.listingCount,
+    )[0];
+    const weighted = (pick: (item: VehicleDistrictPrice) => number) =>
+      total > 0
+        ? Math.round(
+            group.reduce((sum, item) => sum + pick(item) * item.listingCount, 0) /
+              total,
+          )
+        : Math.round(
+            group.reduce((sum, item) => sum + pick(item), 0) / group.length,
+          );
+    merged.push({
+      slug: biggest.slug,
+      districtName: biggest.districtName,
+      listingCount: total,
+      medianPriceLkr: weighted((item) => item.medianPriceLkr),
+      avgPriceLkr: weighted((item) => item.avgPriceLkr),
+      topMake: biggest.topMake,
+      topModel: biggest.topModel,
+    });
+  }
+  return merged;
 }
 
 async function fetchJson<T>(path: string): Promise<T | null> {
@@ -98,10 +150,11 @@ export async function fetchVehicleSnapshot(): Promise<VehicleSnapshot | null> {
     return null;
   }
 
-  const districts = districtPrices.points
-    .map(mapDistrictPoint)
-    .filter((point): point is VehicleDistrictPrice => point != null)
-    .sort((a, b) => b.listingCount - a.listingCount);
+  const districts = dedupeDistrictPrices(
+    districtPrices.points
+      .map(mapDistrictPoint)
+      .filter((point): point is VehicleDistrictPrice => point != null),
+  ).sort((a, b) => b.listingCount - a.listingCount);
 
   if (districts.length === 0) {
     return null;
