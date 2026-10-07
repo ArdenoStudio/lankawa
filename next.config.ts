@@ -5,6 +5,17 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  async redirects() {
+    return [
+      {
+        // The homepage is the pulse view; /:locale/pulse never existed as a
+        // route, so send it home instead of 404ing.
+        source: "/:locale/pulse",
+        destination: "/:locale",
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
     return [
       {
@@ -37,3 +48,4 @@ const nextConfig: NextConfig = {
 };
 
 export default withNextIntl(nextConfig);
+
