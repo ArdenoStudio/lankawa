@@ -37,9 +37,12 @@ export function tierLabel(tier: FreshnessTier): string {
       return "Down";
     case "unknown":
       return "Unknown";
+    case "seed":
+      return "Seed";
     default: {
       const exhaustive: never = tier;
       return exhaustive;
     }
   }
 }
+
