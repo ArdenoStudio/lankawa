@@ -149,6 +149,9 @@ export default async function FoodPage({
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-white">{t("tableTitle")}</h2>
         <p className="text-sm text-slate-400">{t("tableSubtitle")}</p>
+        <p className="text-sm text-slate-500">
+          {t("coverage", { count: snapshot.districts.length, total: 25 })}
+        </p>
         <FoodDistrictTable
           locale={locale}
           snapshot={snapshot}
@@ -172,3 +175,4 @@ export default async function FoodPage({
     </div>
   );
 }
+
