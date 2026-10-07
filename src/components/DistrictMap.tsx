@@ -108,6 +108,11 @@ export function DistrictMap({
             },
             layers: [
               {
+                id: "background",
+                type: "background",
+                paint: { "background-color": "#0a0a0a" },
+              },
+              {
                 id: "district-fill",
                 type: "fill",
                 source: "districts",
@@ -124,7 +129,7 @@ export function DistrictMap({
                       ],
                     }
                   : {
-                      "fill-color": "#14b8a6",
+                      "fill-color": "#ffffff",
                       "fill-opacity": [
                         "case",
                         ["boolean", ["feature-state", "selected"], false],
@@ -143,8 +148,8 @@ export function DistrictMap({
                   "line-color": [
                     "case",
                     ["boolean", ["feature-state", "selected"], false],
-                    "#fbbf24",
-                    "#5eead4",
+                    "#ffffff",
+                    "rgba(255, 255, 255, 0.35)",
                   ],
                   "line-width": [
                     "case",
@@ -294,3 +299,4 @@ export function DistrictMap({
     </div>
   );
 }
+
