@@ -19,6 +19,7 @@
     "services": "Services",
     "disaster": "Disaster",
     "economy": "Economy",
+    "fuel": "Fuel",
     "budget": "Budget",
     "health": "Health",
     "compare": "Compare",
@@ -143,6 +144,10 @@
     "economy": {
       "title": "Economy",
       "description": "Exchange rates, fuel prices, and macro indicators."
+    },
+    "fuel": {
+      "title": "Fuel",
+      "description": "CPC pump prices, 90-day price history, and regional comparison."
     },
     "property": {
       "title": "Property",
@@ -2338,6 +2343,44 @@
     "source": "Source provenance",
     "singerLink": "Singer bank offers",
     "honesty": "Indicative public Singer EMI for one sample SKU price — confirm on singersl.com before purchase. Softlogic per-SKU EMI crawl skipped (too heavy). Abans/Arpico merchant EMI parked. Lankawa is not affiliated with Singer or the banks."
+  },
+  "fuel": {
+    "title": "Fuel prices",
+    "subtitle": "CPC pump prices across Sri Lanka — petrol, diesel and kerosene, with every revision on record.",
+    "asOf": "Updated {date}",
+    "perLitre": "LKR/L",
+    "currentTitle": "Current prices",
+    "currentSubtitle": "Ceylon Petroleum Corporation pump prices per litre.",
+    "observed": "Observed {date}",
+    "fallbackNotice": "The Octane fuel feed is unreachable right now, so this page shows the last verified snapshot from {date}. Prices may be stale — check the badge on each number.",
+    "historyTitle": "90-day price history",
+    "historySubtitle": "Step chart — each price holds until the next CPC revision.",
+    "revisionsTitle": "Price revisions",
+    "revisionsSubtitle": "The latest CPC price changes on record.",
+    "revisionsDate": "Date",
+    "revisionsFrom": "from",
+    "revisionsTo": "to",
+    "revisionsEmpty": "No revision records yet.",
+    "methodologyTitle": "Methodology",
+    "methodologyBody": "Prices come from the Octane Fuel API (CPC source). Revisions are recorded only when a price changes, and the step chart holds each price until the next revision.",
+    "disclaimer": "Prices are for information only — confirm with CPC announcements before heading to the pump.",
+    "fuelTypes": {
+      "petrol_92": "Petrol 92",
+      "petrol_95": "Petrol 95",
+      "auto_diesel": "Auto Diesel",
+      "super_diesel": "Super Diesel",
+      "kerosene": "Kerosene"
+    },
+    "pump": {
+      "title": "Petrol vs the region",
+      "subtitle": "Petrol pump prices in USD per litre.",
+      "seedBadge": "Seed",
+      "liveBadge": "Live",
+      "asOf": "As of {date}",
+      "methodology": "Methodology",
+      "empty": "No comparison data available right now.",
+      "worldAvg": "World average {avg} USD/L · Sri Lanka {delta}"
+    }
   }
 }
 
