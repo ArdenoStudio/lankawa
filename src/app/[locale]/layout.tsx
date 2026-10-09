@@ -6,6 +6,7 @@ import { Inter, Noto_Sans_Sinhala, Noto_Sans_Tamil } from "next/font/google";
 import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { SentryClientInit } from "@/components/SentryClientInit";
 import { DataSaverProvider } from "@/components/DataSaverProvider";
 import { PwaRegister } from "@/components/PwaRegister";
 import { InstallPrompt } from "@/components/InstallPrompt";
@@ -114,6 +115,7 @@ export default async function LocaleLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <DataSaverProvider>
+            <SentryClientInit />
             <a href="#main-content" className="lk-skip-link">
               {tA11y("skipToContent")}
             </a>

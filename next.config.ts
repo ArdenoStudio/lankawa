@@ -1,7 +1,5 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
-// Sentry v11+: the Next.js config wrapper moved to the /config subpath.
-import { withSentryConfig } from "@sentry/nextjs/config";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
@@ -53,12 +51,15 @@ const nextConfig: NextConfig = {
   },
 };
 
-// Pre-launch P9: Sentry Next.js plugin. Sourcemap upload is skipped when no
-// SENTRY_AUTH_TOKEN is present (warning only); error tracking itself keys off
-// the SENTRY_DSN runtime env var and stays disabled until it is set.
-export default withSentryConfig(withNextIntl(nextConfig), {
-  silent: true,
-  org: process.env.SENTRY_ORG,
-  project: process.env.SENTRY_PROJECT,
-});
+// NOTE (pre-launch P9): Sentry's withSentryConfig wrapper is intentionally
+// NOT used — v11's Turbopack config patch breaks next/font/google on
+// Next 16.2 ("next/font/google queries have exactly one entry", 12 build
+// errors on Vercel). Error tracking is wired manually instead:
+//   - server/edge: src/instrumentation.ts -> sentry.server/edge.config.ts
+//     (DSN from the SENTRY_DSN runtime env var)
+//   - client: <SentryClientInit /> in [locale]/layout.tsx
+//     (DSN from NEXT_PUBLIC_SENTRY_DSN, set to the same value)
+// Sourcemap upload is skipped (no wrapper, no auth token); stack traces
+// still map via the uploaded release artifacts if added later.
+export default withNextIntl(nextConfig);
 
