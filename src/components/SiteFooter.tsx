@@ -9,6 +9,7 @@ const platformLinks = [
   { href: "/sources", key: "sources" },
   { href: "/developers", key: "developers" },
   { href: "/status", key: "status" },
+  { href: "/contact", key: "contact" },
 ] as const;
 
 const exploreLinks = [
@@ -18,7 +19,11 @@ const exploreLinks = [
   { href: "/economy", key: "economy" },
 ] as const;
 
-const legalLinks = [{ href: "/about", key: "disclaimer" }] as const;
+const legalLinks = [
+  { href: "/about", key: "disclaimer" },
+  { href: "/privacy", key: "privacy" },
+  { href: "/terms", key: "terms" },
+] as const;
 
 export async function SiteFooter() {
   const t = await getTranslations("footer");

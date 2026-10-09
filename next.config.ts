@@ -1,10 +1,16 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+// Sentry v11+: the Next.js config wrapper moved to the /config subpath.
+import { withSentryConfig } from "@sentry/nextjs/config";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  experimental: {
+    // Pre-launch F11: serve app/global-not-found.tsx for unmatched routes.
+    globalNotFound: true,
+  },
   async redirects() {
     return [
       {
@@ -47,5 +53,12 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+// Pre-launch P9: Sentry Next.js plugin. Sourcemap upload is skipped when no
+// SENTRY_AUTH_TOKEN is present (warning only); error tracking itself keys off
+// the SENTRY_DSN runtime env var and stays disabled until it is set.
+export default withSentryConfig(withNextIntl(nextConfig), {
+  silent: true,
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+});
 

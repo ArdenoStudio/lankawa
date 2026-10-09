@@ -40,6 +40,24 @@ See **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** for connecting the GitHub repo 
 
 Copy `.env.example` to `.env.local` for local overrides.
 
+## Morning brief email
+
+The morning civic brief (subscribe → double opt-in → daily email) needs three
+things before it can launch — **all currently NEEDS-YOU**:
+
+1. **Verified sender domain in Resend.** Add the domain in the Resend
+   dashboard and complete SPF + DKIM verification. Publish a DMARC policy
+   (`v=DMARC1; p=quarantine` or `p=reject`) for the domain. Until this is
+   done, brief emails will bounce or land in spam.
+2. **`RESEND_API_KEY`** set on Vercel (Production) — the Resend API key.
+3. **`BRIEF_FROM_EMAIL`** set on Vercel (Production) to the verified sender
+   identity, e.g. `Lankawa <brief@updates.lankawa.lk>` (currently a
+   placeholder in `.env.example`).
+
+It also requires the Supabase `brief_subscribers` table (see
+`supabase/migrations/`). Without the database, subscribe requests return
+503 and no emails are queued.
+
 ## API (v0.8)
 
 Full catalog: `/api/v1/openapi.json` and `/developers`.

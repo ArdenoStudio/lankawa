@@ -1142,6 +1142,9 @@
     "developers": "Developers",
     "learn": "Guides",
     "status": "Status",
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "terms": "Terms",
     "districts": "Districts",
     "elections": "Elections",
     "services": "Services",
@@ -1869,7 +1872,7 @@
   "assistant": {
     "title": "Civic assistant",
     "subtitle": "Ask questions about districts, pulse metrics, elections, and public services — answers come only from Lankawa data.",
-    "groundingNote": "Answers use Lankawa data only \u2014 no external links. AI answers appear when the assistant is connected.",
+    "groundingNote": "Answers use Lankawa data only — no external links. AI answers appear when the assistant is connected.",
     "emptyState": "Ask a question to get started.",
     "inputPlaceholder": "e.g. What's the USD/LKR rate?",
     "submit": "Ask",
@@ -2383,4 +2386,3 @@
     }
   }
 }
-

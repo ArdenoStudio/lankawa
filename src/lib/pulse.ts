@@ -17,7 +17,13 @@ import { buildWeatherPulseMetric } from "./integrations/weather";
 import { formatPropertyPrice } from "./property";
 import { formatVehiclePrice } from "./vehicle";
 import { getSource, getSourceProvenancePath } from "./sources";
-import type { PulseMetric, PulseSnapshot, SourceHealth } from "./types";
+import type {
+  PropertySnapshot,
+  PulseMetric,
+  PulseSnapshot,
+  SourceHealth,
+  VehicleSnapshot,
+} from "./types";
 
 export { TODAY_METRIC_IDS, getTodayPulseMetrics } from "./pulse-today";
 
@@ -464,31 +470,235 @@ async function buildColomboAqiMetric(checkedAt: string): Promise<{
   };
 }
 
+/**
+ * Per-upstream build budget for the pulse snapshot (pre-launch F13).
+ * Each builder races its work against PULSE_BUILD_TIMEOUT_MS; the losers
+ * reject, Promise.allSettled collects the outcomes, and pickPulseResult
+ * substitutes a "down" contribution. A single hanging upstream can therefore
+ * never stall /api/v1/pulse again.
+ */
+const PULSE_BUILD_TIMEOUT_MS = 8_000;
+
+function racePulseBuild<T>(label: string, work: Promise<T>): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(
+      () =>
+        reject(
+          new Error(
+            `${label} exceeded ${PULSE_BUILD_TIMEOUT_MS}ms build budget`,
+          ),
+        ),
+      PULSE_BUILD_TIMEOUT_MS,
+    );
+  });
+  // work.finally clears the timer on settle; the race already has handlers
+  // attached, so a late rejection after a timeout can never go unhandled.
+  return Promise.race([work.finally(() => clearTimeout(timer)), timeout]);
+}
+
+function downPulseSource(
+  sourceId: string,
+  checkedAt: string,
+  error: string,
+): SourceHealth {
+  const source = getSource(sourceId)!;
+  return {
+    id: source.id,
+    name: source.name,
+    category: source.category,
+    tier: "down",
+    lastSuccessAt: null,
+    lastCheckedAt: checkedAt,
+    error,
+    provenancePath: getSourceProvenancePath(source.id),
+  };
+}
+
+function downPulseMetric(
+  id: string,
+  label: string,
+  sourceId: string,
+  note: string,
+): PulseMetric {
+  return {
+    id,
+    label,
+    value: "—",
+    observedAt: null,
+    tier: "down",
+    sourceId,
+    provenancePath: getSourceProvenancePath(sourceId),
+    note,
+  };
+}
+
+function pickPulseResult<T>(
+  result: PromiseSettledResult<T>,
+  label: string,
+  fallback: T,
+): T {
+  if (result.status === "fulfilled") {
+    return result.value;
+  }
+  console.error(
+    `[pulse] ${label} failed — serving fallback:`,
+    result.reason instanceof Error ? result.reason.message : result.reason,
+  );
+  return fallback;
+}
+
 export async function buildPulseSnapshot(): Promise<PulseSnapshot> {
   const checkedAt = new Date().toISOString();
-  const [
-    fuel,
-    flood,
-    fx,
-    weather,
-    power,
-    news,
-    cse,
-    propertySnapshot,
-    vehicleSnapshot,
-    aqi,
-  ] = await Promise.all([
-      buildFuelMetrics(checkedAt),
-      buildFloodData(checkedAt),
-      buildFxMetric(checkedAt),
-      buildWeatherPulseMetric(checkedAt),
-      buildPowerPulseMetric(checkedAt),
-      buildNewsData(checkedAt),
-      buildCseData(checkedAt),
-      getPropertyData(),
-      getVehicleData(),
-      buildColomboAqiMetric(checkedAt),
-    ]);
+
+  // Pre-launch F13: /api/v1/pulse was observed hanging ~37s because a single
+  // slow upstream stalled the whole Promise.all. Every builder now races
+  // against an 8s budget; on timeout (or any throw) we fail fast to a
+  // "down" contribution, so one slow source can never stall the public API.
+  const settled = await Promise.allSettled([
+    racePulseBuild("fuel", buildFuelMetrics(checkedAt)),
+    racePulseBuild("flood", buildFloodData(checkedAt)),
+    racePulseBuild("fx", buildFxMetric(checkedAt)),
+    racePulseBuild("weather", buildWeatherPulseMetric(checkedAt)),
+    racePulseBuild("power", buildPowerPulseMetric(checkedAt)),
+    racePulseBuild("news", buildNewsData(checkedAt)),
+    racePulseBuild("cse", buildCseData(checkedAt)),
+    racePulseBuild("property", getPropertyData()),
+    racePulseBuild("vehicle", getVehicleData()),
+    racePulseBuild("aqi", buildColomboAqiMetric(checkedAt)),
+  ]);
+
+  const fuel = pickPulseResult(
+    settled[0],
+    "fuel",
+    {
+      metrics: [],
+      health: downPulseSource(
+        "octane_fuel",
+        checkedAt,
+        "Upstream timeout — Octane API unavailable",
+      ),
+    },
+  );
+  const flood = pickPulseResult(
+    settled[1],
+    "flood",
+    {
+      flood: [],
+      health: downPulseSource(
+        "lk_flood_api",
+        checkedAt,
+        "Upstream timeout — flood API unavailable",
+      ),
+    },
+  );
+  const fx = pickPulseResult(settled[2], "fx", {
+    metric: {
+      id: "usd_lkr",
+      label: "USD / LKR",
+      value: FX_FALLBACK_RATE.toFixed(2),
+      unit: "LKR",
+      observedAt: FX_FALLBACK_DATE,
+      tier: computeFreshnessTier(
+        FX_FALLBACK_DATE,
+        getSource("cbsl_fx")!.cadenceMinutes,
+      ),
+      sourceId: "cbsl_fx",
+      provenancePath: getSourceProvenancePath("cbsl_fx"),
+      note: "Fallback value — CBSL scrape unavailable (timeout)",
+    },
+    health: downPulseSource(
+      "cbsl_fx",
+      checkedAt,
+      "Upstream timeout — CBSL scrape unavailable",
+    ),
+  });
+  const weather = pickPulseResult(settled[3], "weather", {
+    metric: downPulseMetric(
+      "weather_colombo",
+      "Colombo weather",
+      "open_meteo",
+      "Weather unavailable (timeout)",
+    ),
+    health: downPulseSource(
+      "open_meteo",
+      checkedAt,
+      "Upstream timeout — Open-Meteo unavailable",
+    ),
+  });
+  const power = pickPulseResult(settled[4], "power", {
+    metric: downPulseMetric(
+      "power_status",
+      "Power status",
+      "ceb_power",
+      "Power status unavailable (timeout)",
+    ),
+    health: downPulseSource(
+      "ceb_power",
+      checkedAt,
+      "Upstream timeout — power data unavailable",
+    ),
+  });
+  const news = pickPulseResult(settled[5], "news", { contribution: null });
+  const cse = pickPulseResult(settled[6], "cse", {
+    metric: {
+      ...downPulseMetric(
+        "cse_aspi",
+        "ASPI",
+        CSE_SOURCE_ID,
+        "CSE market data unavailable (timeout)",
+      ),
+      unit: "pts",
+    },
+    health: downPulseSource(
+      CSE_SOURCE_ID,
+      checkedAt,
+      "Upstream timeout — CSE API unavailable",
+    ),
+  });
+  const propertySnapshot = pickPulseResult<PropertySnapshot>(
+    settled[7],
+    "property",
+    {
+      sourceId: "propertylk_seed",
+      sourceName: "PropertyLK (seed)",
+      asOf: checkedAt,
+      unit: "perch",
+      currency: "LKR",
+      districts: [],
+    },
+  );
+  const vehicleSnapshot = pickPulseResult<VehicleSnapshot>(
+    settled[8],
+    "vehicle",
+    {
+      sourceId: "vehicle_platform_seed",
+      sourceName: "Vehicle Platform (seed)",
+      asOf: checkedAt,
+      totalListings: 0,
+      avgPriceLkr: 0,
+      goodDealsCount: 0,
+      sourceCount: 0,
+      popularMakes: [],
+      districts: [],
+    },
+  );
+  const aqi = pickPulseResult(settled[9], "aqi", {
+    metric: {
+      ...downPulseMetric(
+        "aqi_colombo",
+        "Colombo AQI",
+        "environment_aqi_seed",
+        "Colombo reading unavailable (timeout)",
+      ),
+      unit: "AQI",
+    },
+    health: downPulseSource(
+      "environment_aqi_seed",
+      checkedAt,
+      "Upstream timeout — AQI unavailable",
+    ),
+  });
 
   const normalStations =
     flood.flood.find((item) => item.alertLevel === "NORMAL")?.count ?? 0;

@@ -15,6 +15,15 @@ export async function POST(request: Request) {
 
   const email = body.email?.trim() ?? "";
   const locale = body.locale?.trim() ?? "en";
+
+  // Pre-launch P6: bound input size before it reaches the mailer/DB.
+  if (email.length === 0 || email.length > 254) {
+    return NextResponse.json(
+      { ok: false, error: "Invalid email address" },
+      { status: 400 },
+    );
+  }
+
   const result = await upsertBriefSubscriber({ email, locale });
 
   if (!result.ok) {
