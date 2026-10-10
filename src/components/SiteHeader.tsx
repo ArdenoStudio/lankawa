@@ -10,6 +10,7 @@ import { Logo } from "@/components/brand/Logo";
 import { useDataSaver } from "@/components/DataSaverProvider";
 
 const primaryLinks = [
+  { href: "/pulse", key: "pulse" },
   { href: "/districts", key: "districts" },
   { href: "/explore", key: "explore" },
 ] as const;
@@ -62,6 +63,7 @@ const mobileSections = [
   {
     key: "data",
     links: [
+      { href: "/pulse", key: "pulse" },
       { href: "/economy", key: "economy" },
       { href: "/fuel", key: "fuel" },
       { href: "/budget", key: "budget" },
