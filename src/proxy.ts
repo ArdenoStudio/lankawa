@@ -44,5 +44,14 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/(en|si|ta)/:path*", "/api/v1/:path*"],
+  // "/api/v1/*" keeps the in-proxy rate limiter above. The final catch-all
+  // lets the next-intl middleware redirect locale-less page paths
+  // (e.g. /privacy -> /en/privacy) instead of 404ing; api/cron/og and
+  // static assets stay outside the middleware as before.
+  matcher: [
+    "/",
+    "/(en|si|ta)/:path*",
+    "/api/v1/:path*",
+    "/((?!api|_next|_vercel|.*\\..*).*)",
+  ],
 };
