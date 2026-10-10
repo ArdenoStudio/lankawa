@@ -63,6 +63,7 @@ export async function fetchPlaceWeather(
 ): Promise<PlaceWeather> {
   const { latitude, longitude } = getDistrictCoords(districtSlug);
   const response = await fetch(buildOpenMeteoUrl(latitude, longitude), {
+    signal: AbortSignal.timeout(8_000),
     next: { revalidate: 1800 },
     headers: { Accept: "application/json" },
   });

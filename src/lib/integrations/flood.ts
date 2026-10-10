@@ -14,6 +14,7 @@ export const FLOOD_LEVELS_STALE_MS = 6 * 60 * 60 * 1000;
 
 export async function fetchFloodAlertSummary(): Promise<FloodAlertSummary[]> {
   const response = await fetch(`${FLOOD_API_BASE}/alerts/summary`, {
+    signal: AbortSignal.timeout(8_000),
     next: { revalidate: 600 },
     headers: { Accept: "application/json" },
   });
@@ -38,6 +39,7 @@ export async function fetchFloodAlertSummary(): Promise<FloodAlertSummary[]> {
 
 export async function fetchFloodHealth(): Promise<{ status: string }> {
   const response = await fetch(`${FLOOD_API_BASE}/health`, {
+    signal: AbortSignal.timeout(8_000),
     next: { revalidate: 300 },
     headers: { Accept: "application/json" },
   });
@@ -101,6 +103,7 @@ export function preferIrrigationWhenFloodStale(
 
 async function fetchLatestFloodLevelsFromApi(): Promise<FloodStationLevel[]> {
   const response = await fetch(`${FLOOD_API_BASE}/levels/latest`, {
+    signal: AbortSignal.timeout(8_000),
     next: { revalidate: 600 },
     headers: { Accept: "application/json" },
   });
@@ -187,6 +190,7 @@ export async function fetchFloodLevelHistory(
   const response = await fetch(
     `${FLOOD_API_BASE}/levels/history/${encodeURIComponent(stationName)}?limit=${limit}`,
     {
+    signal: AbortSignal.timeout(8_000),
       next: { revalidate: 600 },
       headers: { Accept: "application/json" },
     },

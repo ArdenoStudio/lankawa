@@ -141,6 +141,7 @@ async function parseCebJson<T>(response: Response): Promise<T> {
 
 async function bootstrapCebSession(pageUrl: string): Promise<CebSession> {
   const response = await fetch(pageUrl, {
+    signal: AbortSignal.timeout(8_000),
     headers: {
       "User-Agent": BOT_USER_AGENT,
       Accept: "text/html,application/xhtml+xml",
@@ -191,6 +192,7 @@ async function fetchLoadSheddingEvents(
   });
 
   const response = await fetch(`${CEB_BASE}/Incognito/GetLoadSheddingEvents`, {
+    signal: AbortSignal.timeout(8_000),
     method: "POST",
     headers: {
       ...cebHeaders(session),
@@ -210,6 +212,7 @@ async function fetchLoadSheddingEvents(
 
 async function fetchProvinces(session: CebSession): Promise<CebProvince[]> {
   const response = await fetch(`${CEB_BASE}/Incognito/GetProvinces`, {
+    signal: AbortSignal.timeout(8_000),
     headers: cebHeaders(session),
     next: { revalidate: FETCH_REVALIDATE_SECONDS },
   });
@@ -229,6 +232,7 @@ async function fetchAreasForProvince(
   const response = await fetch(
     `${CEB_BASE}/Incognito/GetAreasByProvince?provinceId=${encodeURIComponent(provinceId)}`,
     {
+    signal: AbortSignal.timeout(8_000),
       headers: cebHeaders(session),
       next: { revalidate: FETCH_REVALIDATE_SECONDS },
     },
@@ -249,6 +253,7 @@ async function fetchPresentOutagesInArea(
   const response = await fetch(
     `${CEB_BASE}/Incognito/GetOutageLocationsInArea?areaId=${encodeURIComponent(areaId)}`,
     {
+    signal: AbortSignal.timeout(8_000),
       headers: cebHeaders(session),
       next: { revalidate: FETCH_REVALIDATE_SECONDS },
     },
@@ -269,6 +274,7 @@ async function fetchGroupGeoAreas(
   const response = await fetch(
     `${CEB_BASE}/Incognito/GetLoadSheddingGeoAreas?LoadShedGroupId=${encodeURIComponent(groupId)}`,
     {
+    signal: AbortSignal.timeout(8_000),
       headers: cebHeaders(session),
       next: { revalidate: FETCH_REVALIDATE_SECONDS },
     },

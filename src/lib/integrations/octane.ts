@@ -14,6 +14,7 @@ export interface OctaneLatestResponse {
 
 export async function fetchOctanePrices(): Promise<OctaneLatestResponse> {
   const response = await fetch(`${OCTANE_BASE}/v1/prices/latest`, {
+    signal: AbortSignal.timeout(8_000),
     next: { revalidate: 3600 },
     headers: { Accept: "application/json" },
   });
@@ -58,6 +59,7 @@ export async function fetchOctanePriceHistory(
   const response = await fetch(
     `${OCTANE_BASE}/v1/prices/history?${params.toString()}`,
     {
+    signal: AbortSignal.timeout(8_000),
       next: { revalidate: 3600 },
       headers: { Accept: "application/json" },
     },
@@ -94,6 +96,7 @@ export async function fetchOctanePriceChanges(
   const response = await fetch(
     `${OCTANE_BASE}/v1/prices/changes?${params.toString()}`,
     {
+    signal: AbortSignal.timeout(8_000),
       next: { revalidate: 3600 },
       headers: { Accept: "application/json" },
     },
@@ -128,6 +131,7 @@ export interface OctaneWorldComparison {
 
 export async function fetchOctaneWorldComparison(): Promise<OctaneWorldComparison> {
   const response = await fetch(`${OCTANE_BASE}/v1/comparison/world`, {
+    signal: AbortSignal.timeout(8_000),
     next: { revalidate: 3600 },
     headers: { Accept: "application/json" },
   });

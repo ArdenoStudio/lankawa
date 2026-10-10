@@ -145,6 +145,7 @@ export async function fetchCbslFxRates(): Promise<CbslFxRate[]> {
   });
 
   const response = await fetch(RESULTS_URL, {
+    signal: AbortSignal.timeout(8_000),
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",

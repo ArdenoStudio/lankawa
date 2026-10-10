@@ -96,6 +96,7 @@ async function dbFetch<T>(
 
   const response = await fetch(`${config.url}/rest/v1/${path}`, {
     ...init,
+    signal: init?.signal ?? AbortSignal.timeout(8_000),
     headers: {
       apikey: config.key,
       Authorization: `Bearer ${config.key}`,
